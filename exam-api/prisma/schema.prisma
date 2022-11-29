@@ -1,0 +1,98 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  email        String         @unique
+  name         String?
+  quota        String?
+  status       Boolean?
+  mobile       String?
+  address      String?
+  city         String?
+  state        String?
+  pincode      String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  participants Participants[]
+}
+
+model user_auth {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  name     String?
+  email    String  @unique
+  password String?
+}
+
+model reset_token {
+  user_id   String   @id @default(auto()) @map("_id") @db.ObjectId
+  token     String
+  CreatedAt DateTime @default(now())
+}
+
+model Participants {
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  Organization_id String
+  name            String?
+  email           String       @unique
+  password        String?
+  mobile          String?
+  organization    Organization @relation(fields: [Organization_id], references: [id])
+}
+
+model Level {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  level     String   @unique
+  status    Boolean?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Module {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  module    String   @unique
+  status    Boolean?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Login {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  token     String?
+  email     String?
+  createdAt DateTime @default(now())
+}
+
+model Questions {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  question          String
+  question_type     String?
+  question_time     String?
+  images            String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  status            Boolean
+  questions_options Questions_options[]
+}
+
+model Questions_options {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  option_type String?
+  option      String?
+  question_id String
+  correct     String?
+  image       String?
+  status      Boolean
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  questions   Questions @relation(fields: [question_id], references: [id])
+}
