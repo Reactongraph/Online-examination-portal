@@ -6,6 +6,10 @@ import {
 import {CgOrganisation} from 'react-icons/cg';
 import {TiGroup} from 'react-icons/ti';
 import {CgNotes} from 'react-icons/cg';
+import {BsSpeedometer} from 'react-icons/bs';
+import {FaSuitcase} from 'react-icons/fa';
+
+
 import React, { useEffect, useState } from "react";
 import NavItem from "./NavItem";
 
@@ -85,6 +89,26 @@ const Nav = ({ sidebarOutsideClick }) => {
         >
           <TiGroup size={30} />
         </NavItem> 
+        <NavItem
+          hrefLink='/dashboard/level'
+          sidebarStatus={sidebarStatus}
+          menuTitle="Level"
+          subMenu={false}
+          subMenuArray={null}
+        >
+                    <BsSpeedometer size={30} />
+
+        </NavItem> 
+        <NavItem
+          hrefLink='/dashboard/module'
+          sidebarStatus={sidebarStatus}
+          menuTitle="Module"
+          subMenu={false}
+          subMenuArray={null}
+        >
+                    <FaSuitcase size={30} />
+
+        </NavItem> 
 
         {/* this menu has child Menu     */}
         <NavItem
@@ -97,6 +121,8 @@ const Nav = ({ sidebarOutsideClick }) => {
                     <CgNotes size={30} />
 
         </NavItem> 
+
+       
        
       </nav>
     </>
