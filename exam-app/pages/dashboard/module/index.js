@@ -2,19 +2,19 @@ import  * as React from 'react';
 
 // import OrganizationTable from './orgTable';
  
-import Level from '../../../components/level/Level';
+import Module from '../../../components/module/Module';
 import Layout from '../../../components/layout/Layout';
 
 import axios from 'axios';
 import { SERVER_LINK } from "../../../helpers/config";
 
 
-export default function organization({level_data}){
+export default function module({module_data}){
   
     return (
         <>
             <Layout title='Organization'>
-                <Level level_data={level_data} />
+                <Module module_data={module_data} />
                 {/* <h1 style={{color: "red"}}>This is he level </h1> */}
             </Layout>
         </>
@@ -25,10 +25,10 @@ export default function organization({level_data}){
 
 export async function getServerSideProps() {
   // Fetch data from external API
-  const res = await axios.get(`${SERVER_LINK}/level/find`);
+  const res = await axios.get(`${SERVER_LINK}/module/find`);
 
-  let level_data = res.data;
+  let module_data = res.data;
 
   // Pass data to the page via props
-  return { props: { level_data } };
+  return { props: { module_data } };
 }
