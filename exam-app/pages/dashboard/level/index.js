@@ -9,7 +9,7 @@ import axios from 'axios';
 import { SERVER_LINK } from "../../../helpers/config";
 
 
-export default function organization({level_data}){
+export default function level({level_data}){
   
     return (
         <>

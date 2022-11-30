@@ -12,17 +12,11 @@ const LevelModal = ({ modal, setModal,editForm , organizationId , orgData }) => 
   const [selectedImage, setSelectedImage] = useState();
   const router = useRouter();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [pincode, setPincode] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [mobile, setMobile] = useState("");
-  const [quota, setQuota] = useState("");
+  const [level, setLevel] = useState("");
+  
   const [buttonText, setButtonText] = useState("Add");
   
-  const [password, setPassword] = useState("");
+  // const [password, setPassword] = useState("");
 
   const { register, handleSubmit } = useForm();
 
@@ -46,15 +40,8 @@ const LevelModal = ({ modal, setModal,editForm , organizationId , orgData }) => 
     console.log("this is the orgdata "+orgData);
     console.log(orgData);
 
-        setName(orgData.name);
-        setEmail(orgData.email);
-        setMobile(orgData.mobile);
-        setState(orgData.state);
-        setAddress(orgData.address);
-        setCity(orgData.city);
-        setPincode(orgData.pincode);
-        setQuota(orgData.quota);
-        setPassword(orgData.password)
+        setLevel(orgData.name);
+       
         setButtonText("Update");
 
      
@@ -106,7 +93,7 @@ const LevelModal = ({ modal, setModal,editForm , organizationId , orgData }) => 
     // for new data registration
     else {
       await axios({
-        url: `${SERVER_LINK}/rest-api`,
+        url: `${SERVER_LINK}/level`,
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -116,6 +103,7 @@ const LevelModal = ({ modal, setModal,editForm , organizationId , orgData }) => 
       })
         .then((response) => {
           router.replace(router.asPath);
+          setLevel("")
           setModal(!modal);
         })
         .catch((err) => {
@@ -157,11 +145,11 @@ const LevelModal = ({ modal, setModal,editForm , organizationId , orgData }) => 
                     class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                     id="grid-first-name"
                     type="text"
-                    value={name}
-                    {...register("name", {
-                      onChange: (e) => setName(e.target.value)
+                    value={level}
+                    {...register("level", {
+                      onChange: (e) => setLevel(e.target.value)
                     })}
-                    placeholder="eg. Easy , Har"
+                    placeholder="eg. Easy , Moderate , etc ..."
                   />
                   {/* <p class="text-red-500 text-xs italic">
                     Please fill out this field.   property - > border-red-500
