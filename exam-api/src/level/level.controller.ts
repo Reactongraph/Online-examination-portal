@@ -8,7 +8,7 @@ export class LevelController {
   @Post()
   async create (@Body() level: level_dto) {
     const level_create = await this.Levels.create(level)
-    return `${level_create}`
+    return level_create
   }
 
   // this controller is used to find all Levels data

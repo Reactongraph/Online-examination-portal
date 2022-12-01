@@ -4,11 +4,11 @@ class PostDTO {
   name: string
   quota: string
   status: boolean
-  mobile: Int32Array
+  mobile: string
   address: string
   city: string
   state: string
-  pincode: Int32Array
+  pincode: string
   createdAt: Date
   updatedAt: Date
   password: string

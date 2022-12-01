@@ -9,6 +9,12 @@ export class ParticipantsController {
   async create (@Body() createparticipants: participants_dto) {
     console.log(createparticipants.name)
     const participant_create = await this.participant.create(createparticipants)
+    if (participant_create.email==null)
+    {
+      return {
+        message:'user already exist'
+      }
+    }
     const reset_link = await this.participant.reset_link(participant_create.email, participant_create.password)
     return participant_create
   }

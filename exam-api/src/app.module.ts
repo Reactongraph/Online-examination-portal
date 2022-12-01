@@ -1,7 +1,7 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
-import { RestApiModule } from './organization/rest-api.module'
+import { RestApiModule } from './organization/organization.module'
 import { ParticipantsController } from './participants/participants.controller'
 import { ParticipantsService } from './participants/participants.service'
 import { ParticipantsModule } from './participants/participants.module'
@@ -10,7 +10,7 @@ import { LevelService } from './level/level.service'
 import { LevelModule } from './level/level.module'
 import { ModuleModule } from './module/module.module'
 import { AuthModule } from './auth/auth.module'
-import { Oraganization } from './organization/rest-api.middleware'
+import { Oraganization } from './organization/organization.middleware'
 import { Participants } from './participants/participants.middlesware'
 // import { Module, } from '@nestjs/common';
 import { QuestionsController } from './questions/questions.controller'
@@ -25,8 +25,8 @@ import { QuestionOptionsController } from './question_options/question_options.c
   imports: [RestApiModule, ParticipantsModule, LevelModule, ModuleModule, AuthModule, QuestionsModule, QuestionOptionsModule, MulterModule.register({
     dest: './images'
   })],
-  controllers: [AppController, ParticipantsController, LevelController, QuestionsController, QuestionsController, QuestionOptionsController],
-  providers: [AppService, ParticipantsService, LevelService, QuestionsService, QuestionOptionsService]
+  controllers: [AppController, QuestionsController, QuestionsController, QuestionOptionsController],
+  providers: [AppService, QuestionsService, QuestionOptionsService]
 })
 export class AppModule implements NestModule {
   configure (consumer: MiddlewareConsumer) {

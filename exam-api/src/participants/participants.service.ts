@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common'
 import { participants_dto } from './participants.entity'
 import * as bcrypt from 'bcrypt'
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
+import { PrismaService } from 'src/prisma.service'
+import { Participants,PrismaClient } from '@prisma/client'
 const nodemailer = require('nodemailer')
 @Injectable()
 export class ParticipantsService {
+  constructor(private prisma: PrismaService) {}
   async create (params: participants_dto) {
-    prisma.$connect()
     console.log('in service ', params?.name)
     const name = params?.name
     const email = params?.email
@@ -17,11 +17,15 @@ export class ParticipantsService {
     console.log('hash', hash)
 
     const mobile = params?.mobile
-    const email_check = await prisma.Participants.findUnique({ where: { email } })
+    const email_check = await this.prisma.participants.findUnique({ where: { email } })
     if (email_check) {
-      return 'user already exist!'
+      return {
+      message:'user already exist',
+      password:null,
+      email:null
+    }
     } else {
-      const user = await prisma.Participants.create(
+      const user = await this.prisma.participants.create(
         {
           data: {
             name: params?.name,
@@ -69,8 +73,7 @@ export class ParticipantsService {
   }
 
   async findAll () {
-    prisma.$connect()
-    const users = await prisma.Participants.findMany()
+    const users = await this.prisma.participants.findMany()
     console.log(users)
 
     return `${JSON.stringify(users)}`
@@ -79,7 +82,7 @@ export class ParticipantsService {
   async findOne (id: string) {
     console.log(id)
 
-    const user = await prisma.Participants.findUnique({
+    const user = await this.prisma.participants.findUnique({
       where: {
         id
       }
@@ -93,7 +96,7 @@ export class ParticipantsService {
   }
 
   async update (id: string, updateRestApiDto: participants_dto) {
-    const updateUser = await prisma.Participants.update({
+    const updateUser = await this.prisma.participants.update({
       where: {
         id
       },
@@ -106,7 +109,7 @@ export class ParticipantsService {
   }
 
   async remove (id: string) {
-    const delete_user = await prisma.Participants.delete({
+    const delete_user = await this.prisma.participants.delete({
       where: {
         id
       }

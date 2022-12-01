@@ -3,11 +3,12 @@ import { JwtService } from '@nestjs/jwt'
 import { AuthService } from './auth.service'
 import { auth_dto } from './auth.entity'
 import { Response, Request } from 'express'
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
+import { PrismaService } from 'src/prisma.service'
+import {Login, Prisma } from '@prisma/client'
 @Controller('auth')
 export class AuthController {
-  constructor (private readonly authService: AuthService, private readonly jwtService: JwtService) {
+  constructor (private readonly authService: AuthService, private readonly jwtService: JwtService,
+    private prisma:PrismaService) {
 
   }
 
@@ -25,7 +26,7 @@ export class AuthController {
   @Post('login')
   async login (@Body() login: auth_dto, @Res({ passthrough: true }) response: Response) {
     console.log(login)
-    prisma.$connect()
+    // prisma.$connect()
     const users = await this.authService.login(login)
     console.log('in controller', users)
 
@@ -35,7 +36,8 @@ export class AuthController {
     } else {
       const jwt = await this.jwtService.signAsync({ id: users.id })
       console.log('jwt', jwt, login?.email)
-      const login_date = await prisma.Login.create(
+      // const data = this.prisma.L
+      const login_date = await this.prisma.login.create(
         {
           data: {
             token: jwt,

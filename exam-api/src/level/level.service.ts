@@ -1,36 +1,47 @@
 import { Injectable } from '@nestjs/common'
 import { level_dto } from './level.entity'
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
+import { PrismaService } from 'src/prisma.service'
+import {Login,Level, Prisma } from '@prisma/client'
 @Injectable()
 export class LevelService {
-  async create (params: level_dto) {
-    prisma.$connect()
+  constructor(private prisma: PrismaService) {}
+  async create(params: level_dto) {
     console.log('in service ', params?.level)
-    const level = params?.level
     const status = params?.status
-    const users = await prisma.Level.create({
-      data: {
-        level,
-        status
+    const toLowerCaseLevel = params?.level.toLowerCase()
+    const find = await this.prisma.level.findUnique({
+      where: {
+        level: toLowerCaseLevel
       }
+    })
+    console.log("find", find);
+    if (find != null) {
+      return 'level already exist'
     }
-    )
-    return 'level inserted'
+    else {
+
+      const users = await this.prisma.level.create({
+        data: {
+          level:toLowerCaseLevel,
+          status:status
+        }
+      }
+      )
+      return { message :'level inserted'}
+    }
   }
 
-  async findAll () {
-    prisma.$connect()
-    const users = await prisma.Level.findMany()
+  async findAll() {
+    const users = await this.prisma.level.findMany()
     console.log(users)
 
     return `${JSON.stringify(users)}`
   }
 
-  async findOne (id: string) {
+  async findOne(id: string) {
     console.log(id)
 
-    const user = await prisma.Level.findUnique({
+    const user = await this.prisma.level.findUnique({
       where: {
         id
       }
@@ -43,21 +54,35 @@ export class LevelService {
     return `${JSON.stringify(user)} `
   }
 
-  async update (id: string, updateRestApiDto: level_dto) {
-    const updateUser = await prisma.Level.update({
+  async update(id: string, updateRestApiDto: level_dto) {
+    const toLowerCaseLevel = updateRestApiDto?.level.toLowerCase()
+    const find = await this.prisma.level.findUnique({
+      where: {
+        level: toLowerCaseLevel
+      }
+    })
+    if (find != null) {
+      return 'level already exist'
+    }
+    else {
+    const updateUser = await this.prisma.level.update({
       where: {
         id
       },
-      data: updateRestApiDto
+      data: {
+        level:toLowerCaseLevel
+      } 
     })
+    
     if (!updateUser) {
       return `user not found for this ${id}`
     }
     return `${id} `
   }
+  }
 
-  async remove (id: string) {
-    const delete_user = await prisma.Level.delete({
+  async remove(id: string) {
+    const delete_user = await this.prisma.level.delete({
       where: {
         id
       }
