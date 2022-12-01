@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import OrganizationModal from "./Modal";
 import ParticipantModal from "./ParticipantModal";
 import LevelModal from "./LevelModal";
+import ModuleModal from "./ModuleModal";
 
 const PageComponentTitle = ({
   title,
@@ -93,8 +94,6 @@ const PageComponentTitle = ({
     }
 })()} */}
 
-      
-
         {title == "PARTICIPANT" ? (
           <>
             {" "}
@@ -103,6 +102,11 @@ const PageComponentTitle = ({
         ) : title == "LEVEL" ? (
           <>
             <LevelModal modal={modal} setModal={setModal} />
+          </>
+        ) : title == "MODULE" ? (
+          <>
+            {" "}
+            <ModuleModal modal={modal} setModal={setModal} />
           </>
         ) : (
           <>
