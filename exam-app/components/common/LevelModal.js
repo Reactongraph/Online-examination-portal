@@ -6,53 +6,24 @@ import { useForm } from "react-hook-form";
 import { SERVER_LINK } from "../../helpers/config";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { injectStyle } from "react-toastify/dist/inject-style";
+import { ToastContainer, toast } from "react-toastify";
 
-const LevelModal = ({ modal, setModal,editForm , organizationId , orgData }) => {
-  //For Image Preview
+// CALL IT ONCE IN YOUR APP
+if (typeof window !== "undefined") {
+  injectStyle();
+}
+
+const LevelModal = ({ modal, setModal, editForm, organizationId, orgData }) => {
+ 
   const [selectedImage, setSelectedImage] = useState();
   const router = useRouter();
-
   const [level, setLevel] = useState("");
-  
   const [buttonText, setButtonText] = useState("Add");
-  
-  // const [password, setPassword] = useState("");
-
   const { register, handleSubmit } = useForm();
 
-  useEffect(()=>{
-
-    if(orgData){
-
-      userData();
-    }
-  },[editForm])
-
-
- function userData(){
-
-    // setButtonText("Update");/
-    // setEditForm(true);
-    // setOrganizationId(org_id);
-
-    // first find the user with the id
-   
-    console.log("this is the orgdata "+orgData);
-    console.log(orgData);
-
-        setLevel(orgData.name);
-       
-        setButtonText("Update");
-
-     
-
-}
+ 
   // This function will be triggered when the file field change
-  const imageChange = (e) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setSelectedImage(e.target.files);
-    }
-  };
 
   // This function will be triggered when the "Remove This Image" button is clicked
   const removeSelectedImage = () => {
@@ -67,23 +38,29 @@ const LevelModal = ({ modal, setModal,editForm , organizationId , orgData }) => 
 
   // for sending the data to the backend
   const checkWithDatabase = async (data) => {
-    console.log("This is thge data ");
-    console.log(data);
-    data.status = true;
-    data = JSON.stringify(data);
+ 
 
+    data.status = true;
+    data.level = level;
+
+    let LevelData = JSON.stringify(data);
+
+  
     // for taking the patch api data
-    if (editForm) {
-      await axios
-        .patch(`${SERVER_LINK}/rest-api/${organizationId}`, data, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json;charset=UTF-8",
-          },
-        })
+    if (data.level !== null && data.level != "") {
+      await axios({
+        url: `${SERVER_LINK}/level`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+        },
+        data: LevelData,
+      })
         .then((response) => {
-          setModal(!modal);
           router.replace(router.asPath);
+          setLevel("");
+          setModal(!modal);
         })
         .catch((err) => {
           console.log(err);
@@ -92,26 +69,10 @@ const LevelModal = ({ modal, setModal,editForm , organizationId , orgData }) => 
 
     // for new data registration
     else {
-      await axios({
-        url: `${SERVER_LINK}/level`,
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json;charset=UTF-8",
-        },
-        data,
-      })
-        .then((response) => {
-          router.replace(router.asPath);
-          setLevel("")
-          setModal(!modal);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      toast.error("Fill Required Field");
     }
   };
-  //console.log('modal modal', modal)
+  
   return (
     <>
       <PureModal
@@ -119,8 +80,8 @@ const LevelModal = ({ modal, setModal,editForm , organizationId , orgData }) => 
         isOpen={modal}
         width="800px"
         onClose={() => {
+          setLevel("");
           setModal(false);
-          return true;
         }}
       >
         <div className="flex-row space-y-3 relative">
@@ -139,28 +100,24 @@ const LevelModal = ({ modal, setModal,editForm , organizationId , orgData }) => 
                     class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                     for="grid-first-name"
                   >
-                     Enter Level 
+                    Enter Level
                   </label>
                   <input
                     class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                     id="grid-first-name"
                     type="text"
                     value={level}
-                    {...register("level", {
-                      onChange: (e) => setLevel(e.target.value)
-                    })}
+                    // {...register("level", {
+                    onChange={(e) => setLevel(e.target.value)}
+                    // })}
                     placeholder="eg. Easy , Moderate , etc ..."
                   />
                   {/* <p class="text-red-500 text-xs italic">
                     Please fill out this field.   property - > border-red-500
                   </p> */}
                 </div>
-              
               </div>
 
-           
-             
-             
               <button
                 type="submit"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -173,7 +130,8 @@ const LevelModal = ({ modal, setModal,editForm , organizationId , orgData }) => 
           {/* */}
         </div>
       </PureModal>
-      ;
+
+      <ToastContainer />
     </>
   );
 };
