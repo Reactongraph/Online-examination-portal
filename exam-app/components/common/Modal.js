@@ -341,7 +341,7 @@ const OrganizationModal = ({ modal, setModal,editForm , organizationId , orgData
           {/* */}
         </div>
       </PureModal>
-      ;
+      
     </>
   );
 };

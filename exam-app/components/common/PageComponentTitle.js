@@ -49,68 +49,20 @@ const PageComponentTitle = ({
           {buttonTitle}
         </button>
 
-        {/* {
-        {
-          'PARTICIPANT':<> <ParticipantModal modal={modal} setModal={setModal} /></>,
-          'ORGANIZATION': <><OrganizationModal modal={modal} setModal={setModal} /></>,
-          'LEVEL' : <> <LevelModal modal={modal} setModal={setModal} /></>
-        }[title]
-      } */}
-
-        {/* {  
-   switch (title) {
-    case 'PARTICIPANT':
-      
-      break;
-   
-    default:
-      break;
-   }
-  }  */}
-
-        {/* {(() => {
-
-     switch (title) {
-      case 'PARTICIPANT':
-        <>
-        {" "}
-       return  <ParticipantModal modal={modal} setModal={setModal} />
-      </>
-        break;
-      case 'ORGANIZATION':
-        <>
-        {" "}
-        <OrganizationModal modal={modal} setModal={setModal} />
-      </>
-        break;
-      case 'LEVEL':
-        <>
-        {" "}
-        <LevelModal modal={modal} setModal={setModal} />
-      </>
-        break;
-    
-     
-    }
-})()} */}
-
-        {title == "PARTICIPANT" ? (
+        {title == "MODULE" ? (
           <>
-            {" "}
             <ParticipantModal modal={modal} setModal={setModal} />
           </>
         ) : title == "LEVEL" ? (
           <>
             <LevelModal modal={modal} setModal={setModal} />
           </>
-        ) : title == "MODULE" ? (
+        ) : title == "PARTICIPANT" ? (
           <>
-            {" "}
             <ModuleModal modal={modal} setModal={setModal} />
           </>
         ) : (
           <>
-            {" "}
             <OrganizationModal modal={modal} setModal={setModal} />
           </>
         )}

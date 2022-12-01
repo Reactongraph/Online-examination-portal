@@ -12,8 +12,7 @@ const Organization = ({org_data}) => {
             <PageComponentTitle 
                 title='ORGANIZATION'
                 titleDescription='List of all organization'
-                buttonTitle='ADD ORAGANIZATION'
-            />
+                buttonTitle='ADD ORAGANIZATION'/>
         </div>
 
         <section className="grid md:grid-cols-1 xl:grid-cols-1 gap-6">
@@ -30,3 +29,5 @@ const Organization = ({org_data}) => {
 };
 
 export default Organization;
+
+
