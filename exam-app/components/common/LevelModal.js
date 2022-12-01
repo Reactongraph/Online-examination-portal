@@ -69,7 +69,7 @@ const LevelModal = ({ modal, setModal, editForm, organizationId, orgData }) => {
 
     // for new data registration
     else {
-      toast.error("Fill Required Field");
+      toast.error("Field Can't be empty ");
     }
   };
   
