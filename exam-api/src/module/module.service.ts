@@ -1,27 +1,45 @@
 import { Injectable } from '@nestjs/common'
 import { module_dto } from './module.entity'
 import { PrismaService } from 'src/prisma.service'
-import {Login,Level, Prisma } from '@prisma/client'
+import { Login, Level, Prisma } from '@prisma/client'
 @Injectable()
 export class ModuleService {
-  constructor(private prisma: PrismaService) {}
-  async create (params: module_dto) {
+  constructor(private prisma: PrismaService) { }
+  async create(params: module_dto) {
+    try {
 
-    console.log('in service ', params?.module)
-    const module = params?.module
-    const status = params?.status
-    const toLowerCaseModule = params?.module.toLowerCase()
-    const users = await this.prisma.module.create({
-      data: {
-        module: toLowerCaseModule,
-        status
+
+
+      console.log('in service ', params?.module)
+      const module = params?.module
+      const status = params?.status
+      const toLowerCaseModule = params?.module.toLowerCase()
+      const find = await this.prisma.module.findUnique({
+        where: {
+          module: toLowerCaseModule
+        }
+      })
+      console.log("find", find);
+      if (find != null) {
+        return 'module already exist'
+      }
+      else {
+        const users = await this.prisma.module.create({
+          data: {
+            module: toLowerCaseModule,
+            status
+          }
+        }
+        )
+        return { message: 'module inserted' }
       }
     }
-    )
-    return 'module inserted'
+    catch (error) {
+      return { error: error }
+    }
   }
 
-  async findAll () {
+  async findAll() {
 
     const users = await this.prisma.module.findMany()
     console.log(users)
@@ -29,61 +47,74 @@ export class ModuleService {
     return `${JSON.stringify(users)}`
   }
 
-  async findOne (id: string) {
+  async findOne(id: string) {
     console.log(id)
+    try {
 
-    const user = await this.prisma.module.findUnique({
-      where: {
-        id
-      }
-    })
-    console.log(user)
-    if (!user) {
-      return `data not found with this  ${id}`
-    }
 
-    return `${JSON.stringify(user)} `
-  }
-
-  async update (id: string, updateRestApiDto: module_dto) {
-    const check_id = await this.prisma.module.findUnique({
-      where: {
-        id
-      }
-    })
-    console.log('checkid', check_id)
-    const data_check = await this.prisma.module.findUnique({
-      where: {
-        module: updateRestApiDto.module
-
-      }
-    })
-    console.log('data check', data_check)
-
-    if (check_id == null || data_check != null) {
-      return 'invalid id or data already exist!'
-    } else {
-      console.log('inside else', updateRestApiDto.module.toLowerCase)
-
-      const updateUser = await this.prisma.module.update({
+      const user = await this.prisma.module.findUnique({
         where: {
           id
-        },
-        data: updateRestApiDto
+        }
       })
-      if (!updateUser) {
-        return `user not found for this ${id}`
+      if (user) {
+        return user
       }
-      return `${id} `
+      // console.log(user)
+      else {
+        return `data not found with this  ${id}`
+      }
+
+
+    } catch (error) {
+      return { error: error }
     }
   }
 
-  async remove (id: string) {
-    const delete_user = await this.prisma.module.delete({
-      where: {
-        id
+  async update(id: string, updateRestApiDto: module_dto) {
+    const toLowerCaseModule = updateRestApiDto?.module.toLowerCase()
+    try {
+      const find = await this.prisma.module.findUnique({
+        where: {
+          module: toLowerCaseModule
+        }
+      })
+      if (find != null) {
+        return { message: 'data already exist' }
       }
-    })
-    return `This action removes a #${id} restApi`
+      else {
+
+
+        const updateUser = await this.prisma.module.update({
+          where: {
+            id
+          },
+          data: {
+            module: toLowerCaseModule
+          }
+        })
+
+        return { message: 'data updated' }
+      }
+    }
+    catch (err) {
+      console.log("err", err);
+      return { error: err }
+
+    }
+  }
+
+  async remove(id: string) {
+    try {
+      const delete_user = await this.prisma.module.delete({
+        where: {
+          id
+        }
+      })
+      return `This action removes a #${id} restApi`
+    }
+    catch (error) {
+      return { error: error }
+    }
   }
 }

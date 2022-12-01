@@ -4,7 +4,7 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 @Injectable()
 export class AuthService {
-  async changepass (Headers: auth_dto, body: auth_dto) {
+  async changepass(Headers: auth_dto, body: auth_dto) {
     console.log(body.password)
     console.log('decode id', body.decodeid)
 
@@ -31,7 +31,7 @@ export class AuthService {
     }
   }
 
-  async login (login: auth_dto) {
+  async login(login: auth_dto) {
     prisma.$connect()
 
     console.log(login)

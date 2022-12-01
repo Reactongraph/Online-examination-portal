@@ -4,17 +4,17 @@ import { AuthService } from './auth.service'
 import { auth_dto } from './auth.entity'
 import { Response, Request } from 'express'
 import { PrismaService } from 'src/prisma.service'
-import {Login, Prisma } from '@prisma/client'
+import { Login, Prisma } from '@prisma/client'
 @Controller('auth')
 export class AuthController {
-  constructor (private readonly authService: AuthService, private readonly jwtService: JwtService,
-    private prisma:PrismaService) {
+  constructor(private readonly authService: AuthService, private readonly jwtService: JwtService,
+    private prisma: PrismaService) {
 
   }
 
   // this controller is used to change password using rest link
   @Post('change-password')
-  async create (@Headers('xaccesstoken') Headers: auth_dto, @Body() body: auth_dto) {
+  async create(@Headers('xaccesstoken') Headers: auth_dto, @Body() body: auth_dto) {
     console.log(Headers)
     console.log(body)
     const change_password = await this.authService.changepass(Headers, body)
@@ -24,7 +24,7 @@ export class AuthController {
 
   // this controller is used to Login user by email id and password with token
   @Post('login')
-  async login (@Body() login: auth_dto, @Res({ passthrough: true }) response: Response) {
+  async login(@Body() login: auth_dto, @Res({ passthrough: true }) response: Response) {
     console.log(login)
     // prisma.$connect()
     const users = await this.authService.login(login)

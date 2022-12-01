@@ -25,8 +25,8 @@ import { QuestionOptionsController } from './question_options/question_options.c
   imports: [RestApiModule, ParticipantsModule, LevelModule, ModuleModule, AuthModule, QuestionsModule, QuestionOptionsModule, MulterModule.register({
     dest: './images'
   })],
-  controllers: [AppController, QuestionsController, QuestionsController, QuestionOptionsController],
-  providers: [AppService, QuestionsService, QuestionOptionsService]
+  controllers: [AppController],
+  providers: [AppService]
 })
 export class AppModule implements NestModule {
   configure (consumer: MiddlewareConsumer) {

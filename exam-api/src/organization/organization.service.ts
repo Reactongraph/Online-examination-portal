@@ -10,41 +10,45 @@ export class RestApiService {
   async create(createRestApiDto: PostDTO) {
 
     console.log(createRestApiDto)
+    try {
+      const email_check = await this.prisma.organization.findUnique({ where: { email: createRestApiDto?.email } })
+      if (email_check) {
+        return {
+          message: 'user already exist',
+          id: null,
+          email: null
+        }
+      } else {
+        const user = await this.prisma.organization.create(
+          {
+            data: {
+              email: createRestApiDto?.email,
+              name: createRestApiDto?.name,
+              quota: createRestApiDto?.quota,
+              status: createRestApiDto?.status,
+              mobile: createRestApiDto?.mobile,
+              address: createRestApiDto?.address,
+              city: createRestApiDto?.city,
+              state: createRestApiDto?.state,
+              pincode: createRestApiDto.pincode
 
-    const email_check = await this.prisma.organization.findUnique({ where: { email: createRestApiDto?.email } })
-    if (email_check) {
-      return {
-        message: 'user already exist',
-        id: null,
-        email: null
+            }
+          }
+        )
+        const userauth = await this.prisma.user_auth.create(
+          {
+            data: {
+              name: createRestApiDto?.name,
+              email: createRestApiDto?.email,
+              password: createRestApiDto?.password
+            }
+          }
+        )
+        return user
       }
-    } else {
-      const user = await this.prisma.organization.create(
-        {
-          data: {
-            email: createRestApiDto?.email,
-            name: createRestApiDto?.name,
-            quota: createRestApiDto?.quota,
-            status: createRestApiDto?.status,
-            mobile: createRestApiDto?.mobile,
-            address: createRestApiDto?.address,
-            city: createRestApiDto?.city,
-            state: createRestApiDto?.state,
-            pincode: createRestApiDto.pincode
-
-          }
-        }
-      )
-      const userauth = await this.prisma.user_auth.create(
-        {
-          data: {
-            name: createRestApiDto?.name,
-            email: createRestApiDto?.email,
-            password: createRestApiDto?.password
-          }
-        }
-      )
-      return user
+    }
+    catch (err) {
+      return { error: err }
     }
   }
 
@@ -78,10 +82,8 @@ export class RestApiService {
     mailTransporter.sendMail(mailOptions, function (error, info) {
       if (error) {
         console.log(error)
-        // res.status(409).send(error.message);
       } else {
         console.log('Email sent: ' + info.response)
-        // res.status(200).send("Mail sent successfully" );
         return 'mail send '
       }
     })
@@ -95,39 +97,53 @@ export class RestApiService {
 
   async findOne(id: string) {
     console.log(id)
-
-    const user = await this.prisma.organization.findUnique({
-      where: {
-        id
+    try {
+      const user = await this.prisma.organization.findUnique({
+        where: {
+          id
+        }
+      })
+      console.log(user)
+      if (!user) {
+        return `user not found with this  ${id}`
       }
-    })
-    console.log(user)
-    if (!user) {
-      return `user not found with this  ${id}`
-    }
 
-    return `${JSON.stringify(user)}`
+      return `${JSON.stringify(user)}`
+    }
+    catch (err) {
+      return { error: err }
+    }
   }
 
   async update(id: string, updateRestApiDto: PostDTO) {
-    const updateUser = await this.prisma.organization.update({
-      where: {
-        id
-      },
-      data: updateRestApiDto
-    })
-    if (!updateUser) {
-      return `user not found for this ${id}`
+    try {
+      const updateUser = await this.prisma.organization.update({
+        where: {
+          id
+        },
+        data: updateRestApiDto
+      })
+      if (!updateUser) {
+        return `user not found for this ${id}`
+      }
+      return `${id} `
     }
-    return `${id} `
+    catch (err) {
+      return { error: err }
+    }
   }
 
   async remove(id: string) {
-    const delete_user = await this.prisma.organization.delete({
-      where: {
-        id
-      }
-    })
-    return `${id} `
+    try {
+      const delete_user = await this.prisma.organization.delete({
+        where: {
+          id
+        }
+      })
+      return `${id} `
+    }
+    catch (err) {
+      return { error: err }
+    }
   }
 }
