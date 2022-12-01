@@ -9,6 +9,13 @@ import Modal from "../common/Modal";
 import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
 import { useForm } from "react-hook-form";
+import { injectStyle } from "react-toastify/dist/inject-style";
+import { ToastContainer, toast } from "react-toastify";
+
+// CALL IT ONCE IN YOUR APP
+if (typeof window !== "undefined") {
+  injectStyle();
+}
 
 const LevelTable = ({ level_data }) => {
   // console.log('this is the talbe ');
@@ -56,12 +63,17 @@ const LevelTable = ({ level_data }) => {
 
   const checkWithDatabase = async (data) => {
     data.status = true;
-    data = JSON.stringify(data);
+    data.level = level
+
+    let LevelData = JSON.stringify(data);
+    // console.log(LevelData);
 
     // for taking the patch api data
-    if (editForm) {
+
+    
+    if (data.level !=null && data.level != "") {
       await axios
-        .patch(`${SERVER_LINK}/level/${levelId}`, data, {
+        .patch(`${SERVER_LINK}/level/${levelId}`, LevelData, {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json;charset=UTF-8",
@@ -75,26 +87,30 @@ const LevelTable = ({ level_data }) => {
           console.log(err);
         });
     }
+    else{
+      toast.error("Field Can't be empty ");
+
+    }
 
     // for new data registration
-    else {
-      await axios({
-        url: `${SERVER_LINK}/level`,
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json;charset=UTF-8",
-        },
-        data,
-      })
-        .then((response) => {
-          setModal(!modal);
-          router.replace(router.asPath);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    // else {
+    //   await axios({
+    //     url: `${SERVER_LINK}/level`,
+    //     method: "POST",
+    //     headers: {
+    //       Accept: "application/json",
+    //       "Content-Type": "application/json;charset=UTF-8",
+    //     },
+    //     data,
+    //   })
+    //     .then((response) => {
+    //       setModal(!modal);
+    //       router.replace(router.asPath);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // }
   };
 
   function createData(level, level_id) {
@@ -239,6 +255,8 @@ const LevelTable = ({ level_data }) => {
           {/* */}
         </div>
       </PureModal>
+      <ToastContainer />
+
     </>
   );
 };
