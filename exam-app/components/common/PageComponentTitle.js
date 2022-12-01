@@ -49,7 +49,7 @@ const PageComponentTitle = ({
           {buttonTitle}
         </button>
 
-        {title == "MODULE" ? (
+        {title == "PARTICIPANT" ? (
           <>
             <ParticipantModal modal={modal} setModal={setModal} />
           </>
@@ -57,7 +57,7 @@ const PageComponentTitle = ({
           <>
             <LevelModal modal={modal} setModal={setModal} />
           </>
-        ) : title == "PARTICIPANT" ? (
+        ) : title == "MODULE" ? (
           <>
             <ModuleModal modal={modal} setModal={setModal} />
           </>
