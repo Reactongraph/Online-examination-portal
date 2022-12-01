@@ -163,18 +163,18 @@ function Table({ columns, data }) {
         <div className="-my-2 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div className="shadow-lg  overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <table {...getTableProps()} className="min-w-full divide-y divide-gray-200">
+              <table {...getTableProps()} className="min-w-full divide-y table-auto divide-gray-200">
                 <thead className="bg-gray-50 justify-center">
                   {headerGroups.map(headerGroup => (
                     <tr {...headerGroup.getHeaderGroupProps()}
-                    className="bg-slate-200  justify-around "
+                    className="bg-slate-200   "
                     >
                       {headerGroup.headers.map(column => (
                         // Add the sorting props to control sorting. For this example
                         // we can add them into the header props
                         <th
                           scope="col"
-                          className="group px-6 py-3 text-center font-bold text-black-700 uppercase tracking-wider"
+                          className="group px-6 py-3  font-bold text-black-700 uppercase tracking-wider"
                           {...column.getHeaderProps(column.getSortByToggleProps())}
                         >
                           <div className="flex items-center justify-between">
@@ -197,7 +197,7 @@ function Table({ columns, data }) {
                 </thead>
                 <tbody
                   {...getTableBodyProps()}
-                  className="bg-white divide-y divide-gray-200 text-left"
+                  className="bg-white divide-y postion:relative   divide-gray-200 text-left"
                 >
                   {page.map((row, i) => {  // new
                     prepareRow(row)
@@ -209,7 +209,7 @@ function Table({ columns, data }) {
                           return (
                             <td
                               {...cell.getCellProps()}
-                              className="px-6 py-4  uppercase  whitespace-nowrap"
+                              className="px-6 py-4   uppercase  whitespace-nowrap"
                               role="cell"
                             >
                               {cell.column.Cell.name === "defaultRenderer"
