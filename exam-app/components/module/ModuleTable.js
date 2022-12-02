@@ -9,6 +9,13 @@ import Modal from "../common/Modal";
 import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
 import { useForm } from "react-hook-form";
+import { injectStyle } from "react-toastify/dist/inject-style";
+import { ToastContainer, toast } from "react-toastify";
+
+// CALL IT ONCE IN YOUR APP
+if (typeof window !== "undefined") {
+  injectStyle();
+}
 
 const ModuleTable = ({ module_data }) => {
   // console.log('this is the talbe ');
@@ -57,12 +64,12 @@ const ModuleTable = ({ module_data }) => {
   const checkWithDatabase = async (data) => {
     data.status = true;
     data.module = modules;
-    data = JSON.stringify(data);
+    let moduleData = JSON.stringify(data);
 
     // for taking the patch api data
-    if (editForm) {
+    if (data.module !=null && data.module != "") {
       await axios
-        .patch(`${SERVER_LINK}/module/${moduleId}`, data, {
+        .patch(`${SERVER_LINK}/module/${moduleId}`, moduleData, {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json;charset=UTF-8",
@@ -76,25 +83,9 @@ const ModuleTable = ({ module_data }) => {
           console.log(err);
         });
     }
+    else{
+      toast.error("Field Can't be empty ");
 
-    // for new data registration
-    else {
-      await axios({
-        url: `${SERVER_LINK}/module`,
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json;charset=UTF-8",
-        },
-        data,
-      })
-        .then((response) => {
-          setModal(!modal);
-          router.replace(router.asPath);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
     }
   };
 
@@ -240,6 +231,7 @@ const ModuleTable = ({ module_data }) => {
           {/* */}
         </div>
       </PureModal>
+      <ToastContainer/>
     </>
   );
 };
