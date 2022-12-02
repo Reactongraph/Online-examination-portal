@@ -87,11 +87,14 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
 
   // for sending the data to the backend
   const checkWithDatabase = async (data) => {
-    console.log("This is thge data ");
-    console.log(data);
-    // data.status = true;
-    data = JSON.stringify(data);
-    console.log(data);
+    data.name = name
+  data.email = email 
+  data.mobile = mobile
+  data.id = organizationId
+  data.password = password
+
+  // data.status = true;
+  let participantData = JSON.stringify(data);
 
     // for taking the patch api data
     if (editForm) {
@@ -120,10 +123,15 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
           Accept: "application/json",
           "Content-Type": "application/json;charset=UTF-8",
         },
-        data,
+        data : participantData,
       })
         .then((response) => {
           router.replace(router.asPath);
+          setName("")
+          setEmail("")
+          setMobile("")
+          setPassword("")
+          setOrganizationId("")
           setModal(!modal);
         })
         .catch((err) => {
@@ -139,6 +147,11 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
         isOpen={modal}
         width="800px"
         onClose={() => {
+          setName("")
+          setEmail("")
+          setMobile("")
+          setPassword("")
+          setOrganizationId("")
           setModal(false);
           return true;
         }}
@@ -166,9 +179,8 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
                     id="name"
                     type="text"
                     value={name}
-                    {...register("name", {
-                      onChange: (e) => setName(e.target.value),
-                    })}
+                    onChange = { (e) => setName(e.target.value)}
+                    required = "required"
                     placeholder="Jane"
                   />
                   {/* <p className="text-red-500 text-xs italic">
@@ -187,10 +199,9 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
                     id="email"
                     type="email"
                     placeholder="example@gmail.com "
+                    required = "required"
                     value={email}
-                    {...register("email", {
-                      onChange: (e) => setEmail(e.target.value),
-                    })}
+                    onChange = { (e) => setEmail(e.target.value)}
                   />
                 </div>
               </div>
@@ -208,10 +219,9 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
                     id="password"
                     type="password"
                     placeholder="******************"
+                    required = "required"
                     value={password}
-                    {...register("password", {
-                      onChange: (e) => setPassword(e.target.value),
-                    })}
+                    onChange = { (e) => setPassword(e.target.value)}
                   />
                   <p className="text-gray-600 text-xs italic">
                     Make it as long and as crazy as you'd like
@@ -232,10 +242,9 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
                     id="mobile"
                     type="text"
                     placeholder="+91 "
+                    required = "required"
                     value={mobile}
-                    {...register("mobile", {
-                      onChange: (e) => setMobile(e.target.value),
-                    })}
+                    onChange = { (e) => setMobile(e.target.value)}
                   />
                   {/* <p className="text-red-500 text-xs italic">
                     Please fill out this field.   property - > border-red-500
@@ -253,10 +262,9 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
                     id="org_id"
                     type="text"
                     placeholder="e.g. 1000"
+                    required = "required"
                     value={organizationId}
-                    {...register("Organization_id", {
-                      onChange: (e) => setOrganizationId(e.target.value),
-                    })}
+                    onChange = { (e) => setOrganizationId(e.target.value)}
                   />
                 </div>
               </div>

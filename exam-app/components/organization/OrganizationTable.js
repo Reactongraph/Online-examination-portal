@@ -10,7 +10,6 @@ import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
 import { useForm } from "react-hook-form";  
 
-
 const OrganizationTable = ({org_data}) => {
   // console.log('this is the talbe ');
   
@@ -29,11 +28,12 @@ const OrganizationTable = ({org_data}) => {
   const [state, setState] = useState("");
   const [mobile, setMobile] = useState("");
   const [quota, setQuota] = useState("");
+  
   // const [buttonText, setButtonText] = useState("Add");
   
   const [password, setPassword] = useState("");
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit  } = useForm();
 
   // const userOrgData = org_data.map((oneOrg)=>({id:oneOrg.id , name:oneOrg.name, email : oneOrg.email, status : oneOrg.status}))
 
@@ -48,7 +48,7 @@ const OrganizationTable = ({org_data}) => {
       });
   };
 
-  const handleEditClick = (org_id) => {
+  const handleEditClick = async (org_id) => {
     // setOpen(true);
     setButtonText("Update");
     setEditForm(true);
@@ -56,7 +56,7 @@ const OrganizationTable = ({org_data}) => {
     setModal(true)
 
     // first find the user with the id
-    axios
+    await axios
       .get(`${SERVER_LINK}/rest-api/${org_id}`)
       .then((response) => {
         let singleOrgData = response.data;
@@ -65,6 +65,7 @@ const OrganizationTable = ({org_data}) => {
         setEmail(singleOrgData.email);
         setMobile(singleOrgData.mobile);
         setState(singleOrgData.state);
+        setPassword(singleOrgData.password);
         setAddress(singleOrgData.address);
         setCity(singleOrgData.city);
         setPincode(singleOrgData.pincode);
@@ -77,12 +78,22 @@ const OrganizationTable = ({org_data}) => {
 
   const checkWithDatabase = async (data) => {
     data.status = true;
-    data = JSON.stringify(data);
+    data.name = name
+    data.email = email
+    data.mobile = mobile
+    data.password = password
+    data.city = city
+    data.state = state
+    data.pincode = pincode
+    data.address = address
+    data.quota = quota
+    let OrganizationData = JSON.stringify(data);
+    console.log(data);
 
     // for taking the patch api data
     if (editForm) {
       await axios
-        .patch(`${SERVER_LINK}/rest-api/${organizationId}`, data, {
+        .patch(`${SERVER_LINK}/rest-api/${organizationId}`, OrganizationData, {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json;charset=UTF-8",
@@ -269,13 +280,15 @@ const OrganizationTable = ({org_data}) => {
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                     id="grid-first-name"
-                    type="text"
+                    type = 'text'
                     value={name}
-                    {...register("name", {
-                      onChange: (e) => setName(e.target.value)
+                    required
+                    {...register("name", {                      
+                      onChange: (e) => setName(e.target.value),
                     })}
                     placeholder="Jane"
                   />
+                    
                   {/* <p className="text-red-500 text-xs italic">
                     Please fill out this field.   property - > border-red-500
                   </p> */}
@@ -290,13 +303,16 @@ const OrganizationTable = ({org_data}) => {
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-email"
-                    type="email"
+                    type = 'email'
+                    required
                     placeholder="example@gmail.com "
                     value={email}
                     {...register("email", {
                       onChange: (e) => setEmail(e.target.value),
-                    })}
+                      })}
                   />
+                  
+
                 </div>
               </div>
 
@@ -311,13 +327,17 @@ const OrganizationTable = ({org_data}) => {
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-password"
-                    type="password"
+                    type = 'password'
+                    required
                     placeholder="******************"
                     value={password}
                     {...register("password", {
                       onChange: (e) => setPassword(e.target.value),
+                      
                     })}
                   />
+                    
+
                   <p className="text-gray-600 text-xs italic">
                     Make it as long and as crazy as you'd like
                   </p>
@@ -335,13 +355,17 @@ const OrganizationTable = ({org_data}) => {
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-city"
-                    type="text"
+                    type = 'text'
+                    required
                     placeholder="Albuquerque"
                     value={city}
                     {...register("city", {
                       onChange: (e) => setCity(e.target.value),
+                     
                     })}
                   />
+                  
+
                 </div>
 
                 <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -354,13 +378,16 @@ const OrganizationTable = ({org_data}) => {
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-state"
-                    type="text"
+                    type = 'text'
+                    required
                     placeholder="State"
                     value={state}
                     {...register("state", {
                       onChange: (e) => setState(e.target.value),
+                     
                     })}
                   />
+                    
                 </div>
                 <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                   <label
@@ -372,13 +399,17 @@ const OrganizationTable = ({org_data}) => {
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-zip"
-                    type="text"
+                    type = 'text'  
+                    required                
                     placeholder="90210"
                     value={pincode}
                     {...register("pincode", {
                       onChange: (e) => setPincode(e.target.value),
+                      
                     })}
                   />
+                   
+
                 </div>
               </div>
               <div className="flex flex-wrap -mx-3 mb-6">
@@ -392,13 +423,16 @@ const OrganizationTable = ({org_data}) => {
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-address"
-                    type="text"
+                    type = 'text'
+                    required
                     placeholder="Your Office number... "
                     value={address}
                     {...register("address", {
                       onChange: (e) => setAddress(e.target.value),
+                     
                     })}
                   />
+                 
                 </div>
               </div>
               <div className="flex flex-wrap -mx-3 mb-6">
@@ -412,13 +446,16 @@ const OrganizationTable = ({org_data}) => {
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                     id="grid-mobile"
-                    type="text"
+                    type = 'text'
                     placeholder="+91 "
+                    required
                     value={mobile}
                     {...register("mobile", {
                       onChange: (e) => setMobile(e.target.value),
+                     
                     })}
                   />
+                    
                   {/* <p className="text-red-500 text-xs italic">
                     Please fill out this field.   property - > border-red-500
                   </p> */}
@@ -433,13 +470,16 @@ const OrganizationTable = ({org_data}) => {
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-quota"
-                    type="text"
+                    type = 'text'
                     placeholder="e.g. 1000"
+                    required
                     value={quota}
                     {...register("quota", {
                       onChange: (e) => setQuota(e.target.value),
+                     
                     })}
                   />
+                 
                 </div>
               </div>
               <button
