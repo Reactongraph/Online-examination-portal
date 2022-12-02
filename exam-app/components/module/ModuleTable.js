@@ -41,6 +41,34 @@ const ModuleTable = ({ module_data }) => {
       });
   };
 
+  const handleBoxClick = async (module_id,module_status) =>{
+    console.log('This is hte box click');
+    console.log(module_id);
+    let new_status = {
+      status : ! module_status
+    }
+    new_status = JSON.stringify(new_status)
+    console.log(new_status);
+    
+    
+    await axios
+        .patch(`${SERVER_LINK}/module/${module_id}`, new_status, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+        })
+        .then((response) => {
+          // setModal(!modal);
+          router.replace(router.asPath);
+        })
+        .catch((err) => {
+          console.log(err);
+        });   
+    
+  }
+
+  
   const handleEditClick = (module_id) => {
     // setOpen(true);
     setButtonText("Update");
@@ -89,7 +117,7 @@ const ModuleTable = ({ module_data }) => {
     }
   };
 
-  function createData(modules, module_id) {
+  function createData(modules, module_id,module_status) {
     const action = (
       <>
         <button
@@ -112,10 +140,12 @@ const ModuleTable = ({ module_data }) => {
         <div className="flex">
           {/* <div className="form-check form-switch"> */}
           <input
-            className="form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
+            onClick = {() => handleBoxClick(module_id,module_status)}
+            className="form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-gray-300 bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
             type="checkbox"
             role="switch"
             id="flexSwitchCheckDefault"
+            defaultChecked = {module_status}
           />
         </div>
       </>
@@ -127,7 +157,9 @@ const ModuleTable = ({ module_data }) => {
     let modules = element.module;
     // let email = element.email;
     let module_id = element.id;
-    return createData(modules, module_id);
+    let module_status = element.status
+    // console.log(element.status);
+    return createData(modules, module_id,module_status);
   });
 
   const columns = [

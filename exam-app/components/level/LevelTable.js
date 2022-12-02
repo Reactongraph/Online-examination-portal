@@ -61,6 +61,34 @@ const LevelTable = ({ level_data }) => {
       });
   };
 
+  const handleBoxClick = async (level_id,level_status) =>{
+    console.log('This is hte box click');
+    console.log(level_id);
+    let new_status = {
+      status : ! level_status
+    }
+    new_status = JSON.stringify(new_status)
+    console.log(new_status);
+    
+    
+    await axios
+        .patch(`${SERVER_LINK}/level/${level_id}`, new_status, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+        })
+        .then((response) => {
+          // setModal(!modal);
+          router.replace(router.asPath);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+    
+    
+  }
   const checkWithDatabase = async (data) => {
     data.status = true;
     data.level = level
@@ -113,7 +141,7 @@ const LevelTable = ({ level_data }) => {
     // }
   };
 
-  function createData(level, level_id) {
+  function createData(level, level_id,level_status) {
     const action = (
       <>
         <button
@@ -136,10 +164,12 @@ const LevelTable = ({ level_data }) => {
         <div className="flex">
           {/* <div className="form-check form-switch"> */}
           <input
+            onClick = {() => handleBoxClick(level_id,level_status)}
             className="form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
             type="checkbox"
             role="switch"
             id="flexSwitchCheckDefault"
+            defaultChecked = {level_status}
           />
         </div>
       </>
@@ -151,7 +181,8 @@ const LevelTable = ({ level_data }) => {
     let level = element.level;
     // let email = element.email;
     let level_id = element.id;
-    return createData(level, level_id);
+    let level_status = element.status
+    return createData(level, level_id,level_status);
   });
 
   const columns = [

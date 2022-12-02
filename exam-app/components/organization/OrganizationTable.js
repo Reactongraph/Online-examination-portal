@@ -1,23 +1,23 @@
 // import Table from 'rc-table';
-import Table from './Table';
-import React, { useState } from 'react';
+import Table from "./Table";
+import React, { useState } from "react";
 import Pagination from "react-js-pagination";
-import axios from 'axios';
+import axios from "axios";
 import { SERVER_LINK } from "../../helpers/config";
 import { useRouter } from "next/router";
-import Modal from '../common/Modal';
+import Modal from "../common/Modal";
 import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
-import { useForm } from "react-hook-form";  
+import { useForm } from "react-hook-form";
 
-const OrganizationTable = ({org_data}) => {
+const OrganizationTable = ({ org_data }) => {
   // console.log('this is the talbe ');
-  
+
   const router = useRouter();
   const [editForm, setEditForm] = useState(false);
-  const [modal,setModal] = useState(false);
-  const [organizationId,setOrganizationId] = useState("")
-  const [orgData,setOrgData] = useState();
+  const [modal, setModal] = useState(false);
+  const [organizationId, setOrganizationId] = useState("");
+  const [orgData, setOrgData] = useState();
   const [buttonText, setButtonText] = useState("Add");
 
   const [name, setName] = useState("");
@@ -28,12 +28,12 @@ const OrganizationTable = ({org_data}) => {
   const [state, setState] = useState("");
   const [mobile, setMobile] = useState("");
   const [quota, setQuota] = useState("");
-  
+
   // const [buttonText, setButtonText] = useState("Add");
-  
+
   const [password, setPassword] = useState("");
 
-  const { register, handleSubmit  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   // const userOrgData = org_data.map((oneOrg)=>({id:oneOrg.id , name:oneOrg.name, email : oneOrg.email, status : oneOrg.status}))
 
@@ -48,12 +48,40 @@ const OrganizationTable = ({org_data}) => {
       });
   };
 
+  const handleBoxClick = async (org_id ,org_status) =>{
+    console.log('This is hte box click');
+    console.log(org_id);
+    let new_status = {
+      status : ! org_status
+    }
+    new_status = JSON.stringify(new_status)
+    console.log(new_status);
+    
+    
+    await axios
+        .patch(`${SERVER_LINK}/rest-api/${org_id}`, new_status, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+        })
+        .then((response) => {
+          // setModal(!modal);
+          router.replace(router.asPath);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+    
+    
+  }
   const handleEditClick = async (org_id) => {
     // setOpen(true);
     setButtonText("Update");
     setEditForm(true);
     setOrganizationId(org_id);
-    setModal(true)
+    setModal(true);
 
     // first find the user with the id
     await axios
@@ -78,15 +106,15 @@ const OrganizationTable = ({org_data}) => {
 
   const checkWithDatabase = async (data) => {
     data.status = true;
-    data.name = name
-    data.email = email
-    data.mobile = mobile
-    data.password = password
-    data.city = city
-    data.state = state
-    data.pincode = pincode
-    data.address = address
-    data.quota = quota
+    data.name = name;
+    data.email = email;
+    data.mobile = mobile;
+    data.password = password;
+    data.city = city;
+    data.state = state;
+    data.pincode = pincode;
+    data.address = address;
+    data.quota = quota;
     let OrganizationData = JSON.stringify(data);
     console.log(data);
 
@@ -100,7 +128,7 @@ const OrganizationTable = ({org_data}) => {
           },
         })
         .then((response) => {
-         setModal(!modal)
+          setModal(!modal);
           router.replace(router.asPath);
         })
         .catch((err) => {
@@ -120,7 +148,7 @@ const OrganizationTable = ({org_data}) => {
         data,
       })
         .then((response) => {
-          setModal(!modal)
+          setModal(!modal);
           router.replace(router.asPath);
         })
         .catch((err) => {
@@ -129,7 +157,7 @@ const OrganizationTable = ({org_data}) => {
     }
   };
 
-  function createData(name, email, org_id) {
+  function createData(name, email, org_id, org_status) {
     const action = (
       <>
         <button
@@ -149,12 +177,19 @@ const OrganizationTable = ({org_data}) => {
     );
     const status = (
       <>
-     <div className="flex ">
-  {/* <div className="form-check form-switch"> */}
-    <input className="form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-    {/* <label className="form-check-label inline-block text-gray-800" for="flexSwitchCheckDefault">Default switch checkbox input</label> */}
-  {/* </div> */}
-</div>
+        <div className="flex ">
+          {/* <div className="form-check form-switch"> */}
+          <input
+            onClick = {() => handleBoxClick(org_id,org_status)}
+            className="form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckDefault"
+            defaultChecked = {org_status}
+          />
+          {/* <label className="form-check-label inline-block text-gray-800" for="flexSwitchCheckDefault">Default switch checkbox input</label> */}
+          {/* </div> */}
+        </div>
       </>
     );
     return { name, email, status, action };
@@ -164,77 +199,82 @@ const OrganizationTable = ({org_data}) => {
     let name = element.name;
     let email = element.email;
     let org_id = element.id;
-    return createData(name, email, org_id);
+    let org_status = element.status;
+    return createData(name, email, org_id, org_status);
   });
-  
-    const columns = [
-        {
-          Header: "Name",
-          accessor: 'name',
-          title: 'Name',
-          dataIndex: 'name',
-          key: 'name',
-          width: 400,
-          className:"text-white bg-gray-800 p-2 border-r-2 border-b-2",
-          rowClassName:"bg-black-ripon"
-        },
-        {
-          Header: "Email",
-          accessor: 'email',
-          title: 'Email',
-          dataIndex: 'email',
-          key: 'email',
-          width: 400,
-          className:"text-white bg-gray-600 p-2 border-r-2 border-b-2"
-        },
-        {  
-          Header: "Status",
-          accessor: 'status',
-          title: 'Status',
-          dataIndex: 'status',
-          key: 'status',
-          width: 400,
-          className:"text-white bg-gray-800 p-2 border-r-2 border-b-2",
-        //   render : () =><>  <div class="flex justify-center">
-        //   <div class="form-check form-switch">
-        //     <input class="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-black bg-no-repeat   focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked/>          </div>
-        // </div></>
-        },
-        {
-          Header: "Action",
-          accessor: 'action',
-          title: 'Action',
-          dataIndex: 'action',
-          key: 'operations',
-          width:250,
-          className:"text-white bg-gray-600 p-2 border-b-2",
-//           render: (id) => <><button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
-//           Edit
-//         </button> <button  class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"  >
-//   Delete
-// </button></>,
-          
-        },
-      ];
-      
-      // const data = [
-      //   { id:'01', name: 'Jack', email: 28 },
-      //   { id:'02', name: 'Rose', email: 36 },
-      // ];
 
-      // data by using which table data is creating using api call
-      const data = rowsDataArray;
+  const columns = [
+    {
+      Header: "Name",
+      accessor: "name",
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      width: 400,
+      className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+      rowClassName: "bg-black-ripon",
+    },
+    {
+      Header: "Email",
+      accessor: "email",
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      width: 400,
+      className: "text-white bg-gray-600 p-2 border-r-2 border-b-2",
+    },
+    {
+      Header: "Status",
+      accessor: "status",
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      width: 400,
+      className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+      //   render : () =><>  <div class="flex justify-center">
+      //   <div class="form-check form-switch">
+      //     <input class="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-black bg-no-repeat   focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked/>          </div>
+      // </div></>
+    },
+    {
+      Header: "Action",
+      accessor: "action",
+      title: "Action",
+      dataIndex: "action",
+      key: "operations",
+      width: 250,
+      className: "text-white bg-gray-600 p-2 border-b-2",
+      //           render: (id) => <><button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
+      //           Edit
+      //         </button> <button  class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"  >
+      //   Delete
+      // </button></>,
+    },
+  ];
 
-      //Pagination
-      const [activePage, setActivePage] = useState(15)
-      const handlePageChange = (pageNumber)=>{
-        setActivePage(pageNumber)
-      }
+  // const data = [
+  //   { id:'01', name: 'Jack', email: 28 },
+  //   { id:'02', name: 'Rose', email: 36 },
+  // ];
 
-    return (
-        <>
-        <Table columns={columns} data={data} rowKey="id"  className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'/>
-        {/* <Pagination
+  // data by using which table data is creating using api call
+  const data = rowsDataArray;
+
+  //Pagination
+  const [activePage, setActivePage] = useState(15);
+  const handlePageChange = (pageNumber) => {
+    setActivePage(pageNumber);
+  };
+
+  return (
+    <>
+      <Table
+        columns={columns}
+        data={data}
+        rowKey="id"
+        className="bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed"
+      />
+      {/* <Pagination
           activePage={activePage}
           itemsCountPerPage={10}
           totalItemsCount={450}
@@ -248,9 +288,9 @@ const OrganizationTable = ({org_data}) => {
           itemClass='js-li'
           linkClass='page-link'
         /> */}
-            {/* <Modal modal={modal} setModal={setModal} editForm ={editForm} orgData={orgData} organizationId={organizationId} /> */}
+      {/* <Modal modal={modal} setModal={setModal} editForm ={editForm} orgData={orgData} organizationId={organizationId} /> */}
 
-            <PureModal
+      <PureModal
         //header={<div className="bg-blue-600 p-2 font-bold text-lg text-center text-white">Category</div>}
         isOpen={modal}
         width="800px"
@@ -280,15 +320,15 @@ const OrganizationTable = ({org_data}) => {
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                     id="grid-first-name"
-                    type = 'text'
+                    type="text"
                     value={name}
                     required
-                    {...register("name", {                      
+                    {...register("name", {
                       onChange: (e) => setName(e.target.value),
                     })}
                     placeholder="Jane"
                   />
-                    
+
                   {/* <p className="text-red-500 text-xs italic">
                     Please fill out this field.   property - > border-red-500
                   </p> */}
@@ -303,16 +343,14 @@ const OrganizationTable = ({org_data}) => {
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-email"
-                    type = 'email'
+                    type="email"
                     required
                     placeholder="example@gmail.com "
                     value={email}
                     {...register("email", {
                       onChange: (e) => setEmail(e.target.value),
-                      })}
+                    })}
                   />
-                  
-
                 </div>
               </div>
 
@@ -327,16 +365,14 @@ const OrganizationTable = ({org_data}) => {
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-password"
-                    type = 'password'
+                    type="password"
                     required
                     placeholder="******************"
                     value={password}
                     {...register("password", {
                       onChange: (e) => setPassword(e.target.value),
-                      
                     })}
                   />
-                    
 
                   <p className="text-gray-600 text-xs italic">
                     Make it as long and as crazy as you'd like
@@ -355,17 +391,14 @@ const OrganizationTable = ({org_data}) => {
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-city"
-                    type = 'text'
+                    type="text"
                     required
                     placeholder="Albuquerque"
                     value={city}
                     {...register("city", {
                       onChange: (e) => setCity(e.target.value),
-                     
                     })}
                   />
-                  
-
                 </div>
 
                 <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -378,16 +411,14 @@ const OrganizationTable = ({org_data}) => {
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-state"
-                    type = 'text'
+                    type="text"
                     required
                     placeholder="State"
                     value={state}
                     {...register("state", {
                       onChange: (e) => setState(e.target.value),
-                     
                     })}
                   />
-                    
                 </div>
                 <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                   <label
@@ -399,17 +430,14 @@ const OrganizationTable = ({org_data}) => {
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-zip"
-                    type = 'text'  
-                    required                
+                    type="text"
+                    required
                     placeholder="90210"
                     value={pincode}
                     {...register("pincode", {
                       onChange: (e) => setPincode(e.target.value),
-                      
                     })}
                   />
-                   
-
                 </div>
               </div>
               <div className="flex flex-wrap -mx-3 mb-6">
@@ -423,16 +451,14 @@ const OrganizationTable = ({org_data}) => {
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-address"
-                    type = 'text'
+                    type="text"
                     required
                     placeholder="Your Office number... "
                     value={address}
                     {...register("address", {
                       onChange: (e) => setAddress(e.target.value),
-                     
                     })}
                   />
-                 
                 </div>
               </div>
               <div className="flex flex-wrap -mx-3 mb-6">
@@ -446,16 +472,15 @@ const OrganizationTable = ({org_data}) => {
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                     id="grid-mobile"
-                    type = 'text'
+                    type="text"
                     placeholder="+91 "
                     required
                     value={mobile}
                     {...register("mobile", {
                       onChange: (e) => setMobile(e.target.value),
-                     
                     })}
                   />
-                    
+
                   {/* <p className="text-red-500 text-xs italic">
                     Please fill out this field.   property - > border-red-500
                   </p> */}
@@ -470,16 +495,14 @@ const OrganizationTable = ({org_data}) => {
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-quota"
-                    type = 'text'
+                    type="text"
                     placeholder="e.g. 1000"
                     required
                     value={quota}
                     {...register("quota", {
                       onChange: (e) => setQuota(e.target.value),
-                     
                     })}
                   />
-                 
                 </div>
               </div>
               <button
@@ -494,10 +517,8 @@ const OrganizationTable = ({org_data}) => {
           {/* */}
         </div>
       </PureModal>
-
-        </>
-        
-    );
+    </>
+  );
 };
 
 export default OrganizationTable;
