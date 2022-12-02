@@ -1,0 +1,9 @@
+FROM node:14 
+WORKDIR /app 
+COPY package.json /app 
+COPY yarn.lock /app
+RUN yarn install 
+RUN yarn add nodemon
+COPY . /app 
+CMD ["yarn run", "start:dev"] 
+EXPOSE 5000

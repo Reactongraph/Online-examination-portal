@@ -16,26 +16,25 @@ exports.RestApiController = void 0;
 const common_1 = require("@nestjs/common");
 const rest_api_service_1 = require("./rest-api.service");
 const post_1 = require("./post");
-const common_2 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 let RestApiController = class RestApiController {
     constructor(restApiService, jwtService) {
         this.restApiService = restApiService;
         this.jwtService = jwtService;
     }
-    async create(createRestApiDto, response) {
+    async create(createRestApiDto) {
         const user = await this.restApiService.create(createRestApiDto);
         const jwt = await this.jwtService.signAsync({ id: user.id });
         const create = await prisma.reset_token.create({
             data: {
-                token: jwt
+                token: jwt,
             },
         });
         const reset_link = await this.restApiService.reset_link(jwt, user.id, user.email);
         return {
-            message: "mail send sucessfully!"
+            message: 'mail send sucessfully!',
         };
     }
     findAll(Headers) {
@@ -54,9 +53,8 @@ let RestApiController = class RestApiController {
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_2.Res)({ passthrough: true })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [post_1.PostDTO, Response]),
+    __metadata("design:paramtypes", [post_1.PostDTO]),
     __metadata("design:returntype", Promise)
 ], RestApiController.prototype, "create", null);
 __decorate([
@@ -90,7 +88,8 @@ __decorate([
 ], RestApiController.prototype, "remove", null);
 RestApiController = __decorate([
     (0, common_1.Controller)('rest-api'),
-    __metadata("design:paramtypes", [rest_api_service_1.RestApiService, jwt_1.JwtService])
+    __metadata("design:paramtypes", [rest_api_service_1.RestApiService,
+        jwt_1.JwtService])
 ], RestApiController);
 exports.RestApiController = RestApiController;
 //# sourceMappingURL=rest-api.controller.js.map

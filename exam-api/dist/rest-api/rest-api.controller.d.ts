@@ -5,7 +5,7 @@ export declare class RestApiController {
     private readonly restApiService;
     private jwtService;
     constructor(restApiService: RestApiService, jwtService: JwtService);
-    create(createRestApiDto: PostDTO, response: Response): Promise<{
+    create(createRestApiDto: PostDTO): Promise<{
         message: string;
     }>;
     findAll(Headers: any): Promise<string>;

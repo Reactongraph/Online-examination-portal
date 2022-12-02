@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: unless-stopped
+    networks:
+      - development_infra_network
+    command: redis-server --requirepass "redisIsCool"
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
+
+networks:
+  my-network:

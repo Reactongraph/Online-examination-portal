@@ -8,20 +8,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ModuleService = void 0;
 const common_1 = require("@nestjs/common");
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 let ModuleService = class ModuleService {
     async create(params) {
         prisma.$connect();
-        console.log("in service ", params === null || params === void 0 ? void 0 : params.module);
+        console.log('in service ', params === null || params === void 0 ? void 0 : params.module);
         const module = params === null || params === void 0 ? void 0 : params.module;
         const status = params === null || params === void 0 ? void 0 : params.status;
         const toLowerCaseModule = params === null || params === void 0 ? void 0 : params.module.toLowerCase();
         const users = await prisma.module.create({
             data: {
                 module: toLowerCaseModule,
-                status: status
-            }
+                status: status,
+            },
         });
         return 'module inserted';
     }
@@ -50,23 +50,19 @@ let ModuleService = class ModuleService {
                 id: id,
             },
         });
-        console.log("checkid", check_id);
-        const data_check = await prisma.Module.findUnique({
-            where: {
-                module: updateRestApiDto.module
-            }
-        });
-        console.log("data check", data_check);
-        if (check_id == null || data_check != null) {
-            return 'invalid id or data already exist!';
+        console.log('checkid', check_id.module);
+        if ((updateRestApiDto === null || updateRestApiDto === void 0 ? void 0 : updateRestApiDto.module) == check_id.module) {
+            return { message: 'module already exist' };
+        }
+        if (check_id == null) {
+            return 'invalid id ';
         }
         else {
-            console.log("inside else", updateRestApiDto.module.toLowerCase);
             const updateUser = await prisma.Module.update({
                 where: {
                     id: id,
                 },
-                data: updateRestApiDto
+                data: updateRestApiDto,
             });
             if (!updateUser) {
                 return `user not found for this ${id}`;
@@ -77,7 +73,7 @@ let ModuleService = class ModuleService {
     async remove(id) {
         const delete_user = await prisma.Module.delete({
             where: {
-                id: id
+                id: id,
             },
         });
         return `This action removes a #${id} restApi`;

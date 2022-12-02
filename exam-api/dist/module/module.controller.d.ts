@@ -6,6 +6,8 @@ export declare class ModuleController {
     create(module: module_dto): Promise<string>;
     findAll(): Promise<string>;
     findOne(id: string): Promise<string>;
-    update(id: string, update_module: module_dto): Promise<string>;
+    update(id: string, update_module: module_dto): Promise<string | {
+        message: string;
+    }>;
     remove(id: string): Promise<string>;
 }

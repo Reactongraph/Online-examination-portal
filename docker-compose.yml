@@ -1,21 +1,24 @@
-version: '3.4'
+version: "3.4"
 
 services:
-  prisma:
-    image: prisma
-    restart: unless-stopped
-    container_name: prisma
-    networks:
-      - my-network
-    ports:
-      - "15432:5432"
-    logging:
-      options:
-        max-size: 10m
-        max-file: "3"
-    volumes:
-      - prisma:/var/lib/prisma/data
+  postgres:
+  image: postgres:13
+  restart: unless-stopped
+  container_name: postgres
+  networks:
+    - development_infra_network
+  ports:
+    - "15432:5432"
+  logging:
+    options:
+      max-size: 10m
+      max-file: "3"
+  volumes:
+    - postgres_data:/var/lib/postgresql/data
+  environment:
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: postgres
 volumes:
-  prisma:
+  postgres:
 networks:
   my-network:

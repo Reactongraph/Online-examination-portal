@@ -3,6 +3,8 @@ export declare class ModuleService {
     create(params: module_dto): Promise<string>;
     findAll(): Promise<string>;
     findOne(id: string): Promise<string>;
-    update(id: string, updateRestApiDto: module_dto): Promise<string>;
+    update(id: string, updateRestApiDto: module_dto): Promise<string | {
+        message: string;
+    }>;
     remove(id: string): Promise<string>;
 }
