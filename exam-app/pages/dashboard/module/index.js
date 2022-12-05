@@ -1,20 +1,26 @@
 import  * as React from 'react';
 
 // import OrganizationTable from './orgTable';
- 
 import Module from '../../../components/module/Module';
 import Layout from '../../../components/layout/Layout';
+import Level from '../../../components/level/Level';
 
 import axios from 'axios';
 import { SERVER_LINK } from "../../../helpers/config";
 
 
-export default function module({module_data}){
+
+// You can't name a function as MODULE...
+export default function modules({module_data}){
+    console.log('This is the module daa ');
+    console.log(module_data);
   
     return (
         <>
-            <Layout title='Organization'>
+            <Layout title='Module'>
                 <Module module_data={module_data} />
+                {/* <Level level_data={module_data} /> */}
+
                 {/* <h1 style={{color: "red"}}>This is he level </h1> */}
             </Layout>
         </>

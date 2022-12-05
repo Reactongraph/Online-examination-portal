@@ -87,17 +87,22 @@ const ParticipantTable = ({ participant_data }) => {
 
  // for sending the data to the backend
  const checkWithDatabase = async (data) => {
-  console.log('This is thge data ');
-  console.log(data);
+ 
+  data.name = name
+  data.email = email 
+  data.mobile = mobile
+  data.Organization_id = organizationId
+  data.password = password
+
   // data.status = true;
-  data = JSON.stringify(data);
-  console.log(data);
+  let participantData = JSON.stringify(data);
+  // console.log(data);
 
   // for taking the patch api data
   if (editForm) {
-    console.log('this is ghe edit request');
+    // console.log('this is ghe edit request');
     await axios
-      .patch(`${SERVER_LINK}/participants/${participantId}`, data, {
+      .patch(`${SERVER_LINK}/participants/${participantId}`, participantData, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json;charset=UTF-8",
@@ -266,7 +271,7 @@ const rowsDataArray = participant_data.map((element) => {
                 <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                   <label
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                    for="grid-first-name"
+                    htmlFor="grid-first-name"
                   >
                     Name
                   </label>
@@ -275,9 +280,10 @@ const rowsDataArray = participant_data.map((element) => {
                     id="name"
                     type="text"
                     value={name}
-                 {...register("name", {
-                onChange: (e) => setName(e.target.value),
-              })}
+                    required = "required"
+                //  {...register("name", {
+                onChange = { (e) => setName(e.target.value)}
+              // })}
                     placeholder="Jane"
                   />
                   {/* <p className="text-red-500 text-xs italic">
@@ -287,7 +293,7 @@ const rowsDataArray = participant_data.map((element) => {
                 <div className="w-full md:w-1/2 px-3">
                   <label
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                    for="grid-last-name"
+                    htmlFor="grid-last-name"
                   >
                     Email
                   </label>
@@ -296,10 +302,11 @@ const rowsDataArray = participant_data.map((element) => {
                     id="email"
                     type="email"
                     placeholder="example@gmail.com "
+                    required = "required"
                     value={email}
-                    {...register("email", {
-                   onChange: (e) => setEmail(e.target.value),
-                 })}
+                    // {...register("email", {
+                   onChange={ (e) => setEmail(e.target.value)}
+                //  })}
                   />
                 </div>
               </div>
@@ -308,7 +315,7 @@ const rowsDataArray = participant_data.map((element) => {
                 <div className="w-full px-3">
                   <label
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                    for="grid-password"
+                    htmlFor="grid-password"
                   >
                     Password
                   </label>
@@ -317,10 +324,11 @@ const rowsDataArray = participant_data.map((element) => {
                     id="password"
                     type="password"
                     placeholder="******************"
+                    required = "required"
                     value={password}
-                    {...register("password", {
-                   onChange: (e) => setPassword(e.target.value),
-                 })}
+                    // {...register("password", {
+                   onChange={ (e) => setPassword(e.target.value)}
+                //  })}
                   />
                   <p className="text-gray-600 text-xs italic">
                     Make it as long and as crazy as you'd like
@@ -334,7 +342,7 @@ const rowsDataArray = participant_data.map((element) => {
                 <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                   <label
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                    for="grid-first-name"
+                    htmlFor="grid-first-name"
                   >
                     Mobile
                   </label>
@@ -343,10 +351,11 @@ const rowsDataArray = participant_data.map((element) => {
                     id="mobile"
                     type="text"
                     placeholder="+91 "
+                    required = "required"
                     value={mobile}
-                    {...register("mobile", {
-                   onChange: (e) => setMobile(e.target.value),
-                 })}
+                    // {...register("mobile", {
+                   onChange={ (e) => setMobile(e.target.value)}
+                //  })}
                   />
                   {/* <p className="text-red-500 text-xs italic">
                     Please fill out this field.   property - > border-red-500
@@ -355,7 +364,7 @@ const rowsDataArray = participant_data.map((element) => {
                 <div className="w-full md:w-1/2 px-3">
                   <label
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                    for="grid-last-name"
+                    htmlFor="grid-last-name"
                   >
                     Organization Id
                   </label>
@@ -364,10 +373,11 @@ const rowsDataArray = participant_data.map((element) => {
                     id="org_id"
                     type="text"
                     placeholder="e.g. 1000"
+                    required = "required"
                     value={organizationId}
-                    {...register("Organization_id", {
-                        onChange: (e) => setOrganizationId(e.target.value),
-                      })}
+                    // {...register("Organization_id", {
+                        onChange={ (e) => setOrganizationId(e.target.value)}
+                      // })}
                   />
                 </div>
                 

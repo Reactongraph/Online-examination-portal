@@ -2,7 +2,7 @@ import React from 'react';
 import PageComponentTitle from '../common/PageComponentTitle';
 import ModuleTable from './ModuleTable';
 
-const Module = ({module_data}) => {
+const Modules = ({module_data}) => {
   //  console.log("The level_data "+ level_data);
    console.log(module_data);
     return (
@@ -29,4 +29,4 @@ const Module = ({module_data}) => {
     );
 };
 
-export default Module;
+export default Modules;
