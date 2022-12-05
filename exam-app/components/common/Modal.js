@@ -7,7 +7,7 @@ import { SERVER_LINK } from "../../helpers/config";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-const Modal = ({ modal, setModal,editForm , organizationId , orgData }) => {
+const OrganizationModal = ({ modal, setModal,editForm , organizationId , orgData }) => {
   //For Image Preview
   const [selectedImage, setSelectedImage] = useState();
   const router = useRouter();
@@ -346,4 +346,4 @@ const Modal = ({ modal, setModal,editForm , organizationId , orgData }) => {
   );
 };
 
-export default Modal;
+export default OrganizationModal;

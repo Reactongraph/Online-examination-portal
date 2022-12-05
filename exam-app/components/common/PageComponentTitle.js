@@ -1,8 +1,14 @@
 import React, { useState } from "react";
-import Modal from "./Modal";
-import ParticipantModal from './ParticipantModal';
+import OrganizationModal from "./Modal";
+import ParticipantModal from "./ParticipantModal";
+import LevelModal from "./LevelModal";
 
-const PageComponentTitle = ({ title, titleDescription, buttonTitle, editForm }) => {
+const PageComponentTitle = ({
+  title,
+  titleDescription,
+  buttonTitle,
+  editForm,
+}) => {
   const [modal, setModal] = useState(false);
   // const [editForm,setEditForm] = useState(false);
 
@@ -11,6 +17,7 @@ const PageComponentTitle = ({ title, titleDescription, buttonTitle, editForm }) 
   //   setModal(true)
   // }
 
+  const checkModal = (title) => {};
 
   return (
     <>
@@ -41,15 +48,66 @@ const PageComponentTitle = ({ title, titleDescription, buttonTitle, editForm }) 
           {buttonTitle}
         </button>
 
+        {/* {
+        {
+          'PARTICIPANT':<> <ParticipantModal modal={modal} setModal={setModal} /></>,
+          'ORGANIZATION': <><OrganizationModal modal={modal} setModal={setModal} /></>,
+          'LEVEL' : <> <LevelModal modal={modal} setModal={setModal} /></>
+        }[title]
+      } */}
+
+        {/* {  
+   switch (title) {
+    case 'PARTICIPANT':
+      
+      break;
+   
+    default:
+      break;
+   }
+  }  */}
+
+        {/* {(() => {
+
+     switch (title) {
+      case 'PARTICIPANT':
+        <>
+        {" "}
+       return  <ParticipantModal modal={modal} setModal={setModal} />
+      </>
+        break;
+      case 'ORGANIZATION':
+        <>
+        {" "}
+        <OrganizationModal modal={modal} setModal={setModal} />
+      </>
+        break;
+      case 'LEVEL':
+        <>
+        {" "}
+        <LevelModal modal={modal} setModal={setModal} />
+      </>
+        break;
+    
+     
+    }
+})()} */}
+
+      
+
         {title == "PARTICIPANT" ? (
           <>
             {" "}
             <ParticipantModal modal={modal} setModal={setModal} />
           </>
+        ) : title == "LEVEL" ? (
+          <>
+            <LevelModal modal={modal} setModal={setModal} />
+          </>
         ) : (
           <>
             {" "}
-            <Modal modal={modal} setModal={setModal} />
+            <OrganizationModal modal={modal} setModal={setModal} />
           </>
         )}
       </div>
