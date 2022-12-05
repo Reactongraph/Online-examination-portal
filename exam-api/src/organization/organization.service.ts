@@ -1,22 +1,25 @@
 import { Injectable } from '@nestjs/common'
 import { PostDTO } from './post'
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
+import { PrismaService } from 'src/prisma.service'
+import { reset_token, Organization, user_auth, PrismaClient } from '@prisma/client'
 const nodemailer = require('nodemailer')
 
 @Injectable()
 export class RestApiService {
-  async create (createRestApiDto: PostDTO) {
-    prisma.$connect()
+  constructor(private prisma: PrismaService) { }
+  async create(createRestApiDto: PostDTO) {
 
     console.log(createRestApiDto)
 
-    const email_check = await prisma.Organization.findUnique({ where: { email: createRestApiDto?.email } })
-    // console.log(email_check.email);
+    const email_check = await this.prisma.organization.findUnique({ where: { email: createRestApiDto?.email } })
     if (email_check) {
-      return 'user already exist!'
+      return {
+        message: 'user already exist',
+        id: null,
+        email: null
+      }
     } else {
-      const user = await prisma.Organization.create(
+      const user = await this.prisma.organization.create(
         {
           data: {
             email: createRestApiDto?.email,
@@ -32,7 +35,7 @@ export class RestApiService {
           }
         }
       )
-      const userauth = await prisma.user_auth.create(
+      const userauth = await this.prisma.user_auth.create(
         {
           data: {
             name: createRestApiDto?.name,
@@ -45,7 +48,7 @@ export class RestApiService {
     }
   }
 
-  async reset_link (token: string, id: string, email: string) {
+  async reset_link(token: string, id: string, email: string) {
     console.log('id=', id)
 
     const mailTransporter = nodemailer.createTransport({
@@ -84,16 +87,16 @@ export class RestApiService {
     })
   }
 
-  async findAll () {
-    prisma.$connect()
-    const users = await prisma.Organization.findMany()
+  async findAll() {
+
+    const users = await this.prisma.organization.findMany()
     return `${JSON.stringify(users)}`
   }
 
-  async findOne (id: string) {
+  async findOne(id: string) {
     console.log(id)
 
-    const user = await prisma.Organization.findUnique({
+    const user = await this.prisma.organization.findUnique({
       where: {
         id
       }
@@ -106,8 +109,8 @@ export class RestApiService {
     return `${JSON.stringify(user)}`
   }
 
-  async update (id: string, updateRestApiDto: PostDTO) {
-    const updateUser = await prisma.Organization.update({
+  async update(id: string, updateRestApiDto: PostDTO) {
+    const updateUser = await this.prisma.organization.update({
       where: {
         id
       },
@@ -119,8 +122,8 @@ export class RestApiService {
     return `${id} `
   }
 
-  async remove (id: string) {
-    const delete_user = await prisma.Organization.delete({
+  async remove(id: string) {
+    const delete_user = await this.prisma.organization.delete({
       where: {
         id
       }

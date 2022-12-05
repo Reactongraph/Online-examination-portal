@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { RestApiController } from './rest-api.controller'
-import { RestApiService } from './rest-api.service'
+import { RestApiController } from './organization.controller'
+import { RestApiService } from './organization.service'
 
 describe('RestApiController', () => {
   let controller: RestApiController

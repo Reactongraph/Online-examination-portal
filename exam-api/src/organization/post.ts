@@ -1,18 +1,17 @@
 class PostDTO {
-  id: Int32Array;
+  id: Int32Array
   email: string
   name: string
   quota: string
   status: boolean
-  mobile: Int32Array
+  mobile: string
   address: string
   city: string
   state: string
-  pincode: Int32Array
+  pincode: string
   createdAt: Date
   updatedAt: Date
   password: string
 }
 
-export { PostDTO };
-
+export { PostDTO }

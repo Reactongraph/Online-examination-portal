@@ -1,31 +1,42 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Headers, HttpStatus, Put, Res } from '@nestjs/common'
-import { RestApiService } from './rest-api.service'
+import { RestApiService } from './organization.service'
 import { CreateRestApiDto } from './dto/create-rest-api.dto'
 import { UpdateRestApiDto } from './dto/update-rest-api.dto'
 import { PostDTO } from './post'
 import { JwtService } from '@nestjs/jwt'
-import { Oraganization } from './rest-api.middleware'
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
+import { Oraganization } from './organization.middleware'
+import { PrismaService } from 'src/prisma.service'
+import { reset_token,PrismaClient } from '@prisma/client'
+
 @Controller('rest-api')
 export class RestApiController {
-  constructor (private readonly restApiService: RestApiService, private readonly jwtService: JwtService) { }
+  constructor (private readonly restApiService: RestApiService, private readonly jwtService: JwtService,private prisma:PrismaService) { }
   // this controller is used to create Oraganization data
   @Post()
   async create (@Body() createRestApiDto: PostDTO, @Res({ passthrough: true }) response: Response) {
     const user = await this.restApiService.create(createRestApiDto)
-    const jwt = await this.jwtService.signAsync({ id: user.id })
-    const create = await prisma.reset_token.create({
-      data:
-      {
-        token: jwt
+    console.log("user",user);
+    if (user.id==null)
+    {
+      return {
+        message:'user already exist'
       }
-    })
-    // this controller is used to send reset link
-    const reset_link = await this.restApiService.reset_link(jwt, user.id, user.email)
-    return {
-      message: 'mail send sucessfully!'
     }
+    else {
+      const jwt = await this.jwtService.signAsync({ id: user.id })
+      const create = await this.prisma.reset_token.create({
+        data:
+        {
+          token: jwt
+        }
+      })
+      const reset_link = await this.restApiService.reset_link(jwt, user.id, user.email)
+      return {
+        message:'email-send'
+      }
+    }
+
+  
   }
 
   // this controller is used to Read all Oraganization data
