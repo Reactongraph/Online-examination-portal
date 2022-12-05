@@ -1,41 +1,34 @@
 // import Table from 'rc-table';
-import Table from './Table';
-import React, { useState } from 'react';
+import Table from "./Table";
+import React, { useState } from "react";
 import Pagination from "react-js-pagination";
-import axios from 'axios';
+import axios from "axios";
 import { SERVER_LINK } from "../../helpers/config";
 import { useRouter } from "next/router";
-import Modal from '../common/Modal';
+import Modal from "../common/Modal";
 import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
-import { useForm } from "react-hook-form";  
+import { useForm } from "react-hook-form";
+import { injectStyle } from "react-toastify/dist/inject-style";
+import { ToastContainer, toast } from "react-toastify";
 
+// CALL IT ONCE IN YOUR APP
+if (typeof window !== "undefined") {
+  injectStyle();
+}
 
-const LevelTable = ({level_data}) => {
+const LevelTable = ({ level_data }) => {
   // console.log('this is the talbe ');
-  
+
   const router = useRouter();
   const [editForm, setEditForm] = useState(false);
-  const [modal,setModal] = useState(false);
-  const [levelId,setLevelId] = useState("")
-  const [orgData,setOrgData] = useState();
+  const [modal, setModal] = useState(false);
+  const [levelId, setLevelId] = useState("");
+  const [orgData, setOrgData] = useState();
   const [buttonText, setButtonText] = useState("Add");
   const [level, setLevel] = useState("");
-//   const [name, setName] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [pincode, setPincode] = useState("");
-//   const [address, setAddress] = useState("");
-//   const [city, setCity] = useState("");
-//   const [state, setState] = useState("");
-//   const [mobile, setMobile] = useState("");
-//   const [quota, setQuota] = useState("");
-  // const [buttonText, setButtonText] = useState("Add");
-  
-//   const [password, setPassword] = useState("");
 
   const { register, handleSubmit } = useForm();
-
-  // const userOrgData = level_data.map((oneOrg)=>({id:oneOrg.id , name:oneOrg.name, email : oneOrg.email, status : oneOrg.status}))
 
   const handleRemoveClick = (level_id) => {
     axios
@@ -53,7 +46,7 @@ const LevelTable = ({level_data}) => {
     setButtonText("Update");
     setEditForm(true);
     setLevelId(level_id);
-    setModal(true)
+    setModal(true);
 
     // first find the user with the id
     axios
@@ -61,66 +54,94 @@ const LevelTable = ({level_data}) => {
       .then((response) => {
         let singleLevelData = response.data;
 
-        setLevel(singleLevelData.level)
-
-        // setName(singleOrgData.name);
-        // setEmail(singleOrgData.email);
-        // setMobile(singleOrgData.mobile);
-        // setState(singleOrgData.state);
-        // setAddress(singleOrgData.address);
-        // setCity(singleOrgData.city);
-        // setPincode(singleOrgData.pincode);
-        // setQuota(singleOrgData.quota);
+        setLevel(singleLevelData.level);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  const checkWithDatabase = async (data) => {
-    data.status = true;
-    data = JSON.stringify(data);
-
-    // for taking the patch api data
-    if (editForm) {
-      await axios
-        .patch(`${SERVER_LINK}/level/${organizationId}`, data, {
+  const handleBoxClick = async (level_id,level_status) =>{
+    console.log('This is hte box click');
+    console.log(level_id);
+    let new_status = {
+      status : ! level_status
+    }
+    new_status = JSON.stringify(new_status)
+    console.log(new_status);
+    
+    
+    await axios
+        .patch(`${SERVER_LINK}/level/${level_id}`, new_status, {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json;charset=UTF-8",
           },
         })
         .then((response) => {
-         setModal(!modal)
+          // setModal(!modal);
           router.replace(router.asPath);
         })
         .catch((err) => {
           console.log(err);
         });
+
+    
+    
+  }
+  const checkWithDatabase = async (data) => {
+    data.status = true;
+    data.level = level
+
+    let LevelData = JSON.stringify(data);
+    // console.log(LevelData);
+
+    // for taking the patch api data
+
+    
+    if (data.level !=null && data.level != "") {
+      await axios
+        .patch(`${SERVER_LINK}/level/${levelId}`, LevelData, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+        })
+        .then((response) => {
+          setModal(!modal);
+          router.replace(router.asPath);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    else{
+      toast.error("Field Can't be empty ");
+
     }
 
     // for new data registration
-    else {
-      await axios({
-        url: `${SERVER_LINK}/level`,
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json;charset=UTF-8",
-        },
-        data,
-      })
-        .then((response) => {
-          setModal(!modal)
-          router.replace(router.asPath);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    // else {
+    //   await axios({
+    //     url: `${SERVER_LINK}/level`,
+    //     method: "POST",
+    //     headers: {
+    //       Accept: "application/json",
+    //       "Content-Type": "application/json;charset=UTF-8",
+    //     },
+    //     data,
+    //   })
+    //     .then((response) => {
+    //       setModal(!modal);
+    //       router.replace(router.asPath);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // }
   };
 
-  function createData(level, level_id) {
+  function createData(level, level_id,level_status) {
     const action = (
       <>
         <button
@@ -140,12 +161,17 @@ const LevelTable = ({level_data}) => {
     );
     const status = (
       <>
-     <div className="flex">
-  {/* <div className="form-check form-switch"> */}
-    <input className="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-    {/* <label className="form-check-label inline-block text-gray-800" for="flexSwitchCheckDefault">Default switch checkbox input</label> */}
-  {/* </div> */}
-</div>
+        <div className="flex">
+          {/* <div className="form-check form-switch"> */}
+          <input
+            onClick = {() => handleBoxClick(level_id,level_status)}
+            className="form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckDefault"
+            defaultChecked = {level_status}
+          />
+        </div>
       </>
     );
     return { level, status, action };
@@ -155,86 +181,61 @@ const LevelTable = ({level_data}) => {
     let level = element.level;
     // let email = element.email;
     let level_id = element.id;
-    return createData(level, level_id);
+    let level_status = element.status
+    return createData(level, level_id,level_status);
   });
-  
-    const columns = [
-        {
-          Header: "Level",
-          accessor: 'level',
-          title: 'Level',
-          dataIndex: 'level',
-          key: 'level',
-          width: 400,
-          className:"text-white bg-gray-800 p-2 border-r-2 border-b-2",
-          rowClassName:"bg-black-ripon"
-        },
-        
-        {  
-          Header: "Status",
-          accessor: 'status',
-          title: 'Status',
-          dataIndex: 'status',
-          key: 'status',
-          width: 400,
-          className:"text-white bg-gray-800 p-2 border-r-2 border-b-2",
-        //   render : () =><>  <div class="flex justify-center">
-        //   <div class="form-check form-switch">
-        //     <input class="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-black bg-no-repeat   focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked/>          </div>
-        // </div></>
-        },
-        {
-          Header: "Action",
-          accessor: 'action',
-          title: 'Action',
-          dataIndex: 'action',
-          key: 'operations',
-          width:250,
-          className:"text-white bg-gray-600 p-2 border-b-2",
-//           render: (id) => <><button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
-//           Edit
-//         </button> <button  class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"  >
-//   Delete
-// </button></>,
-          
-        },
-      ];
-      
-      // const data = [
-      //   { id:'01', name: 'Jack', email: 28 },
-      //   { id:'02', name: 'Rose', email: 36 },
-      // ];
 
-      // data by using which table data is creating using api call
-      const data = rowsDataArray;
+  const columns = [
+    {
+      Header: "Level",
+      accessor: "level",
+      title: "Level",
+      dataIndex: "level",
+      key: "level",
+      width: 400,
+      className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+      rowClassName: "bg-black-ripon",
+    },
 
-      //Pagination
-      const [activePage, setActivePage] = useState(15)
-      const handlePageChange = (pageNumber)=>{
-        setActivePage(pageNumber)
-      }
+    {
+      Header: "Status",
+      accessor: "status",
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      width: 400,
+      className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+    },
+    {
+      Header: "Action",
+      accessor: "action",
+      title: "Action",
+      dataIndex: "action",
+      key: "operations",
+      width: 250,
+      className: "text-white bg-gray-600 p-2 border-b-2",
+      //
+    },
+  ];
 
-    return (
-        <>
-        <Table columns={columns} data={data} rowKey="id"  className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'/>
-        {/* <Pagination
-          activePage={activePage}
-          itemsCountPerPage={10}
-          totalItemsCount={450}
-          pageRangeDisplayed={5}
-          onChange={handlePageChange}
-          nextPageText={'Next'}
-          prevPageText={'Prev'}
-          firstPageText={'First'}
-          lastPageText={'Last'}
-          innerClass="js-ul"
-          itemClass='js-li'
-          linkClass='page-link'
-        /> */}
-            {/* <Modal modal={modal} setModal={setModal} editForm ={editForm} orgData={orgData} organizationId={organizationId} /> */}
+  // data by using which table data is creating using api call
+  const data = rowsDataArray;
 
-            <PureModal
-        //header={<div className="bg-blue-600 p-2 font-bold text-lg text-center text-white">Category</div>}
+  const [activePage, setActivePage] = useState(15);
+  const handlePageChange = (pageNumber) => {
+    setActivePage(pageNumber);
+  };
+
+  return (
+    <>
+      <Table
+        columns={columns}
+        data={data}
+        rowKey="id"
+        className="bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed"
+      />
+
+      <PureModal
         isOpen={modal}
         width="800px"
         onClose={() => {
@@ -258,7 +259,7 @@ const LevelTable = ({level_data}) => {
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                     for="grid-first-name"
                   >
-                   Enter Level for Module
+                    Enter Level for Module
                   </label>
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
@@ -266,22 +267,13 @@ const LevelTable = ({level_data}) => {
                     type="text"
                     value={level}
                     {...register("level", {
-                      onChange: (e) => setLevel(e.target.value)
+                      onChange: (e) => setLevel(e.target.value),
                     })}
                     placeholder="e.g. Easy , Hard ..."
                   />
-                  {/* <p className="text-red-500 text-xs italic">
-                    Please fill out this field.   property - > border-red-500
-                  </p> */}
                 </div>
-              
               </div>
 
-              
-
-            
-         
-           
               <button
                 type="submit"
                 className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -294,10 +286,10 @@ const LevelTable = ({level_data}) => {
           {/* */}
         </div>
       </PureModal>
+      <ToastContainer />
 
-        </>
-        
-    );
+    </>
+  );
 };
 
 export default LevelTable;

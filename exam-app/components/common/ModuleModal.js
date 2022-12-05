@@ -18,7 +18,7 @@ const LevelModal = ({ modal, setModal, editForm, organizationId, orgData }) => {
  
   const [selectedImage, setSelectedImage] = useState();
   const router = useRouter();
-  const [level, setLevel] = useState("");
+  const [modules, setModules] = useState("");
   const [buttonText, setButtonText] = useState("Add");
   const { register, handleSubmit } = useForm();
 
@@ -41,15 +41,15 @@ const LevelModal = ({ modal, setModal, editForm, organizationId, orgData }) => {
  
 
     data.status = true;
-    data.level = level;
+    data.module = modules;
 
     let LevelData = JSON.stringify(data);
 
   
     // for taking the patch api data
-    if (data.level !== null && data.level != "") {
+    if (data.module !== null && data.module != "") {
       await axios({
-        url: `${SERVER_LINK}/level`,
+        url: `${SERVER_LINK}/module`,
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -59,7 +59,7 @@ const LevelModal = ({ modal, setModal, editForm, organizationId, orgData }) => {
       })
         .then((response) => {
           router.replace(router.asPath);
-          setLevel("");
+          setModules("");
           setModal(!modal);
         })
         .catch((err) => {
@@ -69,7 +69,7 @@ const LevelModal = ({ modal, setModal, editForm, organizationId, orgData }) => {
 
     // for new data registration
     else {
-      toast.error("Field Can't be empty ");
+      toast.error("Fill Required Field");
     }
   };
   
@@ -80,13 +80,13 @@ const LevelModal = ({ modal, setModal, editForm, organizationId, orgData }) => {
         isOpen={modal}
         width="800px"
         onClose={() => {
-          setLevel("");
+         setModules("");
           setModal(false);
         }}
       >
         <div className="flex-row space-y-3 relative">
           <div className="bg-blue-600 p-2 font-bold text-lg text-center text-white -mt-4 -mx-4 mb-5 pb-4">
-            <p>{buttonText} LEVEL</p>
+            <p>{buttonText} MODULE</p>
           </div>
 
           <div class="py-6 px-6 lg:px-8">
@@ -100,17 +100,17 @@ const LevelModal = ({ modal, setModal, editForm, organizationId, orgData }) => {
                     class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                     for="grid-first-name"
                   >
-                    Enter Level
+                    Enter Module
                   </label>
                   <input
                     class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                     id="grid-first-name"
                     type="text"
-                    value={level}
+                    value={modules}
                     // {...register("level", {
-                    onChange={(e) => setLevel(e.target.value)}
+                    onChange={(e) => setModules(e.target.value)}
                     // })}
-                    placeholder="eg. Easy , Moderate , etc ..."
+                    placeholder="e.g. C++ , JAVA , etc..."
                   />
                   {/* <p class="text-red-500 text-xs italic">
                     Please fill out this field.   property - > border-red-500
@@ -137,3 +137,4 @@ const LevelModal = ({ modal, setModal, editForm, organizationId, orgData }) => {
 };
 
 export default LevelModal;
+                                                                                                                               

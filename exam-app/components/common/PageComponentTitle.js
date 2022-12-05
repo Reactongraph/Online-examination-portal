@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import OrganizationModal from "./Modal";
 import ParticipantModal from "./ParticipantModal";
 import LevelModal from "./LevelModal";
+import ModuleModal from "./ModuleModal";
 
 const PageComponentTitle = ({
   title,
@@ -48,65 +49,20 @@ const PageComponentTitle = ({
           {buttonTitle}
         </button>
 
-        {/* {
-        {
-          'PARTICIPANT':<> <ParticipantModal modal={modal} setModal={setModal} /></>,
-          'ORGANIZATION': <><OrganizationModal modal={modal} setModal={setModal} /></>,
-          'LEVEL' : <> <LevelModal modal={modal} setModal={setModal} /></>
-        }[title]
-      } */}
-
-        {/* {  
-   switch (title) {
-    case 'PARTICIPANT':
-      
-      break;
-   
-    default:
-      break;
-   }
-  }  */}
-
-        {/* {(() => {
-
-     switch (title) {
-      case 'PARTICIPANT':
-        <>
-        {" "}
-       return  <ParticipantModal modal={modal} setModal={setModal} />
-      </>
-        break;
-      case 'ORGANIZATION':
-        <>
-        {" "}
-        <OrganizationModal modal={modal} setModal={setModal} />
-      </>
-        break;
-      case 'LEVEL':
-        <>
-        {" "}
-        <LevelModal modal={modal} setModal={setModal} />
-      </>
-        break;
-    
-     
-    }
-})()} */}
-
-      
-
         {title == "PARTICIPANT" ? (
           <>
-            {" "}
             <ParticipantModal modal={modal} setModal={setModal} />
           </>
         ) : title == "LEVEL" ? (
           <>
             <LevelModal modal={modal} setModal={setModal} />
           </>
+        ) : title == "MODULE" ? (
+          <>
+            <ModuleModal modal={modal} setModal={setModal} />
+          </>
         ) : (
           <>
-            {" "}
             <OrganizationModal modal={modal} setModal={setModal} />
           </>
         )}

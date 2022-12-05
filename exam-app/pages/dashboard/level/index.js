@@ -9,11 +9,11 @@ import axios from 'axios';
 import { SERVER_LINK } from "../../../helpers/config";
 
 
-export default function organization({level_data}){
+export default function level({level_data}){
   
     return (
         <>
-            <Layout title='Organization'>
+            <Layout title='Level'>
                 <Level level_data={level_data} />
                 {/* <h1 style={{color: "red"}}>This is he level </h1> */}
             </Layout>
