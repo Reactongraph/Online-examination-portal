@@ -1,11 +1,9 @@
-// import Table from 'rc-table';
 import Table from "./Table";
 import React, { useState } from "react";
 import Pagination from "react-js-pagination";
 import axios from "axios";
 import { SERVER_LINK } from "../../helpers/config";
 import { useRouter } from "next/router";
-import Modal from "../common/Modal";
 import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
 import { useForm } from "react-hook-form";
@@ -18,8 +16,6 @@ if (typeof window !== "undefined") {
 }
 
 const LevelTable = ({ level_data }) => {
-  // console.log('this is the talbe ');
-
   const router = useRouter();
   const [editForm, setEditForm] = useState(false);
   const [modal, setModal] = useState(false);
@@ -61,45 +57,36 @@ const LevelTable = ({ level_data }) => {
       });
   };
 
-  const handleBoxClick = async (level_id,level_status) =>{
-    console.log('This is hte box click');
-    console.log(level_id);
+  const handleBoxClick = async (level_id, level_status) => {
     let new_status = {
-      status : ! level_status
-    }
-    new_status = JSON.stringify(new_status)
-    console.log(new_status);
-    
-    
-    await axios
-        .patch(`${SERVER_LINK}/level/${level_id}`, new_status, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json;charset=UTF-8",
-          },
-        })
-        .then((response) => {
-          // setModal(!modal);
-          router.replace(router.asPath);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      status: !level_status,
+    };
+    new_status = JSON.stringify(new_status);
 
-    
-    
-  }
+    await axios
+      .patch(`${SERVER_LINK}/level/${level_id}`, new_status, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+        },
+      })
+      .then((response) => {
+        // setModal(!modal);
+        router.replace(router.asPath);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const checkWithDatabase = async (data) => {
     data.status = true;
-    data.level = level
+    data.level = level;
 
     let LevelData = JSON.stringify(data);
-    // console.log(LevelData);
 
     // for taking the patch api data
 
-    
-    if (data.level !=null && data.level != "") {
+    if (data.level != null && data.level != "") {
       await axios
         .patch(`${SERVER_LINK}/level/${levelId}`, LevelData, {
           headers: {
@@ -114,34 +101,12 @@ const LevelTable = ({ level_data }) => {
         .catch((err) => {
           console.log(err);
         });
-    }
-    else{
+    } else {
       toast.error("Field Can't be empty ");
-
     }
-
-    // for new data registration
-    // else {
-    //   await axios({
-    //     url: `${SERVER_LINK}/level`,
-    //     method: "POST",
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Content-Type": "application/json;charset=UTF-8",
-    //     },
-    //     data,
-    //   })
-    //     .then((response) => {
-    //       setModal(!modal);
-    //       router.replace(router.asPath);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // }
   };
 
-  function createData(level, level_id,level_status) {
+  function createData(level, level_id, level_status) {
     const action = (
       <>
         <button
@@ -164,12 +129,12 @@ const LevelTable = ({ level_data }) => {
         <div className="flex">
           {/* <div className="form-check form-switch"> */}
           <input
-            onClick = {() => handleBoxClick(level_id,level_status)}
+            onClick={() => handleBoxClick(level_id, level_status)}
             className="form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
             type="checkbox"
             role="switch"
             id="flexSwitchCheckDefault"
-            defaultChecked = {level_status}
+            defaultChecked={level_status}
           />
         </div>
       </>
@@ -181,8 +146,8 @@ const LevelTable = ({ level_data }) => {
     let level = element.level;
     // let email = element.email;
     let level_id = element.id;
-    let level_status = element.status
-    return createData(level, level_id,level_status);
+    let level_status = element.status;
+    return createData(level, level_id, level_status);
   });
 
   const columns = [
@@ -287,7 +252,6 @@ const LevelTable = ({ level_data }) => {
         </div>
       </PureModal>
       <ToastContainer />
-
     </>
   );
 };

@@ -1,23 +1,14 @@
 import * as React from "react";
-import Typography from "@mui/material/Typography";
-import LayoutDashboard from ".././layoutDashboard";
-import ParticipantTable from "./participantTable";
-
-import axios from "axios";
 import { SERVER_LINK } from "../../../helpers/config";
-
-import Layout from '../../../components/layout/Layout';
-import Participant from '../../../components/participant/Participant';
-
+import axios from 'axios';
+import Layout from "../../../components/layout/Layout";
+import Participant from "../../../components/participant/Participant";
 
 export default function participant({ participant_data }) {
   return (
     <>
-      {/* <LayoutDashboard>         
-           <ParticipantTable participants = {participant_data} />
-          </LayoutDashboard> */}
       <Layout title="Participant">
-        <Participant participant_data ={participant_data }  />
+        <Participant participant_data={participant_data} />
       </Layout>
     </>
   );

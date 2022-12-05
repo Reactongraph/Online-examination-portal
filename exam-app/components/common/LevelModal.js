@@ -15,37 +15,19 @@ if (typeof window !== "undefined") {
 }
 
 const LevelModal = ({ modal, setModal, editForm, organizationId, orgData }) => {
- 
   const [selectedImage, setSelectedImage] = useState();
   const router = useRouter();
   const [level, setLevel] = useState("");
   const [buttonText, setButtonText] = useState("Add");
   const { register, handleSubmit } = useForm();
 
- 
-  // This function will be triggered when the file field change
-
-  // This function will be triggered when the "Remove This Image" button is clicked
-  const removeSelectedImage = () => {
-    setSelectedImage();
-  };
-
-  useEffect(() => {
-    if (!modal) {
-      setSelectedImage();
-    }
-  }, [modal]);
-
   // for sending the data to the backend
   const checkWithDatabase = async (data) => {
- 
-
     data.status = true;
     data.level = level;
 
     let LevelData = JSON.stringify(data);
 
-  
     // for taking the patch api data
     if (data.level !== null && data.level != "") {
       await axios({
@@ -72,11 +54,10 @@ const LevelModal = ({ modal, setModal, editForm, organizationId, orgData }) => {
       toast.error("Field Can't be empty ");
     }
   };
-  
+
   return (
     <>
       <PureModal
-        //header={<div className="bg-blue-600 p-2 font-bold text-lg text-center text-white">Category</div>}
         isOpen={modal}
         width="800px"
         onClose={() => {
@@ -107,14 +88,9 @@ const LevelModal = ({ modal, setModal, editForm, organizationId, orgData }) => {
                     id="grid-first-name"
                     type="text"
                     value={level}
-                    // {...register("level", {
                     onChange={(e) => setLevel(e.target.value)}
-                    // })}
                     placeholder="eg. Easy , Moderate , etc ..."
                   />
-                  {/* <p class="text-red-500 text-xs italic">
-                    Please fill out this field.   property - > border-red-500
-                  </p> */}
                 </div>
               </div>
 

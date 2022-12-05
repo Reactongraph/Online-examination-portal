@@ -1,27 +1,22 @@
-import  * as React from 'react';
+import * as React from "react";
 
-// import OrganizationTable from './orgTable';
- 
-import Level from '../../../components/level/Level';
-import Layout from '../../../components/layout/Layout';
+import Level from "../../../components/level/Level";
+import Layout from "../../../components/layout/Layout";
 
-import axios from 'axios';
+import axios from "axios";
 import { SERVER_LINK } from "../../../helpers/config";
 
-
-export default function level({level_data}){
-  
-    return (
-        <>
-            <Layout title='Level'>
-                <Level level_data={level_data} />
-                {/* <h1 style={{color: "red"}}>This is he level </h1> */}
-            </Layout>
-        </>
-    )
+export default function level({ level_data }) {
+  return (
+    <>
+      <Layout title="Level">
+        <Level level_data={level_data} />
+      </Layout>
+    </>
+  );
 }
 
-// function for ssr data 
+// function for ssr data
 
 export async function getServerSideProps() {
   // Fetch data from external API

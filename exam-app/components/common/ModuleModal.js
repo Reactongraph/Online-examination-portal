@@ -15,37 +15,19 @@ if (typeof window !== "undefined") {
 }
 
 const LevelModal = ({ modal, setModal, editForm, organizationId, orgData }) => {
- 
   const [selectedImage, setSelectedImage] = useState();
   const router = useRouter();
   const [modules, setModules] = useState("");
   const [buttonText, setButtonText] = useState("Add");
   const { register, handleSubmit } = useForm();
 
- 
-  // This function will be triggered when the file field change
-
-  // This function will be triggered when the "Remove This Image" button is clicked
-  const removeSelectedImage = () => {
-    setSelectedImage();
-  };
-
-  useEffect(() => {
-    if (!modal) {
-      setSelectedImage();
-    }
-  }, [modal]);
-
   // for sending the data to the backend
   const checkWithDatabase = async (data) => {
- 
-
     data.status = true;
     data.module = modules;
 
     let LevelData = JSON.stringify(data);
 
-  
     // for taking the patch api data
     if (data.module !== null && data.module != "") {
       await axios({
@@ -72,15 +54,15 @@ const LevelModal = ({ modal, setModal, editForm, organizationId, orgData }) => {
       toast.error("Fill Required Field");
     }
   };
-  
+
   return (
     <>
       <PureModal
-        //header={<div className="bg-blue-600 p-2 font-bold text-lg text-center text-white">Category</div>}
+        
         isOpen={modal}
         width="800px"
         onClose={() => {
-         setModules("");
+          setModules("");
           setModal(false);
         }}
       >
@@ -107,14 +89,9 @@ const LevelModal = ({ modal, setModal, editForm, organizationId, orgData }) => {
                     id="grid-first-name"
                     type="text"
                     value={modules}
-                    // {...register("level", {
                     onChange={(e) => setModules(e.target.value)}
-                    // })}
                     placeholder="e.g. C++ , JAVA , etc..."
                   />
-                  {/* <p class="text-red-500 text-xs italic">
-                    Please fill out this field.   property - > border-red-500
-                  </p> */}
                 </div>
               </div>
 
@@ -126,8 +103,6 @@ const LevelModal = ({ modal, setModal, editForm, organizationId, orgData }) => {
               </button>
             </form>
           </div>
-
-          {/* */}
         </div>
       </PureModal>
 
@@ -137,4 +112,3 @@ const LevelModal = ({ modal, setModal, editForm, organizationId, orgData }) => {
 };
 
 export default LevelModal;
-                                                                                                                               

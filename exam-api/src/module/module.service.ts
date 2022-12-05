@@ -1,89 +1,79 @@
-import { Injectable } from '@nestjs/common'
-import { module_dto } from './module.entity'
-import { PrismaService } from 'src/prisma.service'
-import {Login,Level, Prisma } from '@prisma/client'
+import { Injectable } from '@nestjs/common';
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+import { module_dto } from './module.entity';
 @Injectable()
 export class ModuleService {
-  constructor(private prisma: PrismaService) {}
-  async create (params: module_dto) {
-
-    console.log('in service ', params?.module)
-    const module = params?.module
-    const status = params?.status
-    const toLowerCaseModule = params?.module.toLowerCase()
-    const users = await this.prisma.module.create({
+  async create(params: module_dto) {
+    prisma.$connect();
+    console.log('in service ', params?.module);
+    const module = params?.module;
+    const status = params?.status;
+    const toLowerCaseModule = params?.module.toLowerCase();
+    const users = await prisma.module.create({
       data: {
         module: toLowerCaseModule,
-        status
-      }
-    }
-    )
-    return 'module inserted'
+        status: status,
+      },
+    });
+    return 'module inserted';
   }
+  async findAll() {
+    prisma.$connect();
+    const users = await prisma.Module.findMany();
+    console.log(users);
 
-  async findAll () {
-
-    const users = await this.prisma.module.findMany()
-    console.log(users)
-
-    return `${JSON.stringify(users)}`
+    return `${JSON.stringify(users)}`;
   }
+  async findOne(id: string) {
+    console.log(id);
 
-  async findOne (id: string) {
-    console.log(id)
-
-    const user = await this.prisma.module.findUnique({
+    const user = await prisma.Module.findUnique({
       where: {
-        id
-      }
-    })
-    console.log(user)
+        id: id,
+      },
+    });
+    console.log(user);
     if (!user) {
-      return `data not found with this  ${id}`
+      return `data not found with this  ${id}`;
     }
 
-    return `${JSON.stringify(user)} `
+    return `${JSON.stringify(user)} `;
   }
-
-  async update (id: string, updateRestApiDto: module_dto) {
-    const check_id = await this.prisma.module.findUnique({
+  async update(id: string, updateRestApiDto: module_dto) {
+    const check_id = await prisma.Module.findUnique({
       where: {
-        id
-      }
-    })
-    console.log('checkid', check_id)
-    const data_check = await this.prisma.module.findUnique({
-      where: {
-        module: updateRestApiDto.module
+        id: id,
+      },
+    });
+    console.log('checkid', check_id.module);
+    if (updateRestApiDto?.module == check_id.module) {
+      return { message: 'module already exist' };
+    }
 
-      }
-    })
-    console.log('data check', data_check)
-
-    if (check_id == null || data_check != null) {
-      return 'invalid id or data already exist!'
+    if (check_id == null) {
+      return 'invalid id ';
     } else {
-      console.log('inside else', updateRestApiDto.module.toLowerCase)
-
-      const updateUser = await this.prisma.module.update({
+      const updateUser = await prisma.Module.update({
         where: {
-          id
+          id: id,
         },
-        data: updateRestApiDto
-      })
+        data: updateRestApiDto,
+      });
       if (!updateUser) {
-        return `user not found for this ${id}`
+        return `user not found for this ${id}`;
       }
-      return `${id} `
+      return `${id} `;
     }
   }
 
-  async remove (id: string) {
-    const delete_user = await this.prisma.module.delete({
+
+  async remove(id: string) {
+    const delete_user = await prisma.Module.delete({
       where: {
-        id
-      }
-    })
-    return `This action removes a #${id} restApi`
+        id: id,
+      },
+    });
+    return `This action removes a #${id} restApi`;
   }
 }
