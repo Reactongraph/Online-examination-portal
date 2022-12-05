@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import OrganizationModal from "./Modal";
+import OrganizationModal from "./OrganizationModal";
 import ParticipantModal from "./ParticipantModal";
 import LevelModal from "./LevelModal";
 import ModuleModal from "./ModuleModal";
@@ -11,12 +11,6 @@ const PageComponentTitle = ({
   editForm,
 }) => {
   const [modal, setModal] = useState(false);
-  // const [editForm,setEditForm] = useState(false);
-
-  // if(editForm){
-  //   console.log('this is the component ');
-  //   setModal(true)
-  // }
 
   const checkModal = (title) => {};
 

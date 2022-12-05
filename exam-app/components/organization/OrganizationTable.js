@@ -1,18 +1,14 @@
-// import Table from 'rc-table';
 import Table from "./Table";
 import React, { useState } from "react";
 import Pagination from "react-js-pagination";
 import axios from "axios";
 import { SERVER_LINK } from "../../helpers/config";
 import { useRouter } from "next/router";
-import Modal from "../common/Modal";
 import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
 import { useForm } from "react-hook-form";
 
 const OrganizationTable = ({ org_data }) => {
-  // console.log('this is the talbe ');
-
   const router = useRouter();
   const [editForm, setEditForm] = useState(false);
   const [modal, setModal] = useState(false);
@@ -29,13 +25,9 @@ const OrganizationTable = ({ org_data }) => {
   const [mobile, setMobile] = useState("");
   const [quota, setQuota] = useState("");
 
-  // const [buttonText, setButtonText] = useState("Add");
-
   const [password, setPassword] = useState("");
 
   const { register, handleSubmit } = useForm();
-
-  // const userOrgData = org_data.map((oneOrg)=>({id:oneOrg.id , name:oneOrg.name, email : oneOrg.email, status : oneOrg.status}))
 
   const handleRemoveClick = (org_id) => {
     axios
@@ -48,36 +40,27 @@ const OrganizationTable = ({ org_data }) => {
       });
   };
 
-  const handleBoxClick = async (org_id ,org_status) =>{
-    console.log('This is hte box click');
-    console.log(org_id);
+  const handleBoxClick = async (org_id, org_status) => {
     let new_status = {
-      status : ! org_status
-    }
-    new_status = JSON.stringify(new_status)
-    console.log(new_status);
-    
-    
-    await axios
-        .patch(`${SERVER_LINK}/rest-api/${org_id}`, new_status, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json;charset=UTF-8",
-          },
-        })
-        .then((response) => {
-          // setModal(!modal);
-          router.replace(router.asPath);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      status: !org_status,
+    };
+    new_status = JSON.stringify(new_status);
 
-    
-    
-  }
+    await axios
+      .patch(`${SERVER_LINK}/rest-api/${org_id}`, new_status, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+        },
+      })
+      .then((response) => {
+        router.replace(router.asPath);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const handleEditClick = async (org_id) => {
-    // setOpen(true);
     setButtonText("Update");
     setEditForm(true);
     setOrganizationId(org_id);
@@ -116,7 +99,6 @@ const OrganizationTable = ({ org_data }) => {
     data.address = address;
     data.quota = quota;
     let OrganizationData = JSON.stringify(data);
-    console.log(data);
 
     // for taking the patch api data
     if (editForm) {
@@ -127,26 +109,6 @@ const OrganizationTable = ({ org_data }) => {
             "Content-Type": "application/json;charset=UTF-8",
           },
         })
-        .then((response) => {
-          setModal(!modal);
-          router.replace(router.asPath);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
-    // for new data registration
-    else {
-      await axios({
-        url: `${SERVER_LINK}/rest-api`,
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json;charset=UTF-8",
-        },
-        data,
-      })
         .then((response) => {
           setModal(!modal);
           router.replace(router.asPath);
@@ -178,17 +140,14 @@ const OrganizationTable = ({ org_data }) => {
     const status = (
       <>
         <div className="flex ">
-          {/* <div className="form-check form-switch"> */}
           <input
-            onClick = {() => handleBoxClick(org_id,org_status)}
+            onClick={() => handleBoxClick(org_id, org_status)}
             className="form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
             type="checkbox"
             role="switch"
             id="flexSwitchCheckDefault"
-            defaultChecked = {org_status}
+            defaultChecked={org_status}
           />
-          {/* <label className="form-check-label inline-block text-gray-800" for="flexSwitchCheckDefault">Default switch checkbox input</label> */}
-          {/* </div> */}
         </div>
       </>
     );
@@ -231,10 +190,6 @@ const OrganizationTable = ({ org_data }) => {
       key: "status",
       width: 400,
       className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
-      //   render : () =><>  <div class="flex justify-center">
-      //   <div class="form-check form-switch">
-      //     <input class="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-black bg-no-repeat   focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked/>          </div>
-      // </div></>
     },
     {
       Header: "Action",
@@ -244,20 +199,9 @@ const OrganizationTable = ({ org_data }) => {
       key: "operations",
       width: 250,
       className: "text-white bg-gray-600 p-2 border-b-2",
-      //           render: (id) => <><button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
-      //           Edit
-      //         </button> <button  class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"  >
-      //   Delete
-      // </button></>,
     },
   ];
 
-  // const data = [
-  //   { id:'01', name: 'Jack', email: 28 },
-  //   { id:'02', name: 'Rose', email: 36 },
-  // ];
-
-  // data by using which table data is creating using api call
   const data = rowsDataArray;
 
   //Pagination
@@ -274,24 +218,8 @@ const OrganizationTable = ({ org_data }) => {
         rowKey="id"
         className="bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed"
       />
-      {/* <Pagination
-          activePage={activePage}
-          itemsCountPerPage={10}
-          totalItemsCount={450}
-          pageRangeDisplayed={5}
-          onChange={handlePageChange}
-          nextPageText={'Next'}
-          prevPageText={'Prev'}
-          firstPageText={'First'}
-          lastPageText={'Last'}
-          innerClass="js-ul"
-          itemClass='js-li'
-          linkClass='page-link'
-        /> */}
-      {/* <Modal modal={modal} setModal={setModal} editForm ={editForm} orgData={orgData} organizationId={organizationId} /> */}
 
       <PureModal
-        //header={<div className="bg-blue-600 p-2 font-bold text-lg text-center text-white">Category</div>}
         isOpen={modal}
         width="800px"
         onClose={() => {
@@ -328,10 +256,6 @@ const OrganizationTable = ({ org_data }) => {
                     })}
                     placeholder="Jane"
                   />
-
-                  {/* <p className="text-red-500 text-xs italic">
-                    Please fill out this field.   property - > border-red-500
-                  </p> */}
                 </div>
                 <div className="w-full md:w-1/2 px-3">
                   <label
@@ -480,10 +404,6 @@ const OrganizationTable = ({ org_data }) => {
                       onChange: (e) => setMobile(e.target.value),
                     })}
                   />
-
-                  {/* <p className="text-red-500 text-xs italic">
-                    Please fill out this field.   property - > border-red-500
-                  </p> */}
                 </div>
                 <div className="w-full md:w-1/2 px-3">
                   <label
@@ -513,8 +433,6 @@ const OrganizationTable = ({ org_data }) => {
               </button>
             </form>
           </div>
-
-          {/* */}
         </div>
       </PureModal>
     </>
