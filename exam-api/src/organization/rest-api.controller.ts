@@ -1,12 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Headers, HttpStatus, Put, Res } from '@nestjs/common'
-import { RestApiService } from './rest-api.service'
-import { CreateRestApiDto } from './dto/create-rest-api.dto'
-import { UpdateRestApiDto } from './dto/update-rest-api.dto'
-import { PostDTO } from './post'
-import { JwtService } from '@nestjs/jwt'
-import { Oraganization } from './rest-api.middleware'
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
+import { Controller, Get, Post, Body, Patch, Param, Delete, Headers } from '@nestjs/common';
+import { RestApiService } from './rest-api.service';
+import { CreateRestApiDto } from './dto/create-rest-api.dto';
+import { UpdateRestApiDto } from './dto/update-rest-api.dto';
+import { PostDTO } from './post';
+import { HttpStatus, Put, Res } from "@nestjs/common"
+import { JwtService } from '@nestjs/jwt';
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
+import { Oraganization } from './rest-api.middleware';
+import { Response } from 'express';
 @Controller('rest-api')
 export class RestApiController {
   constructor (private readonly restApiService: RestApiService, private readonly jwtService: JwtService) { }
