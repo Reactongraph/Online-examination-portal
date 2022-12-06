@@ -67,7 +67,6 @@ export class ModuleService {
     }
   }
 
-
   async remove(id: string) {
     const delete_user = await prisma.Module.delete({
       where: {
