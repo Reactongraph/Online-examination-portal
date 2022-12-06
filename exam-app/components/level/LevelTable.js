@@ -90,7 +90,7 @@ const LevelTable = ({ level_data }) => {
     
   }
   const checkWithDatabase = async (data) => {
-    data.status = true;
+    // data.status = true;
     data.level = level
 
     let LevelData = JSON.stringify(data);

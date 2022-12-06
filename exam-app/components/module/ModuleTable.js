@@ -90,7 +90,7 @@ const ModuleTable = ({ module_data }) => {
   };
 
   const checkWithDatabase = async (data) => {
-    data.status = true;
+    // data.status = true;
     data.module = modules;
     let moduleData = JSON.stringify(data);
 
