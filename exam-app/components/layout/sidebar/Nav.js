@@ -8,6 +8,7 @@ import {TiGroup} from 'react-icons/ti';
 import {CgNotes} from 'react-icons/cg';
 import {BsSpeedometer} from 'react-icons/bs';
 import {FaSuitcase} from 'react-icons/fa';
+import {MdRateReview} from 'react-icons/md';
 
 
 import React, { useEffect, useState } from "react";
@@ -107,6 +108,16 @@ const Nav = ({ sidebarOutsideClick }) => {
           subMenuArray={null}
         >
                     <FaSuitcase size={30} />
+
+        </NavItem> 
+        <NavItem
+          hrefLink='/dashboard/questions'
+          sidebarStatus={sidebarStatus}
+          menuTitle="Questions"
+          subMenu={false}
+          subMenuArray={null}
+        >
+                    <MdRateReview size={30} />
 
         </NavItem> 
 
