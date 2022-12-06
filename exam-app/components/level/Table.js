@@ -89,6 +89,7 @@ function Table({ columns, data }) {
       </label>
     );
   };
+
   // Use the state and functions returned from useTable to build your UI
 
   // Render the UI for your table

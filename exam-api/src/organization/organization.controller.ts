@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   Controller,
   Get,
@@ -14,6 +15,18 @@ import {
 import { RestApiService } from './organization.service';
 import { PostDTO } from './post';
 import { JwtService } from '@nestjs/jwt';
+=======
+import { Controller, Get, Post, Body, Patch, Param, Delete, Headers, HttpStatus, Put, Res } from '@nestjs/common'
+import { RestApiService } from './organization.service'
+import { CreateRestApiDto } from './dto/create-rest-api.dto'
+import { UpdateRestApiDto } from './dto/update-rest-api.dto'
+import { PostDTO } from './post'
+import { JwtService } from '@nestjs/jwt'
+import { Oraganization } from './organization.middleware'
+import { PrismaService } from 'src/prisma.service'
+import { reset_token,PrismaClient } from '@prisma/client'
+import { Response } from 'express'
+>>>>>>> 22520a1ea38797de82193de6715e70f10ad21484
 
 import { PrismaService } from 'src/prisma.service';
 
