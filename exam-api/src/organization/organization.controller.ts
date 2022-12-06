@@ -16,6 +16,7 @@ import { PostDTO } from './post';
 import { JwtService } from '@nestjs/jwt';
 
 import { PrismaService } from 'src/prisma.service';
+import { Response } from 'express';
 
 @Controller('organization')
 export class RestApiController {

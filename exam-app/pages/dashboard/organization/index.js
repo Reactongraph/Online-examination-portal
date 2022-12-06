@@ -25,7 +25,7 @@ export default function organization({org_data}){
 
 export async function getServerSideProps() {
   // Fetch data from external API
-  const res = await axios.get(`${SERVER_LINK}/rest-api/find`);
+  const res = await axios.get(`${SERVER_LINK}/organization/find`);
 
   let org_data = res.data;
 

@@ -28,6 +28,8 @@ export class AuthController {
     @Headers('xaccesstoken') Headers: auth_dto,
     @Body() body: auth_dto,
   ) {
+    console.log(Headers);
+    console.log(body);
     const change_password = await this.authService.changepass(Headers, body);
 
     return change_password;
@@ -39,19 +41,24 @@ export class AuthController {
     @Body() login: auth_dto,
     @Res({ passthrough: true }) response: Response,
   ) {
+    console.log(login);
     // prisma.$connect()
     const users = await this.authService.login(login);
+    console.log('in controller', users);
 
     if (users === 'invalid credentials' || users === 'invalid username') {
       response.status(HttpStatus.BAD_REQUEST).send('Login failed');
     } else {
       const jwt = await this.jwtService.signAsync({ id: users.id });
+      console.log('jwt', jwt, login?.email);
+      // const data = this.prisma.L
       const login_date = await this.prisma.login.create({
         data: {
           token: jwt,
           email: login?.email,
         },
       });
+      console.log(login_date);
 
       response.cookie('jwt', jwt, { httpOnly: true });
       response
