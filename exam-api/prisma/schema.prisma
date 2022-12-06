@@ -14,6 +14,7 @@ model Organization {
   id           String         @id @default(auto()) @map("_id") @db.ObjectId
   email        String         @unique
   name         String?
+  password     String?
   quota        String?
   status       Boolean?
   mobile       String?
@@ -50,19 +51,21 @@ model Participants {
 }
 
 model Level {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  level     String   @unique
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  level     String      @unique
   status    Boolean?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  questions Questions[]
 }
 
 model Module {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  module    String   @unique
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  module    String      @unique
   status    Boolean?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  questions Questions[]
 }
 
 model Login {
@@ -81,7 +84,11 @@ model Questions {
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   status            Boolean
-  questions_options Questions_options[]
+  module_id         String
+  level_id          String
+  questions_options Questions_options[] 
+  module            Module  @relation(fields: [module_id], references: [id])
+  level             Level @relation(fields: [level_id], references: [id])
 }
 
 model Questions_options {
