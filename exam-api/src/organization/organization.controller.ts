@@ -20,7 +20,7 @@ import { Oraganization } from './organization.middleware';
 import { PrismaService } from 'src/prisma.service';
 import { reset_token, PrismaClient } from '@prisma/client';
 
-@Controller('rest-api')
+@Controller('organization')
 export class RestApiController {
   constructor(
     private readonly restApiService: RestApiService,

@@ -97,7 +97,6 @@ model Questions_options {
   option      String?
   question_id String
   correct     String?
-  image       String?
   status      Boolean
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
