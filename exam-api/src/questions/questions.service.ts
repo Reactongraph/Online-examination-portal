@@ -10,6 +10,15 @@ export class QuestionsService {
     const myBool = Boolean(createQuestionDto?.status);
     const date = new Date(createQuestionDto?.question_time);
     try {
+      // const user = await this.prisma.questions.create({
+      // data: {
+      //   question: createQuestionDto.question,
+      //   question_type: createQuestionDto.question_type,
+      //   question_time: createQuestionDto.question_time,
+      //   images: path,
+      //   status: myBool,
+      //   },
+      // });
       const user = await this.prisma.questions.create({
         data: {
           question: createQuestionDto.question,
