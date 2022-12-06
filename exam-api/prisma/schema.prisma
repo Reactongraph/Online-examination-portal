@@ -86,9 +86,9 @@ model Questions {
   status            Boolean
   module_id         String
   level_id          String
-  questions_options Questions_options[] 
-  module            Module  @relation(fields: [module_id], references: [id])
-  level             Level @relation(fields: [level_id],references: [id])
+  questions_options Questions_options[]
+  module            Module              @relation(fields: [module_id], references: [id])
+  level             Level               @relation(fields: [level_id], references: [id])
 }
 
 model Questions_options {
