@@ -2,6 +2,7 @@ class PostDTO {
   id: Int32Array
   email: string
   name: string
+  passwrod:string
   quota: string
   status: boolean
   mobile: string
