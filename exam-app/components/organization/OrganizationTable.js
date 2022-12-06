@@ -105,7 +105,7 @@ const OrganizationTable = ({ org_data }) => {
   };
 
   const checkWithDatabase = async (data) => {
-    data.status = true;
+    // data.status = true;
     data.name = name;
     data.email = email;
     data.mobile = mobile;
