@@ -10,10 +10,9 @@ const Organization = ({org_data}) => {
         
         <div className="flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between">
             <PageComponentTitle 
-                title='Organization'
+                title='ORGANIZATION'
                 titleDescription='List of all organization'
-                buttonTitle='ADD ORAGANIZATION'
-            />
+                buttonTitle='ADD ORAGANIZATION'/>
         </div>
 
         <section className="grid md:grid-cols-1 xl:grid-cols-1 gap-6">
@@ -30,3 +29,5 @@ const Organization = ({org_data}) => {
 };
 
 export default Organization;
+
+

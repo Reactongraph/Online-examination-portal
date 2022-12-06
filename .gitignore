@@ -3,6 +3,7 @@
 /node_modules
 /exam-app/node_modules
 /exam-api/node_modules
+/exam-api/dist
 
 # Logs
 logs
