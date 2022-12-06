@@ -7,7 +7,6 @@ import { JwtService } from '@nestjs/jwt'
 import { Oraganization } from './organization.middleware'
 // import { PrismaService } from 'src/prisma.service'
 import { reset_token,PrismaClient } from '@prisma/client'
-import { Response } from 'express'
 
 import { PrismaService } from 'src/prisma.service';
 import { Response } from 'express';
