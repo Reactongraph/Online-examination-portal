@@ -1,4 +1,4 @@
 export class level_dto {
-  level: string
-  status: boolean
+    level: string
+    status: boolean
 }

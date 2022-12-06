@@ -7,14 +7,13 @@ generator client {
 
 datasource db {
   provider = "mongodb"
-  url      = env("DATABASE")
+  url      = env("DATABASE_URL")
 }
 
 model Organization {
   id           String         @id @default(auto()) @map("_id") @db.ObjectId
   email        String         @unique
   name         String?
-  password     String?
   quota        String?
   status       Boolean?
   mobile       String?

@@ -1,7 +1,7 @@
 export class participants_dto {
-  name: string
-  email: string
-  password: string
-  mobile: string
-  id: string
+    name: string
+    email: string
+    password: string
+    mobile: string
+    id: string
 }

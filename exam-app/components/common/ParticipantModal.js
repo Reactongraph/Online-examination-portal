@@ -4,13 +4,15 @@ import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
 import { useForm } from "react-hook-form";
 import { SERVER_LINK } from "../../helpers/config";
-import axios from "axios";
+import axios from 'axios';
 import { useRouter } from "next/router";
 
-const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
+
+const ParticipantModal = ({ modal, setModal ,editForm , participantId}) => {
   //For Image Preview
   const [selectedImage, setSelectedImage] = useState();
   const router = useRouter();
+
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -20,29 +22,35 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
 
   const [password, setPassword] = useState("");
   const [organizationId, setOrganizationId] = useState("");
-
+  
   const { register, handleSubmit } = useForm();
 
-  //   console.log('this is the modeal calle');
+//   console.log('this is the modeal calle');
 
-  if (editForm) {
-    axios
+
+  if(editForm){
+
+      axios
       .get(`${SERVER_LINK}/participants/${participantId}`)
       .then((response) => {
+   
         let singleParticipantData = response.data;
 
         setName(singleParticipantData.name);
         setEmail(singleParticipantData.email);
         setMobile(singleParticipantData.mobile);
-        setOrganizationId(singleParticipantData.Organization_id);
-        setPassword(singleParticipantData.password);
-        setButtonText("Update");
+        setOrganizationId(singleParticipantData.Organization_id)
+        setPassword(singleParticipantData.password)
+        setButtonText('Update')
       })
       .catch((err) => {
         console.log(err);
       });
+
   }
 
+  
+ 
   // This function will be triggered when the file field change
   const imageChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -55,29 +63,34 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
     setSelectedImage();
   };
 
-  const handleEditClick = (participantId) => {
-    // setOpen(true);
+
+    
+const handleEditClick = (participantId) => {
+    // setOpen(true); 
     setButtonText("Update");
     // setEditForm(true);
     setParticipantId(participantId);
-    console.log("participant id " + participantId);
+    console.log("participant id "+participantId)
 
     // first find the user with the id
     axios
       .get(`${SERVER_LINK}/participants/${participantId}`)
       .then((response) => {
+   
         let singleParticipantData = response.data;
 
         setName(singleParticipantData.name);
         setEmail(singleParticipantData.email);
         setMobile(singleParticipantData.mobile);
-        setOrganizationId(singleParticipantData.Organization_id);
-        setPassword(singleParticipantData.password);
+        setOrganizationId(singleParticipantData.Organization_id)
+        setPassword(singleParticipantData.password)
+       
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
 
   useEffect(() => {
     if (!modal) {
@@ -87,14 +100,11 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
 
   // for sending the data to the backend
   const checkWithDatabase = async (data) => {
-    data.name = name
-  data.email = email 
-  data.mobile = mobile
-  data.id = organizationId
-  data.password = password
-
-  // data.status = true;
-  let participantData = JSON.stringify(data);
+    console.log('This is thge data ');
+    console.log(data);
+    // data.status = true;
+    data = JSON.stringify(data);
+    console.log(data);
 
     // for taking the patch api data
     if (editForm) {
@@ -106,7 +116,7 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
           },
         })
         .then((response) => {
-          setModal(!modal);
+       setModal(!modal)
           router.replace(router.asPath);
         })
         .catch((err) => {
@@ -123,16 +133,11 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
           Accept: "application/json",
           "Content-Type": "application/json;charset=UTF-8",
         },
-        data : participantData,
+        data,
       })
         .then((response) => {
           router.replace(router.asPath);
-          setName("")
-          setEmail("")
-          setMobile("")
-          setPassword("")
-          setOrganizationId("")
-          setModal(!modal);
+          setModal(!modal)
         })
         .catch((err) => {
           console.log(err);
@@ -147,11 +152,6 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
         isOpen={modal}
         width="800px"
         onClose={() => {
-          setName("")
-          setEmail("")
-          setMobile("")
-          setPassword("")
-          setOrganizationId("")
           setModal(false);
           return true;
         }}
@@ -179,8 +179,9 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
                     id="name"
                     type="text"
                     value={name}
-                    onChange = { (e) => setName(e.target.value)}
-                    required = "required"
+                 {...register("name", {
+                onChange: (e) => setName(e.target.value),
+              })}
                     placeholder="Jane"
                   />
                   {/* <p className="text-red-500 text-xs italic">
@@ -199,9 +200,10 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
                     id="email"
                     type="email"
                     placeholder="example@gmail.com "
-                    required = "required"
                     value={email}
-                    onChange = { (e) => setEmail(e.target.value)}
+                    {...register("email", {
+                   onChange: (e) => setEmail(e.target.value),
+                 })}
                   />
                 </div>
               </div>
@@ -219,9 +221,10 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
                     id="password"
                     type="password"
                     placeholder="******************"
-                    required = "required"
                     value={password}
-                    onChange = { (e) => setPassword(e.target.value)}
+                    {...register("password", {
+                   onChange: (e) => setPassword(e.target.value),
+                 })}
                   />
                   <p className="text-gray-600 text-xs italic">
                     Make it as long and as crazy as you'd like
@@ -229,6 +232,8 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
                 </div>
               </div>
 
+            
+              
               <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                   <label
@@ -242,9 +247,10 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
                     id="mobile"
                     type="text"
                     placeholder="+91 "
-                    required = "required"
                     value={mobile}
-                    onChange = { (e) => setMobile(e.target.value)}
+                    {...register("mobile", {
+                   onChange: (e) => setMobile(e.target.value),
+                 })}
                   />
                   {/* <p className="text-red-500 text-xs italic">
                     Please fill out this field.   property - > border-red-500
@@ -262,25 +268,22 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
                     id="org_id"
                     type="text"
                     placeholder="e.g. 1000"
-                    required = "required"
                     value={organizationId}
-                    onChange = { (e) => setOrganizationId(e.target.value)}
+                    {...register("Organization_id", {
+                        onChange: (e) => setOrganizationId(e.target.value),
+                      })}
                   />
                 </div>
+                
               </div>
-              <button
-                type="submit"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                {buttonText}
-              </button>
+              <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{buttonText}</button>
             </form>
           </div>
 
           {/* */}
         </div>
       </PureModal>
-      
+      ;
     </>
   );
 };
