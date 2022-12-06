@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import Modal from "./Modal";
-import ParticipantModal from './ParticipantModal';
+import OrganizationModal from "./OrganizationModal";
+import ParticipantModal from "./ParticipantModal";
+import LevelModal from "./LevelModal";
+import ModuleModal from "./ModuleModal";
 
-const PageComponentTitle = ({ title, titleDescription, buttonTitle, editForm }) => {
+const PageComponentTitle = ({
+  title,
+  titleDescription,
+  buttonTitle,
+  editForm,
+}) => {
   const [modal, setModal] = useState(false);
-  // const [editForm,setEditForm] = useState(false);
 
-  // if(editForm){
-  //   console.log('this is the component ');
-  //   setModal(true)
-  // }
-
+  const checkModal = (title) => {};
 
   return (
     <>
@@ -43,13 +45,19 @@ const PageComponentTitle = ({ title, titleDescription, buttonTitle, editForm }) 
 
         {title == "PARTICIPANT" ? (
           <>
-            {" "}
             <ParticipantModal modal={modal} setModal={setModal} />
+          </>
+        ) : title == "LEVEL" ? (
+          <>
+            <LevelModal modal={modal} setModal={setModal} />
+          </>
+        ) : title == "MODULE" ? (
+          <>
+            <ModuleModal modal={modal} setModal={setModal} />
           </>
         ) : (
           <>
-            {" "}
-            <Modal modal={modal} setModal={setModal} />
+            <OrganizationModal modal={modal} setModal={setModal} />
           </>
         )}
       </div>

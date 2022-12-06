@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
@@ -6,50 +7,56 @@ import { SERVER_LINK } from "../../helpers/config";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
-  //For Image Preview
-  const [selectedImage, setSelectedImage] = useState();
+const OrganizationModal = ({
+  modal,
+  setModal,
+  editForm,
+  organizationId,
+  orgData,
+}) => {
   const router = useRouter();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-
+  const [pincode, setPincode] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
   const [mobile, setMobile] = useState("");
+  const [quota, setQuota] = useState("");
   const [buttonText, setButtonText] = useState("Add");
 
   const [password, setPassword] = useState("");
-  const [organizationId, setOrganizationId] = useState("");
 
   const { register, handleSubmit } = useForm();
 
   // for sending the data to the backend
   const checkWithDatabase = async (data) => {
+    data.status = true;
     data.name = name;
     data.email = email;
     data.mobile = mobile;
-    data.id = organizationId;
     data.password = password;
-
-    let participantData = JSON.stringify(data);
+    data.city = city;
+    data.state = state;
+    data.pincode = pincode;
+    data.address = address;
+    data.quota = quota;
+    let OrganizationData = JSON.stringify(data);
 
     // for new data registration
 
     await axios({
-      url: `${SERVER_LINK}/participants`,
+      url: `${SERVER_LINK}/rest-api`,
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json;charset=UTF-8",
       },
-      data: participantData,
+      data: OrganizationData,
     })
       .then((response) => {
         router.replace(router.asPath);
-        setName("");
-        setEmail("");
-        setMobile("");
-        setPassword("");
-        setOrganizationId("");
         setModal(!modal);
       })
       .catch((err) => {
@@ -65,16 +72,21 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
         onClose={() => {
           setName("");
           setEmail("");
-          setMobile("");
+
           setPassword("");
-          setOrganizationId("");
+          setCity("");
+          setState("");
+          setPincode("");
+          setAddress("");
+          setMobile("");
+          setQuota("");
           setModal(false);
           return true;
         }}
       >
-        <div classNameName="flex-row space-y-3 relative">
-          <div classNameName="bg-blue-600 p-2 font-bold text-lg text-center text-white -mt-4 -mx-4 mb-5 pb-4">
-            <p>{buttonText} Participant</p>
+        <div className="flex-row space-y-3 relative">
+          <div className="bg-blue-600 p-2 font-bold text-lg text-center text-white -mt-4 -mx-4 mb-5 pb-4">
+            <p>{buttonText} Organization</p>
           </div>
 
           <div className="py-6 px-6 lg:px-8">
@@ -92,14 +104,13 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
                   </label>
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                    id="name"
+                    id="grid-first-name"
                     type="text"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
                     required="required"
+                    onChange={(e) => setName(e.target.value)}
                     placeholder="Jane"
                   />
-                  
                 </div>
                 <div className="w-full md:w-1/2 px-3">
                   <label
@@ -110,11 +121,11 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
                   </label>
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="email"
+                    id="grid-email"
                     type="email"
                     placeholder="example@gmail.com "
-                    required="required"
                     value={email}
+                    required="required"
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
@@ -130,11 +141,11 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
                   </label>
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="password"
+                    id="grid-password"
                     type="password"
                     placeholder="******************"
-                    required="required"
                     value={password}
+                    required="required"
                     onChange={(e) => setPassword(e.target.value)}
                   />
                   <p className="text-gray-600 text-xs italic">
@@ -143,6 +154,79 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
                 </div>
               </div>
 
+              <div className="flex flex-wrap -mx-3 mb-2">
+                <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                  <label
+                    className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                    for="grid-city"
+                  >
+                    City
+                  </label>
+                  <input
+                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-city"
+                    type="text"
+                    placeholder="Albuquerque"
+                    value={city}
+                    required="required"
+                    onChange={(e) => setCity(e.target.value)}
+                  />
+                </div>
+
+                <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                  <label
+                    className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                    for="grid-city"
+                  >
+                    State
+                  </label>
+                  <input
+                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-state"
+                    type="text"
+                    placeholder="State"
+                    value={state}
+                    required="required"
+                    onChange={(e) => setState(e.target.value)}
+                  />
+                </div>
+                <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                  <label
+                    className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                    for="grid-zip"
+                  >
+                    Pin Code
+                  </label>
+                  <input
+                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-zip"
+                    type="text"
+                    placeholder="90210"
+                    value={pincode}
+                    required="required"
+                    onChange={(e) => setPincode(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-wrap -mx-3 mb-6">
+                <div className="w-full px-3">
+                  <label
+                    className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                    for="grid-password"
+                  >
+                    Address
+                  </label>
+                  <input
+                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-address"
+                    type="text"
+                    placeholder="Your Office number... "
+                    value={address}
+                    required="required"
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
+                </div>
+              </div>
               <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                   <label
@@ -153,11 +237,11 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
                   </label>
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                    id="mobile"
+                    id="grid-mobile"
                     type="text"
                     placeholder="+91 "
-                    required="required"
                     value={mobile}
+                    required="required"
                     onChange={(e) => setMobile(e.target.value)}
                   />
                 </div>
@@ -166,16 +250,16 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                     for="grid-last-name"
                   >
-                    Organization Id
+                    Quota
                   </label>
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="org_id"
+                    id="grid-quota"
                     type="text"
                     placeholder="e.g. 1000"
+                    value={quota}
                     required="required"
-                    value={organizationId}
-                    onChange={(e) => setOrganizationId(e.target.value)}
+                    onChange={(e) => setQuota(e.target.value)}
                   />
                 </div>
               </div>
@@ -187,10 +271,12 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
               </button>
             </form>
           </div>
+
+          {/* */}
         </div>
       </PureModal>
     </>
   );
 };
 
-export default ParticipantModal;
+export default OrganizationModal;

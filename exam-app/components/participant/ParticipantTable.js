@@ -1,23 +1,20 @@
-// import Table from "rc-table";
-import Table from './Table';
+import Table from "./Table";
 import React, { useState } from "react";
 import Pagination from "react-js-pagination";
-import axios from 'axios';
+import axios from "axios";
 import { SERVER_LINK } from "../../helpers/config";
 import { useRouter } from "next/router";
-import PageComponentTitle from '../common/PageComponentTitle';
-import ParticipantModal from '../common/ParticipantModal';
+import PageComponentTitle from "../common/PageComponentTitle";
+import ParticipantModal from "../common/ParticipantModal";
 import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
 import { useForm } from "react-hook-form";
 
-
-
 const ParticipantTable = ({ participant_data }) => {
   const router = useRouter();
   const [editForm, setEditForm] = useState(false);
-  const [modal,setModal] = useState(false);
-  const [participantId,setParticipantId]= useState("")
+  const [modal, setModal] = useState(false);
+  const [participantId, setParticipantId] = useState("");
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,17 +24,10 @@ const ParticipantTable = ({ participant_data }) => {
 
   const [password, setPassword] = useState("");
   const [organizationId, setOrganizationId] = useState("");
-  
+
   const { register, handleSubmit } = useForm();
 
-  // const userParticipantData = participant_data.map((onePartcipant) => ({
-  //   id: onePartcipant.id,
-  //   name: onePartcipant.name,
-  //   email : onePartcipant.email,
-  //   mobile: onePartcipant.mobile,
-  // }));
-
-  const handleRemoveClick = async(participantId) => {
+  const handleRemoveClick = async (participantId) => {
     await axios
       .delete(`${SERVER_LINK}/participants/${participantId}`)
       .then((result) => {
@@ -48,128 +38,118 @@ const ParticipantTable = ({ participant_data }) => {
       });
   };
 
-  // const handleEditClick = (participantId)=>{
-  //   // console.log('this is teh edit btton '+participantId);
-  //     // setEditForm(true)
-  //     setButtonText('Update')
-  //     setModal(true);
-  //     setParticipantId(participantId);     
-      
-  //   }
-
-  const handleEditClick = (participantId) => {
+  const handleEditClick = async (participantId) => {
     // setOpen(true);
     setModal(true);
     // setButtonText('Update')
     setButtonText("Update");
     setEditForm(true);
     setParticipantId(participantId);
-    console.log("participant id "+participantId)
 
     // first find the user with the id
-    axios
+    await axios
       .get(`${SERVER_LINK}/participants/${participantId}`)
       .then((response) => {
-   
         let singleParticipantData = response.data;
 
         setName(singleParticipantData.name);
         setEmail(singleParticipantData.email);
         setMobile(singleParticipantData.mobile);
-        setOrganizationId(singleParticipantData.Organization_id)
-        setPassword(singleParticipantData.password)
-       
+        setOrganizationId(singleParticipantData.Organization_id);
+        setPassword(singleParticipantData.password);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
- // for sending the data to the backend
- const checkWithDatabase = async (data) => {
-  console.log('This is thge data ');
-  console.log(data);
-  // data.status = true;
-  data = JSON.stringify(data);
-  console.log(data);
+  // for sending the data to the backend
+  const checkWithDatabase = async (data) => {
+    data.name = name;
+    data.email = email;
+    data.mobile = mobile;
+    data.Organization_id = organizationId;
+    data.password = password;
 
-  // for taking the patch api data
-  if (editForm) {
-    console.log('this is ghe edit request');
-    await axios
-      .patch(`${SERVER_LINK}/participants/${participantId}`, data, {
+    // data.status = true;
+    let participantData = JSON.stringify(data);
+
+    // for taking the patch api data
+    if (editForm) {
+      await axios
+        .patch(
+          `${SERVER_LINK}/participants/${participantId}`,
+          participantData,
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json;charset=UTF-8",
+            },
+          }
+        )
+        .then((response) => {
+          setModal(!modal);
+          router.replace(router.asPath);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    // for new data registration
+    else {
+      await axios({
+        url: `${SERVER_LINK}/participants`,
+        method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json;charset=UTF-8",
         },
+        data,
       })
-      .then((response) => {
-     setModal(!modal)
-        router.replace(router.asPath);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((response) => {
+          router.replace(router.asPath);
+          setModal(!modal);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  function createData(name, email, mobile, participantId) {
+    const action = (
+      <>
+        <button
+          onClick={() => handleEditClick(participantId)}
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
+        >
+          Edit
+        </button>
+        &nbsp;
+        <button
+          onClick={() => handleRemoveClick(participantId)}
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
+        >
+          Delete
+        </button>
+      </>
+    );
+    return { name, email, mobile, action };
   }
 
-  // for new data registration
-  else {
-    await axios({
-      url: `${SERVER_LINK}/participants`,
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-      data,
-    })
-      .then((response) => {
-        router.replace(router.asPath);
-        setModal(!modal)
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-};
-  
-
-  
-function createData(name, email, mobile , participantId) {
-  const action = (
-    <>
-      <button
-        onClick={() => handleEditClick(participantId)}
-        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
-      >
-        Edit
-      </button>
-      &nbsp;
-
-      <button
-       onClick={() => handleRemoveClick(participantId)}
-       className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
-      >
-        Delete
-      </button>
-    </>
-  );
-  return { name, email, mobile, action };
-}
-
-
-const rowsDataArray = participant_data.map((element) => {
+  const rowsDataArray = participant_data.map((element) => {
     let name = element.name;
     let email = element.email;
     let mobile = element.mobile;
-    let participantId = element.id
-    return createData(name, email, mobile,participantId);
+    let participantId = element.id;
+    return createData(name, email, mobile, participantId);
   });
 
   const columns = [
     {
       Header: "Name",
-      accessor: 'name',
+      accessor: "name",
       title: "Name",
       dataIndex: "name",
       key: "name",
@@ -179,7 +159,7 @@ const rowsDataArray = participant_data.map((element) => {
     },
     {
       Header: "Email",
-      accessor: 'email',
+      accessor: "email",
       title: "Email",
       dataIndex: "email",
       key: "email",
@@ -188,7 +168,7 @@ const rowsDataArray = participant_data.map((element) => {
     },
     {
       Header: "Mobile",
-      accessor: 'mobile',
+      accessor: "mobile",
       title: "Mobile",
       dataIndex: "mobile",
       key: "mobile",
@@ -197,22 +177,16 @@ const rowsDataArray = participant_data.map((element) => {
     },
     {
       Header: "Action",
-      accessor: 'action',
+      accessor: "action",
       title: "Action",
       dataIndex: "action",
       key: "operations",
       width: 250,
       className: "text-white bg-gray-600 p-2 border-b-2",
-      
     },
   ];
 
-  // const data = [
-  //   { id: "01", name: "Jack", subCount: 28, productCount: "some where" },
-  //   { id: "02", name: "Rose", subCount: 36, productCount: "some where" },
-  // ];
-
-  const data = rowsDataArray
+  const data = rowsDataArray;
   //Pagination
   const [activePage, setActivePage] = useState(15);
   const handlePageChange = (pageNumber) => {
@@ -227,24 +201,8 @@ const rowsDataArray = participant_data.map((element) => {
         rowKey="id"
         className="bg-white p-4 w-full text-center rc-table-custom font-semibold "
       />
-      {/* <Pagination
-          activePage={activePage}
-          itemsCountPerPage={10}
-          totalItemsCount={450}
-          pageRangeDisplayed={5}
-          onChange={handlePageChange}
-          nextPageText={'Next'}
-          prevPageText={'Prev'}
-          firstPageText={'First'}
-          lastPageText={'Last'}
-          innerClass="js-ul"
-          itemClass='js-li'
-          linkClass='page-link'
-        /> */}
-    {/* <ParticipantModal modal={modal} setModal={setModal} editForm ={true} participantId={participantId} /> */}
 
-    <PureModal
-        //header={<div classNameName="bg-blue-600 p-2 font-bold text-lg text-center text-white">Category</div>}
+      <PureModal
         isOpen={modal}
         width="800px"
         onClose={() => {
@@ -266,7 +224,7 @@ const rowsDataArray = participant_data.map((element) => {
                 <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                   <label
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                    for="grid-first-name"
+                    htmlFor="grid-first-name"
                   >
                     Name
                   </label>
@@ -275,19 +233,15 @@ const rowsDataArray = participant_data.map((element) => {
                     id="name"
                     type="text"
                     value={name}
-                 {...register("name", {
-                onChange: (e) => setName(e.target.value),
-              })}
+                    required="required"
+                    onChange={(e) => setName(e.target.value)}
                     placeholder="Jane"
                   />
-                  {/* <p className="text-red-500 text-xs italic">
-                    Please fill out this field.   property - > border-red-500
-                  </p> */}
                 </div>
                 <div className="w-full md:w-1/2 px-3">
                   <label
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                    for="grid-last-name"
+                    htmlFor="grid-last-name"
                   >
                     Email
                   </label>
@@ -296,10 +250,9 @@ const rowsDataArray = participant_data.map((element) => {
                     id="email"
                     type="email"
                     placeholder="example@gmail.com "
+                    required="required"
                     value={email}
-                    {...register("email", {
-                   onChange: (e) => setEmail(e.target.value),
-                 })}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
               </div>
@@ -308,7 +261,7 @@ const rowsDataArray = participant_data.map((element) => {
                 <div className="w-full px-3">
                   <label
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                    for="grid-password"
+                    htmlFor="grid-password"
                   >
                     Password
                   </label>
@@ -317,10 +270,9 @@ const rowsDataArray = participant_data.map((element) => {
                     id="password"
                     type="password"
                     placeholder="******************"
+                    required="required"
                     value={password}
-                    {...register("password", {
-                   onChange: (e) => setPassword(e.target.value),
-                 })}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                   <p className="text-gray-600 text-xs italic">
                     Make it as long and as crazy as you'd like
@@ -328,13 +280,11 @@ const rowsDataArray = participant_data.map((element) => {
                 </div>
               </div>
 
-            
-              
               <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                   <label
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                    for="grid-first-name"
+                    htmlFor="grid-first-name"
                   >
                     Mobile
                   </label>
@@ -343,19 +293,15 @@ const rowsDataArray = participant_data.map((element) => {
                     id="mobile"
                     type="text"
                     placeholder="+91 "
+                    required="required"
                     value={mobile}
-                    {...register("mobile", {
-                   onChange: (e) => setMobile(e.target.value),
-                 })}
+                    onChange={(e) => setMobile(e.target.value)}
                   />
-                  {/* <p className="text-red-500 text-xs italic">
-                    Please fill out this field.   property - > border-red-500
-                  </p> */}
                 </div>
                 <div className="w-full md:w-1/2 px-3">
                   <label
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                    for="grid-last-name"
+                    htmlFor="grid-last-name"
                   >
                     Organization Id
                   </label>
@@ -364,22 +310,24 @@ const rowsDataArray = participant_data.map((element) => {
                     id="org_id"
                     type="text"
                     placeholder="e.g. 1000"
+                    required="required"
                     value={organizationId}
-                    {...register("Organization_id", {
-                        onChange: (e) => setOrganizationId(e.target.value),
-                      })}
+                    onChange={(e) => setOrganizationId(e.target.value)}
                   />
                 </div>
-                
               </div>
-              <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{buttonText}</button>
+              <button
+                type="submit"
+                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                {buttonText}
+              </button>
             </form>
           </div>
 
           {/* */}
         </div>
       </PureModal>
-
     </>
   );
 };
