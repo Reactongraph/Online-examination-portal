@@ -19,6 +19,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Oraganization } from './organization.middleware';
 import { PrismaService } from 'src/prisma.service';
 import { reset_token, PrismaClient } from '@prisma/client';
+import { Response } from 'express';
 
 @Controller('organization')
 export class RestApiController {
