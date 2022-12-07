@@ -70,15 +70,12 @@ export class RestApiService {
 
     mailTransporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        return {
-          message: error,
-        };
+        console.log(error);
+        // res.status(409).send(error.message);
       } else {
-        return;
-        {
-          message: 'mail send ';
-          response: info.response;
-        }
+        console.log('Email sent: ' + info.response);
+        // res.status(200).send("Mail sent successfully" );
+        return 'mail send ';
       }
     });
   }
