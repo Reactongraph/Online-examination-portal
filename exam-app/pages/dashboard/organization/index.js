@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import LayoutDashboard from ".././layoutDashboard";
+// import LayoutDashboard from ".././layoutDashboard";
 
 import Organization from "../../../components/organization/Organization";
 import Layout from "../../../components/layout/Layout";
