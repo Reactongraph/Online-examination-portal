@@ -31,7 +31,7 @@ const OrganizationTable = ({ org_data }) => {
 
   const handleRemoveClick = (org_id) => {
     axios
-      .delete(`${SERVER_LINK}/rest-api/${org_id}`)
+      .delete(`${SERVER_LINK}/organization/${org_id}`)
       .then((result) => {
         router.replace(router.asPath);
       })
@@ -47,7 +47,7 @@ const OrganizationTable = ({ org_data }) => {
     new_status = JSON.stringify(new_status);
 
     await axios
-      .patch(`${SERVER_LINK}/rest-api/${org_id}`, new_status, {
+      .patch(`${SERVER_LINK}/organization/${org_id}`, new_status, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json;charset=UTF-8",
@@ -68,7 +68,7 @@ const OrganizationTable = ({ org_data }) => {
 
     // first find the user with the id
     await axios
-      .get(`${SERVER_LINK}/rest-api/${org_id}`)
+      .get(`${SERVER_LINK}/organization/${org_id}`)
       .then((response) => {
         let singleOrgData = response.data;
 
@@ -103,7 +103,7 @@ const OrganizationTable = ({ org_data }) => {
     // for taking the patch api data
     if (editForm) {
       await axios
-        .patch(`${SERVER_LINK}/rest-api/${organizationId}`, OrganizationData, {
+        .patch(`${SERVER_LINK}/organization/${organizationId}`, OrganizationData, {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json;charset=UTF-8",
@@ -121,7 +121,7 @@ const OrganizationTable = ({ org_data }) => {
     // for new data registration
     else {
       await axios({
-        url: `${SERVER_LINK}/rest-api`,
+        url: `${SERVER_LINK}/organization`,
         method: "POST",
         headers: {
           Accept: "application/json",
