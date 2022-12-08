@@ -35,7 +35,6 @@ export class RestApiController {
     @Res({ passthrough: true }) response: Response,
   ) {
     const user = await this.restApiService.create(createRestApiDto);
-    console.log('user', user);
     if (user.id == null) {
       return {
         message: 'user already exist',

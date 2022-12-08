@@ -17,10 +17,11 @@ import { QuestionsController } from './questions/questions.controller';
 import { QuestionsModule } from './questions/questions.module';
 import { QuestionsService } from './questions/questions.service';
 import { MulterModule } from '@nestjs/platform-express';
-import { QuestionOptionsModule } from './question_options/question_options.module';
-import { QuestionOptionsService } from './question_options/question_options.service';
-import { QuestionOptionsController } from './question_options/question_options.controller';
 import { PrismaService } from './prisma.service';
+import { QuizModule } from './quiz/quiz.module';
+import { QuizController } from './quiz/quiz.controller';
+import { QuizService } from './quiz/quiz.service';
+
 @Module({
   imports: [
     RestApiModule,
@@ -28,8 +29,8 @@ import { PrismaService } from './prisma.service';
     LevelModule,
     ModuleModule,
     AuthModule,
+    QuizModule,
     QuestionsModule,
-    QuestionOptionsModule,
     MulterModule.register({
       dest: './images',
     }),
@@ -37,9 +38,8 @@ import { PrismaService } from './prisma.service';
   controllers: [
     AppController,
     QuestionsController,
-    QuestionsController,
-    QuestionOptionsController,
+    QuizController
   ],
-  providers: [AppService, QuestionsService, QuestionOptionsService,PrismaService],
+  providers: [AppService, QuestionsService,PrismaService, QuizService],
 })
 export class AppModule {}

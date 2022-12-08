@@ -57,6 +57,7 @@ model Level {
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
   questions Questions[]
+  Quiz      Quiz[]
 }
 
 model Module {
@@ -66,6 +67,7 @@ model Module {
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
   questions Questions[]
+  Quiz      Quiz[]
 }
 
 model Login {
@@ -101,4 +103,20 @@ model Questions_options {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   questions   Questions @relation(fields: [question_id], references: [id])
+}
+
+model Quiz {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  quiz_name   String
+  quiz_image  String?
+  description String?
+  start_date  String
+  start_time  String
+  module_id   String[]
+  level_id    String
+  status      Boolean
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  module      Module   @relation(fields: [module_id], references: [id])
+  level       Level    @relation(fields: [level_id], references: [id])
 }

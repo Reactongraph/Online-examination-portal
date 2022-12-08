@@ -26,6 +26,8 @@ export class QuestionsService {
           question_time: createQuestionDto.question_time,
           images: path,
           status: myBool,
+          module_id: createQuestionDto.module_id,
+          level_id: createQuestionDto.level_id
         },
       });
       return 'inserted';
