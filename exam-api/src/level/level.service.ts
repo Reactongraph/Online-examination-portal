@@ -1,65 +1,97 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Res, HttpStatus } from '@nestjs/common';
 import { level_dto } from './level.entity';
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+import { PrismaService } from 'src/prisma.service';
 @Injectable()
 export class LevelService {
-    async create(params: level_dto) {
-        prisma.$connect();
-        console.log("in service ", params?.level)
-        const level = params?.level;
-        const status = params?.status;
-        const users = await prisma.Level.create({
-            data: {
-                level: level,
-                status: status
-            }
-        }
-        )
-        return 'level inserted'
-
-
+  constructor(private prisma: PrismaService) {}
+  async create(params: level_dto) {
+    const status = params?.status;
+    const toLowerCaseLevel = params?.level.toLowerCase();
+    try {
+      const find = await this.prisma.level.findUnique({
+        where: {
+          level: toLowerCaseLevel,
+        },
+      });
+      if (find != null) {
+        return 'level already exist';
+      } else {
+        const users = await this.prisma.level.create({
+          data: {
+            level: toLowerCaseLevel,
+            status: status,
+          },
+        });
+        return { message: 'level inserted' };
+      }
+    } catch (error) {
+      return { error: error };
     }
-    async findAll() {
-        prisma.$connect();
-        const users = await prisma.Level.findMany()
-        console.log(users);
+  }
 
-        return `${JSON.stringify(users)}`;
+  async findAll() {
+    const users = await this.prisma.level.findMany();
+
+    return `${JSON.stringify(users)}`;
+  }
+
+  async findOne(id: string) {
+    try {
+      const user = await this.prisma.level.findUnique({
+        where: {
+          id,
+        },
+      });
+      if (!user) {
+        return `data not found with this  ${id}`;
+      }
+
+      return `${JSON.stringify(user)} `;
+    } catch (err) {
+      return { error: err };
     }
-    async findOne(id: string) {
-        console.log(id);
+  }
 
-        const user = await prisma.Level.findUnique({
-            where: {
-                id: id,
-            },
-        })
-        console.log(user);
-        if (!user) {
-            return `data not found with this  ${id}`
-        }
+  async update(id: string, updateRestApiDto: level_dto) {
+    try {
+      const check_id = await await this.prisma.level.findUnique({
+        where: {
+          id: id,
+        },
+      });
+      if (updateRestApiDto?.level == check_id.level) {
+        return { message: 'level already exist' };
+      }
 
-        return `${JSON.stringify(user)} `;
-    }
-    async update(id: string, updateRestApiDto: level_dto) {
-        const updateUser = await prisma.Level.update({
-            where: {
-                id: id,
-            },
-            data: updateRestApiDto
-        })
+      if (check_id == null) {
+        return 'invalid id ';
+      } else {
+        const updateUser = await this.prisma.level.update({
+          where: {
+            id: id,
+          },
+          data: updateRestApiDto,
+        });
         if (!updateUser) {
-            return `user not found for this ${id}`
+          return `user not found for this ${id}`;
         }
-        return `${id} `;
+        return `updated `;
+      }
+    } catch (error) {
+      return { error: error };
     }
-    async remove(id: string) {
-        const delete_user = await prisma.Level.delete({
-            where: {
-                id: id
-            },
-        })
-        return `This action removes a #${id} restApi`;
+  }
+
+  async remove(id: string) {
+    try {
+      const delete_user = await this.prisma.level.delete({
+        where: {
+          id,
+        },
+      });
+      return `This action removes a #${id} restApi`;
+    } catch (err) {
+      return { error: err };
     }
+  }
 }

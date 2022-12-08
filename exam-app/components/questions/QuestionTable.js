@@ -5,7 +5,7 @@ import Pagination from "react-js-pagination";
 import axios from "axios";
 import { SERVER_LINK } from "../../helpers/config";
 import { useRouter } from "next/router";
-import Modal from "../common/Modal";
+import OrganizationModal from "../common/OrganizationModal";
 import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
 import { useForm } from "react-hook-form";
@@ -41,34 +41,31 @@ const QuestionTable = ({ question_data }) => {
       });
   };
 
-  const handleBoxClick = async (module_id,module_status) =>{
-    console.log('This is hte box click');
+  const handleBoxClick = async (module_id, module_status) => {
+    console.log("This is hte box click");
     console.log(module_id);
     let new_status = {
-      status : ! module_status
-    }
-    new_status = JSON.stringify(new_status)
+      status: !module_status,
+    };
+    new_status = JSON.stringify(new_status);
     console.log(new_status);
-    
-    
-    await axios
-        .patch(`${SERVER_LINK}/module/${module_id}`, new_status, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json;charset=UTF-8",
-          },
-        })
-        .then((response) => {
-          // setModal(!modal);
-          router.replace(router.asPath);
-        })
-        .catch((err) => {
-          console.log(err);
-        });   
-    
-  }
 
-  
+    await axios
+      .patch(`${SERVER_LINK}/module/${module_id}`, new_status, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+        },
+      })
+      .then((response) => {
+        // setModal(!modal);
+        router.replace(router.asPath);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const handleEditClick = (module_id) => {
     // setOpen(true);
     setButtonText("Update");
@@ -95,7 +92,7 @@ const QuestionTable = ({ question_data }) => {
     let moduleData = JSON.stringify(data);
 
     // for taking the patch api data
-    if (data.module !=null && data.module != "") {
+    if (data.module != null && data.module != "") {
       await axios
         .patch(`${SERVER_LINK}/module/${moduleId}`, moduleData, {
           headers: {
@@ -110,14 +107,13 @@ const QuestionTable = ({ question_data }) => {
         .catch((err) => {
           console.log(err);
         });
-    }
-    else{
+    } else {
       toast.error("Field Can't be empty ");
-
     }
   };
 
-  function createData(question, question_id,question_status) {
+  function createData(question, question_type, question_id, question_status) {
+    question = question.slice(0, 15) + "...";
     const action = (
       <>
         <button
@@ -140,26 +136,27 @@ const QuestionTable = ({ question_data }) => {
         <div className="flex">
           {/* <div className="form-check form-switch"> */}
           <input
-            onClick = {() => handleBoxClick(question_id,question_status)}
+            onClick={() => handleBoxClick(question_id, question_status)}
             className="form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-gray-300 bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
             type="checkbox"
             role="switch"
             id="flexSwitchCheckDefault"
-            defaultChecked = {question_status}
+            defaultChecked={question_status}
           />
         </div>
       </>
     );
-    return { question, status, action };
+    return { question, question_type, status, action };
   }
 
   const rowsDataArray = question_data.map((element) => {
     let question = element.question;
+    let question_type = element.question_type;
     // let email = element.email;
     let question_id = element.id;
-    let question_status = element.status
+    let question_status = element.status;
     // console.log(element.status);
-    return createData(question, question_id,question_status);
+    return createData(question, question_type, question_id, question_status);
   });
 
   const columns = [
@@ -169,6 +166,36 @@ const QuestionTable = ({ question_data }) => {
       title: "question",
       dataIndex: "question",
       key: "question",
+      width: 400,
+      className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+      rowClassName: "bg-black-ripon",
+    },
+    {
+      Header: "Question Type",
+      accessor: "question_type",
+      title: "question_type",
+      dataIndex: "question_type",
+      key: "question_type",
+      width: 400,
+      className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+      rowClassName: "bg-black-ripon",
+    },
+    {
+      Header: "Level",
+      accessor: "level",
+      title: "level",
+      dataIndex: "level",
+      key: "level",
+      width: 400,
+      className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+      rowClassName: "bg-black-ripon",
+    },
+    {
+      Header: "Module",
+      accessor: "module",
+      title: "module",
+      dataIndex: "module",
+      key: "module",
       width: 400,
       className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
       rowClassName: "bg-black-ripon",
@@ -234,7 +261,7 @@ const QuestionTable = ({ question_data }) => {
                 <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                   <label
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                    for="grid-first-name"
+                    htmlFor="grid-first-name"
                   >
                     Enter Module
                   </label>
@@ -244,7 +271,7 @@ const QuestionTable = ({ question_data }) => {
                     type="text"
                     value={modules}
                     // {...register("modules", {
-                      onChange={(e) => setModules(e.target.value)}
+                    onChange={(e) => setModules(e.target.value)}
                     // })}
                     placeholder="e.g. C++, JAVA "
                   />
@@ -263,7 +290,7 @@ const QuestionTable = ({ question_data }) => {
           {/* */}
         </div>
       </PureModal>
-      <ToastContainer/>
+      <ToastContainer />
     </>
   );
 };

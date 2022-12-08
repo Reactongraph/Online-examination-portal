@@ -1,7 +1,9 @@
 import {
   ArrowNarrowLeftIcon,
   ArrowNarrowRightIcon,
-  CollectionIcon, DuplicateIcon, FilmIcon
+  CollectionIcon,
+  DuplicateIcon,
+  FilmIcon,
 } from "@heroicons/react/solid";
 import {CgOrganisation} from 'react-icons/cg';
 import {TiGroup} from 'react-icons/ti';
@@ -30,20 +32,20 @@ const Nav = ({ sidebarOutsideClick }) => {
     setSubMenuToggleStatus(!subMenuToggleStatus);
   };
 
-   //if menu has chile menu then  use seperate array
-   const childMenu = [
+  //if menu has chile menu then  use seperate array
+  const childMenu = [
     {
       subMenuTitle: "child One",
-      linkHref: "/"
+      linkHref: "/",
     },
     {
       subMenuTitle: "child Two",
-      linkHref: "/"
+      linkHref: "/",
     },
     {
       subMenuTitle: "child Three",
-      linkHref: "/"
-    }
+      linkHref: "/",
+    },
   ];
 
   useEffect(() => {
@@ -60,48 +62,47 @@ const Nav = ({ sidebarOutsideClick }) => {
             <ArrowNarrowLeftIcon
               className="inline-block h-12 cursor-pointer"
               onClick={sidebarClose}
-              size = {30}
+              size={30}
             />
           ) : (
             <ArrowNarrowRightIcon
               className="inline-block h-12 cursor-pointer"
               onClick={sidebarOpen}
-              size = {30}
+              size={30}
             />
           )}
         </div>
 
         <NavItem
-          hrefLink='/dashboard/organization'
+          hrefLink="/dashboard/organization"
           sidebarStatus={sidebarStatus}
           menuTitle="Organization"
           subMenu={false}
           subMenuArray={null}
         >
           <CgOrganisation size={30} />
-        </NavItem> 
+        </NavItem>
 
         <NavItem
-          hrefLink='/dashboard/participant'
+          hrefLink="/dashboard/participant"
           sidebarStatus={sidebarStatus}
           menuTitle="Participant"
           subMenu={false}
           subMenuArray={null}
         >
           <TiGroup size={30} />
-        </NavItem> 
+        </NavItem>
         <NavItem
-          hrefLink='/dashboard/level'
+          hrefLink="/dashboard/level"
           sidebarStatus={sidebarStatus}
           menuTitle="Level"
           subMenu={false}
           subMenuArray={null}
         >
-                    <BsSpeedometer size={30} />
-
-        </NavItem> 
+          <BsSpeedometer size={30} />
+        </NavItem>
         <NavItem
-          hrefLink='/dashboard/module'
+          hrefLink="/dashboard/module"
           sidebarStatus={sidebarStatus}
           menuTitle="Module"
           subMenu={false}
@@ -122,19 +123,19 @@ const Nav = ({ sidebarOutsideClick }) => {
         </NavItem> 
 
         {/* this menu has child Menu     */}
-        <NavItem
-          hrefLink='/dashboard/examination'
+        {/*                                     
+        
+        kept for reference  */}
+        
+        {/* <NavItem
+          hrefLink="/dashboard/examination"
           sidebarStatus={sidebarStatus}
           menuTitle="Examination"
           subMenu={true}
           subMenuArray={childMenu}
         >
-                    <CgNotes size={30} />
-
-        </NavItem> 
-
-       
-       
+          <CgNotes size={30} />
+        </NavItem> */}
       </nav>
     </>
   );
