@@ -25,23 +25,9 @@ import { Observable, of } from 'rxjs';
 @Controller('questions')
 export class QuestionsController {
   constructor(private readonly questionservice: QuestionsService) {}
-  @Post('file-upload')
-  @UseInterceptors(FileInterceptor('profile'))
-  postAdd(
-    @UploadedFile() profile: Express.Multer.File,
-    @Body() createquestion: QuestionDTO,
-  ): object {
-    new ParseFilePipe({
-      validators: [
-        new MaxFileSizeValidator({ maxSize: 1000 }),
-        new FileTypeValidator({ fileType: 'jpeg' }),
-      ],
-    });
-
-    const create_question = this.questionservice.create(
-      createquestion,
-      profile.path,
-    );
+  @Post('create')
+  postAdd(@Body() createquestion: QuestionDTO): object {
+    const create_question = this.questionservice.create(createquestion);
 
     return {
       message: 'question created ',

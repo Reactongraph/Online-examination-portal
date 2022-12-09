@@ -1,85 +1,102 @@
 import { Injectable } from '@nestjs/common';
-import { QuestionDTO } from './questions.entity';
-import { PrismaService } from 'src/prisma.service';
-import { Participants, PrismaClient } from '@prisma/client';
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 @Injectable()
 export class QuestionsService {
-  constructor(private prisma: PrismaService) {}
-  async create(createQuestionDto: QuestionDTO, path: string) {
-    // date comes in string and in db status column data type is boolean so we convert string to boolean
-    const myBool = Boolean(createQuestionDto?.status);
-    const date = new Date(createQuestionDto?.question_time);
-    try {
-      // const user = await this.prisma.questions.create({
-      // data: {
-      //   question: createQuestionDto.question,
-      //   question_type: createQuestionDto.question_type,
-      //   question_time: createQuestionDto.question_time,
-      //   images: path,
-      //   status: myBool,
-      //   },
-      // });
-      const user = await this.prisma.questions.create({
-        data: {
-          question: createQuestionDto.question,
-          question_type: createQuestionDto.question_type,
-          question_time: createQuestionDto.question_time,
-          images: path,
-          status: myBool,
-        },
+  async create(createQuestionDto: any) {
+    prisma.$connect();
+    const question = await prisma.Questions.create({
+      data: {
+        question: createQuestionDto?.question,
+        question_type: createQuestionDto?.question_type,
+        question_time: createQuestionDto?.question_time,
+        status: createQuestionDto?.status,
+      },
+    });
+
+    const updatedOptions = createQuestionDto.options.flatMap((element) => [
+      {
+        ...element,
+        question_id: question.id,
+      },
+    ]);
+    const bulk_insertion = updatedOptions.map(async function (index) {
+      const createMany = await prisma.Questions_options.createMany({
+        data: updatedOptions[index],
       });
-      return 'inserted';
-    } catch (err) {
-      return { error: err };
-    }
+    });
+
+    return 'inserted';
   }
 
   async findAll() {
-    const users = await this.prisma.questions.findMany();
+    prisma.$connect();
+    const question = await prisma.Questions.findMany();
+    const Questions_options = await prisma.Questions_options.findMany();
+    const arr = [question, Questions_options];
 
-    return `${JSON.stringify(users)}`;
+    return arr;
   }
 
   async findOne(id: string) {
-    try {
-      const user = await this.prisma.questions.findUnique({
-        where: {
-          id,
-        },
-      });
-      if (!user) {
-        return `user not found with this  ${id}`;
-      }
-      return user;
-    } catch (err) {
-      return { error: err };
+    const question_options = await prisma.Questions_options.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    const question = await prisma.Questions.findUnique({
+      where: {
+        id: question_options.question_id,
+      },
+    });
+
+    if (!question && !question_options) {
+      return `user not found with this  ${id}`;
     }
-  }
-  async update(id: string, updateRestApiDto: QuestionDTO) {
-    try {
-      const updateUser = await this.prisma.questions.update({
-        where: {
-          id,
-        },
-        data: updateRestApiDto,
-      });
-      if (!updateUser) {
-        return `user not found for this ${id}`;
-      }
-      return 'updated ';
-    } catch (err) {
-      return { error: err };
-    }
+    const arr = [question, question_options];
+    return arr;
   }
 
-  async remove(id: string) {
-    try {
-      const delete_user = await this.prisma.questions.delete({
+  async update(id: string, updateRestApiDto: any) {
+    const update = await prisma.Questions.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        questions_options: true,
+      },
+    });
+    console.log(update);
+
+    for (const [index, element] of updateRestApiDto.options.entries()) {
+      const updatequestion = await prisma.Questions.update({
         where: {
-          id,
+          id: update.id,
         },
+        data: { question: updateRestApiDto.questions.question },
       });
-      return `This action removes a #${id} restApi`;
-    } catch (err) {}
+      const updatedOptions = await prisma.Questions_options.update({
+        where: {
+          id: update.questions_options[index].id,
+        },
+        data: updateRestApiDto.options[index],
+      });
+    }
+    return 'updated';
+  }
+
+  async remove(idd: string) {
+    const delete_option = await prisma.Questions_options.deleteMany({
+      where: {
+        question_id: idd,
+      },
+    });
+    const delete_question = await prisma.Questions.delete({
+      where: {
+        id: idd,
+      },
+    });
+
+    return `This action removes a # restApi`;
   }
 }

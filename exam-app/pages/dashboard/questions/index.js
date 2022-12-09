@@ -33,7 +33,7 @@ export async function getServerSideProps() {
   // Fetch data from external API
   const res = await axios.get(`${SERVER_LINK}/questions/find`);
 
-  let question_data = res.data;
+  let question_data = res.data.question;
 
   // Pass data to the page via props
   return { props: { question_data } };

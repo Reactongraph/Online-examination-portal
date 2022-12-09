@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ComponentTitle from "./ComponentTitle";
 import QuestionTable from "./QuestionTable";
 import { RiDeleteBinLine } from "react-icons/ri";
@@ -8,21 +8,30 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 
 const addQuestion = ({ question_data }) => {
-  //  console.log("The level_data "+ level_data);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [question, setQuestion] = useState('');
+  const [question, setQuestion] = useState("");
   const [optionType, setOptionType] = useState("");
+  const [questionType, setQuestionType] = useState("");
+  const [selectedLevelId, setSelectedLevelId] = useState("");
+  const [selectedModuleId, setSelectedModuleId] = useState("");
+  const [timeLimitSelect, setTimeLimitSelect] = useState("");
+  const [requiredOptionField, setRequiredOptionField] = useState(true);
   const [levelData, setLevelData] = useState();
   const [moduleData, setModuleData] = useState();
+  const [numberOfOptionSelect, setNumberOfOptionSelect] = useState(0);
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState();
   const [inputFields, setInputFields] = useState([
-    { option: "" },
-    { option: "" },
-    { option: "" },
-    { option: "" },
+    { option: "", correct: "" },
+    { option: "", correct: "" },
+    { option: "", correct: "" },
+    { option: "", correct: "" },
   ]);
-  const { register,  handleSubmit ,reset} = useForm();
-
-  // console.log(question_data);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   const handleLevelClick = async () => {
     let levels = await axios.get(`${SERVER_LINK}/level/find`);
@@ -33,11 +42,54 @@ const addQuestion = ({ question_data }) => {
     setModuleData(modules.data);
   };
 
-  const handleSelect = (event) => {
-    // console.log('selectd');
+  useEffect(() => {
+    if (numberOfOptionSelect > 0) {
+      setRequiredOptionField(false);
+    } else {
+      setRequiredOptionField(true);
+    }
+  }, [numberOfOptionSelect]);
+
+  const handleSelectedOption = (index, event) => {
+    setRequiredOptionField(false);
+
+    if (!event.target.checked) {
+      setNumberOfOptionSelect(numberOfOptionSelect - 1);
+    }
+    setSelectedOptionIndex(index);
+    let data = [...inputFields];
+    data[index].correct = event.target.checked;
+    setInputFields(data);
+
+    inputFields.map((oneObj) => {
+      if (oneObj.correct == true)
+        setNumberOfOptionSelect(numberOfOptionSelect + 1);
+    });
+  };
+
+  const handleModuleTypeSelect = (event) => {
+    let moduleId = event.target.value;
+    setSelectedModuleId(moduleId);
+  };
+
+  const handleLevelTypeSelect = (event) => {
+    let levelId = event.target.value;
+    setSelectedLevelId(levelId);
+    // setSelectedLevelId(moduleId);
+  };
+
+  const handleOptionTypeSelect = (event) => {
     let optionType = event.target.value;
-    // console.log(event.target.value);
     setOptionType(optionType);
+  };
+
+  const handleTimeLimitSelect = (event) => {
+    let timeLimitValue = event.target.value;
+    setTimeLimitSelect(timeLimitValue);
+  };
+  const handleQuestionTypeSelect = (event) => {
+    let questionTypeValue = event.target.value;
+    setQuestionType(questionTypeValue);
   };
   const handleFormChange = (index, event) => {
     let data = [...inputFields];
@@ -55,11 +107,45 @@ const addQuestion = ({ question_data }) => {
     setInputFields(data);
   };
 
-  const checkWithDatabase = (e) => {
-    console.log("The submit button");
-    e = JSON.stringify(e)
-    console.log(e);
-    reset()
+  const checkWithDatabase = async (data) => {
+    data.question_type = questionType;
+    data.question_time = timeLimitSelect;
+    data.status = true;
+    data.level_id = selectedLevelId;
+    data.module_id = selectedModuleId;
+    data.option_type = optionType;
+    if (optionType != "Multiple") {
+      data.options.map((oneOption, i) => {
+        if (selectedOptionIndex == i) oneOption.correct = true;
+        else oneOption.correct = false;
+      });
+    } else {
+      data.options = inputFields;
+      data.options.map((oneOption, i) => {
+        if (!oneOption.correct) oneOption.correct = false;
+      });
+    }
+
+    data = JSON.stringify(data);
+
+    await axios({
+      url: `${SERVER_LINK}/questions/create`,
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+      data,
+    })
+      .then((response) => {
+        // setModal(!modal);
+        // router.replace(router.asPath);
+
+        reset();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <main>
@@ -160,8 +246,9 @@ const addQuestion = ({ question_data }) => {
                 {/* <label for="default-input" className="block mb-2 text-sm font-medium">Default input</label> */}
                 <input
                   type="text"
-                  id="default-input"                 
-                  {...register(`questions.0.question`)} 
+                  id="default-input"
+                  required
+                  {...register(`question`)}
                   placeholder="Type your question"
                   className="bg-gray-50 border text-center border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
@@ -179,19 +266,28 @@ const addQuestion = ({ question_data }) => {
                         id="default-input"
                         className="bg-gray-50 border my-3 text-left border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-3/4 p-2.5  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         name="option"
-                        {...register(`options.${index}.option`)} 
+                        {...register(`options.${index}.option`, {
+                          required: true,
+                        })}
                         // value={input.option}
-                        // onChange={(event) => handleFormChange(index, event)}
+                        onChange={(event) => handleFormChange(index, event)}
                         placeholder={`Option ${String.fromCharCode(
                           65 + index
                         )}`}
                       />
+                      {/* {errors.options.index && <p>{errors.options.message} thsi </p>} */}
                       <input
                         type={optionType == "Multiple" ? "checkbox" : "radio"}
                         className="mx-5"
+                        required={requiredOptionField}
+                        // validate = "required"//
+                        // validate =  {  selectedOptionIndex  ? "required" : "" }
+                        // required = {selectedOptionIndex ?"false":<>required</>}
+                        {...register(`options.${index}.correct`)}
                         id={index}
                         name="fav_language"
-                        value="HTML"
+                        // value = {input.option}
+                        onChange={(event) => handleSelectedOption(index, event)}
                       />
                       <button onClick={() => removeFields(index)}>
                         <RiDeleteBinLine />
@@ -202,7 +298,11 @@ const addQuestion = ({ question_data }) => {
                     </div>
                   );
                 })}
-                <button type = "button" onClick={addFields} className="text-blue-400">
+                <button
+                  type="button"
+                  onClick={addFields}
+                  className="text-blue-400"
+                >
                   Add More...
                 </button>
               </div>
@@ -231,15 +331,19 @@ const addQuestion = ({ question_data }) => {
           </label>
           <select
             id="default"
+            required
+            onChange={(e) => {
+              handleQuestionTypeSelect(e);
+            }}
             className="bg-gray-50 border  w-40 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
-            <option value="Select" hidden>
+            <option value="" hidden>
               Select
             </option>
-            <option value="US">MCQ</option>
-            <option value="CA">TRUE/FALSE</option>
-            <option value="FR">ONE-WORD</option>
-            <option value="DE">Don't Know</option>
+            <option value="MCQ">MCQ</option>
+            <option value="TRUE/FALSE">TRUE/FALSE</option>
+            <option value="ONE-WORD">ONE-WORD</option>
+            <option value="DON'T KNOW">Don't Know</option>
           </select>
 
           <label
@@ -250,15 +354,17 @@ const addQuestion = ({ question_data }) => {
           </label>
           <select
             id="default"
+            onChange={handleTimeLimitSelect}
+            required
             className="bg-gray-50 border  w-40 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
-            <option value="Select" hidden>
+            <option value="" hidden>
               Select
             </option>
-            <option value="US">10 Seconds</option>
-            <option value="CA">20 Seconds</option>
-            <option value="FR">30 Seconds</option>
-            <option value="DE">40 Seconds</option>
+            <option value="10 Seconds">10 Seconds</option>
+            <option value="20 Seconds">20 Seconds</option>
+            <option value="30 Seconds">30 Seconds</option>
+            <option value="40 Seconds">40 Seconds</option>
           </select>
           <label
             htmlFor="default"
@@ -268,10 +374,11 @@ const addQuestion = ({ question_data }) => {
           </label>
           <select
             id="default"
-            onChange={handleSelect}
+            onChange={handleOptionTypeSelect}
+            required
             className="bg-gray-50 border w-40 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
-            <option value="Select" hidden>
+            <option value="" hidden>
               Select
             </option>
             <option value="Single">Single</option>
@@ -286,14 +393,18 @@ const addQuestion = ({ question_data }) => {
           <select
             id="default"
             onClick={handleLevelClick}
+            onChange={(e) => {
+              handleLevelTypeSelect(e);
+            }}
+            required
             className="bg-gray-50 border w-40 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
-            <option value="Select" hidden>
+            <option value="" hidden>
               Select
             </option>
             {levelData &&
               levelData.map((response) => (
-                <option value={response.level}>{response.level}</option>
+                <option value={response.id}>{response.level}</option>
               ))}
           </select>
           <label
@@ -305,16 +416,34 @@ const addQuestion = ({ question_data }) => {
           <select
             id="default"
             onClick={handleModuleClick}
+            onChange={(e) => {
+              handleModuleTypeSelect(e);
+            }}
+            required
             className="bg-gray-50 border w-40 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
-            <option value="Select" hidden>
+            <option value="" hidden>
               Select
             </option>
             {moduleData &&
               moduleData.map((response) => (
-                <option value={response.module}>{response.module}</option>
+                <option value={response.id}>{response.module}</option>
               ))}
           </select>
+          <label
+            htmlFor="default"
+            className="block mb-2 text-sm font-medium text-gray-900 "
+          >
+            Marks
+          </label>
+          <input
+            type="number"
+            min="1"
+            {...register(`marks`)}
+            required
+            placeholder="eg. 1 , 2 etc ..."
+            className="bg-gray-50 border w-40 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
         </div>
       </form>
     </main>
