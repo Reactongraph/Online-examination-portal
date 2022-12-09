@@ -13,7 +13,7 @@ import { QuestionDTO } from './questions.entity';
 export class QuestionsController {
   constructor(private readonly questionservice: QuestionsService) {}
   @Post('create')
-  async postAdd(@Body() createquestion: QuestionDTO) {
+  async create_question(@Body() createquestion: QuestionDTO) {
     const data = this.questionservice.create(createquestion);
 
     return data;
