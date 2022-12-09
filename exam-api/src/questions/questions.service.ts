@@ -23,14 +23,21 @@ export class QuestionsService {
   }
 
   async findAll() {
-    const question = await this.prisma.questions.findMany();
-    return question;
+    const find_questions = await this.prisma.questions.findMany({
+      include: { level: true, module: true },
+    });
+
+    return find_questions;
   }
 
   async findOne(id: string) {
     const question = await this.prisma.questions.findUnique({
       where: {
         id: id,
+      },
+      include: {
+        level: true,
+        module: true,
       },
     });
 
