@@ -3,6 +3,7 @@ class QuestionDTO {
   question: string;
   question_type: string;
   question_time: string;
+  options: object;
   images: string;
   createdAt: Date;
   updatedAt: Date;

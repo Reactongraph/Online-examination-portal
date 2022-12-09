@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
+import { QuestionDTO } from './questions.entity';
 @Injectable()
 export class QuestionsService {
   constructor(private prisma: PrismaService) {}
-  async create(createQuestionDto: any) {
+  async create(createQuestionDto: QuestionDTO) {
     const question = await this.prisma.questions.create({
       data: {
         question: createQuestionDto?.question,
@@ -27,7 +28,7 @@ export class QuestionsService {
     const data = {
       question,
     };
-    return `${JSON.stringify(data)}`;
+    return data;
   }
 
   async findOne(id: string) {
@@ -75,6 +76,6 @@ export class QuestionsService {
       },
     });
 
-    return `question deleted  ${delete_question} `;
+    return `question deleted  `;
   }
 }
