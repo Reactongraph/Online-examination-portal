@@ -9,9 +9,11 @@ import {
 } from '@nestjs/common';
 import { QuestionsService } from './questions.service';
 import { QuestionDTO } from './questions.entity';
+
 @Controller('questions')
 export class QuestionsController {
   constructor(private readonly questionservice: QuestionsService) {}
+
   @Post('create')
   async create_question(@Body() createquestion: QuestionDTO) {
     const data = this.questionservice.create(createquestion);

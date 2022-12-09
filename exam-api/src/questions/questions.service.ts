@@ -24,11 +24,7 @@ export class QuestionsService {
 
   async findAll() {
     const question = await this.prisma.questions.findMany();
-
-    const data = {
-      question,
-    };
-    return data;
+    return question;
   }
 
   async findOne(id: string) {
@@ -41,24 +37,20 @@ export class QuestionsService {
     if (!question) {
       return `user not found with this  ${id}`;
     }
-    const arr = [question];
-    return arr;
+    return question;
   }
 
-  async update(id: string, updateRestApiDto: any) {
+  async update(id: string, updateRestApiDto: QuestionDTO) {
     const find = await this.prisma.questions.findUnique({ where: { id: id } });
     if (!find) {
-      return 'data is not exist!';
+      return 'data does not exist!';
     }
 
     const updatedOptions = await this.prisma.questions.update({
       where: {
         id: id,
       },
-      data: {
-        option: updateRestApiDto.options,
-        question: updateRestApiDto.questions[0].question,
-      },
+      data: updateRestApiDto,
     });
     return updatedOptions;
   }
@@ -68,14 +60,14 @@ export class QuestionsService {
       where: { id: idd },
     });
     if (!find_del) {
-      return 'data is not exist!';
+      return 'data does not exist!';
     }
-    const delete_question = await this.prisma.questions.delete({
+    await this.prisma.questions.delete({
       where: {
         id: idd,
       },
     });
 
-    return `question deleted  `;
+    return `question deleted`;
   }
 }
