@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PostDTO } from './post';
 import { PrismaService } from 'src/prisma.service';
-// import { nodemailer } from 'nodemailer';
 const nodemailer = require('nodemailer');
 
 @Injectable()
