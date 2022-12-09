@@ -4,20 +4,20 @@ module.exports = {
     project: 'tsconfig.json',
     tsconfigRootDir: __dirname,
     sourceType: 'module',
-    ecmaVersion: 'latest'
+    ecmaVersion: 'latest',
   },
   plugins: ['@typescript-eslint/eslint-plugin'],
   extends: [
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
-    'standard-with-typescript'
+    'standard-with-typescript',
   ],
   root: true,
   env: {
     node: true,
     jest: true,
     browser: true,
-    es2021: true
+    es2021: true,
   },
   ignorePatterns: ['.eslintrc.js'],
   rules: {
