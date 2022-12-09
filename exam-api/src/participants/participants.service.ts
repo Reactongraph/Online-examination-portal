@@ -7,36 +7,30 @@ const nodemailer = require('nodemailer');
 export class ParticipantsService {
   constructor(private prisma: PrismaService) {}
   async create(params: participants_dto) {
-    try {
-      const name = params?.name;
-      const email = params?.email;
-      const saltOrRounds = 10;
-      const password = params?.password;
-
-      const mobile = params?.mobile;
-      const email_check = await this.prisma.participants.findUnique({
-        where: { email },
+    const email = params?.email;
+    const saltOrRounds = 10;
+    const password = params?.password;
+    const hash = await bcrypt.hash(password, saltOrRounds);
+    const email_check = await this.prisma.participants.findUnique({
+      where: { email },
+    });
+    if (email_check) {
+      return {
+        message: 'user already exist',
+        password: null,
+        email: null,
+      };
+    } else {
+      const user = await this.prisma.participants.create({
+        data: {
+          name: params?.name,
+          email: params?.email,
+          password: hash,
+          mobile: params?.mobile,
+          Organization_id: params?.id,
+        },
       });
-      if (email_check) {
-        return {
-          message: 'user already exist',
-          password: null,
-          email: null,
-        };
-      } else {
-        const user = await this.prisma.participants.create({
-          data: {
-            name: params?.name,
-            email: params?.email,
-            password: password,
-            mobile: params?.mobile,
-            Organization_id: params?.id,
-          },
-        });
-        return user;
-      }
-    } catch (err) {
-      return { error: err };
+      return user;
     }
   }
 
@@ -60,68 +54,50 @@ export class ParticipantsService {
 
     mailTransporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        return {
-          message: error,
-        };
+        return error;
       } else {
-        {
-          message: 'mail send ';
-          response: info.response;
-        }
+        return { message: 'Email send:', Response: info.response };
       }
     });
   }
 
   async findAll() {
     const users = await this.prisma.participants.findMany();
-
     return `${JSON.stringify(users)}`;
   }
 
   async findOne(id: string) {
-    try {
-      const user = await this.prisma.participants.findUnique({
-        where: {
-          id,
-        },
-      });
-      if (!user) {
-        return `user not found with this  ${id}`;
-      }
-
-      return `${JSON.stringify(user)} `;
-    } catch (err) {
-      return { error: err };
+    const user = await this.prisma.participants.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!user) {
+      return `user not found with this  ${id}`;
     }
+
+    return `${JSON.stringify(user)} `;
   }
 
   async update(id: string, updateRestApiDto: participants_dto) {
-    try {
-      const updateUser = await this.prisma.participants.update({
-        where: {
-          id,
-        },
-        data: updateRestApiDto,
-      });
-      if (!updateUser) {
-        return `user not found for this ${id}`;
-      }
-      return `${id} `;
-    } catch (err) {
-      return { error: err };
+    const updateUser = await this.prisma.participants.update({
+      where: {
+        id,
+      },
+      data: updateRestApiDto,
+    });
+    if (!updateUser) {
+      return `user not found for this ${id}`;
     }
+    return { message: 'updated', data: updateUser };
   }
 
   async remove(id: string) {
-    try {
-      const delete_user = await this.prisma.participants.delete({
-        where: {
-          id,
-        },
-      });
-      return `This action removes a #${id} restApi`;
-    } catch (err) {
-      return { error: err };
-    }
+    const delete_user = await this.prisma.participants.delete({
+      where: {
+        id,
+      },
+    });
+    return `participant deleted  ${delete_user} `;
   }
 }

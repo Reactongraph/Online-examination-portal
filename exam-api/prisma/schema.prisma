@@ -79,26 +79,16 @@ model Questions {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   question          String
   question_type     String?
+  option_type       String?
+  option            Json?
   question_time     String?
   images            String?
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   status            Boolean
-  module_id         String
-  level_id          String
-  questions_options Questions_options[]
-  module            Module              @relation(fields: [module_id], references: [id])
-  level             Level               @relation(fields: [level_id], references: [id])
-}
-
-model Questions_options {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  option_type String?
-  option      String?
-  question_id String
-  correct     String?
-  status      Boolean
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  questions   Questions @relation(fields: [question_id], references: [id])
+  level_id          String?
+  module_id         String?
+  marks             String?
+  level             Level?              @relation(fields: [level_id], references: [id])
+  module            Module?             @relation(fields: [module_id], references: [id])
 }
