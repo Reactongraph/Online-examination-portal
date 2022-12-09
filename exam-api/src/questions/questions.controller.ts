@@ -1,45 +1,23 @@
 import {
   Controller,
-  FileTypeValidator,
   Get,
-  MaxFileSizeValidator,
-  ParseFilePipe,
   Post,
-  UploadedFile,
-  UploadedFiles,
-  UseInterceptors,
   Body,
-  StreamableFile,
   Param,
-  Res,
   Patch,
   Delete,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { profile } from 'console';
 import { QuestionsService } from './questions.service';
 import { QuestionDTO } from './questions.entity';
-import { createReadStream } from 'fs';
-import { join } from 'path';
-import { Observable, of } from 'rxjs';
 @Controller('questions')
 export class QuestionsController {
   constructor(private readonly questionservice: QuestionsService) {}
-  @Post('create')
-  postAdd(@Body() createquestion: QuestionDTO): object {
-    const create_question = this.questionservice.create(createquestion);
+  @Post('create') postAdd(@Body() createquestion: QuestionDTO): object {
+    this.questionservice.create(createquestion);
 
     return {
-      message: 'question created ',
+      message: { message: 'question created ' },
     };
-  }
-
-  @Get('image/:imagename')
-  findProfileImage(
-    @Param('imagename') imagename,
-    @Res() res,
-  ): Observable<object> {
-    return of(res.sendFile(join(process.cwd(), 'images/' + imagename)));
   }
 
   @Get('find')

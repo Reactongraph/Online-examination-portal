@@ -6,19 +6,11 @@ import {
   Patch,
   Param,
   Delete,
-  Headers,
-  HttpStatus,
-  Put,
-  Res,
 } from '@nestjs/common';
 import { RestApiService } from './organization.service';
-import { CreateRestApiDto } from './dto/create-rest-api.dto';
-import { UpdateRestApiDto } from './dto/update-rest-api.dto';
 import { PostDTO } from './post';
 import { JwtService } from '@nestjs/jwt';
-import { Oraganization } from './organization.middleware';
 import { PrismaService } from 'src/prisma.service';
-import { reset_token, PrismaClient } from '@prisma/client';
 
 @Controller('organization')
 export class RestApiController {
@@ -29,28 +21,20 @@ export class RestApiController {
   ) {}
   // this controller is used to create Oraganization data
   @Post()
-  async create(
-    @Body() createRestApiDto: PostDTO,
-    @Res({ passthrough: true }) response: Response,
-  ) {
+  async create(@Body() createRestApiDto: PostDTO) {
     const user = await this.restApiService.create(createRestApiDto);
-    console.log('user', user);
     if (user.id == null) {
       return {
         message: 'user already exist',
       };
     } else {
       const jwt = await this.jwtService.signAsync({ id: user.id });
-      const create = await this.prisma.reset_token.create({
+      await this.prisma.reset_token.create({
         data: {
           token: jwt,
         },
       });
-      const reset_link = await this.restApiService.reset_link(
-        jwt,
-        user.id,
-        user.email,
-      );
+      await this.restApiService.reset_link(jwt, user.id, user.email);
       return {
         message: 'email-send',
       };
@@ -59,7 +43,7 @@ export class RestApiController {
 
   // this controller is used to Read all Oraganization data
   @Get('find')
-  async findAll(@Headers('xaccesstoken') Headers) {
+  async findAll() {
     return await this.restApiService.findAll();
   }
 
