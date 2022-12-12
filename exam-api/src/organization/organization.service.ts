@@ -7,42 +7,37 @@ const nodemailer = require('nodemailer');
 export class RestApiService {
   constructor(private prisma: PrismaService) {}
   async create(createRestApiDto: PostDTO) {
-    try {
-      const email_check = await this.prisma.organization.findUnique({
-        where: { email: createRestApiDto?.email },
+    const email_check = await this.prisma.organization.findUnique({
+      where: { email: createRestApiDto?.email },
+    });
+    if (email_check) {
+      return {
+        message: 'user already exist',
+        id: null,
+        email: null,
+      };
+    } else {
+      const user = await this.prisma.organization.create({
+        data: {
+          email: createRestApiDto?.email,
+          name: createRestApiDto?.name,
+          quota: createRestApiDto?.quota,
+          status: createRestApiDto?.status,
+          mobile: createRestApiDto?.mobile,
+          address: createRestApiDto?.address,
+          city: createRestApiDto?.city,
+          state: createRestApiDto?.state,
+          pincode: createRestApiDto.pincode,
+        },
       });
-      if (email_check) {
-        return {
-          message: 'user already exist',
-          id: null,
-          email: null,
-        };
-      } else {
-        const user = await this.prisma.organization.create({
-          data: {
-            email: createRestApiDto?.email,
-            name: createRestApiDto?.name,
-            password: createRestApiDto?.password,
-            quota: createRestApiDto?.quota,
-            status: createRestApiDto?.status,
-            mobile: createRestApiDto?.mobile,
-            address: createRestApiDto?.address,
-            city: createRestApiDto?.city,
-            state: createRestApiDto?.state,
-            pincode: createRestApiDto.pincode,
-          },
-        });
-        const userauth = await this.prisma.user_auth.create({
-          data: {
-            name: createRestApiDto?.name,
-            email: createRestApiDto?.email,
-            password: createRestApiDto?.password,
-          },
-        });
-        return user;
-      }
-    } catch (err) {
-      return { error: err };
+      await this.prisma.user_auth.create({
+        data: {
+          name: createRestApiDto?.name,
+          email: createRestApiDto?.email,
+          password: createRestApiDto?.password,
+        },
+      });
+      return user;
     }
   }
 
@@ -56,7 +51,6 @@ export class RestApiService {
         pass: 'qbzgsqdaavnfkfxm',
       },
     });
-
     const clientURL = 'http://localhost:3000/';
     const link = `${clientURL}/passwordReset?token=${token}&id=${id}`;
     const mailOptions = {
@@ -70,12 +64,9 @@ export class RestApiService {
 
     mailTransporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        console.log(error);
-        // res.status(409).send(error.message);
+        return error;
       } else {
-        console.log('Email sent: ' + info.response);
-        // res.status(200).send("Mail sent successfully" );
-        return 'mail send ';
+        return { message: 'Email send:', Response: info.response };
       }
     });
   }
@@ -86,49 +77,37 @@ export class RestApiService {
   }
 
   async findOne(id: string) {
-    try {
-      const user = await this.prisma.organization.findUnique({
-        where: {
-          id,
-        },
-      });
-      if (!user) {
-        return `user not found with this  ${id}`;
-      }
-
-      return `${JSON.stringify(user)}`;
-    } catch (err) {
-      return { error: err };
+    const user = await this.prisma.organization.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!user) {
+      return `user not found with this  ${id}`;
     }
+
+    return `${JSON.stringify(user)}`;
   }
 
   async update(id: string, updateRestApiDto: PostDTO) {
-    try {
-      const updateUser = await this.prisma.organization.update({
-        where: {
-          id,
-        },
-        data: updateRestApiDto,
-      });
-      if (!updateUser) {
-        return `user not found for this ${id}`;
-      }
-      return `${id} `;
-    } catch (err) {
-      return { error: err };
+    const updateUser = await this.prisma.organization.update({
+      where: {
+        id,
+      },
+      data: updateRestApiDto,
+    });
+    if (!updateUser) {
+      return `user not found for this ${id}`;
     }
+    return ` organization updated ${id} `;
   }
 
   async remove(id: string) {
-    try {
-      const delete_user = await this.prisma.organization.delete({
-        where: {
-          id,
-        },
-      });
-      return `${id} `;
-    } catch (err) {
-      return { error: err };
-    }
+    const delete_user = await this.prisma.organization.delete({
+      where: {
+        id,
+      },
+    });
+    return `organization deleted  ${delete_user} `;
   }
 }

@@ -3,6 +3,7 @@ import OrganizationModal from "./OrganizationModal";
 import ParticipantModal from "./ParticipantModal";
 import LevelModal from "./LevelModal";
 import ModuleModal from "./ModuleModal";
+import QuizModal from "./QuizModal";
 
 const PageComponentTitle = ({
   title,
@@ -54,6 +55,10 @@ const PageComponentTitle = ({
         ) : title == "MODULE" ? (
           <>
             <ModuleModal modal={modal} setModal={setModal} />
+          </>
+        ) : title == "QUIZ" ? (
+          <>
+            <QuizModal modal={modal} setModal={setModal} />
           </>
         ) : (
           <>

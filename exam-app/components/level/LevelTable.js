@@ -62,6 +62,7 @@ const LevelTable = ({ level_data }) => {
       status: !level_status,
     };
     new_status = JSON.stringify(new_status);
+    console.log(new_status);
 
     await axios
       .patch(`${SERVER_LINK}/level/${level_id}`, new_status, {

@@ -1,16 +1,13 @@
 import { Injectable } from '@nestjs/common';
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+import { PrismaService } from 'src/prisma.service';
 import { module_dto } from './module.entity';
 @Injectable()
 export class ModuleService {
+  constructor(private prisma: PrismaService) {}
   async create(params: module_dto) {
-    prisma.$connect();
-    console.log('in service ', params?.module);
-    const module = params?.module;
     const status = params?.status;
     const toLowerCaseModule = params?.module.toLowerCase();
-    const users = await prisma.module.create({
+    await this.prisma.module.create({
       data: {
         module: toLowerCaseModule,
         status: status,
@@ -19,21 +16,16 @@ export class ModuleService {
     return 'module inserted';
   }
   async findAll() {
-    prisma.$connect();
-    const users = await prisma.Module.findMany();
-    console.log(users);
+    const users = await this.prisma.module.findMany();
 
     return `${JSON.stringify(users)}`;
   }
   async findOne(id: string) {
-    console.log(id);
-
-    const user = await prisma.Module.findUnique({
+    const user = await this.prisma.module.findUnique({
       where: {
         id: id,
       },
     });
-    console.log(user);
     if (!user) {
       return `data not found with this  ${id}`;
     }
@@ -41,12 +33,11 @@ export class ModuleService {
     return `${JSON.stringify(user)} `;
   }
   async update(id: string, updateRestApiDto: module_dto) {
-    const check_id = await prisma.Module.findUnique({
+    const check_id = await this.prisma.module.findUnique({
       where: {
         id: id,
       },
     });
-    console.log('checkid', check_id.module);
     if (updateRestApiDto?.module == check_id.module) {
       return { message: 'module already exist' };
     }
@@ -54,7 +45,7 @@ export class ModuleService {
     if (check_id == null) {
       return 'invalid id ';
     } else {
-      const updateUser = await prisma.Module.update({
+      const updateUser = await this.prisma.module.update({
         where: {
           id: id,
         },
@@ -63,16 +54,16 @@ export class ModuleService {
       if (!updateUser) {
         return `user not found for this ${id}`;
       }
-      return `${id} `;
+      return `module updated ${id} `;
     }
   }
 
   async remove(id: string) {
-    const delete_user = await prisma.Module.delete({
+    const delete_user = await this.prisma.module.delete({
       where: {
         id: id,
       },
     });
-    return `This action removes a #${id} restApi`;
+    return `module deleted  ${delete_user} `;
   }
 }

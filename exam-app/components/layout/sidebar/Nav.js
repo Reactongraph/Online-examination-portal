@@ -5,11 +5,14 @@ import {
   DuplicateIcon,
   FilmIcon,
 } from "@heroicons/react/solid";
-import { CgOrganisation } from "react-icons/cg";
-import { TiGroup } from "react-icons/ti";
-import { CgNotes } from "react-icons/cg";
-import { BsSpeedometer } from "react-icons/bs";
-import { FaSuitcase } from "react-icons/fa";
+import {CgOrganisation} from 'react-icons/cg';
+import {TiGroup} from 'react-icons/ti';
+import {CgNotes} from 'react-icons/cg';
+import {BsSpeedometer} from 'react-icons/bs';
+import {FaSuitcase} from 'react-icons/fa';
+import {MdRateReview} from 'react-icons/md';
+import {MdQuiz} from 'react-icons/md';
+
 
 import React, { useEffect, useState } from "react";
 import NavItem from "./NavItem";
@@ -106,8 +109,29 @@ const Nav = ({ sidebarOutsideClick }) => {
           subMenu={false}
           subMenuArray={null}
         >
-          <FaSuitcase size={30} />
-        </NavItem>
+                    <FaSuitcase size={30} />
+
+        </NavItem> 
+        <NavItem
+          hrefLink='/dashboard/questions'
+          sidebarStatus={sidebarStatus}
+          menuTitle="Questions"
+          subMenu={false}
+          subMenuArray={null}
+        >
+                    <MdRateReview size={30} />
+
+        </NavItem> 
+        <NavItem
+          hrefLink='/dashboard/quiz'
+          sidebarStatus={sidebarStatus}
+          menuTitle="Quiz"
+          subMenu={false}
+          subMenuArray={null}
+        >
+                    <MdQuiz size={30} />
+
+        </NavItem> 
 
         {/* this menu has child Menu     */}
         {/*                                     

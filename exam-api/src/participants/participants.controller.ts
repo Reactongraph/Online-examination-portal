@@ -23,7 +23,7 @@ export class ParticipantsController {
         message: 'user already exist',
       };
     }
-    const reset_link = await this.participant.reset_link(
+    await this.participant.reset_link(
       participant_create.email,
       participant_create.password,
     );
