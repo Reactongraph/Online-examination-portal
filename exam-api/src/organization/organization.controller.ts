@@ -12,8 +12,8 @@ import { organization_dto } from './post';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma.service';
 import { ApiTags } from '@nestjs/swagger';
-@ApiTags('Organization')
 
+@ApiTags('Organization')
 @Controller('organization')
 export class RestApiController {
   constructor(

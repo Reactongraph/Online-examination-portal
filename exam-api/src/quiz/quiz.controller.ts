@@ -10,6 +10,7 @@ import {
 import { QuizService } from './quiz.service';
 import { QuizDTO } from './quiz.entity';
 import { ApiTags } from '@nestjs/swagger';
+
 @ApiTags('Quiz')
 @Controller('quiz')
 export class QuizController {

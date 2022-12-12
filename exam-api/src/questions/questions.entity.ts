@@ -3,6 +3,7 @@ import { IsEmail, IsNotEmpty, Length } from 'class-validator';
 
 class QuestionDTO {
   id: Int32Array;
+
   @ApiProperty()
   @IsNotEmpty()
   question: string;

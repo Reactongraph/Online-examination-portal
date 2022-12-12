@@ -15,8 +15,8 @@ async function bootstrap() {
   })
 
   const config = new DocumentBuilder()
-    .setTitle('Exam portal')
-    .setDescription('Exam portal API description')
+    .setTitle('Online Examination portal')
+    .setDescription('Online Exam portal API description')
     .setVersion('1.0')
     .addTag('Exam-portal-api\'s')
     .build();
