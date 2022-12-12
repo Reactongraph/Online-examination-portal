@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { PostDTO } from './post';
+import { organization_dto } from './post';
 import { PrismaService } from 'src/prisma.service';
 const nodemailer = require('nodemailer');
 
 @Injectable()
 export class RestApiService {
   constructor(private prisma: PrismaService) {}
-  async create(createRestApiDto: PostDTO) {
+  async create(createRestApiDto: organization_dto) {
     const email_check = await this.prisma.organization.findUnique({
       where: { email: createRestApiDto?.email },
     });
@@ -89,7 +89,7 @@ export class RestApiService {
     return `${JSON.stringify(user)}`;
   }
 
-  async update(id: string, updateRestApiDto: PostDTO) {
+  async update(id: string, updateRestApiDto: organization_dto) {
     const updateUser = await this.prisma.organization.update({
       where: {
         id,

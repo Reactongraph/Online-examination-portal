@@ -9,7 +9,9 @@ import {
 } from '@nestjs/common';
 import { QuestionsService } from './questions.service';
 import { QuestionDTO } from './questions.entity';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Questions')
 @Controller('questions')
 export class QuestionsController {
   constructor(private readonly questionservice: QuestionsService) {}

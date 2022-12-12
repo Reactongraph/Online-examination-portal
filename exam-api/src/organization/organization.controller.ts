@@ -8,20 +8,22 @@ import {
   Delete,
 } from '@nestjs/common';
 import { RestApiService } from './organization.service';
-import { PostDTO } from './post';
+import { organization_dto } from './post';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Organization')
 @Controller('organization')
 export class RestApiController {
   constructor(
     private readonly restApiService: RestApiService,
     private readonly jwtService: JwtService,
     private prisma: PrismaService,
-  ) {}
+  ) { }
   // this controller is used to create Oraganization data
   @Post()
-  async create(@Body() createRestApiDto: PostDTO) {
+  async create(@Body() createRestApiDto: organization_dto) {
     const user = await this.restApiService.create(createRestApiDto);
     if (user.id == null) {
       return {
@@ -55,7 +57,7 @@ export class RestApiController {
 
   // this controller is used to update Oraganization data
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateRestApiDto: PostDTO) {
+  async update(@Param('id') id: string, @Body() updateRestApiDto: organization_dto) {
     return await this.restApiService.update(id, updateRestApiDto);
   }
 
