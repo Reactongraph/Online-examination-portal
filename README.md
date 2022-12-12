@@ -24,9 +24,9 @@
 
 ## Installation Requirements
 
-To run back-end Just cd exam-api then yarn Install and then yarn run start:dev in exam-api directory.
+To run back-end Just `cd exam-api` then `yarn Install` and then `yarn run start:dev` in exam-api directory.
 
-To run front-end (admin) cd exam-app and then yarn Install and Then yarn dev in exam-app directory.
+To run front-end (admin) `cd exam-app` and then `yarn Install` and Then `yarn dev` in exam-app directory.
 
 ## Available Scripts
 
@@ -45,6 +45,10 @@ the server starts at [http://localhost:5000].
 
 Runs the app in the development mode.\
 the server starts at [http://localhost:3000].
+
+### `npx prisma db push`
+
+ Introspects the database to infer and executes the changes required to make your database schema reflect the state of your Prisma schema.
 
 ## Technologies used in app
 

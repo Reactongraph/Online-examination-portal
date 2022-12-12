@@ -39,7 +39,7 @@ export class QuizController {
     return update_quiz;
   }
 
-  // this controller is used to delete  participant data
+  // this controller is used to delete  quiz data
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const delete_quiz = await this.quizService.remove(id);
