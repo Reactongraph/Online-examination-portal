@@ -9,7 +9,10 @@ import {
 } from '@nestjs/common';
 import { module_dto } from './module.entity';
 import { ModuleService } from './module.service';
+import { ApiTags } from '@nestjs/swagger';
+
 @Controller('module')
+@ApiTags('Module')
 export class ModuleController {
   constructor(private readonly Modules: ModuleService) {}
   // this controller is used to create Module

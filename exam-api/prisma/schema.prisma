@@ -78,21 +78,21 @@ model Login {
 }
 
 model Questions {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  question          String
-  question_type     String?
-  option_type       String?
-  option            Json?
-  question_time     String?
-  images            String?
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  status            Boolean
-  level_id          String?
-  module_id         String?
-  marks             String?
-  level             Level?              @relation(fields: [level_id], references: [id])
-  module            Module?             @relation(fields: [module_id], references: [id])
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  question      String
+  question_type String?
+  option_type   String?
+  options       Json?
+  question_time String?
+  images        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  status        Boolean
+  level_id      String?
+  module_id     String?
+  marks         String?
+  level         Level?   @relation(fields: [level_id], references: [id])
+  module        Module?  @relation(fields: [module_id], references: [id])
 }
 
 model Quiz {
