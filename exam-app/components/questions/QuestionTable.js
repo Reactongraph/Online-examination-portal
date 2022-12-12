@@ -30,9 +30,9 @@ const QuestionTable = ({ question_data }) => {
 
   const { register, handleSubmit } = useForm();
 
-  const handleRemoveClick = (module_id) => {
-    axios
-      .delete(`${SERVER_LINK}/module/${module_id}`)
+  const handleRemoveClick = async (question_id) => {
+   await axios
+      .delete(`${SERVER_LINK}/questions/${question_id}`)
       .then((result) => {
         router.replace(router.asPath);
       })
@@ -41,17 +41,17 @@ const QuestionTable = ({ question_data }) => {
       });
   };
 
-  const handleBoxClick = async (module_id, module_status) => {
-    console.log("This is hte box click");
-    console.log(module_id);
+  const handleBoxClick = async (question_id, question_status) => {
+    // console.log("This is hte box click");
+    // console.log(module_id);
     let new_status = {
-      status: !module_status,
+      status: !question_status,
     };
     new_status = JSON.stringify(new_status);
     console.log(new_status);
 
     await axios
-      .patch(`${SERVER_LINK}/module/${module_id}`, new_status, {
+      .patch(`${SERVER_LINK}/questions/${question_id}`, new_status, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json;charset=UTF-8",
@@ -66,24 +66,25 @@ const QuestionTable = ({ question_data }) => {
       });
   };
 
-  const handleEditClick = (module_id) => {
+  const handleEditClick = async(question_id) => {
     // setOpen(true);
     setButtonText("Update");
     setEditForm(true);
-    setModuleId(module_id);
-    setModal(true);
+    // setModuleId(module_id);
+    // setModal(true);
 
+    router.push(`/dashboard/questions/addQuestion?question_id=${question_id}`)
     // first find the user with the id
-    axios
-      .get(`${SERVER_LINK}/module/${module_id}`)
-      .then((response) => {
-        let singleModuleData = response.data;
-
-        setModules(singleModuleData.module);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // await axios
+    //   .get(`${SERVER_LINK}/questions/find/${question_id}`)
+    //   .then((response) => {
+    //     let singleModuleData = response.data;
+    //     console.log(response.data);
+    //     // setModules(singleModuleData.module);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   const checkWithDatabase = async (data) => {
@@ -112,7 +113,7 @@ const QuestionTable = ({ question_data }) => {
     }
   };
 
-  function createData(question, question_type, question_id, question_status) {
+  function createData(question, question_type, question_id, question_status , level , modules) {
     question = question.slice(0, 15) + "...";
     const action = (
       <>
@@ -146,7 +147,7 @@ const QuestionTable = ({ question_data }) => {
         </div>
       </>
     );
-    return { question, question_type, status, action };
+    return { question, question_type, status, action , level , modules};
   }
 
   const rowsDataArray = question_data.map((element) => {
@@ -155,10 +156,13 @@ const QuestionTable = ({ question_data }) => {
     let question = element.question;
     let question_type = element.question_type;
     // let email = element.email;
+    let level = element.level.level
+    // let module = element./
+    let modules = element.module.module
     let question_id = element.id;
     let question_status = element.status;
     // console.log(element.status);
-    return createData(question, question_type, question_id, question_status);
+    return createData(question, question_type, question_id, question_status , level , modules);
   });
 
   const columns = [
@@ -194,10 +198,10 @@ const QuestionTable = ({ question_data }) => {
     },
     {
       Header: "Module",
-      accessor: "module",
-      title: "module",
-      dataIndex: "module",
-      key: "module",
+      accessor: "modules",
+      title: "modules",
+      dataIndex: "modules",
+      key: "modules",
       width: 400,
       className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
       rowClassName: "bg-black-ripon",

@@ -1,102 +1,79 @@
 import { Injectable } from '@nestjs/common';
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+import { PrismaService } from 'src/prisma.service';
+import { QuestionDTO } from './questions.entity';
 @Injectable()
 export class QuestionsService {
-  async create(createQuestionDto: any) {
-    prisma.$connect();
-    const question = await prisma.Questions.create({
+  constructor(private prisma: PrismaService) {}
+  async create(createQuestionDto: QuestionDTO) {
+    const question = await this.prisma.questions.create({
       data: {
         question: createQuestionDto?.question,
         question_type: createQuestionDto?.question_type,
+        options: createQuestionDto?.options,
         question_time: createQuestionDto?.question_time,
         status: createQuestionDto?.status,
+        level_id: createQuestionDto?.level_id,
+        module_id: createQuestionDto?.module_id,
+        marks: createQuestionDto?.marks,
+        option_type: createQuestionDto?.option_type,
       },
     });
 
-    const updatedOptions = createQuestionDto.options.flatMap((element) => [
-      {
-        ...element,
-        question_id: question.id,
-      },
-    ]);
-    const bulk_insertion = updatedOptions.map(async function (index) {
-      const createMany = await prisma.Questions_options.createMany({
-        data: updatedOptions[index],
-      });
-    });
-
-    return 'inserted';
+    return question;
   }
 
   async findAll() {
-    prisma.$connect();
-    const question = await prisma.Questions.findMany();
-    const Questions_options = await prisma.Questions_options.findMany();
-    const arr = [question, Questions_options];
+    const find_questions = await this.prisma.questions.findMany({
+      include: { level: true, module: true },
+    });
 
-    return arr;
+    return find_questions;
   }
 
   async findOne(id: string) {
-    const question_options = await prisma.Questions_options.findUnique({
-      where: {
-        id: id,
-      },
-    });
-    const question = await prisma.Questions.findUnique({
-      where: {
-        id: question_options.question_id,
-      },
-    });
-
-    if (!question && !question_options) {
-      return `user not found with this  ${id}`;
-    }
-    const arr = [question, question_options];
-    return arr;
-  }
-
-  async update(id: string, updateRestApiDto: any) {
-    const update = await prisma.Questions.findUnique({
+    const question = await this.prisma.questions.findUnique({
       where: {
         id: id,
       },
       include: {
-        questions_options: true,
+        level: true,
+        module: true,
       },
     });
-    console.log(update);
 
-    for (const [index, element] of updateRestApiDto.options.entries()) {
-      const updatequestion = await prisma.Questions.update({
-        where: {
-          id: update.id,
-        },
-        data: { question: updateRestApiDto.questions.question },
-      });
-      const updatedOptions = await prisma.Questions_options.update({
-        where: {
-          id: update.questions_options[index].id,
-        },
-        data: updateRestApiDto.options[index],
-      });
+    if (!question) {
+      return `user not found with this  ${id}`;
     }
-    return 'updated';
+    return question;
+  }
+  async update(id: string, updateRestApiDto: QuestionDTO) {
+    const find = await this.prisma.questions.findUnique({ where: { id: id } });
+    if (!find) {
+      return 'data does not exist!';
+    }
+
+    const updatedOptions = await this.prisma.questions.update({
+      where: {
+        id: id,
+      },
+      data: updateRestApiDto,
+    });
+    return updatedOptions;
   }
 
   async remove(idd: string) {
-    const delete_option = await prisma.Questions_options.deleteMany({
-      where: {
-        question_id: idd,
-      },
+    const find_del = await this.prisma.questions.findUnique({
+      where: { id: idd },
     });
-    const delete_question = await prisma.Questions.delete({
+    if (!find_del) {
+      return 'data does not exist!';
+    }
+    await this.prisma.questions.delete({
       where: {
         id: idd,
       },
     });
 
-    return `This action removes a # restApi`;
+    return `question deleted`;
   }
 }

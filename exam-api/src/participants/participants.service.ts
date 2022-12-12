@@ -2,21 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { participants_dto } from './participants.entity';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma.service';
-import { Participants, PrismaClient } from '@prisma/client';
 const nodemailer = require('nodemailer');
 @Injectable()
 export class ParticipantsService {
   constructor(private prisma: PrismaService) {}
   async create(params: participants_dto) {
-    console.log('in service ', params?.name);
-    const name = params?.name;
     const email = params?.email;
     const saltOrRounds = 10;
     const password = params?.password;
     const hash = await bcrypt.hash(password, saltOrRounds);
-    console.log('hash', hash);
-
-    const mobile = params?.mobile;
     const email_check = await this.prisma.participants.findUnique({
       where: { email },
     });
@@ -41,8 +35,6 @@ export class ParticipantsService {
   }
 
   async reset_link(email: string, password: string) {
-    // console.log("id=", id);
-
     const mailTransporter = nodemailer.createTransport({
       service: 'gmail',
       host: 'smtp.gmail.com',
@@ -52,8 +44,6 @@ export class ParticipantsService {
         pass: 'qbzgsqdaavnfkfxm',
       },
     });
-    // console.log(token);
-    // console.log("userid", id);
     const mailOptions = {
       from: 'glalwani177@gmail.com',
       to: `${email}`,
@@ -64,30 +54,24 @@ export class ParticipantsService {
 
     mailTransporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        console.log(error);
+        return error;
       } else {
-        console.log('Email sent: ' + info.response);
-        return 'mail send ';
+        return { message: 'Email send:', Response: info.response };
       }
     });
   }
 
   async findAll() {
     const users = await this.prisma.participants.findMany();
-    console.log(users);
-
     return `${JSON.stringify(users)}`;
   }
 
   async findOne(id: string) {
-    console.log(id);
-
     const user = await this.prisma.participants.findUnique({
       where: {
         id,
       },
     });
-    console.log(user);
     if (!user) {
       return `user not found with this  ${id}`;
     }
@@ -105,19 +89,15 @@ export class ParticipantsService {
     if (!updateUser) {
       return `user not found for this ${id}`;
     }
-    return `${id} `;
+    return { message: 'updated', data: updateUser };
   }
 
   async remove(id: string) {
-    try {
-      const delete_user = await this.prisma.participants.delete({
-        where: {
-          id,
-        },
-      });
-      return `This action removes a #${id} restApi`;
-    } catch (err) {
-      return { error: err };
-    }
+    const delete_user = await this.prisma.participants.delete({
+      where: {
+        id,
+      },
+    });
+    return `participant deleted  ${delete_user} `;
   }
 }
