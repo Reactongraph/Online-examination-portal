@@ -5,6 +5,27 @@ import { useForm } from "react-hook-form";
 import { SERVER_LINK } from "../../helpers/config";
 import axios from "axios";
 import { useRouter } from "next/router";
+import DatePicker from "react-datepicker";
+import { default as ReactSelect } from "react-select";
+import Select from 'react-select';
+import { components } from "react-select";
+// import { Multiselect } from "multiselect-react-dropdown";
+import "react-datepicker/dist/react-datepicker.css";
+
+const Option = (props) => {
+  return (
+    <div>
+      <components.Option {...props}>
+        <input
+          type="checkbox"
+          checked={props.isSelected}
+          onChange={() => null}
+        />{" "}
+        <label>{props.label}</label>
+      </components.Option>
+    </div>
+  );
+};
 
 const QuizModal = ({ modal, setModal, editForm, participantId }) => {
   //For Image Preview
@@ -17,12 +38,35 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
   const [mobile, setMobile] = useState("");
   const [buttonText, setButtonText] = useState("Add");
 
+  const [levelData, setLevelData] = useState("");
+  const [moduleData, setModuleData] = useState("");
+
   const [password, setPassword] = useState("");
   const [organizationId, setOrganizationId] = useState("");
 
   const { register, handleSubmit } = useForm();
+  const [selectedDate, setSelectedDate] = useState(null);
 
+  useEffect(() => {
+    async function fetchApiData() {
+      let levels = await axios.get(`${SERVER_LINK}/level/find`);
+      let modules = await axios.get(`${SERVER_LINK}/module/find`);
+
+      let moduleArray = modules.data.map((object) => {
+          object.value = object.module
+          object.label = object.module
+          return object
+      });
+      setModuleData(moduleArray);
+      setLevelData(levels.data);
+    }
+
+    fetchApiData();
+  }, [router.query?.question_id]);
   // for sending the data to the backend
+
+  console.log("this is modulearra");
+  console.log(moduleData);
   const checkWithDatabase = async (data) => {
     data.name = name;
     data.email = email;
@@ -33,7 +77,6 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
     let participantData = JSON.stringify(data);
 
     // for new data registration
-
     await axios({
       url: `${SERVER_LINK}/participants`,
       method: "POST",
@@ -73,8 +116,8 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
         }}
       >
         <div classNameName="flex-row space-y-3 relative">
-          <div classNameName="bg-blue-600 p-2 font-bold text-lg text-center text-white -mt-4 -mx-4 mb-5 pb-4">
-            <p>{buttonText} Participant</p>
+          <div className="bg-blue-600 p-2 font-bold text-lg text-center text-white -mt-4 -mx-4 mb-5 pb-4">
+            <p>{buttonText} Quiz</p>
           </div>
 
           <div className="py-6 px-6 lg:px-8">
@@ -88,7 +131,7 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                     for="grid-first-name"
                   >
-                    Name
+                    Quiz Name
                   </label>
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
@@ -99,24 +142,62 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
                     required="required"
                     placeholder="Jane"
                   />
-                  
                 </div>
                 <div className="w-full md:w-1/2 px-3">
                   <label
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                     for="grid-last-name"
                   >
-                    Email
+                    Pick A Date
                   </label>
-                  <input
-                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="email"
-                    type="email"
-                    placeholder="example@gmail.com "
-                    required="required"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
+
+                  <div class="flex items-center justify-center">
+                    <div
+                      className="datepicker bg-gray-200relative form-floating mb-3 xl:w-96"
+                      data-mdb-toggle-button="false"
+                    >
+                      <DatePicker
+                        className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                        selected={selectedDate}
+                        onChange={(date) => setSelectedDate(date)}
+                        placeholderText={"mm/dd/yyyy"}
+                        filterDate={(date) =>
+                          date.getDay() !== 6 && date.getDay() !== 0
+                        } // weekends cancel
+                        popperClassName="react-datepicker-right"
+                        showYearDropdown // year show and scrolldown alos
+                        scrollableYearDropdown
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="w-full md:w-1/2 px-3">
+                  <label
+                    className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                    for="grid-last-name"
+                  >
+                    Pick A TIme
+                  </label>
+
+                  <div class="flex items-center justify-center">
+                    <div
+                      className="datepicker bg-gray-200relative form-floating mb-3 xl:w-96"
+                      data-mdb-toggle-button="false"
+                    >
+                      <DatePicker
+                        className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                        selected={selectedDate}
+                        showTimeSelect
+                        placeholderText={"10 : 40 PM"}
+                        showTimeSelectOnly
+                        // popperClassName="react-datepicker-right"
+                        timeIntervals={15}
+                        timeCaption="Choose "
+                        dateFormat="h:mm aa"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -126,19 +207,19 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                     for="grid-password"
                   >
-                    Password
+                    Description
                   </label>
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="password"
-                    type="password"
-                    placeholder="******************"
+                    id="description"
+                    type="text"
+                    placeholder="A short description about quiz"
                     required="required"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
                   <p className="text-gray-600 text-xs italic">
-                    Make it as long and as crazy as you'd like
+                    Describe in Brief*
                   </p>
                 </div>
               </div>
@@ -147,36 +228,53 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
                 <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                   <label
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                    for="grid-first-name"
+                    for="grid-last-name"
                   >
-                    Mobile
+                    Question Level
                   </label>
-                  <input
-                    className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                    id="mobile"
-                    type="text"
-                    placeholder="+91 "
-                    required="required"
-                    value={mobile}
-                    onChange={(e) => setMobile(e.target.value)}
-                  />
+                  <select
+                    id="default"
+                    // value={selectedLevelId}
+                    // onChange={(e) => {
+                    //   handleLevelTypeSelect(e);
+                    // }}
+                    required
+                    className="bg-gray-50 border w-40 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  >
+                    <option value="" hidden>
+                      Select
+                    </option>
+                    {levelData &&
+                      levelData.map((response) => (
+                        <option value={response.id}>{response.level}</option>
+                      ))}
+                  </select>
                 </div>
                 <div className="w-full md:w-1/2 px-3">
                   <label
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                     for="grid-last-name"
                   >
-                    Organization Id
+                    Choose Modules for Quiz
                   </label>
-                  <input
-                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="org_id"
-                    type="text"
-                    placeholder="e.g. 1000"
-                    required="required"
-                    value={organizationId}
-                    onChange={(e) => setOrganizationId(e.target.value)}
+                  <ReactSelect
+                    options={moduleData}
+                    isMulti
+                    closeMenuOnSelect={false}
+                    hideSelectedOptions={false}
+                    components={{
+                      Option,
+                    }}
+                    // onChange={this.handleChange}
+                    allowSelectAll={true}
+                    // value={this.state.optionSelected}
                   />
+                  {/* <Multiselect
+                  //  isMulti={true}/
+                    options={['name','checkj','data']}
+                    displayValue="key"
+                    // showCheckbox={true}
+                  /> */}
                 </div>
               </div>
               <button

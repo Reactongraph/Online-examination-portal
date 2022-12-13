@@ -8,8 +8,8 @@ const Quiz = ({ quiz_data }) => {
       <div className="flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between">
         <PageComponentTitle
           title="QUIZ"
-          titleDescription="Create , view and delete Quizes"
-          buttonTitle="ADD Quiz"
+          titleDescription="Create,view and delete Quiz"
+          buttonTitle="ADD NEW QUIZ"
           editForm={false}
         />
       </div>

@@ -13,6 +13,9 @@ import { QuestionsModule } from './questions/questions.module';
 import { QuestionsService } from './questions/questions.service';
 import { MulterModule } from '@nestjs/platform-express';
 import { PrismaService } from './prisma.service';
+import { QuizModule } from './quiz/quiz.module';
+import { QuizController } from './quiz/quiz.controller';
+import { QuizService } from './quiz/quiz.service';
 
 @Module({
   imports: [
@@ -21,13 +24,18 @@ import { PrismaService } from './prisma.service';
     LevelModule,
     ModuleModule,
     AuthModule,
+    QuizModule,
     QuestionsModule,
     MulterModule.register({
       dest: './images',
     }),
   ],
-  controllers: [AppController, QuestionsController],
-  providers: [AppService, QuestionsService, PrismaService],
+  controllers: [
+    AppController,
+    QuestionsController,
+    QuizController
+  ],
+  providers: [AppService, QuestionsService,PrismaService, QuizService],
 })
 export class AppModule  {
   // configure(consumer: MiddlewareConsumer) {

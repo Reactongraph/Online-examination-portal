@@ -9,10 +9,12 @@ import { SERVER_LINK } from "../../../helpers/config";
 
 // You can't name a function as MODULE...
 export default function Quiz({ quiz_data }) {
+  console.log('this is data');
+  console.log(quiz_data);
   return (
     <>
       <Layout title="Quiz">
-        {/* <Quizs quiz_data={quiz_data} />/ */}
+        <Quizs quiz_data={quiz_data} />
       </Layout>
     </>
   );

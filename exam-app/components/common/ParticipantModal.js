@@ -73,7 +73,7 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
         }}
       >
         <div classNameName="flex-row space-y-3 relative">
-          <div classNameName="bg-blue-600 p-2 font-bold text-lg text-center text-white -mt-4 -mx-4 mb-5 pb-4">
+        <div className="bg-blue-600 p-2 font-bold text-lg text-center text-white -mt-4 -mx-4 mb-5 pb-4">
             <p>{buttonText} Participant</p>
           </div>
 
