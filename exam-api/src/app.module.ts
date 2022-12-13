@@ -12,6 +12,10 @@ import { ModuleModule } from './module/module.module';
 import { AuthModule } from './auth/auth.module';
 import { Oraganization } from './organization/organization.middleware';
 import { Participants } from './participants/participants.middlesware';
+import { Modules } from './module/module.middleware';
+import { Levels } from './level/level.middleware';
+import { Questions } from './questions/questions.middleware';
+import { Quiz } from './quiz/quiz.middleware';
 // import { Module, } from '@nestjs/common';
 import { QuestionsController } from './questions/questions.controller';
 import { QuestionsModule } from './questions/questions.module';
@@ -40,6 +44,15 @@ import { QuizService } from './quiz/quiz.service';
     QuestionsController,
     QuizController
   ],
-  providers: [AppService, QuestionsService,PrismaService, QuizService],
+  providers: [AppService, QuestionsService, PrismaService, QuizService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(Oraganization).forRoutes('organization')
+    consumer.apply(Participants).forRoutes('participants')
+    consumer.apply(Modules).forRoutes('module')
+    consumer.apply(Levels).forRoutes('level')
+    consumer.apply(Questions).forRoutes('questions')
+    consumer.apply(Quiz).forRoutes('quiz')
+  }
+}
