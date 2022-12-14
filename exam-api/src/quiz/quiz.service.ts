@@ -1,6 +1,5 @@
-
 import { Injectable } from '@nestjs/common'
-import { QuizDTO } from './quiz.entity'
+import { QuizDTO } from './quiz.entity';
 import { PrismaService } from 'src/prisma.service'
 
 @Injectable()

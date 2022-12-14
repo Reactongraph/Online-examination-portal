@@ -72,7 +72,7 @@ model Module {
 
 model Login {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  token     String?
+  token     String
   email     String?
   createdAt DateTime @default(now())
 }
