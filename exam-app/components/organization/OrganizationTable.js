@@ -45,6 +45,7 @@ const OrganizationTable = ({ org_data }) => {
       status: !org_status,
     };
     new_status = JSON.stringify(new_status);
+    console.log(new_status);
 
     await axios
       .patch(`${SERVER_LINK}/organization/${org_id}`, new_status, {

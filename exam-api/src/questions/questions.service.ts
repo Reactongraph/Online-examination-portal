@@ -23,12 +23,9 @@ export class QuestionsService {
   }
 
   async findAll() {
-    // const find_questions = await this.prisma.questions.findMany({
-    //   include: { level: true, module: true },
-    // })
     const find_questions = await this.prisma.questions.findMany({
-      include: { level: true, module:true }
-    })
+      include: { level: true, module: true },
+    });
 
     return find_questions;
   }
@@ -36,7 +33,7 @@ export class QuestionsService {
   async findOne(id: string) {
     const question = await this.prisma.questions.findUnique({
       where: {
-        id,
+        id: id,
       },
       include: {
         level: true,
@@ -49,7 +46,6 @@ export class QuestionsService {
     }
     return question;
   }
-
   async update(id: string, updateRestApiDto: QuestionDTO) {
     const find = await this.prisma.questions.findUnique({ where: { id } });
     if (!find) {
@@ -78,6 +74,6 @@ export class QuestionsService {
       }
     });
 
-    return 'question deleted';
+    return `question deleted`;
   }
 }
