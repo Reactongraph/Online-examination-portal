@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express'
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 @Injectable()
-export class Oraganization implements NestMiddleware {
+export class Modules implements NestMiddleware {
   async use (req: Request, res: Response, next: NextFunction) {
     console.log('Request Received')
     prisma.$connect()
