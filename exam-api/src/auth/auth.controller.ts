@@ -11,7 +11,9 @@ import { AuthService } from './auth.service';
 import { auth_dto } from './auth.entity';
 import { Response } from 'express';
 import { PrismaService } from 'src/prisma.service';
+import { ApiTags } from '@nestjs/swagger';
 @Controller('auth')
+@ApiTags('Auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,

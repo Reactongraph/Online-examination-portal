@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { auth_dto } from './auth.entity';
 import { PrismaService } from 'src/prisma.service';
+
 @Injectable()
 export class AuthService {
   constructor(private prisma: PrismaService) {}

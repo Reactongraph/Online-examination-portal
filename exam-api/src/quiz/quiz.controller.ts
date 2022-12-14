@@ -9,7 +9,9 @@ import {
 } from '@nestjs/common';
 import { QuizService } from './quiz.service';
 import { QuizDTO } from './quiz.entity';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Quiz')
 @Controller('quiz')
 export class QuizController {
   constructor(private readonly quizService: QuizService) {}
@@ -39,7 +41,7 @@ export class QuizController {
     return update_quiz;
   }
 
-  // this controller is used to delete  participant data
+  // this controller is used to delete  quiz data
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const delete_quiz = await this.quizService.remove(id);

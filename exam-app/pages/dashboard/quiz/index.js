@@ -26,7 +26,7 @@ export async function getServerSideProps() {
   // Fetch data from external API
   const res = await axios.get(`${SERVER_LINK}/quiz/find`);
 
-  let quiz_data = res.data;
+  let quiz_data = res.data.quiz;
 
   // Pass data to the page via props
   return { props: { quiz_data } };

@@ -13,7 +13,7 @@ const AddQuestion = ({ question_data }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [pageTitle, setPageTitle] = useState("Add");
   const [question, setQuestion] = useState("");
-  const [optionType, setOptionType] = useState("");
+  const [optionType, setOptionType] = useState("Single");
   const [questionType, setQuestionType] = useState("");
   const [selectedLevelId, setSelectedLevelId] = useState("");
   const [selectedModuleId, setSelectedModuleId] = useState("");
@@ -45,6 +45,17 @@ const AddQuestion = ({ question_data }) => {
       setPageTitle("Edit");
       setQuestion(questionData.question);
       setInputFields(questionData.options);
+      questionData.options.map((one, index) => {
+        if (questionData.option_type == "Single") {
+          if (one.correct) {
+            setNumberOfOptionSelect(numberOfOptionSelect + 1);
+            setSelectedOptionIndex(index);
+          }
+        } else {
+          if (one.correct) setNumberOfOptionSelect(numberOfOptionSelect + 1);
+        }
+      });
+
       setQuestionType(questionData.question_type);
       setTimeLimitSelect(questionData.question_time);
       setOptionType(questionData.option_type);
@@ -88,20 +99,34 @@ const AddQuestion = ({ question_data }) => {
   }, [numberOfOptionSelect]);
 
   const handleSelectedOption = (index, event) => {
-    setRequiredOptionField(false);
+    // setRequiredOptionField(false);
+
+    if (optionType == "Single") {
+      inputFields.map((one, i) => {
+        if (index != i) one.correct = false;
+      });
+    }
 
     if (!event.target.checked) {
       setNumberOfOptionSelect(numberOfOptionSelect - 1);
     }
-    setSelectedOptionIndex(index);
+    if (optionType == "Single") {
+      setSelectedOptionIndex(index);
+    }
+
     let data = [...inputFields];
+
     data[index].correct = event.target.checked;
     setInputFields(data);
 
-    inputFields.map((oneObj) => {
-      if (oneObj.correct == true)
-        setNumberOfOptionSelect(numberOfOptionSelect + 1);
-    });
+    if (optionType == "Multiple") {
+      inputFields.map((oneObj) => {
+        if (oneObj.correct == true)
+          setNumberOfOptionSelect(numberOfOptionSelect + 1);
+      });
+    } else {
+      setNumberOfOptionSelect(1);
+    }
   };
 
   const handleModuleTypeSelect = (event) => {
@@ -139,6 +164,7 @@ const AddQuestion = ({ question_data }) => {
   };
   const removeFields = (index) => {
     let data = [...inputFields];
+    data[index].option = "";
     data.splice(index, 1);
     setInputFields(data);
   };
@@ -329,7 +355,7 @@ const AddQuestion = ({ question_data }) => {
                           name="option"
                           required
                           value={input.option}
-                          {...register(`options.${index}.option`)}
+                          // {...register(`options.${index}.option`)}
                           onChange={(event) => handleFormChange(index, event)}
                           placeholder={`Option ${String.fromCharCode(
                             65 + index
@@ -341,10 +367,10 @@ const AddQuestion = ({ question_data }) => {
                           className="mx-5"
                           checked={input.correct}
                           required={requiredOptionField}
-                          {...register(`options.${index}.correct`)}
+                          // {...register(`options.${index}.correct`)}
                           id={index}
                           name="fav_language"
-                          onChange={(event) =>
+                          onClick={(event) =>
                             handleSelectedOption(index, event)
                           }
                         />
@@ -441,7 +467,9 @@ const AddQuestion = ({ question_data }) => {
               <option value="" hidden>
                 Select
               </option>
-              <option value="Single">Single</option>
+              <option selected value="Single">
+                Single
+              </option>
               <option value="Multiple">Multiple</option>
             </select>
             <label

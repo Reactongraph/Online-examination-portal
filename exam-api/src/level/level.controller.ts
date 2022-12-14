@@ -9,7 +9,9 @@ import {
 } from '@nestjs/common';
 import { LevelService } from './level.service';
 import { level_dto } from './level.entity';
+import { ApiTags } from '@nestjs/swagger';
 @Controller('level')
+@ApiTags('Level')
 export class LevelController {
   constructor(private readonly Levels: LevelService) {}
   // this controller is used to create Levels

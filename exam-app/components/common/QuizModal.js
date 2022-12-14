@@ -69,7 +69,7 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
     console.log(event);
     let moduleSelectedArray = [];
     event.map((oneModule) => {
-      moduleSelectedArray.push(oneModule.id);
+      moduleSelectedArray.push(`${oneModule.id}`);
     });
 
     setSelectedModules(moduleSelectedArray);

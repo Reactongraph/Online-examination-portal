@@ -37,14 +37,19 @@ const QuizTable = ({ quiz_data }) => {
       });
   };
 
-  const handleBoxClick = async (module_id, module_status) => {
+  const handleBoxClick = async (quiz_id, quiz_status) => {
+    console.log('clciked');
+    console.log('quiz_status');
+    console.log(quiz_id);
+    console.log(quiz_status);
     let new_status = {
-      status: !module_status,
+      status: !quiz_status,
     };
     new_status = JSON.stringify(new_status);
+    console.log("data",new_status);
 
-    await axios
-      .patch(`${SERVER_LINK}/module/${module_id}`, new_status, {
+   await axios
+      .patch(`${SERVER_LINK}/quiz/${quiz_id}`, new_status, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json;charset=UTF-8",
@@ -52,11 +57,13 @@ const QuizTable = ({ quiz_data }) => {
       })
       .then((response) => {
         // setModal(!modal);
-        router.replace(router.asPath);
+        console.log('it wikd');
+        // router.replace(router.asPath);
       })
       .catch((err) => {
         console.log(err);
       });
+      // console.log(datacheck);
   };
 
   const handleEditClick = (module_id) => {
@@ -105,7 +112,7 @@ const QuizTable = ({ quiz_data }) => {
     }
   };
 
-  function createData(quiz, quiz_id, quiz_status) {
+  function createData(quiz, quiz_id, quiz_status,modules,level,start_time,start_date) {
     const action = (
       <>
         <button
@@ -137,16 +144,26 @@ const QuizTable = ({ quiz_data }) => {
         </div>
       </>
     );
-    return { quiz, status, action };
+    return { quiz, status, action ,modules,level,start_time,start_date};
   }
 
   const rowsDataArray = quiz_data.map((element) => {
     let quiz = element.quiz_name;
-
-    let quiz_id = element.id;
+    let quiz_id = element._id.$oid;
     let quiz_status = element.status;
+    let moduleNameArray = [];
+    let moduleArray = element.module
+    moduleArray.map((oneModule)=>{
+        moduleNameArray.push(oneModule.module)
+    })
 
-    return createData(quiz, quiz_id, quiz_status);
+    let modules = moduleNameArray.join()
+    let {level} = element.level
+    let start_time = element.start_time
+    let start_date = element.start_date
+    
+
+    return createData(quiz, quiz_id, quiz_status,modules,level,start_time,start_date);
   });
 
   const columns = [
@@ -171,11 +188,11 @@ const QuizTable = ({ quiz_data }) => {
     //   rowClassName: "bg-black-ripon",
     },
     {
-      Header: "Module",
-      accessor: "module",
-      title: "module",
-      dataIndex: "module",
-      key: "module",
+      Header: "Modules",
+      accessor: "modules",
+      title: "modules",
+      dataIndex: "modules",
+      key: "modules",
       width: 400,
       className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
     //   rowClassName: "bg-black-ripon",
