@@ -1,9 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { QuestionDTO } from './questions.entity';
+const csv = require('csvtojson')
 @Injectable()
 export class QuestionsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
+  async Bulk_insertion(file: any) {
+    const csvfilepath = process.cwd() + '/' + file.path;
+    const question_csv = await csv().fromFile(csvfilepath)
+    try {
+      const create_csv = await this.prisma.questions.createMany({
+        data: question_csv
+      })
+    }
+    catch (err) {
+
+      return err
+    }
+  }
   async create(createQuestionDto: QuestionDTO) {
     const question = await this.prisma.questions.create({
       data: {

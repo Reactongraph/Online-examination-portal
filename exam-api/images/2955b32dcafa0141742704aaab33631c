@@ -1,0 +1,4 @@
+questions,status,question_type,option_type
+what is array,TRUE,data,option_data
+what is linkedlist,FALSE,data2,option_data1
+what is stack,TRUE,data3,option_data2

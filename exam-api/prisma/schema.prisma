@@ -87,7 +87,7 @@ model Questions {
   images        String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  status        Boolean
+  status        String
   level_id      String?
   module_id     String?
   marks         String?
