@@ -1,4 +1,5 @@
-import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
+// eslint-disable-next-line prettier/prettier
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common'
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RestApiModule } from './organization/organization.module';
