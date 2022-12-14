@@ -7,25 +7,11 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import DatePicker from "react-datepicker";
 import { default as ReactSelect } from "react-select";
-import Select from 'react-select';
+import Select from "react-select";
+import moment from "moment";
 import { components } from "react-select";
 // import { Multiselect } from "multiselect-react-dropdown";
 import "react-datepicker/dist/react-datepicker.css";
-
-const Option = (props) => {
-  return (
-    <div>
-      <components.Option {...props}>
-        <input
-          type="checkbox"
-          checked={props.isSelected}
-          onChange={() => null}
-        />{" "}
-        <label>{props.label}</label>
-      </components.Option>
-    </div>
-  );
-};
 
 const QuizModal = ({ modal, setModal, editForm, participantId }) => {
   //For Image Preview
@@ -41,11 +27,15 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
   const [levelData, setLevelData] = useState("");
   const [moduleData, setModuleData] = useState("");
 
-  const [password, setPassword] = useState("");
+  const [description, setDescription] = useState("");
   const [organizationId, setOrganizationId] = useState("");
 
   const { register, handleSubmit } = useForm();
   const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [moduleArray, setModuleArray] = useState([]);
+  const [selectedLevelId, setSelectedLevelId] = useState("");
+  const [selectedModules, setSelectedModules] = useState([]);
 
   useEffect(() => {
     async function fetchApiData() {
@@ -53,9 +43,9 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
       let modules = await axios.get(`${SERVER_LINK}/module/find`);
 
       let moduleArray = modules.data.map((object) => {
-          object.value = object.module
-          object.label = object.module
-          return object
+        object.value = object.module;
+        object.label = object.module;
+        return object;
       });
       setModuleData(moduleArray);
       setLevelData(levels.data);
@@ -65,34 +55,84 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
   }, [router.query?.question_id]);
   // for sending the data to the backend
 
-  console.log("this is modulearra");
-  console.log(moduleData);
+  // console.log(moduleData);
+  // console.log("this is modulearra");
+  // console.log(moduleData);
+
+  const handleLevelTypeSelect = (event) => {
+    let levelId = event.target.value;
+    setSelectedLevelId(levelId);
+  };
+
+  const handleModuleTypeSelect = (event) => {
+    console.log("This is click");
+    console.log(event);
+    let moduleSelectedArray = [];
+    event.map((oneModule) => {
+      moduleSelectedArray.push(oneModule.id);
+    });
+
+    setSelectedModules(moduleSelectedArray);
+
+    // console.log(module_id);
+  };
+
+  const Option = (props) => {
+    return (
+      <div>
+        <components.Option {...props}>
+          <input
+            type="checkbox"
+            // value={props.id}
+            // onClick={(e) => {
+            //   handleModuleTypeSelect(e);
+            // }}
+            checked={props.isSelected}
+            onChange={() => null}
+          />{" "}
+          <label>{props.label}</label>
+        </components.Option>
+      </div>
+    );
+  };
   const checkWithDatabase = async (data) => {
-    data.name = name;
-    data.email = email;
-    data.mobile = mobile;
-    data.id = organizationId;
-    data.password = password;
+    data.status = true;
+    data.quiz_name = name;
 
-    let participantData = JSON.stringify(data);
+    let setDateFormat = `${selectedDate.getDate()}/${
+      selectedDate.getMonth() + 1
+    }/${selectedDate.getUTCFullYear()}`;
+    let setTimeFormat = `${selectedTime.getHours()}:${selectedTime.getMinutes()}`;
+    data.start_date = setDateFormat;
+    data.start_time = setTimeFormat;
+    data.level_id = selectedLevelId;
+    data.description = description;
+    data.module_id = selectedModules;
+    // data.module_id =
 
-    // for new data registration
+    console.log(data);
+
+    let QuizData = JSON.stringify(data);
+    console.log("This is data ");
+
+    // //for new data registration
     await axios({
-      url: `${SERVER_LINK}/participants`,
+      url: `${SERVER_LINK}/quiz/create`,
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json;charset=UTF-8",
       },
-      data: participantData,
+      data: QuizData,
     })
       .then((response) => {
         router.replace(router.asPath);
         setName("");
-        setEmail("");
-        setMobile("");
-        setPassword("");
-        setOrganizationId("");
+        setSelectedDate("");
+        setSelectedTime("");
+        setModuleArray([]);
+        setDescription("");
+        setSelectedLevelId("");
         setModal(!modal);
       })
       .catch((err) => {
@@ -107,10 +147,11 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
         width="800px"
         onClose={() => {
           setName("");
-          setEmail("");
-          setMobile("");
-          setPassword("");
-          setOrganizationId("");
+          setSelectedDate("");
+          setSelectedTime("");
+          setModuleArray([]);
+          setDescription("");
+          setSelectedLevelId("");
           setModal(false);
           return true;
         }}
@@ -148,6 +189,37 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                     for="grid-last-name"
                   >
+                    Choose Quiz image
+                  </label>
+
+                  <div class="flex items-center justify-center">
+                    <div
+                      className="datepicker bg-gray-200relative form-floating mb-3 xl:w-96"
+                      data-mdb-toggle-button="false"
+                    >
+                      <input
+                        className="block w-full text-sm appearance-none  bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                        aria-describedby="file_input_help"
+                        required="required"
+                        accept="image/*"
+                        id="file_input"
+                        type="file"
+                      />
+                      <p
+                        class="mt-1 text-sm text-gray-500 dark:text-gray-300"
+                        id="file_input_help"
+                      >
+                        SVG, PNG, JPG *.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="w-full md:w-1/2 px-3">
+                  <label
+                    className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                    for="grid-last-name"
+                  >
                     Pick A Date
                   </label>
 
@@ -171,13 +243,12 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
                     </div>
                   </div>
                 </div>
-
                 <div className="w-full md:w-1/2 px-3">
                   <label
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                     for="grid-last-name"
                   >
-                    Pick A TIme
+                    Pick A Time
                   </label>
 
                   <div class="flex items-center justify-center">
@@ -187,7 +258,8 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
                     >
                       <DatePicker
                         className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        selected={selectedDate}
+                        selected={selectedTime}
+                        onChange={(time) => setSelectedTime(time)}
                         showTimeSelect
                         placeholderText={"10 : 40 PM"}
                         showTimeSelectOnly
@@ -202,29 +274,6 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
               </div>
 
               <div className="flex flex-wrap -mx-3 mb-6">
-                <div className="w-full px-3">
-                  <label
-                    className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                    for="grid-password"
-                  >
-                    Description
-                  </label>
-                  <input
-                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="description"
-                    type="text"
-                    placeholder="A short description about quiz"
-                    required="required"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <p className="text-gray-600 text-xs italic">
-                    Describe in Brief*
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                   <label
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -234,10 +283,10 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
                   </label>
                   <select
                     id="default"
-                    // value={selectedLevelId}
-                    // onChange={(e) => {
-                    //   handleLevelTypeSelect(e);
-                    // }}
+                    value={selectedLevelId}
+                    onChange={(e) => {
+                      handleLevelTypeSelect(e);
+                    }}
                     required
                     className="bg-gray-50 border w-40 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   >
@@ -259,15 +308,16 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
                   </label>
                   <ReactSelect
                     options={moduleData}
+                    className="bg-gray-50 w-50 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     isMulti
                     closeMenuOnSelect={false}
                     hideSelectedOptions={false}
                     components={{
                       Option,
                     }}
-                    // onChange={this.handleChange}
+                    onChange={handleModuleTypeSelect}
                     allowSelectAll={true}
-                    // value={this.state.optionSelected}
+                    // value={optionSelected}
                   />
                   {/* <Multiselect
                   //  isMulti={true}/
@@ -275,6 +325,28 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
                     displayValue="key"
                     // showCheckbox={true}
                   /> */}
+                </div>
+              </div>
+              <div className="flex flex-wrap -mx-3 mb-6">
+                <div className="w-full px-3">
+                  <label
+                    className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                    for="grid-password"
+                  >
+                    Description
+                  </label>
+                  <textarea
+                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="description"
+                    type="text"
+                    placeholder="A short description about quiz"
+                    required="required"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  ></textarea>
+                  <p className="text-gray-600 text-xs italic">
+                    Describe in Brief*
+                  </p>
                 </div>
               </div>
               <button
