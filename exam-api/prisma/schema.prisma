@@ -105,7 +105,7 @@ model Quiz {
   buffer_time DateTime
   module_id   String[] @db.ObjectId
   level_id    String
-  status      Boolean
+  status      Boolean @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   module      Module?   @relation(fields: [module_id], references: [id])
