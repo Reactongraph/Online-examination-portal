@@ -100,6 +100,7 @@ const csv = require('csvtojson');
 export class QuestionsService {
   constructor(private readonly prisma: PrismaService) {}
   async Bulk_insertion(file: any) {
+    try {
     const csvfilepath = process.cwd() + '/' + file.path;
 
     const question_csv = await csv().fromFile(csvfilepath);
@@ -107,10 +108,10 @@ export class QuestionsService {
     question_csv.map((OneRow) => {
       OneRow.status = JSON.parse(OneRow.status);
     });
-    try {
       const create_csv = await this.prisma.questions.createMany({
         data: question_csv,
       });
+      return create_csv
     } catch (err) {
       return err;
     }
