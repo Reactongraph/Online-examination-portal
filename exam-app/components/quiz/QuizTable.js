@@ -84,8 +84,6 @@ const QuizTable = ({ quiz_data }) => {
       moduleSelectedArray.push(`${oneModule.id}`);
     });
 
-    console.log(moduleSelectedArray);
-    // setOptionModuleSelected(moduleSelectedArray)
     setSelectedModules(moduleSelectedArray);
   };
 
@@ -104,7 +102,7 @@ const QuizTable = ({ quiz_data }) => {
       })
       .then((response) => {
         // setModal(!modal);
-        // router.replace(router.asPath);
+        router.replace(router.asPath);
       })
       .catch((err) => {
         console.log(err);
@@ -138,8 +136,6 @@ const QuizTable = ({ quiz_data }) => {
             }
           });
         });
-        console.log("module should ");
-        console.log(seletedModuleDataArray);
         setOptionModuleSelected(seletedModuleDataArray);
         setSelectedBufferDate(bufferDate);
         setSelectedEndDate(endDate);
@@ -150,8 +146,6 @@ const QuizTable = ({ quiz_data }) => {
       });
   };
 
-  console.log("thsese are new modules ");
-  console.log(optionModuleSelected);
   const Option = (props) => {
     // props.isSelected = true
     let setChecked = props;
@@ -160,10 +154,6 @@ const QuizTable = ({ quiz_data }) => {
         <components.Option {...props}>
           <input
             type="checkbox"
-            // value={props.id}
-            // onClick={(e) => {
-            //   handleModuleTypeSelect(e);
-            // }}
             checked={props.isSelected}
             onChange={() => null}
           />{" "}
@@ -173,7 +163,6 @@ const QuizTable = ({ quiz_data }) => {
     );
   };
   const checkWithDatabase = async (data) => {
-    // data.status = true;
     data.quiz_name = name;
     data.start_date = selectedStartDate;
     data.end_date = selectedEndDate;
@@ -181,8 +170,6 @@ const QuizTable = ({ quiz_data }) => {
     data.level_id = selectedLevelId;
     data.description = description;
     data.module_id = selectedModules;
-
-    console.log(data);
 
     let QuizData = JSON.stringify(data);
     await axios
