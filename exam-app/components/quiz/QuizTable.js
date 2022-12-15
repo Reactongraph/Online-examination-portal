@@ -72,6 +72,11 @@ const QuizTable = ({ quiz_data }) => {
       });
   };
 
+  const handleLevelTypeSelect = (event) => {
+    let levelId = event.target.value;
+    setSelectedLevelId(levelId);
+  };
+
   const handleModuleTypeSelect = (event) => {
     let moduleSelectedArray = [];
     setOptionModuleSelected(event)
@@ -451,9 +456,6 @@ const QuizTable = ({ quiz_data }) => {
                         onChange={(date) => setSelectedStartDate(date)}
                         placeholderText={"MMMM d, yyyy h:mm aa "}
                         showTimeSelect
-                        filterDate={(date) =>
-                          date.getDay() !== 6 && date.getDay() !== 0
-                        } // weekends cancel
                         popperClassName="react-datepicker-right"
                         showYearDropdown // year show and scrolldown alos
                         scrollableYearDropdown
@@ -481,10 +483,7 @@ const QuizTable = ({ quiz_data }) => {
                         onChange={(date) => setSelectedEndDate(date)}
                         placeholderText={"MMMM d, yyyy h:mm aa "}
                         showTimeSelect
-                        filterDate={(date) =>
-                          date.getDay() !== 6 && date.getDay() !== 0
-                        } // weekends cancel
-                        popperClassName="react-datepicker-right"
+                         popperClassName="react-datepicker-right"
                         showYearDropdown // year show and scrolldown alos
                         scrollableYearDropdown
                         dateFormat="MMMM d, yyyy h:mm aa"
@@ -511,9 +510,6 @@ const QuizTable = ({ quiz_data }) => {
                         onChange={(date) => setSelectedBufferDate(date)}
                         placeholderText={"MMMM d, yyyy h:mm aa "}
                         showTimeSelect
-                        filterDate={(date) =>
-                          date.getDay() !== 6 && date.getDay() !== 0
-                        } // weekends cancel
                         popperClassName="react-datepicker-right"
                         showYearDropdown // year show and scrolldown alos
                         scrollableYearDropdown
@@ -561,7 +557,6 @@ const QuizTable = ({ quiz_data }) => {
                     options={moduleData}
                     className="bg-gray-50 w-50 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     isMulti
-                    // defaultValue={optionModuleSelected}
                     closeMenuOnSelect={false}
                     // hideSelectedOptions={false}
                     components={{
@@ -571,13 +566,7 @@ const QuizTable = ({ quiz_data }) => {
                     allowSelectAll={true}
                     value={optionModuleSelected}
                   />
-                  {/* <Multiselect
-                  //  isMulti={true}/
-                    options={['name','checkj','data']}
-                    displayValue="key"
-                    // showCheckbox={true}
-                  /> */}
-                </div>
+                 </div>
               </div>
               <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full px-3">
