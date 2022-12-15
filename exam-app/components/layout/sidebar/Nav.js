@@ -11,6 +11,7 @@ import {CgNotes} from 'react-icons/cg';
 import {BsSpeedometer} from 'react-icons/bs';
 import {FaSuitcase} from 'react-icons/fa';
 import {MdRateReview} from 'react-icons/md';
+import {MdQuiz} from 'react-icons/md';
 
 
 import React, { useEffect, useState } from "react";
@@ -119,6 +120,16 @@ const Nav = ({ sidebarOutsideClick }) => {
           subMenuArray={null}
         >
                     <MdRateReview size={30} />
+
+        </NavItem> 
+        <NavItem
+          hrefLink='/dashboard/quiz'
+          sidebarStatus={sidebarStatus}
+          menuTitle="Quiz"
+          subMenu={false}
+          subMenuArray={null}
+        >
+                    <MdQuiz size={30} />
 
         </NavItem> 
 
