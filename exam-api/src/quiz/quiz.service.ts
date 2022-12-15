@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma.service'
 @Injectable()
 export class QuizService {
   constructor(private readonly prisma: PrismaService) { }
-  async create(createQuizDto: QuizDTO) {
+  async create (createQuizDto: QuizDTO) {
     // date comes in string and in db status column data type is boolean so we convert string to boolean
     const myBool = Boolean(createQuizDto?.status)
     try {

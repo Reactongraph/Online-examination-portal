@@ -7,14 +7,18 @@ export class QuestionsService {
   constructor(private readonly prisma: PrismaService) { }
   async Bulk_insertion(file: any) {
     const csvfilepath = process.cwd() + '/' + file.path;
+
     const question_csv = await csv().fromFile(csvfilepath)
+    //  map function convert status field from string to boolean because data from csv comes in string format but in database status is boolean type format
+    question_csv.map((OneRow) => {
+      OneRow.status = JSON.parse(OneRow.status)
+    })
     try {
       const create_csv = await this.prisma.questions.createMany({
         data: question_csv
       })
     }
     catch (err) {
-
       return err
     }
   }

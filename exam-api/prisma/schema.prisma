@@ -87,7 +87,7 @@ model Questions {
   images        String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  status        String
+  status        Boolean
   level_id      String?
   module_id     String?
   marks         String?
@@ -104,7 +104,7 @@ model Quiz {
   start_time  String
   module_id   String[] @db.ObjectId
   level_id    String
-  status      Boolean
+  status      Boolean @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   module      Module?   @relation(fields: [module_id], references: [id])

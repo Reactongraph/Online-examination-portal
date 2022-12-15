@@ -23,7 +23,7 @@ class QuestionDTO {
   @ApiProperty()
   updatedAt: Date;
   @ApiProperty()
-  status: string;
+  status: boolean;
   @ApiProperty()
   level_id: string;
   @ApiProperty()

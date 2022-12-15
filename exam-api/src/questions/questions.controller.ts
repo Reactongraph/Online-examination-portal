@@ -9,11 +9,14 @@ import {
   UseInterceptors,
   UploadedFile,
   Res,
+  StreamableFile,
 } from '@nestjs/common';
 import { QuestionsService } from './questions.service';
 import { QuestionDTO } from './questions.entity';
 import { ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
+
+const csv = require('fast-csv')
 
 @ApiTags('Questions')
 @Controller('questions')
@@ -21,21 +24,29 @@ export class QuestionsController {
   constructor(private readonly questionservice: QuestionsService) { }
   @Post('uploads')
   @UseInterceptors(FileInterceptor('File'))
-  async uploadFile(@UploadedFile() file: Express.Multer.File, @Res() res) {
+  async uploadFile(
+    @UploadedFile() file: Express.Multer.File,
+    @Res() res
+  ): Promise<StreamableFile> {
+
     const data = await this.questionservice.Bulk_insertion(file)
 
+    if (!data) {
+      return res.end('data is not inserted')
+    }
     return res.end('data inserted')
   }
+
+
   @Post('create')
   async create_question(@Body() createquestion: QuestionDTO) {
     const data = this.questionservice.create(createquestion);
 
-    return data;
+    return await data;
   }
 
   @Get('find')
   async findAll() {
-
     const question_read = await this.questionservice.findAll();
     return question_read;
   }
@@ -52,7 +63,7 @@ export class QuestionsController {
     const update_questions = await this.questionservice.update(
       id,
       updatequestion,
-    );
+    )
     return update_questions;
   }
 
