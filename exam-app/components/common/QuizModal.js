@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 import DatePicker from "react-datepicker";
 import { default as ReactSelect } from "react-select";
 import Select from "react-select";
-import moment from "moment";
 import { components } from "react-select";
 // import { Multiselect } from "multiselect-react-dropdown";
 import "react-datepicker/dist/react-datepicker.css";
@@ -18,21 +17,20 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
   const [selectedImage, setSelectedImage] = useState();
   const router = useRouter();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");/
 
-  const [mobile, setMobile] = useState("");
+  // const [mobile, setMobile] = useState("");
+  // const [organizationId, setOrganizationId] = useState("");
   const [buttonText, setButtonText] = useState("Add");
-
+  const [name, setName] = useState("");
   const [levelData, setLevelData] = useState("");
   const [moduleData, setModuleData] = useState("");
-
   const [description, setDescription] = useState("");
-  const [organizationId, setOrganizationId] = useState("");
 
   const { register, handleSubmit } = useForm();
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedTime, setSelectedTime] = useState(null);
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+  const [selectedEndDate, setSelectedEndtDate] = useState(null);
+  const [selectedBufferDate, setSelectedBufferDate] = useState(null);
   const [moduleArray, setModuleArray] = useState([]);
   const [selectedLevelId, setSelectedLevelId] = useState("");
   const [selectedModules, setSelectedModules] = useState([]);
@@ -45,6 +43,7 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
       let moduleArray = modules.data.map((object) => {
         object.value = object.module;
         object.label = object.module;
+        // object.isSelected = true;
         return object;
       });
       setModuleData(moduleArray);
@@ -99,23 +98,25 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
     data.status = true;
     data.quiz_name = name;
 
-    let setDateFormat = `${selectedDate.getDate()}/${
-      selectedDate.getMonth() + 1
-    }/${selectedDate.getUTCFullYear()}`;
-    let setTimeFormat = `${selectedTime.getHours()}:${selectedTime.getMinutes()}`;
-    data.start_date = setDateFormat;
-    data.start_time = setTimeFormat;
+    // let setDateFormat = `${selectedDate.getDate()}/${
+    //   selectedDate.getMonth() + 1
+    // }/${selectedDate.getUTCFullYear()}`;
+    // let setTimeFormat = `${selectedTime.getHours()}:${selectedTime.getMinutes()}`;
+    data.start_date = selectedStartDate;
+    data.end_date = selectedEndDate;
+    data.buffer_time = selectedBufferDate;
     data.level_id = selectedLevelId;
     data.description = description;
     data.module_id = selectedModules;
     // data.module_id =
 
-    console.log(data);
+    // console.log(data);
 
     let QuizData = JSON.stringify(data);
-    console.log("This is data ");
+    // console.log("This is data ");
+    // console.log(data);
 
-    // //for new data registration
+    //for new data registration
     await axios({
       url: `${SERVER_LINK}/quiz/create`,
       method: "POST",
@@ -128,11 +129,11 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
       .then((response) => {
         router.replace(router.asPath);
         setName("");
-        setSelectedDate("");
-        setSelectedTime("");
-        setModuleArray([]);
-        setDescription("");
-        setSelectedLevelId("");
+        // setSelectedDate("");
+        // setSelectedTime("");
+        // setModuleArray([]);
+        // setDescription("");
+        // setSelectedLevelId("");
         setModal(!modal);
       })
       .catch((err) => {
@@ -147,8 +148,9 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
         width="800px"
         onClose={() => {
           setName("");
-          setSelectedDate("");
-          setSelectedTime("");
+          setSelectedBufferDate("");
+          setSelectedEndtDate("");
+          setSelectedStartDate("")
           setModuleArray([]);
           setDescription("");
           setSelectedLevelId("");
@@ -220,7 +222,7 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                     for="grid-last-name"
                   >
-                    Pick A Date
+                    Start Time
                   </label>
 
                   <div class="flex items-center justify-center">
@@ -230,15 +232,17 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
                     >
                       <DatePicker
                         className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        selected={selectedDate}
-                        onChange={(date) => setSelectedDate(date)}
-                        placeholderText={"mm/dd/yyyy"}
+                        selected={selectedStartDate}
+                        onChange={(date) => setSelectedStartDate(date)}
+                        placeholderText={"MMMM d, yyyy h:mm aa "}
+                        showTimeSelect
                         filterDate={(date) =>
                           date.getDay() !== 6 && date.getDay() !== 0
                         } // weekends cancel
                         popperClassName="react-datepicker-right"
                         showYearDropdown // year show and scrolldown alos
                         scrollableYearDropdown
+                        dateFormat="MMMM d, yyyy h:mm aa"
                       />
                     </div>
                   </div>
@@ -248,7 +252,7 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                     for="grid-last-name"
                   >
-                    Pick A Time
+                    End Time
                   </label>
 
                   <div class="flex items-center justify-center">
@@ -258,15 +262,47 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
                     >
                       <DatePicker
                         className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        selected={selectedTime}
-                        onChange={(time) => setSelectedTime(time)}
+                        selected={selectedEndDate}
+                        onChange={(date) => setSelectedEndtDate(date)}
+                        placeholderText={"MMMM d, yyyy h:mm aa "}
                         showTimeSelect
-                        placeholderText={"10 : 40 PM"}
-                        showTimeSelectOnly
-                        // popperClassName="react-datepicker-right"
-                        timeIntervals={15}
-                        timeCaption="Choose "
-                        dateFormat="h:mm aa"
+                        filterDate={(date) =>
+                          date.getDay() !== 6 && date.getDay() !== 0
+                        } // weekends cancel
+                        popperClassName="react-datepicker-right"
+                        showYearDropdown // year show and scrolldown alos
+                        scrollableYearDropdown
+                        dateFormat="MMMM d, yyyy h:mm aa"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="w-96 my-3 md:w-1/2 px-3">
+                  <label
+                    className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                    for="grid-last-name"
+                  >
+                    Buffer Time (Access Time for Quiz)
+                  </label>
+
+                  <div class="items-center  justify-center">
+                    <div
+                      className="datepicker bg-gray-200relative form-floating mb-3 xl:w-96"
+                      data-mdb-toggle-button="false"
+                    >
+                      <DatePicker
+                        className="appearance-none  block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                        selected={selectedBufferDate}
+                        onChange={(date) => setSelectedBufferDate(date)}
+                        placeholderText={"MMMM d, yyyy h:mm aa "}
+                        showTimeSelect
+                        filterDate={(date) =>
+                          date.getDay() !== 6 && date.getDay() !== 0
+                        } // weekends cancel
+                        popperClassName="react-datepicker-right"
+                        showYearDropdown // year show and scrolldown alos
+                        scrollableYearDropdown
+                        dateFormat="MMMM d, yyyy h:mm aa"
                       />
                     </div>
                   </div>
