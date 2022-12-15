@@ -97,7 +97,7 @@ const QuizTable = ({ quiz_data }) => {
       })
       .then((response) => {
         // setModal(!modal);
-        // router.replace(router.asPath);
+        router.replace(router.asPath);
       })
       .catch((err) => {
         console.log(err);
@@ -149,10 +149,6 @@ const QuizTable = ({ quiz_data }) => {
         <components.Option {...props}>
           <input
             type="checkbox"
-            // value={props.id}
-            // onClick={(e) => {
-            //   handleModuleTypeSelect(e);
-            // }}
             checked={props.isSelected}
             onChange={() => null}
           />{" "}
@@ -162,7 +158,6 @@ const QuizTable = ({ quiz_data }) => {
     );
   };
   const checkWithDatabase = async (data) => {
-    // data.status = true;
     data.quiz_name = name;
     data.start_date = selectedStartDate;
     data.end_date = selectedEndDate;
