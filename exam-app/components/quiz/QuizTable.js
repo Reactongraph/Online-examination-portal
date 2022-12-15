@@ -1,6 +1,5 @@
 import Table from "./Table";
 import React, { useState, useEffect } from "react";
-import Pagination from "react-js-pagination";
 import axios from "axios";
 import { SERVER_LINK } from "../../helpers/config";
 import { useRouter } from "next/router";
@@ -8,10 +7,9 @@ import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
 import { useForm } from "react-hook-form";
 import { injectStyle } from "react-toastify/dist/inject-style";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import DatePicker from "react-datepicker";
 import { default as ReactSelect } from "react-select";
-import Select from "react-select";
 import { components } from "react-select";
 import moment from "moment";
 
@@ -27,8 +25,6 @@ const QuizTable = ({ quiz_data }) => {
   const [quizId, setQuizId] = useState("");
   // const [orgData, setOrgData] = useState();
   const [buttonText, setButtonText] = useState("Add");
-  const [modules, setModules] = useState("");
-
   const [name, setName] = useState("");
   const [levelData, setLevelData] = useState("");
   const [moduleData, setModuleData] = useState("");
@@ -83,9 +79,6 @@ const QuizTable = ({ quiz_data }) => {
     event.map((oneModule) => {
       moduleSelectedArray.push(`${oneModule.id}`);
     });
-
-    console.log(moduleSelectedArray);
-    // setOptionModuleSelected(moduleSelectedArray)
     setSelectedModules(moduleSelectedArray);
   };
 
@@ -138,8 +131,6 @@ const QuizTable = ({ quiz_data }) => {
             }
           });
         });
-        console.log("module should ");
-        console.log(seletedModuleDataArray);
         setOptionModuleSelected(seletedModuleDataArray);
         setSelectedBufferDate(bufferDate);
         setSelectedEndDate(endDate);
@@ -150,8 +141,6 @@ const QuizTable = ({ quiz_data }) => {
       });
   };
 
-  console.log("thsese are new modules ");
-  console.log(optionModuleSelected);
   const Option = (props) => {
     // props.isSelected = true
     let setChecked = props;
@@ -181,8 +170,6 @@ const QuizTable = ({ quiz_data }) => {
     data.level_id = selectedLevelId;
     data.description = description;
     data.module_id = selectedModules;
-
-    console.log(data);
 
     let QuizData = JSON.stringify(data);
     await axios
