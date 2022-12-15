@@ -68,8 +68,6 @@ import { QuestionDTO } from './questions.entity';
 import { ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 
-const csv = require('fast-csv');
-
 @ApiTags('Questions')
 @Controller('questions')
 export class QuestionsController {
