@@ -6,9 +6,8 @@
     "extends": [
         "eslint:recommended",
         "next",
-        "prettier",
         "next/core-web-vitals",
-        "plugin:prettier/recommended"
+        "prettier"
     ],
     "parserOptions": {
         "ecmaVersion": 2020
