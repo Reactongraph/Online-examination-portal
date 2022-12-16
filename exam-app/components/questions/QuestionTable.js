@@ -11,6 +11,8 @@ import "react-pure-modal/dist/react-pure-modal.min.css";
 import { useForm } from "react-hook-form";
 import { injectStyle } from "react-toastify/dist/inject-style";
 import { ToastContainer, toast } from "react-toastify";
+import { login_token } from "../login";
+import { useSelector, useDispatch } from "react-redux";
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== "undefined") {
@@ -29,10 +31,16 @@ const QuestionTable = ({ question_data }) => {
   const [modules, setModules] = useState("");
 
   const { register, handleSubmit } = useForm();
-
+  const login_token = useSelector((state) => state.user.token);
   const handleRemoveClick = async (question_id) => {
-   await axios
-      .delete(`${SERVER_LINK}/questions/${question_id}`)
+    await axios
+      .delete(`${SERVER_LINK}/questions/${question_id}`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: login_token,
+        },
+      })
       .then((result) => {
         router.replace(router.asPath);
       })
@@ -55,6 +63,7 @@ const QuestionTable = ({ question_data }) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json;charset=UTF-8",
+          Authorization: login_token,
         },
       })
       .then((response) => {
@@ -66,14 +75,14 @@ const QuestionTable = ({ question_data }) => {
       });
   };
 
-  const handleEditClick = async(question_id) => {
+  const handleEditClick = async (question_id) => {
     // setOpen(true);
     setButtonText("Update");
     setEditForm(true);
     // setModuleId(module_id);
     // setModal(true);
 
-    router.push(`/dashboard/questions/addQuestion?question_id=${question_id}`)
+    router.push(`/dashboard/questions/addQuestion?question_id=${question_id}`);
     // first find the user with the id
     // await axios
     //   .get(`${SERVER_LINK}/questions/find/${question_id}`)
@@ -99,6 +108,7 @@ const QuestionTable = ({ question_data }) => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json;charset=UTF-8",
+            Authorization: login_token,
           },
         })
         .then((response) => {
@@ -113,7 +123,14 @@ const QuestionTable = ({ question_data }) => {
     }
   };
 
-  function createData(question, question_type, question_id, question_status , level , modules) {
+  function createData(
+    question,
+    question_type,
+    question_id,
+    question_status,
+    level,
+    modules
+  ) {
     question = question.slice(0, 15) + "...";
     const action = (
       <>
@@ -147,7 +164,7 @@ const QuestionTable = ({ question_data }) => {
         </div>
       </>
     );
-    return { question, question_type, status, action , level , modules};
+    return { question, question_type, status, action, level, modules };
   }
 
   const rowsDataArray = question_data.map((element) => {
@@ -156,13 +173,20 @@ const QuestionTable = ({ question_data }) => {
     let question = element.question;
     let question_type = element.question_type;
     // let email = element.email;
-    let level = element.level.level
+    let level = element.level.level;
     // let module = element./
-    let modules = element.module.module
+    let modules = element.module.module;
     let question_id = element.id;
     let question_status = element.status;
     // console.log(element.status);
-    return createData(question, question_type, question_id, question_status , level , modules);
+    return createData(
+      question,
+      question_type,
+      question_id,
+      question_status,
+      level,
+      modules
+    );
   });
 
   const columns = [

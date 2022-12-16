@@ -39,7 +39,13 @@ const AddQuestion = ({ question_data }) => {
 
     async function getQuestionData() {
       const results = await axios.get(
-        `${SERVER_LINK}/questions/find/${question_id}`
+        `${SERVER_LINK}/questions/find/${question_id}`, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json;charset=UTF-8",
+            Authorization: login_token,
+          },
+        }
       );
       const questionData = results.data;
       setPageTitle("Edit");

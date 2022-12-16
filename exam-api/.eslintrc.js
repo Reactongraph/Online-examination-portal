@@ -24,6 +24,5 @@ module.exports = {
     camelcase: 'off',
     'global-require': 'off',
     'no-underscore-dangle': 'off',
-    'no-console': ['error', { allow: ['warn'] }],
   },
 };

@@ -53,7 +53,7 @@ export class AuthController {
 
       response.cookie('jwt', jwt, { httpOnly: true });
       response
-        .send('login success ' + 'token: ' + JSON.stringify(jwt))
+        .send( JSON.stringify(jwt))
         .status(HttpStatus.ACCEPTED);
     }
   }

@@ -26,6 +26,7 @@ import TokenService from "../services/token";
 import { injectStyle } from "react-toastify/dist/inject-style";
 
 import { ToastContainer, toast } from "react-toastify";
+import { setCookie } from "cookies-next";
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== "undefined") {
@@ -76,10 +77,20 @@ const Login = () => {
 
       .then((response) => {
         if (response.status === 201) {
-          const login_token = response.data.token;
+          const login_token = response.data;
           toast.success("Login Successfully !");
+          console.log("token",response.data);
+          setCookie("user", JSON.stringify(response.data), {
+            path: "/",
+            maxAge: 3600, // Expires after 1hr
+            sameSite: true,
+          })
           dispatch({ type: "SET_LOGIN", token: login_token });
-          router.push("/dashboard");
+          // router.push("/dashboard");
+          router.push({
+            pathname: '/dashboard',
+            // query: { token: login_token },
+          })
         } else {
           setInvalid(true);
           setErrorMessage("Invalid Credentials !");

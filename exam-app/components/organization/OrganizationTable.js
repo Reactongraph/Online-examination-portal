@@ -7,6 +7,10 @@ import { useRouter } from "next/router";
 import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
 import { useForm } from "react-hook-form";
+import { Cookies } from "next/dist/server/web/spec-extension/cookies";
+import { login_token } from "../login";
+import { getCookies } from "cookies-next";
+import { useSelector, useDispatch } from "react-redux";
 
 const OrganizationTable = ({ org_data }) => {
   const router = useRouter();
@@ -28,10 +32,17 @@ const OrganizationTable = ({ org_data }) => {
   const [password, setPassword] = useState("");
 
   const { register, handleSubmit } = useForm();
-
+  const login_token = useSelector((state) => state.user.token);
+  console.log("token", login_token);
   const handleRemoveClick = (org_id) => {
     axios
-      .delete(`${SERVER_LINK}/organization/${org_id}`)
+      .delete(`${SERVER_LINK}/organization/${org_id}`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: login_token,
+        },
+      })
       .then((result) => {
         router.replace(router.asPath);
       })
@@ -46,12 +57,17 @@ const OrganizationTable = ({ org_data }) => {
     };
     new_status = JSON.stringify(new_status);
     console.log(new_status);
-
+    // console.log("login",login_token);
+    // console.log(org_id,org_status);
+    // const token=Cookies.get('jwt')
+    // console.log('token',token);
+    // console.log("hello");
     await axios
       .patch(`${SERVER_LINK}/organization/${org_id}`, new_status, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json;charset=UTF-8",
+          Authorization: login_token,
         },
       })
       .then((response) => {
@@ -66,13 +82,24 @@ const OrganizationTable = ({ org_data }) => {
     setEditForm(true);
     setOrganizationId(org_id);
     setModal(true);
-
+    // console.log("login", login_token);
+    console.log(org_id);
+    // const token = Cookies.get("jwt");
+    console.log(getCookies("jwt", true));
+    // console.log("token", token);
+    console.log("hello");
     // first find the user with the id
     await axios
-      .get(`${SERVER_LINK}/organization/${org_id}`)
+      .get(`${SERVER_LINK}/organization/${org_id}`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: login_token,
+        },
+      })
       .then((response) => {
         let singleOrgData = response.data;
-
+        // console.log("res",response);
         setName(singleOrgData.name);
         setEmail(singleOrgData.email);
         setMobile(singleOrgData.mobile);
@@ -104,12 +131,17 @@ const OrganizationTable = ({ org_data }) => {
     // for taking the patch api data
     if (editForm) {
       await axios
-        .patch(`${SERVER_LINK}/organization/${organizationId}`, OrganizationData, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json;charset=UTF-8",
-          },
-        })
+        .patch(
+          `${SERVER_LINK}/organization/${organizationId}`,
+          OrganizationData,
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json;charset=UTF-8",
+              Authorization: login_token,
+            },
+          }
+        )
         .then((response) => {
           setModal(!modal);
           router.replace(router.asPath);
@@ -121,12 +153,14 @@ const OrganizationTable = ({ org_data }) => {
 
     // for new data registration
     else {
+      console.log("login", login_token);
       await axios({
         url: `${SERVER_LINK}/organization`,
         method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json;charset=UTF-8",
+          Authorization: login_token,
         },
         data,
       })
