@@ -7,8 +7,7 @@
         "build-css": "tailwindcss -i styles/globals.css -o public/style.css",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint",
-        "prepare": "cd .. && husky install exam-app/.husky"
+        "lint": "next lint"
     },
     "dependencies": {
         "@babel/core": "^7.20.2",
