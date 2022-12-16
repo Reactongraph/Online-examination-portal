@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
 import { useForm } from "react-hook-form";
@@ -12,19 +12,14 @@ import { components } from "react-select";
 // import { Multiselect } from "multiselect-react-dropdown";
 import "react-datepicker/dist/react-datepicker.css";
 
-const QuizModal = ({ modal, setModal, editForm, participantId }) => {
+const QuizModal = ({ modal, setModal, editForm, participantId ,module_data, level_data }) => {
   //For Image Preview
   const [selectedImage, setSelectedImage] = useState();
   const router = useRouter();
-
-  // const [email, setEmail] = useState("");/
-
-  // const [mobile, setMobile] = useState("");
-  // const [organizationId, setOrganizationId] = useState("");
   const [buttonText, setButtonText] = useState("Add");
   const [name, setName] = useState("");
-  const [levelData, setLevelData] = useState("");
-  const [moduleData, setModuleData] = useState("");
+  const [levelData, setLevelData] = useState(level_data);
+  const [moduleData, setModuleData] = useState(module_data);
   const [description, setDescription] = useState("");
 
   const { register, handleSubmit } = useForm();
@@ -34,25 +29,6 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
   const [moduleArray, setModuleArray] = useState([]);
   const [selectedLevelId, setSelectedLevelId] = useState("");
   const [selectedModules, setSelectedModules] = useState([]);
-
-  useEffect(() => {
-    async function fetchApiData() {
-      let levels = await axios.get(`${SERVER_LINK}/level/find`);
-      let modules = await axios.get(`${SERVER_LINK}/module/find`);
-
-      let moduleArray = modules.data.map((object) => {
-        object.value = object.module;
-        object.label = object.module;
-        // object.isSelected = true;
-        return object;
-      });
-      setModuleData(moduleArray);
-      setLevelData(levels.data);
-    }
-
-    fetchApiData();
-  }, [router.query?.question_id]);
-  // for sending the data to the backend
 
 
   const handleLevelTypeSelect = (event) => {
@@ -75,10 +51,6 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
         <components.Option {...props}>
           <input
             type="checkbox"
-            // value={props.id}
-            // onClick={(e) => {
-            //   handleModuleTypeSelect(e);
-            // }}
             checked={props.isSelected}
             onChange={() => null}
           />{" "}

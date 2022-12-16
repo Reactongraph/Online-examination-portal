@@ -26,8 +26,12 @@ const LevelTable = ({ level_data }) => {
 
   const { register, handleSubmit } = useForm();
 
-  const handleRemoveClick = (level_id) => {
-    axios
+  const handleRemoveClick = async (level_id) => {
+    var shouldDelete = confirm(
+      "Do you really want to delete ?"
+    );
+    if (shouldDelete) {
+      await axios
       .delete(`${SERVER_LINK}/level/${level_id}`)
       .then((result) => {
         router.replace(router.asPath);
@@ -35,6 +39,8 @@ const LevelTable = ({ level_data }) => {
       .catch((err) => {
         console.log(err);
       });
+    }
+    
   };
 
   const handleEditClick = (level_id) => {
@@ -81,7 +87,7 @@ const LevelTable = ({ level_data }) => {
   };
   const checkWithDatabase = async (data) => {
     // data.status = true;
-    data.level = level
+    data.level = level;
 
     let LevelData = JSON.stringify(data);
 

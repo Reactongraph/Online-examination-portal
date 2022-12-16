@@ -12,17 +12,11 @@ import { SERVER_LINK } from "../../../helpers/config";
 
 
 // You can't name a function as MODULE...
-export default function modules({question_data}){
-    console.log('This is the question_data daa ');
-    console.log(question_data);
-  
+export default function modules({level_data,module_data}){  
     return (
         <>
             <Layout title='Questions'>
-                <AddQuestion  />
-                {/* <Level level_data={module_data} /> */}
-
-                {/* <h1 style={{color: "red"}}>This is questions add   </h1> */}
+                <AddQuestion  level_data ={level_data} module_data={module_data} />
             </Layout>
         </>
     )
@@ -30,12 +24,16 @@ export default function modules({question_data}){
 
 // function for ssr data 
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   // Fetch data from external API
-  const res = await axios.get(`${SERVER_LINK}/questions/find`);
 
-  let question_data = res.data;
+  const levels = await axios.get(`${SERVER_LINK}/level/find`);
+  const modules = await axios.get(`${SERVER_LINK}/module/find`);
+
+  let level_data = levels.data;
+  let module_data = modules.data; 
+
 
   // Pass data to the page via props
-  return { props: { question_data } };
+  return { props: { level_data,module_data } };
 }

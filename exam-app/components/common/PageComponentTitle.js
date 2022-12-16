@@ -10,6 +10,9 @@ const PageComponentTitle = ({
   titleDescription,
   buttonTitle,
   editForm,
+  quiz_data,
+  module_data,
+  level_data,
 }) => {
   const [modal, setModal] = useState(false);
 
@@ -58,7 +61,7 @@ const PageComponentTitle = ({
           </>
         ) : title == "QUIZ" ? (
           <>
-            <QuizModal modal={modal} setModal={setModal} />
+            <QuizModal quiz_data={quiz_data}  level_data={level_data} module_data={module_data}  modal={modal} setModal={setModal} />
           </>
         ) : (
           <>

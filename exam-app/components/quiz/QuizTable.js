@@ -18,7 +18,7 @@ if (typeof window !== "undefined") {
   injectStyle();
 }
 
-const QuizTable = ({ quiz_data }) => {
+const QuizTable = ({ quiz_data , module_data,level_data}) => {
   const router = useRouter();
   const [editForm, setEditForm] = useState(false);
   const [modal, setModal] = useState(false);
@@ -26,8 +26,8 @@ const QuizTable = ({ quiz_data }) => {
   // const [orgData, setOrgData] = useState();
   const [buttonText, setButtonText] = useState("Add");
   const [name, setName] = useState("");
-  const [levelData, setLevelData] = useState("");
-  const [moduleData, setModuleData] = useState("");
+  const [levelData, setLevelData] = useState(level_data);
+  const [moduleData, setModuleData] = useState(module_data);
   const [selectedLevelId, setSelectedLevelId] = useState("");
   const [description, setDescription] = useState("");
   const [selectedBufferDate, setSelectedBufferDate] = useState(null);
@@ -37,25 +37,6 @@ const QuizTable = ({ quiz_data }) => {
   const [selectedModules, setSelectedModules] = useState();
 
   const { register, handleSubmit } = useForm();
-
-  useEffect(() => {
-    async function fetchApiData() {
-      let levels = await axios.get(`${SERVER_LINK}/level/find`);
-      let modules = await axios.get(`${SERVER_LINK}/module/find`);
-
-      let moduleArray = modules.data.map((object) => {
-        object.value = object.module;
-        object.label = object.module;
-        // object.isSelected = true;
-        return object;
-      });
-
-      setModuleData(moduleArray);
-      setLevelData(levels.data);
-    }
-
-    fetchApiData();
-  }, [router.query?.question_id]);
 
   const handleRemoveClick = (quiz_id) => {
     axios

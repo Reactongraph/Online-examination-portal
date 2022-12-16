@@ -18,7 +18,7 @@ export default function organization({ org_data }) {
 
 // function for ssr data
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   // Fetch data from external API
   const res = await axios.get(`${SERVER_LINK}/organization/find`);
 
