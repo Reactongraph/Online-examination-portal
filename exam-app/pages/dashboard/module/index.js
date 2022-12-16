@@ -20,7 +20,7 @@ export default function modules({ module_data }) {
 
 // function for ssr data
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   // Fetch data from external API
   const res = await axios.get(`${SERVER_LINK}/module/find`);
 

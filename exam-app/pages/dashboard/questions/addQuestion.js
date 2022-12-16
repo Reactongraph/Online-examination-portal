@@ -24,7 +24,7 @@ export default function modules({level_data,module_data}){
 
 // function for ssr data 
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   // Fetch data from external API
 
   const levels = await axios.get(`${SERVER_LINK}/level/find`);
