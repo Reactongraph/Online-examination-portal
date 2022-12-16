@@ -91,7 +91,6 @@
 //   }
 // }
 
-
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { QuestionDTO } from './questions.entity';
@@ -110,7 +109,7 @@ export class QuestionsService {
         module_id: createQuestionDto?.module_id,
         marks: createQuestionDto?.marks,
         option_type: createQuestionDto?.option_type,
-      }
+      },
     });
 
     return question;
@@ -119,8 +118,7 @@ export class QuestionsService {
   async findAll() {
     const find_questions = await this.prisma.questions.findMany({
       include: { level: true, module: true },
-    })
-
+    });
     return find_questions;
   }
 
@@ -132,7 +130,7 @@ export class QuestionsService {
       include: {
         level: true,
         module: true,
-      }
+      },
     });
 
     if (!question) {
@@ -152,21 +150,21 @@ export class QuestionsService {
         id,
       },
       data: updateRestApiDto,
-    })
+    });
     return updatedOptions;
   }
 
   async remove(idd: string) {
     const find_del = await this.prisma.questions.findUnique({
       where: { id: idd },
-    })
+    });
     if (!find_del) {
       return 'data does not exist!';
     }
     await this.prisma.questions.delete({
       where: {
         id: idd,
-      }
+      },
     });
 
     return 'question deleted';

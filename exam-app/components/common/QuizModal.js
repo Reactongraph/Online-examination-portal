@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
 import { useForm } from "react-hook-form";
@@ -12,19 +12,14 @@ import { components } from "react-select";
 // import { Multiselect } from "multiselect-react-dropdown";
 import "react-datepicker/dist/react-datepicker.css";
 
-const QuizModal = ({ modal, setModal, editForm, participantId }) => {
+const QuizModal = ({ modal, setModal, editForm, participantId ,module_data, level_data }) => {
   //For Image Preview
   const [selectedImage, setSelectedImage] = useState();
   const router = useRouter();
-
-  // const [email, setEmail] = useState("");/
-
-  // const [mobile, setMobile] = useState("");
-  // const [organizationId, setOrganizationId] = useState("");
   const [buttonText, setButtonText] = useState("Add");
   const [name, setName] = useState("");
-  const [levelData, setLevelData] = useState("");
-  const [moduleData, setModuleData] = useState("");
+  const [levelData, setLevelData] = useState(level_data);
+  const [moduleData, setModuleData] = useState(module_data);
   const [description, setDescription] = useState("");
 
   const { register, handleSubmit } = useForm();
@@ -35,28 +30,8 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
   const [selectedLevelId, setSelectedLevelId] = useState("");
   const [selectedModules, setSelectedModules] = useState([]);
 
-  useEffect(() => {
-    async function fetchApiData() {
-      let levels = await axios.get(`${SERVER_LINK}/level/find`);
-      let modules = await axios.get(`${SERVER_LINK}/module/find`);
-
-      let moduleArray = modules.data.map((object) => {
-        object.value = object.module;
-        object.label = object.module;
-        // object.isSelected = true;
-        return object;
-      });
-      setModuleData(moduleArray);
-      setLevelData(levels.data);
-    }
-
-    fetchApiData();
-  }, [router.query?.question_id]);
+  
   // for sending the data to the backend
-
-  // console.log(moduleData);
-  // console.log("this is modulearra");
-  // console.log(moduleData);
 
   const handleLevelTypeSelect = (event) => {
     let levelId = event.target.value;
@@ -82,10 +57,6 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
         <components.Option {...props}>
           <input
             type="checkbox"
-            // value={props.id}
-            // onClick={(e) => {
-            //   handleModuleTypeSelect(e);
-            // }}
             checked={props.isSelected}
             onChange={() => null}
           />{" "}
@@ -97,24 +68,13 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
   const checkWithDatabase = async (data) => {
     data.status = true;
     data.quiz_name = name;
-
-    // let setDateFormat = `${selectedDate.getDate()}/${
-    //   selectedDate.getMonth() + 1
-    // }/${selectedDate.getUTCFullYear()}`;
-    // let setTimeFormat = `${selectedTime.getHours()}:${selectedTime.getMinutes()}`;
     data.start_date = selectedStartDate;
     data.end_date = selectedEndDate;
     data.buffer_time = selectedBufferDate;
     data.level_id = selectedLevelId;
     data.description = description;
     data.module_id = selectedModules;
-    // data.module_id =
-
-    // console.log(data);
-
-    let QuizData = JSON.stringify(data);
-    // console.log("This is data ");
-    // console.log(data);
+    let QuizData = JSON.stringify(data);   
 
     //for new data registration
     await axios({
@@ -129,11 +89,6 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
       .then((response) => {
         router.replace(router.asPath);
         setName("");
-        // setSelectedDate("");
-        // setSelectedTime("");
-        // setModuleArray([]);
-        // setDescription("");
-        // setSelectedLevelId("");
         setModal(!modal);
       })
       .catch((err) => {
@@ -355,12 +310,7 @@ const QuizModal = ({ modal, setModal, editForm, participantId }) => {
                     allowSelectAll={true}
                     // value={optionSelected}
                   />
-                  {/* <Multiselect
-                  //  isMulti={true}/
-                    options={['name','checkj','data']}
-                    displayValue="key"
-                    // showCheckbox={true}
-                  /> */}
+               
                 </div>
               </div>
               <div className="flex flex-wrap -mx-3 mb-6">

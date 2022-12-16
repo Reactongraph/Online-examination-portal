@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 // import OrganizationModal from "./OrganizationModal";
 // import ParticipantModal from "./ParticipantModal";
 // import LevelModal from "./LevelModal";
@@ -10,17 +10,18 @@ const PageComponentTitle = ({
   titleDescription,
   buttonTitle,
   editForm,
+  level_data,
+  module_data,
 }) => {
   const [modal, setModal] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
   const checkModal = (title) => {};
 
-  const handleAddClick = ()=>{
-        // console.log('this is clickl');
-        router.push('/dashboard/questions/addQuestion')
-
-  }
+  const handleAddClick = () => {
+    // console.log('this is clickl');
+    router.push("/dashboard/questions/addQuestion");
+  };
 
   return (
     <>
@@ -50,8 +51,6 @@ const PageComponentTitle = ({
           </svg>
           {buttonTitle}
         </button>
-
-       
       </div>
     </>
   );
