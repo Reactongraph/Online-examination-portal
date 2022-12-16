@@ -1,23 +1,21 @@
-import * as React from "react";
+import * as React from 'react'
 // import Sidebar from "./sidebar";
-import Grid from "@mui/material/Grid";
-import Divider from "@mui/material/Divider";
+import Grid from '@mui/material/Grid'
+import Divider from '@mui/material/Divider'
 
 export default function LayoutDashboard({ children }) {
-  return (
-    <>
-      <Grid container>
-        <Grid item>
-          {/* <Sidebar /> */}
-        </Grid>
-        <Divider flexItem>
-          <br></br>
-        </Divider>
+    return (
+        <>
+            <Grid container>
+                <Grid item>{/* <Sidebar /> */}</Grid>
+                <Divider flexItem>
+                    <br></br>
+                </Divider>
 
-        <Grid item xs>
-          {children}
-        </Grid>
-      </Grid>
-    </>
-  );
+                <Grid item xs>
+                    {children}
+                </Grid>
+            </Grid>
+        </>
+    )
 }
