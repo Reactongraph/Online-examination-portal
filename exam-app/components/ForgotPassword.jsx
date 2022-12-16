@@ -1,28 +1,13 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Image from "next/image";
-import Link from "next/link";
+
 import { useForm } from "react-hook-form";
-import { FaFacebookF, FaLinkedinIn, FaGoogle, FaRegEnvelope } from 'react-icons/fa'
-import { MdLockOutline } from 'react-icons/md'
+import { FaRegEnvelope } from 'react-icons/fa'
 import { useState } from "react";
-import {
-  Paper,
-  Avatar,
-  TextField,
-  Button,
-  ImageListTileBar,
-  IconButton,
-} from "@mui/material";
-import { blue, green, pink, yellow } from "@mui/material/colors";
-import SendIcon from "@mui/icons-material/Send";
 import { object, string, array, number } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SERVER_LINK } from "../helpers/config";
 import axios from "axios";
 import { injectStyle } from "react-toastify/dist/inject-style";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== "undefined") {

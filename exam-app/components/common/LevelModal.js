@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
 import { useForm } from "react-hook-form";
@@ -8,6 +8,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { injectStyle } from "react-toastify/dist/inject-style";
 import { ToastContainer, toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== "undefined") {
@@ -20,6 +21,7 @@ const LevelModal = ({ modal, setModal, editForm, organizationId, orgData }) => {
   const [level, setLevel] = useState("");
   const [buttonText, setButtonText] = useState("Add");
   const { register, handleSubmit } = useForm();
+  const login_token = useSelector((state) => state.user.token);
 
   // for sending the data to the backend
   const checkWithDatabase = async (data) => {
@@ -36,6 +38,7 @@ const LevelModal = ({ modal, setModal, editForm, organizationId, orgData }) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json;charset=UTF-8",
+          Authorization: login_token,
         },
         data: LevelData,
       })

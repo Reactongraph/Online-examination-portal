@@ -2,10 +2,6 @@ import React from "react";
 import { withRouter } from 'next/router'
 
 const Dashboard = (props) => {
-  console.log('this is props ');
-  const {token} = props.router.query;
-  // console.log(props.router.query);
-  console.log(token);
   return (
     <>
       <main className="p-6 sm:p-10 space-y-6">

@@ -10,8 +10,6 @@ import { SERVER_LINK } from "../../../helpers/config";
 
 // You can't name a function as MODULE...
 export default function modules({ question_data }) {
-  console.log("This is the question_data daa ");
-  console.log(question_data);
 
   return (
     <>
@@ -36,9 +34,25 @@ export async function getServerSideProps(data) {
       Authorization: data.req.cookies.jwt,
     },
   });
+  const levels = await axios.get(`${SERVER_LINK}/level/find`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json;charset=UTF-8",
+      Authorization: data.req.cookies.jwt,
+    },
+  });
+  const modules = await axios.get(`${SERVER_LINK}/module/find`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json;charset=UTF-8",
+      Authorization: data.req.cookies.jwt,
+    },
+  });
 
   let question_data = res.data;
+  let level_data = levels.data;
+  let module_data = modules.data; 
 
   // Pass data to the page via props
-  return { props: { question_data } };
+  return { props: { question_data,level_data,module_data } };
 }

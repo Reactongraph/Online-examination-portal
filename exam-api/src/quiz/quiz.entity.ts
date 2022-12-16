@@ -9,9 +9,11 @@ class QuizDTO {
   @ApiProperty()
   description: string;
   @ApiProperty()
-  start_date: string;
+  start_date: Date;
   @ApiProperty()
-  start_time: string;
+  end_date: Date;
+  @ApiProperty()
+  buffer_time: Date;
   @ApiProperty()
   level_id: string;
   @ApiProperty()

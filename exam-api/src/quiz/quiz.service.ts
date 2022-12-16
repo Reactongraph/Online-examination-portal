@@ -4,51 +4,58 @@ import { PrismaService } from 'src/prisma.service'
 
 @Injectable()
 export class QuizService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
   async create(createQuizDto: QuizDTO) {
     // date comes in string and in db status column data type is boolean so we convert string to boolean
-    const myBool = Boolean(createQuizDto?.status)
+    const myBool = Boolean(createQuizDto?.status);
     try {
-
+      console.log("hello");
+      
       const quiz = await this.prisma.quiz.create({
         data: {
           quiz_name: createQuizDto.quiz_name,
           quiz_image: createQuizDto.quiz_image,
           start_date: createQuizDto.start_date,
-          start_time: createQuizDto.start_time,
+          end_date: createQuizDto.end_date,
+          buffer_time: createQuizDto.buffer_time,
           description: createQuizDto.description,
           status: myBool,
           module_id: createQuizDto.module_id,
           level_id: createQuizDto.level_id,
-        }
-      })
-      return quiz
+        },
+      });
+      console.log("hello1");
+      
+      return quiz;
     } catch (err) {
-      return { error: err }
+      return { error: err };
     }
   }
 
   async findAll() {
-    const leveldata = await this.prisma.quiz.findMany({ include: { level: true } })
+    const leveldata = await this.prisma.quiz.findMany({
+      include: { level: true },
+    });
+    console.log(leveldata);
+    
 
     const quiz = await this.prisma.quiz.aggregateRaw({
       pipeline: [
         {
-          '$lookup': {
-            'from': 'Module',
-            'localField': 'module_id',
-            'foreignField': '_id',
-            'as': 'module'
-          }
+          $lookup: {
+            from: 'Module',
+            localField: 'module_id',
+            foreignField: '_id',
+            as: 'module',
+          },
         },
       ],
-    })
+    });
 
     for (let [index, x] of leveldata.entries()) {
-      quiz[index]["level"] = leveldata[index].level
-
+      quiz[index]['level'] = leveldata[index].level;
     }
-    return { quiz }
+    return { quiz };
   }
 
   async findOne(id: string) {
@@ -57,16 +64,15 @@ export class QuizService {
         where: {
           id,
         },
-        include: { level: true, module: true }
-      })
-
+        include: { level: true, module: true },
+      });
 
       if (!quiz) {
-        return `quiz not found with this  ${id}`
+        return `quiz not found with this  ${id}`;
       }
-      return quiz
+      return quiz;
     } catch (err) {
-      return { error: err }
+      return { error: err };
     }
   }
 
@@ -77,13 +83,13 @@ export class QuizService {
           id,
         },
         data: updateRestApiDto,
-      })
+      });
       if (!updateQuiz) {
-        return `quiz not found for this ${id}`
+        return `quiz not found for this ${id}`;
       }
-      return updateQuiz
+      return updateQuiz;
     } catch (err) {
-      return { error: err }
+      return { error: err };
     }
   }
 
@@ -92,11 +98,11 @@ export class QuizService {
       const deleteQuiz = await this.prisma.quiz.delete({
         where: {
           id,
-        }
-      })
-      return deleteQuiz
+        },
+      });
+      return deleteQuiz;
     } catch (err) {
-      return err
+      return err;
     }
   }
 }

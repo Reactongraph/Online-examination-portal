@@ -1,5 +1,4 @@
-import styles from "./layout.module.css";
-import Navbar from "./Navbar";
+
 
 import { useEffect } from "react";
 import { useApi } from "../hooks";
@@ -45,7 +44,6 @@ export default function Layout({ children }) {
         ) {
           router.push(`${router.asPath}`);
         } else {
-          // router.push("/login");
           router.push(`${router.asPath}`)
         }
       });
@@ -57,10 +55,7 @@ export default function Layout({ children }) {
 
   return (
     <>
-      {/* <Navbar /> */}
-      {/* <div className={styles.container}>{children}</div> */}
       {children}
-      {/* <Footer/> */}
     </>
   );
 }

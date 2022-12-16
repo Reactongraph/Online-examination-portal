@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import ComponentTitle from "./ComponentTitle";
 import { useRouter } from "next/router";
-import QuestionTable from "./QuestionTable";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { SERVER_LINK } from "../../helpers/config";
 import { useForm } from "react-hook-form";
 
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
 
-const AddQuestion = ({ question_data }) => {
+const AddQuestion = ({question_data,level_data,module_data}) => {
   const router = useRouter();
   const [selectedImage, setSelectedImage] = useState(null);
   const [pageTitle, setPageTitle] = useState("Add");
@@ -19,8 +18,8 @@ const AddQuestion = ({ question_data }) => {
   const [selectedModuleId, setSelectedModuleId] = useState("");
   const [timeLimitSelect, setTimeLimitSelect] = useState("");
   const [requiredOptionField, setRequiredOptionField] = useState(true);
-  const [levelData, setLevelData] = useState();
-  const [moduleData, setModuleData] = useState();
+  const [levelData, setLevelData] = useState(level_data);
+  const [moduleData, setModuleData] = useState(module_data);
   const [marks, setMarks] = useState();
   const [numberOfOptionSelect, setNumberOfOptionSelect] = useState(0);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState();
@@ -32,6 +31,7 @@ const AddQuestion = ({ question_data }) => {
     { option: "", correct: "" },
     { option: "", correct: "" },
   ]);
+  const login_token = useSelector((state) => state.user.token);
 
   useEffect(() => {
     let question_id = router.query.question_id;
@@ -62,6 +62,7 @@ const AddQuestion = ({ question_data }) => {
         }
       });
 
+      
       setQuestionType(questionData.question_type);
       setTimeLimitSelect(questionData.question_time);
       setOptionType(questionData.option_type);
@@ -78,23 +79,13 @@ const AddQuestion = ({ question_data }) => {
       getQuestionData();
     }
   }, [router.query?.question_id]);
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-
-  useEffect(() => {
-    async function fetchApiData() {
-      let levels = await axios.get(`${SERVER_LINK}/level/find`);
-      let modules = await axios.get(`${SERVER_LINK}/module/find`);
-      setModuleData(modules.data);
-      setLevelData(levels.data);
-    }
-
-    fetchApiData();
-  }, [router.query?.question_id]);
 
   useEffect(() => {
     if (numberOfOptionSelect > 0) {
@@ -222,6 +213,7 @@ const AddQuestion = ({ question_data }) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json;charset=UTF-8",
+          Authorization: login_token,
         },
         data,
       })

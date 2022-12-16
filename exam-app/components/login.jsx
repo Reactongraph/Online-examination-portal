@@ -8,21 +8,18 @@ import {
   FaRegEnvelope,
 } from "react-icons/fa";
 
-import Image from "next/image";
 
 import { object, string, array, number } from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import { useRouter } from "next/router";
 import { SERVER_LINK } from "../helpers/config";
 
-import jwt from "jsonwebtoken";
 
 import { useApi } from "../hooks";
-import TokenService from "../services/token";
 import { injectStyle } from "react-toastify/dist/inject-style";
 
 import { ToastContainer, toast } from "react-toastify";

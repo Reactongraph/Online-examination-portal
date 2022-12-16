@@ -3,12 +3,16 @@ import OrganizationModal from "./OrganizationModal";
 import ParticipantModal from "./ParticipantModal";
 import LevelModal from "./LevelModal";
 import ModuleModal from "./ModuleModal";
+import QuizModal from "./QuizModal";
 
 const PageComponentTitle = ({
   title,
   titleDescription,
   buttonTitle,
   editForm,
+  quiz_data,
+  module_data,
+  level_data,
 }) => {
   const [modal, setModal] = useState(false);
 
@@ -54,6 +58,10 @@ const PageComponentTitle = ({
         ) : title == "MODULE" ? (
           <>
             <ModuleModal modal={modal} setModal={setModal} />
+          </>
+        ) : title == "QUIZ" ? (
+          <>
+            <QuizModal quiz_data={quiz_data}  level_data={level_data} module_data={module_data}  modal={modal} setModal={setModal} />
           </>
         ) : (
           <>

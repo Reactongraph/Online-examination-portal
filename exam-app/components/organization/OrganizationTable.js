@@ -33,7 +33,6 @@ const OrganizationTable = ({ org_data }) => {
 
   const { register, handleSubmit } = useForm();
   const login_token = useSelector((state) => state.user.token);
-  console.log("token", login_token);
   const handleRemoveClick = (org_id) => {
     axios
       .delete(`${SERVER_LINK}/organization/${org_id}`, {
@@ -56,12 +55,6 @@ const OrganizationTable = ({ org_data }) => {
       status: !org_status,
     };
     new_status = JSON.stringify(new_status);
-    console.log(new_status);
-    // console.log("login",login_token);
-    // console.log(org_id,org_status);
-    // const token=Cookies.get('jwt')
-    // console.log('token',token);
-    // console.log("hello");
     await axios
       .patch(`${SERVER_LINK}/organization/${org_id}`, new_status, {
         headers: {
@@ -82,12 +75,6 @@ const OrganizationTable = ({ org_data }) => {
     setEditForm(true);
     setOrganizationId(org_id);
     setModal(true);
-    // console.log("login", login_token);
-    console.log(org_id);
-    // const token = Cookies.get("jwt");
-    console.log(getCookies("jwt", true));
-    // console.log("token", token);
-    console.log("hello");
     // first find the user with the id
     await axios
       .get(`${SERVER_LINK}/organization/${org_id}`, {
@@ -99,7 +86,6 @@ const OrganizationTable = ({ org_data }) => {
       })
       .then((response) => {
         let singleOrgData = response.data;
-        // console.log("res",response);
         setName(singleOrgData.name);
         setEmail(singleOrgData.email);
         setMobile(singleOrgData.mobile);
@@ -153,7 +139,6 @@ const OrganizationTable = ({ org_data }) => {
 
     // for new data registration
     else {
-      console.log("login", login_token);
       await axios({
         url: `${SERVER_LINK}/organization`,
         method: "POST",

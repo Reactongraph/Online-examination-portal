@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
 import { useForm } from "react-hook-form";
 import { SERVER_LINK } from "../../helpers/config";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
   //For Image Preview
@@ -21,7 +22,8 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
   const [organizationId, setOrganizationId] = useState("");
 
   const { register, handleSubmit } = useForm();
-
+  
+  const login_token = useSelector((state) => state.user.token);
   // for sending the data to the backend
   const checkWithDatabase = async (data) => {
     data.name = name;
@@ -40,6 +42,7 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json;charset=UTF-8",
+        Authorization: login_token,
       },
       data: participantData,
     })
@@ -73,7 +76,7 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
         }}
       >
         <div classNameName="flex-row space-y-3 relative">
-          <div classNameName="bg-blue-600 p-2 font-bold text-lg text-center text-white -mt-4 -mx-4 mb-5 pb-4">
+        <div className="bg-blue-600 p-2 font-bold text-lg text-center text-white -mt-4 -mx-4 mb-5 pb-4">
             <p>{buttonText} Participant</p>
           </div>
 

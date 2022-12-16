@@ -17,7 +17,6 @@ export default function participant({ participant_data }) {
 // function for ssr data
 export async function getServerSideProps(data) {
   // Fetch data from external API
-  console.log(data.req.cookies.jwt)
   const res = await axios.get(`${SERVER_LINK}/participants/find`, {
     headers: {
       Accept: "application/json",

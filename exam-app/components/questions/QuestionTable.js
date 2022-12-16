@@ -1,17 +1,14 @@
 // import Table from 'rc-table';
 import Table from "./Table";
 import React, { useState } from "react";
-import Pagination from "react-js-pagination";
 import axios from "axios";
 import { SERVER_LINK } from "../../helpers/config";
 import { useRouter } from "next/router";
-import OrganizationModal from "../common/OrganizationModal";
 import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
 import { useForm } from "react-hook-form";
 import { injectStyle } from "react-toastify/dist/inject-style";
 import { ToastContainer, toast } from "react-toastify";
-import { login_token } from "../login";
 import { useSelector, useDispatch } from "react-redux";
 
 // CALL IT ONCE IN YOUR APP
@@ -20,7 +17,6 @@ if (typeof window !== "undefined") {
 }
 
 const QuestionTable = ({ question_data }) => {
-  // console.log('this is the talbe ');
 
   const router = useRouter();
   const [editForm, setEditForm] = useState(false);
@@ -50,13 +46,10 @@ const QuestionTable = ({ question_data }) => {
   };
 
   const handleBoxClick = async (question_id, question_status) => {
-    // console.log("This is hte box click");
-    // console.log(module_id);
     let new_status = {
       status: !question_status,
     };
     new_status = JSON.stringify(new_status);
-    console.log(new_status);
 
     await axios
       .patch(`${SERVER_LINK}/questions/${question_id}`, new_status, {
@@ -94,6 +87,11 @@ const QuestionTable = ({ question_data }) => {
     //   .catch((err) => {
     //     console.log(err);
     //   });
+
+
+
+
+
   };
 
   const checkWithDatabase = async (data) => {
@@ -168,17 +166,12 @@ const QuestionTable = ({ question_data }) => {
   }
 
   const rowsDataArray = question_data.map((element) => {
-    // console.log('this is example ');
-    console.log(element.question);
     let question = element.question;
     let question_type = element.question_type;
-    // let email = element.email;
     let level = element.level.level;
-    // let module = element./
     let modules = element.module.module;
     let question_id = element.id;
     let question_status = element.status;
-    // console.log(element.status);
     return createData(
       question,
       question_type,

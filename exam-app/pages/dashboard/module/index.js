@@ -2,7 +2,6 @@ import * as React from "react";
 
 import Module from "../../../components/module/Module";
 import Layout from "../../../components/layout/Layout";
-import Level from "../../../components/level/Level";
 
 import axios from "axios";
 import { SERVER_LINK } from "../../../helpers/config";
