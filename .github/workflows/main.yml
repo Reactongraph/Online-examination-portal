@@ -38,8 +38,6 @@ jobs:
       - name: Run linters
         uses: wearerequired/lint-action@v2
         with:
-          eslint: true
-          eslint_dir: exam-app
           prettier: true
           prettier_dir: exam-app
           prettier_args: "--ignore-unknown"
