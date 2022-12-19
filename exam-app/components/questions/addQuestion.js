@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import ComponentTitle from './ComponentTitle'
 import { useRouter } from 'next/router'
-import QuestionTable from './QuestionTable'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import { SERVER_LINK } from '../../helpers/config'
 import { useForm } from 'react-hook-form'
 
 import axios from 'axios'
+import { useSelector, useDispatch } from 'react-redux'
 
 const AddQuestion = ({ question_data, level_data, module_data }) => {
     const router = useRouter()
@@ -32,6 +31,7 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
         { option: '', correct: '' },
         { option: '', correct: '' },
     ])
+    const login_token = useSelector((state) => state.user.token)
 
     useEffect(() => {
         let question_id = router.query.question_id
@@ -39,7 +39,14 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
 
         async function getQuestionData() {
             const results = await axios.get(
-                `${SERVER_LINK}/questions/find/${question_id}`
+                `${SERVER_LINK}/questions/find/${question_id}`,
+                {
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json;charset=UTF-8',
+                        Authorization: login_token,
+                    },
+                }
             )
             const questionData = results.data
             setPageTitle('Edit')
@@ -56,17 +63,6 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
                         setNumberOfOptionSelect(numberOfOptionSelect + 1)
                 }
             })
-
-            setQuestionType(questionData.question_type)
-            setTimeLimitSelect(questionData.question_time)
-            setOptionType(questionData.option_type)
-            setSelectedLevelId(questionData.level.id)
-            setSelectedModuleId(questionData.module.id)
-
-            setMarks(questionData.marks)
-            setEditForm(true)
-
-            setPosts(results.data)
         }
 
         if (router.query.question_id) {
@@ -143,16 +139,55 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
         let questionTypeValue = event.target.value
         setQuestionType(questionTypeValue)
     }
-    const handleFormChange = (index, event) => {
+    const handleFormChange = async (index, event) => {
         let data = [...inputFields]
         data[index].option = event.target.value
         setInputFields(data)
+        data = JSON.stringify(data)
+
+        if (editForm) {
+            let question_id = router.query.question_id
+
+            await axios
+                .patch(`${SERVER_LINK}/questions/${question_id}`, data, {
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json;charset=UTF-8',
+                        Authorization: login_token,
+                    },
+                })
+                .then((response) => {
+                    router.push('/dashboard/questions')
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        } else {
+            await axios({
+                url: `${SERVER_LINK}/questions/create`,
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json;charset=UTF-8',
+                    Authorization: login_token,
+                },
+                data,
+            })
+                .then((response) => {
+                    router.push('/dashboard/questions')
+                    // reset();
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        }
     }
 
     const addFields = () => {
         let newfield = { option: '', correct: '' }
         setInputFields([...inputFields, newfield])
     }
+
     const removeFields = (index) => {
         let data = [...inputFields]
         data[index].option = ''

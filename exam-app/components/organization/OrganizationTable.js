@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import PureModal from 'react-pure-modal'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
+import { useSelector, useDispatch } from 'react-redux'
 
 const OrganizationTable = ({ org_data }) => {
     const router = useRouter()
@@ -28,10 +29,16 @@ const OrganizationTable = ({ org_data }) => {
     const [password, setPassword] = useState('')
 
     const { register, handleSubmit } = useForm()
-
+    const login_token = useSelector((state) => state.user.token)
     const handleRemoveClick = (org_id) => {
         axios
-            .delete(`${SERVER_LINK}/organization/${org_id}`)
+            .delete(`${SERVER_LINK}/organization/${org_id}`, {
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json;charset=UTF-8',
+                    Authorization: login_token,
+                },
+            })
             .then((result) => {
                 router.replace(router.asPath)
             })
@@ -45,13 +52,12 @@ const OrganizationTable = ({ org_data }) => {
             status: !org_status,
         }
         new_status = JSON.stringify(new_status)
-        console.log(new_status)
-
         await axios
             .patch(`${SERVER_LINK}/organization/${org_id}`, new_status, {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json;charset=UTF-8',
+                    Authorization: login_token,
                 },
             })
             .then((response) => {
@@ -66,13 +72,17 @@ const OrganizationTable = ({ org_data }) => {
         setEditForm(true)
         setOrganizationId(org_id)
         setModal(true)
-
         // first find the user with the id
         await axios
-            .get(`${SERVER_LINK}/organization/${org_id}`)
+            .get(`${SERVER_LINK}/organization/${org_id}`, {
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json;charset=UTF-8',
+                    Authorization: login_token,
+                },
+            })
             .then((response) => {
                 let singleOrgData = response.data
-
                 setName(singleOrgData.name)
                 setEmail(singleOrgData.email)
                 setMobile(singleOrgData.mobile)
@@ -111,6 +121,7 @@ const OrganizationTable = ({ org_data }) => {
                         headers: {
                             Accept: 'application/json',
                             'Content-Type': 'application/json;charset=UTF-8',
+                            Authorization: login_token,
                         },
                     }
                 )
@@ -131,6 +142,7 @@ const OrganizationTable = ({ org_data }) => {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json;charset=UTF-8',
+                    Authorization: login_token,
                 },
                 data,
             })
