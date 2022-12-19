@@ -1,5 +1,6 @@
 import Table from './Table'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import Pagination from 'react-js-pagination'
 import axios from 'axios'
 import { SERVER_LINK } from '../../helpers/config'
 import { useRouter } from 'next/router'
@@ -7,12 +8,13 @@ import PureModal from 'react-pure-modal'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { injectStyle } from 'react-toastify/dist/inject-style'
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 import DatePicker from 'react-datepicker'
 import { default as ReactSelect } from 'react-select'
+import Select from 'react-select'
 import { components } from 'react-select'
 import moment from 'moment'
-
+import { useSelector, useDispatch } from 'react-redux'
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
@@ -35,12 +37,26 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 	const [selectedEndDate, setSelectedEndDate] = useState(null)
 	const [optionModuleSelected, setOptionModuleSelected] = useState()
 	const [selectedModules, setSelectedModules] = useState()
+	const [modules, setModules] = useState('')
+	const login_token = useSelector((state) => state.user.token)
+	console.log(login_token, 'login_token')
 
 	const { register, handleSubmit } = useForm()
 
+	const handleLevelTypeSelect = (event) => {
+		let levelId = event.target.value
+		setSelectedLevelId(levelId)
+	}
+
 	const handleRemoveClick = (quiz_id) => {
 		axios
-			.delete(`${SERVER_LINK}/quiz/${quiz_id}`)
+			.delete(`${SERVER_LINK}/quiz/${quiz_id}`, {
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json;charset=UTF-8',
+					Authorization: login_token,
+				},
+			})
 			.then((result) => {
 				router.replace(router.asPath)
 			})
@@ -49,17 +65,13 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 			})
 	}
 
-	const handleLevelTypeSelect = (event) => {
-		let levelId = event.target.value
-		setSelectedLevelId(levelId)
-	}
-
 	const handleModuleTypeSelect = (event) => {
 		let moduleSelectedArray = []
 		setOptionModuleSelected(event)
 		event.map((oneModule) => {
 			moduleSelectedArray.push(`${oneModule.id}`)
 		})
+
 		setSelectedModules(moduleSelectedArray)
 	}
 
@@ -68,25 +80,21 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 			status: !quiz_status,
 		}
 		new_status = JSON.stringify(new_status)
-
 		await axios
 			.patch(`${SERVER_LINK}/quiz/${quiz_id}`, new_status, {
 				headers: {
 					Accept: 'application/json',
 					'Content-Type': 'application/json;charset=UTF-8',
+					Authorization: login_token,
 				},
 			})
-			.then((response) => {
-				// setModal(!modal);
-				router.replace(router.asPath)
-			})
+			.then((response) => {})
 			.catch((err) => {
 				console.log(err)
 			})
 	}
 
 	const handleEditClick = async (quiz_id) => {
-		// setOpen(true);
 		setButtonText('Update')
 		setEditForm(true)
 		setQuizId(quiz_id)
@@ -95,7 +103,13 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 
 		// first find the user with the id
 		await axios
-			.get(`${SERVER_LINK}/quiz/find/${quiz_id}`)
+			.get(`${SERVER_LINK}/quiz/find/${quiz_id}`, {
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json;charset=UTF-8',
+					Authorization: login_token,
+				},
+			})
 			.then((response) => {
 				let singleQuizData = response.data[0]
 				setName(singleQuizData.quiz_name)
@@ -153,6 +167,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 				headers: {
 					Accept: 'application/json',
 					'Content-Type': 'application/json;charset=UTF-8',
+					Authorization: login_token,
 				},
 			})
 			.then((response) => {
@@ -311,6 +326,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 	const data = rowsDataArray
 
 	const [activePage, setActivePage] = useState(15)
+
 	const handlePageChange = (pageNumber) => {
 		setActivePage(pageNumber)
 	}
@@ -490,8 +506,12 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 											Select
 										</option>
 										{levelData &&
-											levelData.map((response) => (
-												<option value={response.id}>{response.level}</option>
+											levelData.map((response, i) => (
+												<option
+													key={i}
+													value={response.id}>
+													{response.level}
+												</option>
 											))}
 									</select>
 								</div>

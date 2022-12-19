@@ -7,9 +7,11 @@ export class Questions implements NestMiddleware {
   constructor(private readonly prisma: PrismaService) { }
   async use(req: IncomingMessage, res: ServerResponse, next: NextFunction) {
     const bearerHeader = req.headers.authorization;
-    const accessToken = bearerHeader && bearerHeader.split(' ')[1];
+    console.log(bearerHeader);
 
-    if (!accessToken) {
+
+
+    if (!bearerHeader) {
 
       res.writeHead(401)
       res.end('UNAUTHORIZED');
@@ -17,7 +19,7 @@ export class Questions implements NestMiddleware {
     else {
       const Login_token = await this.prisma.login.findMany({
         where: {
-          token: `${accessToken}`
+          token: `${bearerHeader}`
         }
       })
       if (Login_token.length === 0) {

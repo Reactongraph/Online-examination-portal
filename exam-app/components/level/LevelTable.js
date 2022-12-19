@@ -9,6 +9,8 @@ import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 import { ToastContainer, toast } from 'react-toastify'
+// import { login_token } from '../login'
+import { useSelector, useDispatch } from 'react-redux'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
@@ -25,12 +27,19 @@ const LevelTable = ({ level_data }) => {
 	const [level, setLevel] = useState('')
 
 	const { register, handleSubmit } = useForm()
+	const login_token = useSelector((state) => state.user.token)
 
 	const handleRemoveClick = async (level_id) => {
 		var shouldDelete = confirm('Do you really want to delete ?')
 		if (shouldDelete) {
 			await axios
-				.delete(`${SERVER_LINK}/level/${level_id}`)
+				.delete(`${SERVER_LINK}/level/${level_id}`, {
+					headers: {
+						Accept: 'application/json',
+						'Content-Type': 'application/json;charset=UTF-8',
+						Authorization: login_token,
+					},
+				})
 				.then((result) => {
 					router.replace(router.asPath)
 				})
@@ -40,7 +49,7 @@ const LevelTable = ({ level_data }) => {
 		}
 	}
 
-	const handleEditClick = (level_id) => {
+	const handleEditClick = async (level_id) => {
 		// setOpen(true);
 		setButtonText('Update')
 		setEditForm(true)
@@ -48,9 +57,16 @@ const LevelTable = ({ level_data }) => {
 		setModal(true)
 
 		// first find the user with the id
-		axios
-			.get(`${SERVER_LINK}/level/${level_id}`)
+		await axios
+			.get(`${SERVER_LINK}/level/${level_id}`, {
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json;charset=UTF-8',
+					Authorization: login_token,
+				},
+			})
 			.then((response) => {
+				console.log(response)
 				let singleLevelData = response.data
 
 				setLevel(singleLevelData.level)
@@ -65,13 +81,13 @@ const LevelTable = ({ level_data }) => {
 			status: !level_status,
 		}
 		new_status = JSON.stringify(new_status)
-		console.log(new_status)
 
 		await axios
 			.patch(`${SERVER_LINK}/level/${level_id}`, new_status, {
 				headers: {
 					Accept: 'application/json',
 					'Content-Type': 'application/json;charset=UTF-8',
+					Authorization: login_token,
 				},
 			})
 			.then((response) => {
@@ -96,6 +112,7 @@ const LevelTable = ({ level_data }) => {
 					headers: {
 						Accept: 'application/json',
 						'Content-Type': 'application/json;charset=UTF-8',
+						Authorization: login_token,
 					},
 				})
 				.then((response) => {

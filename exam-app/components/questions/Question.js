@@ -3,8 +3,6 @@ import ComponentTitle from './ComponentTitle'
 import QuestionTable from './QuestionTable'
 
 const Question = ({ question_data, level_data, module_data }) => {
-	//  console.log("The level_data "+ level_data);
-	console.log(question_data)
 	return (
 		<main className='p-6 sm:p-10 space-y-6'>
 			<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>

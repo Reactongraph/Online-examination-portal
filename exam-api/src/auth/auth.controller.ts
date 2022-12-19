@@ -19,7 +19,7 @@ export class AuthController {
     private readonly authService: AuthService,
     private readonly jwtService: JwtService,
     private prisma: PrismaService,
-  ) {}
+  ) { }
 
   // this controller is used to change password using rest link
   @Post('change-password')
@@ -53,7 +53,7 @@ export class AuthController {
 
       response.cookie('jwt', jwt, { httpOnly: true });
       response
-        .send('login success ' + 'token: ' + JSON.stringify(jwt))
+        .send(jwt)
         .status(HttpStatus.ACCEPTED);
     }
   }
