@@ -5,6 +5,8 @@ import {
   Headers,
   Res,
   HttpStatus,
+  Get,
+  Req,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
@@ -12,6 +14,7 @@ import { auth_dto } from './auth.entity';
 import { Response } from 'express';
 import { PrismaService } from 'src/prisma.service';
 import { ApiTags } from '@nestjs/swagger';
+import { jwtConstants } from './constant';
 @Controller('auth')
 @ApiTags('Auth')
 export class AuthController {
@@ -19,7 +22,7 @@ export class AuthController {
     private readonly authService: AuthService,
     private readonly jwtService: JwtService,
     private prisma: PrismaService,
-  ) {}
+  ) { }
 
   // this controller is used to change password using rest link
   @Post('change-password')
@@ -38,23 +41,57 @@ export class AuthController {
     @Body() login: auth_dto,
     @Res({ passthrough: true }) response: Response,
   ) {
+
     const users = await this.authService.login(login);
 
     if (users === 'invalid credentials' || users === 'invalid username') {
-      response.status(HttpStatus.BAD_REQUEST).send('Login failed');
+      const data = { error: 'Login Failed' }
+      response.status(HttpStatus.BAD_REQUEST).send(data);
     } else {
-      const jwt = await this.jwtService.signAsync({ id: users.id });
+      const token = await this.authService.create_token(users)
+
       await this.prisma.login.create({
         data: {
-          token: jwt,
+          token: token.access_token,
+          refresh_token: token.refresh_token,
           email: login?.email,
+          token_id: users.id
+
         },
       });
-
-      response.cookie('jwt', jwt, { httpOnly: true });
+      const data = {
+        "message": "Login success",
+        "payload": users,
+        "access_token": token.access_token,
+        "refresh_token": token.refresh_token
+      }
+      response.cookie('access_token', token.access_token, { httpOnly: true });
       response
-        .send('login success ' + 'token: ' + JSON.stringify(jwt))
-        .status(HttpStatus.ACCEPTED);
+        .send(data)
+        .status(HttpStatus.ACCEPTED)
+
     }
+  }
+
+  @Get('Refresh_token')
+  async refresh_token(@Headers('xaccesstoken') Headers: any, @Res({ passthrough: true }) response: Response,) {
+    const decode = await this.authService.decode_Token(Headers)
+    const data = {
+      "message": "new token generated",
+      "access_token": decode.access_token,
+      "refresh_token": decode.refresh_token
+    }
+    response.cookie('access_token', decode.access_token, { httpOnly: true });
+    response
+      .send(data)
+      .status(HttpStatus.ACCEPTED)
+
+
+
+  }
+  @Get('logout')
+  async logout(@Req() req, @Res({ passthrough: true }) response: Response) {
+    response.clearCookie('access_token');
+    response.send('user logout')
   }
 }

@@ -3,6 +3,8 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma.service';
+// import { AccessTokenStrategy } from './strategies/accessToken.strategy';
+// import { RefreshTokenStrategy } from './strategies/refreshToken.strategy';
 
 @Module({
   imports: [
@@ -11,7 +13,9 @@ import { PrismaService } from 'src/prisma.service';
       signOptions: { expiresIn: '1h' },
     }),
   ],
+  // imports: [JwtModule.register({
+  // })],
   providers: [AuthService, PrismaService],
   controllers: [AuthController],
 })
-export class AuthModule {}
+export class AuthModule { }

@@ -14,4 +14,7 @@ export class auth_dto {
 
   @ApiProperty()
   decodeid: string;
+
+  @ApiProperty()
+  token: string
 }
