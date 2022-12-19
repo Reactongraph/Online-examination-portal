@@ -1,13 +1,12 @@
-import Table from './Table'
-import React, { useState } from 'react'
-import Pagination from 'react-js-pagination'
-import axios from 'axios'
-import { SERVER_LINK } from '../../helpers/config'
-import { useRouter } from 'next/router'
-import PureModal from 'react-pure-modal'
-import 'react-pure-modal/dist/react-pure-modal.min.css'
-import { useForm } from 'react-hook-form'
-import { useSelector, useDispatch } from 'react-redux'
+import Table from "./Table";
+import React, { useState } from "react";
+import axios from "axios";
+import { SERVER_LINK } from "../../helpers/config";
+import { useRouter } from "next/router";
+import PureModal from "react-pure-modal";
+import "react-pure-modal/dist/react-pure-modal.min.css";
+import { useForm } from "react-hook-form";
+import { useSelector, useDispatch } from "react-redux";
 
 const OrganizationTable = ({ org_data }) => {
     const router = useRouter()
