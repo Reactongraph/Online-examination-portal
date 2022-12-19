@@ -1,8 +1,8 @@
-import React from "react";
-import { BiCopyright } from "react-icons/bi";
+import React from 'react'
+import { BiCopyright } from 'react-icons/bi'
 
 const Footer = () => {
-  return <></>;
-};
+	return <></>
+}
 
-export default Footer;
+export default Footer

@@ -1,7 +1,7 @@
 import React from 'react'
 
 const SearchBox = () => {
-    return <></>
+	return <></>
 }
 
 export default SearchBox
