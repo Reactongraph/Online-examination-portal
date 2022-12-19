@@ -19,14 +19,14 @@ export default function level({ level_data }) {
 // function for ssr data
 
 export async function getServerSideProps(data) {
-  // Fetch data from external API
-  const res = await axios.get(`${SERVER_LINK}/level/find`, {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json;charset=UTF-8",
-      "Authorization":data.req.cookies.jwt
-    },
-  });
+	// Fetch data from external API
+	const res = await axios.get(`${SERVER_LINK}/level/find`, {
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json;charset=UTF-8',
+			Authorization: data.req.cookies.jwt,
+		},
+	})
 
 	let level_data = res.data
 

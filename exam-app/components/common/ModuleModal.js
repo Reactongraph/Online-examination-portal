@@ -1,27 +1,33 @@
 /* eslint-disable @next/next/no-img-element */
-import React, {  useState } from "react";
-import PureModal from "react-pure-modal";
-import "react-pure-modal/dist/react-pure-modal.min.css";
-import { useForm } from "react-hook-form";
-import { SERVER_LINK } from "../../helpers/config";
-import axios from "axios";
-import { useRouter } from "next/router";
-import { injectStyle } from "react-toastify/dist/inject-style";
-import { ToastContainer, toast } from "react-toastify";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from 'react'
+import PureModal from 'react-pure-modal'
+import 'react-pure-modal/dist/react-pure-modal.min.css'
+import { useForm } from 'react-hook-form'
+import { SERVER_LINK } from '../../helpers/config'
+import axios from 'axios'
+import { useRouter } from 'next/router'
+import { injectStyle } from 'react-toastify/dist/inject-style'
+import { ToastContainer, toast } from 'react-toastify'
+import { useSelector, useDispatch } from 'react-redux'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
 }
 
-const ModuleModal = ({ modal, setModal, editForm, organizationId, orgData }) => {
-  const [selectedImage, setSelectedImage] = useState();
-  const router = useRouter();
-  const [modules, setModules] = useState("");
-  const [buttonText, setButtonText] = useState("Add");
-  const { register, handleSubmit } = useForm();
-  const login_token = useSelector((state) => state.user.token);
+const ModuleModal = ({
+	modal,
+	setModal,
+	editForm,
+	organizationId,
+	orgData,
+}) => {
+	const [selectedImage, setSelectedImage] = useState()
+	const router = useRouter()
+	const [modules, setModules] = useState('')
+	const [buttonText, setButtonText] = useState('Add')
+	const { register, handleSubmit } = useForm()
+	const login_token = useSelector((state) => state.user.token)
 
 	// for sending the data to the backend
 	const checkWithDatabase = async (data) => {
@@ -30,33 +36,33 @@ const ModuleModal = ({ modal, setModal, editForm, organizationId, orgData }) => 
 
 		let LevelData = JSON.stringify(data)
 
-    // for taking the patch api data
-    if (data.module !== null && data.module != "") {
-      await axios({
-        url: `${SERVER_LINK}/module`,
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json;charset=UTF-8",
-          Authorization: login_token,
-        },
-        data: LevelData,
-      })
-        .then((response) => {
-          router.replace(router.asPath);
-          setModules("");
-          setModal(!modal);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+		// for taking the patch api data
+		if (data.module !== null && data.module != '') {
+			await axios({
+				url: `${SERVER_LINK}/module`,
+				method: 'POST',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json;charset=UTF-8',
+					Authorization: login_token,
+				},
+				data: LevelData,
+			})
+				.then((response) => {
+					router.replace(router.asPath)
+					setModules('')
+					setModal(!modal)
+				})
+				.catch((err) => {
+					console.log(err)
+				})
+		}
 
-    // for new data registration
-    else {
-      toast.error("Fill Required Field");
-    }
-  };
+		// for new data registration
+		else {
+			toast.error('Fill Required Field')
+		}
+	}
 
 	return (
 		<>
@@ -109,4 +115,4 @@ const ModuleModal = ({ modal, setModal, editForm, organizationId, orgData }) => 
 	)
 }
 
-export default ModuleModal;
+export default ModuleModal

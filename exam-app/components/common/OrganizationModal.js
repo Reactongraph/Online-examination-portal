@@ -31,41 +31,41 @@ const OrganizationModal = ({
 
 	const { register, handleSubmit } = useForm()
 
-    const login_token = useSelector((state) => state.user.token)
-    // for sending the data to the backend
-    const checkWithDatabase = async (data) => {
-        data.status = true
-        data.name = name
-        data.email = email
-        data.mobile = mobile
-        data.password = password
-        data.city = city
-        data.state = state
-        data.pincode = pincode
-        data.address = address
-        data.quota = quota
-        let OrganizationData = JSON.stringify(data)
+	const login_token = useSelector((state) => state.user.token)
+	// for sending the data to the backend
+	const checkWithDatabase = async (data) => {
+		data.status = true
+		data.name = name
+		data.email = email
+		data.mobile = mobile
+		data.password = password
+		data.city = city
+		data.state = state
+		data.pincode = pincode
+		data.address = address
+		data.quota = quota
+		let OrganizationData = JSON.stringify(data)
 
 		// for new data registration
 
-        await axios({
-            url: `${SERVER_LINK}/rest-api`,
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json;charset=UTF-8',
-                Authorization: login_token,
-            },
-            data: OrganizationData,
-        })
-            .then((response) => {
-                router.replace(router.asPath)
-                setModal(!modal)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }
+		await axios({
+			url: `${SERVER_LINK}/rest-api`,
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json;charset=UTF-8',
+				Authorization: login_token,
+			},
+			data: OrganizationData,
+		})
+			.then((response) => {
+				router.replace(router.asPath)
+				setModal(!modal)
+			})
+			.catch((err) => {
+				console.log(err)
+			})
+	}
 
 	return (
 		<>
