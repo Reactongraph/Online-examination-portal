@@ -10,7 +10,7 @@ import { PrismaService } from 'src/prisma.service';
   imports: [
     JwtModule.register({
       secret: 'secret',
-      signOptions: { expiresIn: '1h' },
+      signOptions: { expiresIn: '24h' },
     }),
   ],
   // imports: [JwtModule.register({

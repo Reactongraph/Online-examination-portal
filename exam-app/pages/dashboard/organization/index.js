@@ -38,7 +38,7 @@ try {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json;charset=UTF-8",
-          "Authorization":data.req.cookies.jwt
+          "Authorization":data.req.cookies.access_token
         },
       })
      org_data=res.data

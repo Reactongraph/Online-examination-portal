@@ -1,0 +1,2 @@
+question,status,question_type,option_type,option1,correct1,option2,correct2
+what is array,false,MCQ,single, data strucure,true, datatype,false

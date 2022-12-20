@@ -74,7 +74,8 @@ const Login = () => {
 
       .then((response) => {
         if (response.status === 201) {
-          const login_token = response.data;
+          const login_token = response.data.access_token;
+          const payload = response.data.payload
           toast.success("Login Successfully !");
           console.log("token",response.data);
           setCookie("user", JSON.stringify(response.data), {
@@ -82,7 +83,7 @@ const Login = () => {
             maxAge: 3600, // Expires after 1hr
             sameSite: true,
           })
-          dispatch({ type: "SET_LOGIN", token: login_token });
+          dispatch({ type: "SET_LOGIN", token: login_token,payload:payload });
           // router.push("/dashboard");
           router.push({
             pathname: '/dashboard',

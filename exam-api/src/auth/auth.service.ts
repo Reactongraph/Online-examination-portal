@@ -62,6 +62,8 @@ export class AuthService {
     }
   }
   async create_token(userdata: any) {
+    console.log("data", userdata);
+
     const access_token = await this.jwtService.signAsync({ id: userdata.id, username: userdata.name, email: userdata.email }, { secret: jwtConstants.access_tokensecret });
     const refresh_token = await this.jwtService.signAsync({ id: userdata.id, username: userdata.name, email: userdata.email }, { secret: jwtConstants.refresh_tokensecret });
     return { access_token: access_token, refresh_token: refresh_token }
@@ -71,6 +73,8 @@ export class AuthService {
   async decode_Token(tokenn: any) {
 
     const decode: any = this.jwtService.decode(tokenn)
+    console.log("decode", decode);
+
     const new_token = await this.create_token(decode)
     prisma.$connect();
     const finddata = await this.prisma.login.findUnique({
@@ -93,7 +97,7 @@ export class AuthService {
         token_id: decode.id
       },
     });
-    return new_token
+    return { "token": new_token, "payload": decode }
 
   }
 }

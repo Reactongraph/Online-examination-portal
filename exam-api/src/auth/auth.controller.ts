@@ -23,7 +23,6 @@ export class AuthController {
     private readonly jwtService: JwtService,
     private prisma: PrismaService,
   ) { }
-  ) { }
 
   // this controller is used to change password using rest link
   @Post('change-password')
@@ -67,36 +66,30 @@ export class AuthController {
         "refresh_token": token.refresh_token
       }
       response.cookie('access_token', token.access_token, { httpOnly: true });
+      response.cookie('refresh_token',token.refresh_token,{httpOnly: false})
       response
-        .send(jwt)
-        .status(HttpStatus.ACCEPTED);
         .send(data)
         .status(HttpStatus.ACCEPTED)
 
     }
-    response.cookie('access_token', decode.access_token, { httpOnly: true });
-    response
-      .send(data)
-      .status(HttpStatus.ACCEPTED)
-
-
-
-  }
-  @Get('logout')
-  async logout(@Req() req, @Res({ passthrough: true }) response: Response) {
-    response.clearCookie('access_token');
-    response.send('user logout')
   }
 
   @Get('Refresh_token')
   async refresh_token(@Headers('xaccesstoken') Headers: any, @Res({ passthrough: true }) response: Response,) {
+    console.log("welcome to refresh api",Headers);
+    
     const decode = await this.authService.decode_Token(Headers)
+    // console.log("decode in controller",decode);
+    
     const data = {
       "message": "new token generated",
-      "access_token": decode.access_token,
-      "refresh_token": decode.refresh_token
+      "payload":  decode.payload,
+      "access_token": decode.token.access_token,
+      "refresh_token": decode.token.refresh_token
     }
-    response.cookie('access_token', decode.access_token, { httpOnly: true });
+    console.log("responsedata",data);
+    
+    response.cookie('access_token', decode.token.access_token, { httpOnly: true });
     response
       .send(data)
       .status(HttpStatus.ACCEPTED)

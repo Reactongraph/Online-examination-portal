@@ -17,6 +17,7 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 isLogin: true,
                 token: action.token,
+                payload: action.payload
             }
             break
 
@@ -32,6 +33,7 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 isLogin: true,
                 token: action.token,
+                payload: action.payload
             }
 
         default:
