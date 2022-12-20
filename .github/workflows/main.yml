@@ -10,6 +10,7 @@ on:
   pull_request:
     branches:
       - main
+      - development
 
 jobs:
   run-linters:
@@ -34,11 +35,8 @@ jobs:
         with: 
           cmd: ci
 
-      - name: Run linters
-        uses: wearerequired/lint-action@v2
+      - name: Run ESlint
+        uses: CultureHQ/actions-yarn@v1.0.1
         with:
-          eslint: true
-          eslint_dir: exam-app
-          prettier: true
-          prettier_dir: exam-app
-          prettier_args: "--ignore-unknown"
+          cmd: style:all
+          
