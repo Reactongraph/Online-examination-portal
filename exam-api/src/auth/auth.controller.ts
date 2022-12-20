@@ -23,6 +23,7 @@ export class AuthController {
     private readonly jwtService: JwtService,
     private prisma: PrismaService,
   ) { }
+  ) { }
 
   // this controller is used to change password using rest link
   @Post('change-password')
@@ -67,10 +68,24 @@ export class AuthController {
       }
       response.cookie('access_token', token.access_token, { httpOnly: true });
       response
+        .send(jwt)
+        .status(HttpStatus.ACCEPTED);
         .send(data)
         .status(HttpStatus.ACCEPTED)
 
     }
+    response.cookie('access_token', decode.access_token, { httpOnly: true });
+    response
+      .send(data)
+      .status(HttpStatus.ACCEPTED)
+
+
+
+  }
+  @Get('logout')
+  async logout(@Req() req, @Res({ passthrough: true }) response: Response) {
+    response.clearCookie('access_token');
+    response.send('user logout')
   }
 
   @Get('Refresh_token')

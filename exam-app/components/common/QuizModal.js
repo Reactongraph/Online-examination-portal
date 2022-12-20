@@ -11,6 +11,8 @@ import Select from 'react-select'
 import { components } from 'react-select'
 // import { Multiselect } from "multiselect-react-dropdown";
 import 'react-datepicker/dist/react-datepicker.css'
+import { login_token } from '../login'
+import { useSelector, useDispatch } from 'react-redux'
 
 const QuizModal = ({
     modal,
@@ -36,6 +38,9 @@ const QuizModal = ({
     const [moduleArray, setModuleArray] = useState([])
     const [selectedLevelId, setSelectedLevelId] = useState('')
     const [selectedModules, setSelectedModules] = useState([])
+
+    const login_token = useSelector((state) => state.user.token)
+    // for sending the data to the backend
 
     const handleLevelTypeSelect = (event) => {
         let levelId = event.target.value
@@ -84,6 +89,7 @@ const QuizModal = ({
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json;charset=UTF-8',
+                Authorization: login_token,
             },
             data: QuizData,
         })

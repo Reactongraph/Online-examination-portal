@@ -9,6 +9,8 @@ import ParticipantModal from "../common/ParticipantModal";
 import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
 import { useForm } from "react-hook-form";
+import { login_token } from "../login";
+import { useSelector, useDispatch } from "react-redux";
 
 const ParticipantTable = ({ participant_data }) => {
   const router = useRouter();
@@ -26,10 +28,17 @@ const ParticipantTable = ({ participant_data }) => {
   const [organizationId, setOrganizationId] = useState("");
 
   const { register, handleSubmit } = useForm();
+  const login_token = useSelector((state) => state.user.token);
 
   const handleRemoveClick = async (participantId) => {
     await axios
-      .delete(`${SERVER_LINK}/participants/${participantId}`)
+      .delete(`${SERVER_LINK}/participants/${participantId}`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: login_token,
+        },
+      })
       .then((result) => {
         router.replace(router.asPath);
       })
@@ -48,7 +57,13 @@ const ParticipantTable = ({ participant_data }) => {
 
     // first find the user with the id
     await axios
-      .get(`${SERVER_LINK}/participants/${participantId}`)
+      .get(`${SERVER_LINK}/participants/${participantId}`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: login_token,
+        },
+      })
       .then((response) => {
         let singleParticipantData = response.data;
 
@@ -84,8 +99,10 @@ const ParticipantTable = ({ participant_data }) => {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json;charset=UTF-8",
+              Authorization: login_token,
             },
           }
+          // 
         )
         .then((response) => {
           setModal(!modal);
@@ -104,6 +121,7 @@ const ParticipantTable = ({ participant_data }) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json;charset=UTF-8",
+          Authorization: login_token,
         },
         data,
       })

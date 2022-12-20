@@ -9,6 +9,8 @@ import "react-pure-modal/dist/react-pure-modal.min.css";
 import { useForm } from "react-hook-form";
 import { injectStyle } from "react-toastify/dist/inject-style";
 import { ToastContainer, toast } from "react-toastify";
+import { login_token } from "../login";
+import { useSelector, useDispatch } from "react-redux";
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== "undefined") {
@@ -25,10 +27,17 @@ const ModuleTable = ({ module_data }) => {
   const [modules, setModules] = useState("");
 
   const { register, handleSubmit } = useForm();
+  const login_token = useSelector((state) => state.user.token);
 
   const handleRemoveClick = (module_id) => {
     axios
-      .delete(`${SERVER_LINK}/module/${module_id}`)
+      .delete(`${SERVER_LINK}/module/${module_id}`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: login_token,
+        },
+      })
       .then((result) => {
         router.replace(router.asPath);
       })
@@ -48,6 +57,7 @@ const ModuleTable = ({ module_data }) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json;charset=UTF-8",
+          Authorization: login_token,
         },
       })
       .then((response) => {
@@ -68,7 +78,13 @@ const ModuleTable = ({ module_data }) => {
 
     // first find the user with the id
     axios
-      .get(`${SERVER_LINK}/module/${module_id}`)
+      .get(`${SERVER_LINK}/module/${module_id}`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: login_token,
+        },
+      })
       .then((response) => {
         let singleModuleData = response.data;
 
@@ -91,6 +107,7 @@ const ModuleTable = ({ module_data }) => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json;charset=UTF-8",
+            Authorization: login_token,
           },
         })
         .then((response) => {

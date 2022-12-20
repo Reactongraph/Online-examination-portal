@@ -102,9 +102,9 @@ model Quiz {
   quiz_name   String
   quiz_image  String?
   description String?
-  start_date  DateTime
-  end_date    DateTime
-  buffer_time DateTime
+  start_date  DateTime?
+  end_date    DateTime?
+  buffer_time DateTime?
   module_id   String[] @db.ObjectId
   level_id    String
   status      Boolean  @default(true)
