@@ -7,7 +7,7 @@ export class Modules implements NestMiddleware {
   constructor(private readonly prisma: PrismaService) { }
   async use(req: IncomingMessage, res: ServerResponse, next: NextFunction) {
     const bearerHeader = req.headers.authorization;
-    console.log(bearerHeader);
+    console.log("mudoule",bearerHeader);
 
 
 

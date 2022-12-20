@@ -23,6 +23,8 @@ export class Quiz implements NestMiddleware {
           token: `${bearerHeader}`
         }
       })
+      console.log("login",Login_token);
+      
       if (Login_token.length === 0) {
         res.writeHead(401,)
         res.end('UNAUTHORIZED');

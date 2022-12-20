@@ -66,7 +66,7 @@ export class AuthController {
         "refresh_token": token.refresh_token
       }
       response.cookie('access_token', token.access_token, { httpOnly: true });
-      response.cookie('refresh_token',token.refresh_token,{httpOnly: false})
+      response.cookie('refresh_token', token.refresh_token, { httpOnly: false })
       response
         .send(data)
         .status(HttpStatus.ACCEPTED)
@@ -76,20 +76,21 @@ export class AuthController {
 
   @Get('Refresh_token')
   async refresh_token(@Headers('xaccesstoken') Headers: any, @Res({ passthrough: true }) response: Response,) {
-    console.log("welcome to refresh api",Headers);
-    
+    console.log("welcome to refresh api", Headers);
+
     const decode = await this.authService.decode_Token(Headers)
     // console.log("decode in controller",decode);
-    
+
     const data = {
       "message": "new token generated",
-      "payload":  decode.payload,
+      "payload": decode.payload,
       "access_token": decode.token.access_token,
       "refresh_token": decode.token.refresh_token
     }
-    console.log("responsedata",data);
-    
+    console.log("responsedata", data);
+
     response.cookie('access_token', decode.token.access_token, { httpOnly: true });
+    response.cookie('refresh_token', decode.token.refresh_token, { httpOnly: false })
     response
       .send(data)
       .status(HttpStatus.ACCEPTED)

@@ -58,9 +58,9 @@ const Login = () => {
   });
 
   const checkWithDatabase = async (data) => {
-    console.log("hi");
+    // console.log("hi");
     data = JSON.stringify(data);
-    console.log(data);
+    // console.log(data);
     await axios
       .request({
         method: "post",
@@ -77,7 +77,7 @@ const Login = () => {
           const login_token = response.data.access_token;
           const payload = response.data.payload
           toast.success("Login Successfully !");
-          console.log("token",response.data);
+          // console.log("token",response.data);
           setCookie("user", JSON.stringify(response.data), {
             path: "/",
             maxAge: 3600, // Expires after 1hr
