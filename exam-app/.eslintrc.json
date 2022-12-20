@@ -4,7 +4,13 @@
 		"browser": true,
 		"es2021": true
 	},
-	"extends": ["eslint:recommended", "next", "next/core-web-vitals", "prettier"],
+	"extends": [
+		// "next/babel",
+		"eslint:recommended",
+		"next",
+		"next/core-web-vitals",
+		"prettier"
+	],
 	"parserOptions": {
 		"ecmaVersion": 2020
 	},

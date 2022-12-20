@@ -354,7 +354,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 					setModal(false)
 					return true
 				}}>
-				<div classNameName='flex-row space-y-3 relative'>
+				<div className='flex-row space-y-3 relative'>
 					<div className='bg-blue-600 p-2 font-bold text-lg text-center text-white -mt-4 -mx-4 mb-5 pb-4'>
 						<p>{buttonText} Quiz</p>
 					</div>
@@ -367,7 +367,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 									<label
 										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-first-name'>
+										htmlFor='grid-first-name'>
 										Quiz Name
 									</label>
 									<input
@@ -383,7 +383,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 								<div className='w-full md:w-1/2 px-3'>
 									<label
 										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-last-name'>
+										htmlFor='grid-last-name'>
 										Choose Quiz image
 									</label>
 
@@ -411,7 +411,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 								<div className='w-full md:w-1/2 px-3'>
 									<label
 										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-last-name'>
+										htmlFor='grid-last-name'>
 										Start Time
 									</label>
 
@@ -436,7 +436,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 								<div className='w-full md:w-1/2 px-3'>
 									<label
 										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-last-name'>
+										htmlFor='grid-last-name'>
 										End Time
 									</label>
 
@@ -461,7 +461,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 								<div className='w-96 my-3 md:w-1/2 px-3'>
 									<label
 										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-last-name'>
+										htmlFor='grid-last-name'>
 										Buffer Time (Access Time for Quiz)
 									</label>
 
@@ -489,7 +489,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 									<label
 										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-last-name'>
+										htmlFor='grid-last-name'>
 										Question Level
 									</label>
 									<select
@@ -518,7 +518,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 								<div className='w-full md:w-1/2 px-3'>
 									<label
 										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-last-name'>
+										htmlFor='grid-last-name'>
 										Choose Modules for Quiz
 									</label>
 									<ReactSelect
@@ -540,7 +540,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 								<div className='w-full px-3'>
 									<label
 										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-password'>
+										htmlFor='grid-password'>
 										Description
 									</label>
 									<textarea

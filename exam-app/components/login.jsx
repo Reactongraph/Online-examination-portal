@@ -134,7 +134,7 @@ const Login = () => {
 							<p className='text-gray-1000 mr-20'>use your login details</p>
 							<div className='flex flex-col items-center'></div>
 							<form
-								class='w-full max-w-lg'
+								className='w-full max-w-lg'
 								onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 								<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
 									{' '}

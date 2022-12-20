@@ -119,7 +119,7 @@ const QuizModal = ({
 					setModal(false)
 					return true
 				}}>
-				<div classNameName='flex-row space-y-3 relative'>
+				<div className='flex-row space-y-3 relative'>
 					<div className='bg-blue-600 p-2 font-bold text-lg text-center text-white -mt-4 -mx-4 mb-5 pb-4'>
 						<p>{buttonText} Quiz</p>
 					</div>
@@ -270,8 +270,12 @@ const QuizModal = ({
 											Select
 										</option>
 										{levelData &&
-											levelData.map((response) => (
-												<option value={response.id}>{response.level}</option>
+											levelData.map((response, i) => (
+												<option
+													key={i}
+													value={response.id}>
+													{response.level}
+												</option>
 											))}
 									</select>
 								</div>
