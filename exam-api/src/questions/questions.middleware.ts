@@ -22,12 +22,12 @@ export class Questions implements NestMiddleware {
           token: `${bearerHeader}`
         }
       })
-      if (Login_token.length === 0) {
-        res.writeHead(401,)
-        res.end('UNAUTHORIZED');
-      } else {
+      // if (Login_token.length === 0) {
+      //   res.writeHead(401,)
+      //   res.end('UNAUTHORIZED');
+      // } else {
         next()
-      }
+      // }
     }
   }
 }

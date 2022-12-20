@@ -9,7 +9,7 @@ const UserMenu = () => {
   const buttonOutsideClick = OutsideClick(buttonRef);
   const username=useSelector((state) => state.user)
   // const login_token = useSelector((state)=>state.user.token)
-  // console.log("username",username.payload.name);
+  console.log("username",username.payload.username);
 
   const userMenuhandle = () => {
     setUserMenuStatus(!userMenuStatus);
@@ -29,8 +29,8 @@ const UserMenu = () => {
     >
       <span className="sr-only">User Menu</span>
       <div className="hidden md:flex md:flex-col md:items-end md:leading-tight">
-        {/* <span className="font-semibold">{username.payload.name}</span>
-        <span className="text-sm text-gray-600">{username.payload.email}</span> */}
+        <span className="font-semibold">{username.payload.username}</span>
+        <span className="text-sm text-gray-600">{username.payload.email}</span>
       </div>
       <span className="h-12 w-12 ml-2 sm:ml-3 mr-2 bg-gray-100 rounded-full overflow-hidden">
         <img

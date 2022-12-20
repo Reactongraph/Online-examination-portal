@@ -83,12 +83,6 @@ export class AuthService {
       },
     })
 
-    const delete_old_token = await prisma.login.delete({
-      where: {
-        id: finddata.id
-      },
-    })
-
     await prisma.login.create({
       data: {
         token: new_token.access_token,
