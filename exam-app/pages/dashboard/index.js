@@ -9,19 +9,19 @@ import Layout from '../../components/layout/Layout'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
-    injectStyle()
+	injectStyle()
 }
 
 export default function dashboard() {
-    const { get } = useApi()
-    const router = useRouter()
+	const { get } = useApi()
+	const router = useRouter()
 
-    return (
-        <>
-            <Layout title="Dashboard ">
-                <Dashboard />
-            </Layout>
-            <ToastContainer />
-        </>
-    )
+	return (
+		<>
+			<Layout title='Dashboard '>
+				<Dashboard />
+			</Layout>
+			<ToastContainer />
+		</>
+	)
 }

@@ -1,5 +1,5 @@
 module.exports = {
-    publicRuntimeConfig: {
-        SERVER_LINK: process.env.SERVER_LINK,
-    },
+	publicRuntimeConfig: {
+		SERVER_LINK: process.env.SERVER_LINK,
+	},
 }
