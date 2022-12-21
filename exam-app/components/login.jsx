@@ -70,39 +70,40 @@ const Login = () => {
 				data,
 			})
 
-			.then((response) => {
-				if (response.status === 201) {
-					const login_token = response.data
-					toast.success('Login Successfully !')
-					console.log('token', response.data)
-					setCookie('user', JSON.stringify(response.data), {
-						path: '/',
-						maxAge: 3600, // Expires after 1hr
-						sameSite: true,
-					})
-					dispatch({ type: 'SET_LOGIN', token: login_token })
-					// router.push("/dashboard");
-					router.push({
-						pathname: '/dashboard',
-						// query: { token: login_token },
-					})
-				} else {
-					setInvalid(true)
-					setErrorMessage('Invalid Credentials !')
-					setTimeout(() => {
-						setErrorMessage('')
-					}, 2000)
-				}
-			})
-			.catch((err) => {
-				// setInvalid(true);
-				// setErrorMessage("Invalid Credentials !");
-				// setTimeout(() => {
-				//   setErrorMessage("");
-				// }, 2000);
-				const { data } = err.response
-				toast.error(data)
-				// console.log(err.response.data);
+      .then((response) => {
+        if (response.status === 201) {
+          const login_token = response.data.access_token;
+          const payload = response.data.payload
+          toast.success("Login Successfully !");
+          console.log("token",response.data);
+          setCookie("user", JSON.stringify(response.data), {
+            path: "/",
+            maxAge: 3600, // Expires after 1hr
+            sameSite: true,
+          })
+          dispatch({ type: "SET_LOGIN", token: login_token,payload:payload });
+          // router.push("/dashboard");
+          router.push({
+            pathname: '/dashboard',
+            // query: { token: login_token },
+          })
+        } else {
+          setInvalid(true);
+          setErrorMessage("Invalid Credentials !");
+          setTimeout(() => {
+            setErrorMessage("");
+          }, 2000);
+        }
+      })
+      .catch((err) => {
+        // setInvalid(true);
+        // setErrorMessage("Invalid Credentials !");
+        // setTimeout(() => {
+        //   setErrorMessage("");
+        // }, 2000);
+        const {data} = err.response
+        toast.error(data)
+        // console.log(err.response.data);
 
 				// return console.log(err);
 			})

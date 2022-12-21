@@ -25,28 +25,28 @@ export default function modules({ question_data }) {
 // function for ssr data
 
 export async function getServerSideProps(data) {
-	// Fetch data from external API
-	const res = await axios.get(`${SERVER_LINK}/questions/find`, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: data.req.cookies.jwt,
-		},
-	})
-	const levels = await axios.get(`${SERVER_LINK}/level/find`, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: data.req.cookies.jwt,
-		},
-	})
-	const modules = await axios.get(`${SERVER_LINK}/module/find`, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: data.req.cookies.jwt,
-		},
-	})
+  // Fetch data from external API
+  const res = await axios.get(`${SERVER_LINK}/questions/find`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json;charset=UTF-8",
+      Authorization: data.req.cookies.access_token,
+    },
+  });
+  const levels = await axios.get(`${SERVER_LINK}/level/find`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json;charset=UTF-8",
+      Authorization: data.req.cookies.access_token,
+    },
+  });
+  const modules = await axios.get(`${SERVER_LINK}/module/find`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json;charset=UTF-8",
+      Authorization: data.req.cookies.access_token,
+    },
+  });
 
 	let question_data = res.data
 	let level_data = levels.data

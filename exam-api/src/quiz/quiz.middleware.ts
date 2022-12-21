@@ -7,12 +7,13 @@ export class Quiz implements NestMiddleware {
   constructor(private readonly prisma: PrismaService) { }
   async use(req: IncomingMessage, res: ServerResponse, next: NextFunction) {
     const bearerHeader = req.headers.authorization;
-    console.log(bearerHeader);
+    console.log("token in quiz middleware",bearerHeader);
 
 
 
     if (!bearerHeader) {
-
+      console.log("inside if");
+      
       res.writeHead(401)
       res.end('UNAUTHORIZED');
     }
