@@ -18,8 +18,6 @@ export class Questions implements NestMiddleware {
 
       // res.writeHead(401)
       // res.end('UNAUTHORIZED');
-      console.log("inside");
-      
       const Login_token = await this.prisma.login.findUnique({
         where: {
           token: `${bearerHeader}`

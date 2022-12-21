@@ -1,44 +1,42 @@
-import { MdLockOutline } from "react-icons/md";
+import { MdLockOutline } from 'react-icons/md'
 
-import Link from "next/link";
+import Link from 'next/link'
 import {
-  FaFacebookF,
-  FaLinkedinIn,
-  FaGoogle,
-  FaRegEnvelope,
-} from "react-icons/fa";
+	FaFacebookF,
+	FaLinkedinIn,
+	FaGoogle,
+	FaRegEnvelope,
+} from 'react-icons/fa'
 
+import { object, string, array, number } from 'yup'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import axios from 'axios'
+import { useSelector, useDispatch } from 'react-redux'
+import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { SERVER_LINK } from '../helpers/config'
 
-import { object, string, array, number } from "yup";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
-import {useState } from "react";
-import { useRouter } from "next/router";
-import { SERVER_LINK } from "../helpers/config";
+import { useApi } from '../hooks'
+import { injectStyle } from 'react-toastify/dist/inject-style'
 
-
-import { useApi } from "../hooks";
-import { injectStyle } from "react-toastify/dist/inject-style";
-
-import { ToastContainer, toast } from "react-toastify";
-import { setCookie } from "cookies-next";
+import { ToastContainer, toast } from 'react-toastify'
+import { setCookie } from 'cookies-next'
 
 // CALL IT ONCE IN YOUR APP
-if (typeof window !== "undefined") {
-  injectStyle();
+if (typeof window !== 'undefined') {
+	injectStyle()
 }
 
 // validation schema
 const schema = object({
-  email: string("Email should be a string")
-    .required("Email address is required")
-    .email("Please provide a valid email"),
-  password: string("Password is required")
-    .required("Password is required")
-    .min(5, "Password must be atleast 5 characters long ! "),
-});
+	email: string('Email should be a string')
+		.required('Email address is required')
+		.email('Please provide a valid email'),
+	password: string('Password is required')
+		.required('Password is required')
+		.min(5, 'Password must be atleast 5 characters long ! '),
+})
 const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -193,4 +191,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Login

@@ -9,15 +9,15 @@ const UserMenu = () => {
   const buttonOutsideClick = OutsideClick(buttonRef);
   const username=useSelector((state) => state.user)
 
-  const userMenuhandle = () => {
-    setUserMenuStatus(!userMenuStatus);
-  };
+	const userMenuhandle = () => {
+		setUserMenuStatus(!userMenuStatus)
+	}
 
-  useEffect(() => {
-    if (buttonOutsideClick) {
-      setUserMenuStatus(false);
-    }
-  }, [buttonOutsideClick]);
+	useEffect(() => {
+		if (buttonOutsideClick) {
+			setUserMenuStatus(false)
+		}
+	}, [buttonOutsideClick])
 
   return (
     <button
@@ -38,24 +38,24 @@ const UserMenu = () => {
         />
       </span>
 
-      {userMenuStatus && (
-        <div className="absolute right-0 sm:-bottom-16 bg-slate-500 px-2 py-1 space-x-2 text-yellow-50 w-full -bottom-28">
-          <a className="block hover:bg-gray-50 hover:text-black">
-            user Profile
-          </a>
-          <a className="block hover:bg-gray-50 hover:text-black">
-            user setting
-          </a>
-        </div>
-      )}
+			{userMenuStatus && (
+				<div className='absolute right-0 sm:-bottom-16 bg-slate-500 px-2 py-1 space-x-2 text-yellow-50 w-full -bottom-28'>
+					<a className='block hover:bg-gray-50 hover:text-black'>
+						user Profile
+					</a>
+					<a className='block hover:bg-gray-50 hover:text-black'>
+						user setting
+					</a>
+				</div>
+			)}
 
-      {userMenuStatus ? (
-        <ChevronDownIcon className="hidden sm:block h-6 w-6 text-gray-300" />
-      ) : (
-        <ChevronUpIcon className="hidden sm:block h-6 w-6 text-gray-300" />
-      )}
-    </button>
-  );
-};
+			{userMenuStatus ? (
+				<ChevronDownIcon className='hidden sm:block h-6 w-6 text-gray-300' />
+			) : (
+				<ChevronUpIcon className='hidden sm:block h-6 w-6 text-gray-300' />
+			)}
+		</button>
+	)
+}
 
-export default UserMenu;
+export default UserMenu

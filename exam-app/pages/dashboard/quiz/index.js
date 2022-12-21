@@ -1,25 +1,24 @@
 import * as React from 'react'
 
-import Quizs from "../../../components/quiz/Quiz";
-import Layout from "../../../components/layout/Layout";
-
+import Quizs from '../../../components/quiz/Quiz'
+import Layout from '../../../components/layout/Layout'
 
 import axios from 'axios'
 import { SERVER_LINK } from '../../../helpers/config'
 
 // You can't name a function as MODULE...
 export default function Quiz({ quiz_data, module_data, level_data }) {
-  return (
-    <>
-      <Layout title="Quiz">
-        <Quizs
-          quiz_data={quiz_data}
-          level_data={level_data}
-          module_data={module_data}
-        />
-      </Layout>
-    </>
-  );
+	return (
+		<>
+			<Layout title='Quiz'>
+				<Quizs
+					quiz_data={quiz_data}
+					level_data={level_data}
+					module_data={module_data}
+				/>
+			</Layout>
+		</>
+	)
 }
 
 // function for ssr data

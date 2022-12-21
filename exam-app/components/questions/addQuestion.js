@@ -35,6 +35,7 @@ const AddQuestion = ({ question_data, level_data, module_data },props) => {
     ])
     const data = useCookie(props.cookie)
     let [cookie, setName] = useState(data.get('refresh_token') || '')
+    console.log("cookie",cookie);
     const login_token = useSelector((state) => state.user.token)
     
     useEffect(() => {
@@ -164,23 +165,24 @@ const AddQuestion = ({ question_data, level_data, module_data },props) => {
                     console.log(err)
                 })
         } else {
-            await axios({
-                url: `${SERVER_LINK}/questions/create`,
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json;charset=UTF-8',
-                    Authorization: cookie,
-                },
-                data,
-            })
-                .then((response) => {
-                    router.push('/dashboard/questions')
-                    // reset();
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
+            console.log("add question cookies",cookie);
+            // await axios({
+            //     // url: `${SERVER_LINK}/questions/create`,
+            //     method: 'POST',
+            //     headers: {
+            //         Accept: 'application/json',
+            //         'Content-Type': 'application/json;charset=UTF-8',
+            //         Authorization: cookie,
+            //     },
+            //     data,
+            // })
+                // .then((response) => {
+                //     router.push('/dashboard/questions')
+                //     // reset();
+                // })
+                // .catch((err) => {
+                //     console.log(err)
+                // })
         }
     }
 
@@ -228,6 +230,7 @@ const AddQuestion = ({ question_data, level_data, module_data },props) => {
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json;charset=UTF-8',
+                        Authorization: cookie,
                     },
                 })
                 .then((response) => {
@@ -240,10 +243,12 @@ const AddQuestion = ({ question_data, level_data, module_data },props) => {
             await axios({
                 url: `${SERVER_LINK}/questions/create`,
                 method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json;charset=UTF-8',
-                },
+                // headers: {
+                //     Accept: 'application/json',
+                //     'Content-Type': 'application/json;charset=UTF-8',
+                //     Authorization: cookie,
+
+                // },
                 data,
             })
                 .then((response) => {

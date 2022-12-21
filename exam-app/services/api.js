@@ -1,6 +1,5 @@
 import { SERVER_LINK } from '../helpers/config'
 import axios from 'axios'
-import Cookies from 'js-cookie'
 
 
 // const instance = axios.create({

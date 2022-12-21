@@ -1,13 +1,13 @@
 import { userActionType } from './action'
 
 const defaultValues = {
-    isLogin: false,
-    token: null,
+	isLogin: false,
+	token: null,
 }
 
 const initialState = {
-    isLogin: false,
-    token: null,
+	isLogin: false,
+	token: null,
 }
 
 const userReducer = (state = initialState, action) => {
@@ -21,12 +21,12 @@ const userReducer = (state = initialState, action) => {
             }
             break
 
-        case userActionType.SET_LOGOUT:
-            return {
-                ...state,
-                defaultValues,
-            }
-            break
+		case userActionType.SET_LOGOUT:
+			return {
+				...state,
+				defaultValues,
+			}
+			break
 
         case userActionType.UPDATE_ACCESS_TOKEN:
             return {
@@ -36,10 +36,10 @@ const userReducer = (state = initialState, action) => {
                 payload: action.payload
             }
 
-        default:
-            return state
-            break
-    }
+		default:
+			return state
+			break
+	}
 }
 
 export default userReducer

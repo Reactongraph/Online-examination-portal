@@ -1,25 +1,23 @@
-import * as React from "react";
-import AddQuestion from "../../../components/questions/addQuestion";
+import * as React from 'react'
+import AddQuestion from '../../../components/questions/addQuestion'
 
-import Layout from "../../../components/layout/Layout";
+import Layout from '../../../components/layout/Layout'
 
-
-import axios from "axios";
-import { SERVER_LINK } from "../../../helpers/config";
+import axios from 'axios'
+import { SERVER_LINK } from '../../../helpers/config'
 
 // You can't name a function as MODULE...
 export default function modules({ question_data }) {
+	return (
+		<>
+			<Layout title='Questions'>
+				<AddQuestion />
+				{/* <Level level_data={module_data} /> */}
 
-  return (
-    <>
-      <Layout title="Questions">
-        <AddQuestion />
-        {/* <Level level_data={module_data} /> */}
-
-        {/* <h1 style={{color: "red"}}>This is questions add   </h1> */}
-      </Layout>
-    </>
-  );
+				{/* <h1 style={{color: "red"}}>This is questions add   </h1> */}
+			</Layout>
+		</>
+	)
 }
 
 // function for ssr data
