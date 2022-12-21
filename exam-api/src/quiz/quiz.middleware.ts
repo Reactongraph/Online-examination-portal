@@ -6,6 +6,8 @@ import { ServerResponse, IncomingMessage } from 'http';
 export class Quiz implements NestMiddleware {
   constructor(private readonly prisma: PrismaService) { }
   async use(req: IncomingMessage, res: ServerResponse, next: NextFunction) {
+    console.log(req.headers);
+    
     const bearerHeader = req.headers.authorization;
     console.log("token in quiz middleware", bearerHeader);
 

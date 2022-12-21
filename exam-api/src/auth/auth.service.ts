@@ -53,7 +53,7 @@ export class AuthService {
     if (login?.email == user.email && login?.password == user.password) {
       const payload = {
         id: user.id,
-        name: user.name,
+        username: user.name,
         email: user.email,
       }
       return payload;
@@ -73,8 +73,11 @@ export class AuthService {
   async decode_Token(tokenn: any) {
 
     const decode: any = this.jwtService.decode(tokenn)
-    console.log("decode", decode);
-
+    console.log("decode in service", decode);
+    const find_username = await this.prisma.user_auth.findUnique({ where: { email: decode.email } })
+    const payload = { username:find_username.name, email: decode.email }
+    console.log("payload",payload);
+    
     const new_token = await this.create_token(decode)
     prisma.$connect();
     const finddata = await this.prisma.login.findUnique({
@@ -91,7 +94,7 @@ export class AuthService {
         token_id: decode.id
       },
     });
-    return { "token": new_token, "payload": decode }
+    return { "token": new_token, "payload": payload }
 
   }
 }

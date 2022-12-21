@@ -6,9 +6,11 @@ import { useForm } from 'react-hook-form'
 
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
+import { useCookie } from 'next-cookie'
 
-const AddQuestion = ({ question_data, level_data, module_data }) => {
+const AddQuestion = ({ question_data, level_data, module_data },props) => {
     const router = useRouter()
+
     const [selectedImage, setSelectedImage] = useState(null)
     const [pageTitle, setPageTitle] = useState('Add')
     const [question, setQuestion] = useState('')
@@ -31,23 +33,23 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
         { option: '', correct: '' },
         { option: '', correct: '' },
     ])
+    const data = useCookie(props.cookie)
+    let [cookie, setName] = useState(data.get('refresh_token') || '')
     const login_token = useSelector((state) => state.user.token)
-
+    
     useEffect(() => {
         let question_id = router.query.question_id
-        // pageTitle = "Edit"
 
         async function getQuestionData() {
-            const results = await axios.get(
-                `${SERVER_LINK}/questions/find/${question_id}`,
-                {
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json;charset=UTF-8',
-                        Authorization: login_token,
-                    },
-                }
-            )
+
+            const results = await axios
+            .get(`${SERVER_LINK}/questions/find/${question_id}`, {
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json;charset=UTF-8',
+                    Authorization: cookie,
+                },
+            })
             const questionData = results.data
             setPageTitle('Edit')
             setQuestion(questionData.question)
@@ -86,7 +88,6 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
     }, [numberOfOptionSelect])
 
     const handleSelectedOption = (index, event) => {
-        // setRequiredOptionField(false);
 
         if (optionType == 'Single') {
             inputFields.map((one, i) => {
@@ -153,7 +154,7 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json;charset=UTF-8',
-                        Authorization: login_token,
+                        Authorization: cookie,
                     },
                 })
                 .then((response) => {
@@ -169,7 +170,7 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json;charset=UTF-8',
-                    Authorization: login_token,
+                    Authorization: cookie,
                 },
                 data,
             })
@@ -247,7 +248,6 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
             })
                 .then((response) => {
                     router.push('/dashboard/questions')
-                    // reset();
                 })
                 .catch((err) => {
                     console.log(err)
@@ -277,11 +277,8 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
                         </div>
 
                         <section className="flex md:grid-cols-1 xl:grid-cols-1 gap-6">
-                            {/* <form className = "flex-auto  items-center p-8 bg-white shadow rounded-lg"> */}
                             <div className="flex-auto  items-center p-8 bg-white shadow rounded-lg">
                                 <div className="mr-6">
-                                    {/* <h1 className="text-4xl font-semibold mb-2">Add Question</h1> */}
-                                    {/* <h2 className="text-gray-600 ml-0.5">Question </h2> */}
 
                                     <div className="flex justify-center mt-8">
                                         <div className="max-w-2xl rounded-lg shadow-xl bg-gray-50">

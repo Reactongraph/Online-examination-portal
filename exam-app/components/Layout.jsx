@@ -25,62 +25,64 @@ export default function Layout({ children }) {
     const { get } = useApi()
     const refreshToken = async () => {
         console.log('name in refresh fun', cookie)
-        await axios
-            .get(`${SERVER_LINK}/auth/refresh_token`, {
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json;charset=UTF-8',
-                    xaccesstoken: cookie,
-                },
-            })
-            .then((response) => {
-                console.log('response')
-                console.log(response)
-                const newToken = response.data.access_token
-                console.log('new token')
-                console.log(newToken)
-                const payload = response.data.payload
-                console.log("payload",payload);
-                if (newToken) {
-                    if (
-                        router.asPath == '/login' ||
-                        router.asPath == '/' ||
-                        router.asPath == '/passwordReset' ||
-                        router.asPath == 'forgotPassword'
-                    ) {
-                        // console.log('tgis oihsofihsdoiofhsdkdfkn') 
-                        dispatch({
-                            type: 'UPDATE_ACCESS_TOKEN',
-                            token: newToken,
-                            payload: payload,
-                        })
+        if (cookie) {
+            await axios
+                .get(`${SERVER_LINK}/auth/refresh_token`, {
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json;charset=UTF-8',
+                        xaccesstoken: cookie,
+                    },
+                })
+                .then((response) => {
+                    console.log('response')
+                    console.log(response)
+                    const newToken = response.data.access_token
+                    console.log('new token')
+                    console.log(newToken)
+                    const payload = response.data.payload
+                    console.log('payload', payload)
+                    if (newToken) {
+                        if (
+                            router.asPath == '/login' ||
+                            router.asPath == '/' ||
+                            router.asPath == '/passwordReset' ||
+                            router.asPath == 'forgotPassword'
+                        ) {
+                            // console.log('tgis oihsofihsdoiofhsdkdfkn')
+                            dispatch({
+                                type: 'UPDATE_ACCESS_TOKEN',
+                                token: newToken,
+                                payload: payload,
+                            })
 
-                        router.push(`/dashboard`)
-                    } else {
-                        console.log('this is else ')
+                            router.push(`/dashboard`)
+                        } else {
+                            console.log('this is else ')
 
-                        dispatch({
-                            type: 'UPDATE_ACCESS_TOKEN',
-                            token: newToken,
-                            payload: payload,
-                        })
-                        console.log('new token in else', newToken)
-                        router.push(`${router.asPath}`)
+                            dispatch({
+                                type: 'UPDATE_ACCESS_TOKEN',
+                                token: newToken,
+                                payload: payload,
+                            })
+                            console.log('new token in else', newToken)
+                            router.push(`${router.asPath}`)
+                        }
                     }
-                }
-            })
-            .catch((err) => {
-                // for allowing user to access some pages without token
-                if (
-                    router.pathname == `/passwordReset` ||
-                    router.asPath == '/forgotPassword'
-                ) {
-                    router.push(`${router.asPath}`)
-                } else {
-                    router.push('/login')
-                    // router.push(`${router.asPath}`)
-                }
-            })
+                })
+                .catch((err) => {
+                    // for allowing user to access some pages without token
+                    if (
+                        router.pathname == `/passwordReset` ||
+                        router.asPath == '/forgotPassword'
+                    ) {
+                        router.push(`${router.asPath}`)
+                    } else {
+                        router.push('/login')
+                        // router.push(`${router.asPath}`)
+                    }
+                })
+        }
     }
 
     useEffect(() => {

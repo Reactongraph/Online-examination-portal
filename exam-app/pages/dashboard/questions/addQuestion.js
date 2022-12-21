@@ -30,7 +30,7 @@ export async function getServerSideProps(data) {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json;charset=UTF-8",
-      Authorization: data.req.cookies.jwt,
+      authorization: data.req.cookies.jwt,
     },
   });
 
