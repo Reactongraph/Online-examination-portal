@@ -30,7 +30,7 @@ jobs:
       - name: Install Node.js dependencies
         uses: CultureHQ/actions-yarn@v1.0.1
         with: 
-          args: "--cwd exam-app ci"
+          args: "install --immutable --immutable-cache --check-cache"
 
       - name: Run ESlint and Prettier
         uses: CultureHQ/actions-yarn@v1.0.1
