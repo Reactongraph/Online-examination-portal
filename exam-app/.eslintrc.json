@@ -5,7 +5,7 @@
 		"es2021": true
 	},
 	"extends": [
-		// "next/babel",
+		"next/babel",
 		"eslint:recommended",
 		"next",
 		"next/core-web-vitals",
