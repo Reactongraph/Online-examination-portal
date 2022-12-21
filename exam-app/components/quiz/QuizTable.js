@@ -214,7 +214,7 @@ const QuizTable = ({ quiz_data }) => {
         <div className="flex">
           <input
             onClick={() => handleBoxClick(quiz_id, quiz_status)}
-            className="form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-gray-300 bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
+            className="form-check-input appearance-none w-9  rounded-full float-left h-5 align-top  bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
             type="checkbox"
             role="switch"
             id="flexSwitchCheckDefault"

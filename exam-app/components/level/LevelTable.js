@@ -131,7 +131,7 @@ const LevelTable = ({ level_data }) => {
           {/* <div className="form-check form-switch"> */}
           <input
             onClick={() => handleBoxClick(level_id, level_status)}
-            className="form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
+            className="form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
             type="checkbox"
             role="switch"
             id="flexSwitchCheckDefault"
