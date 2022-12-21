@@ -12,11 +12,8 @@ import { useState } from 'react'
 
 // To check for the refresh token on every page
 export default function Layout({ children }) {
-    // const [cookies, setCookie] = useCookies();
-    // console.log("cookie",cookies);
     const data = useCookie(children.cookie)
     let [cookie, setName] = useState(data.get('refresh_token') || '')
-    console.log('next cookie', cookie)
     const router = useRouter()
     const dispatch = useDispatch()
 
@@ -24,7 +21,6 @@ export default function Layout({ children }) {
 
     const { get } = useApi()
     const refreshToken = async () => {
-        console.log('name in refresh fun', cookie)
         if (cookie) {
             await axios
                 .get(`${SERVER_LINK}/auth/refresh_token`, {
@@ -35,13 +31,8 @@ export default function Layout({ children }) {
                     },
                 })
                 .then((response) => {
-                    console.log('response')
-                    console.log(response)
                     const newToken = response.data.access_token
-                    console.log('new token')
-                    console.log(newToken)
                     const payload = response.data.payload
-                    console.log('payload', payload)
                     if (newToken) {
                         if (
                             router.asPath == '/login' ||
@@ -49,7 +40,6 @@ export default function Layout({ children }) {
                             router.asPath == '/passwordReset' ||
                             router.asPath == 'forgotPassword'
                         ) {
-                            // console.log('tgis oihsofihsdoiofhsdkdfkn')
                             dispatch({
                                 type: 'UPDATE_ACCESS_TOKEN',
                                 token: newToken,
@@ -58,14 +48,12 @@ export default function Layout({ children }) {
 
                             router.push(`/dashboard`)
                         } else {
-                            console.log('this is else ')
 
                             dispatch({
                                 type: 'UPDATE_ACCESS_TOKEN',
                                 token: newToken,
                                 payload: payload,
                             })
-                            console.log('new token in else', newToken)
                             router.push(`${router.asPath}`)
                         }
                     }
@@ -79,7 +67,6 @@ export default function Layout({ children }) {
                         router.push(`${router.asPath}`)
                     } else {
                         router.push('/login')
-                        // router.push(`${router.asPath}`)
                     }
                 })
         }
