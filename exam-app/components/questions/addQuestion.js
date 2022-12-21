@@ -35,7 +35,7 @@ const AddQuestion = ({ question_data, level_data, module_data },props) => {
     ])
     const data = useCookie(props.cookie)
     let [cookie, setName] = useState(data.get('refresh_token') || '')
-    console.log("cookie",cookie);
+    // console.log("cookie",cookie);
     const login_token = useSelector((state) => state.user.token)
     
     useEffect(() => {
@@ -67,12 +67,13 @@ const AddQuestion = ({ question_data, level_data, module_data },props) => {
                 }
             })
         }
+        console.log("line no 70");
 
         if (router.query.question_id) {
             getQuestionData()
         }
     }, [router.query?.question_id])
-
+    console.log("line no 76");
     const {
         register,
         handleSubmit,
@@ -87,9 +88,9 @@ const AddQuestion = ({ question_data, level_data, module_data },props) => {
             setRequiredOptionField(true)
         }
     }, [numberOfOptionSelect])
-
+    console.log("line no 91");
     const handleSelectedOption = (index, event) => {
-
+        // console.log("93");
         if (optionType == 'Single') {
             inputFields.map((one, i) => {
                 if (index != i) one.correct = false
@@ -104,7 +105,7 @@ const AddQuestion = ({ question_data, level_data, module_data },props) => {
         }
 
         let data = [...inputFields]
-
+        console.log("line no 108");
         data[index].correct = event.target.checked
         setInputFields(data)
 
@@ -117,7 +118,7 @@ const AddQuestion = ({ question_data, level_data, module_data },props) => {
             setNumberOfOptionSelect(1)
         }
     }
-
+    console.log("121");
     const handleModuleTypeSelect = (event) => {
         let moduleId = event.target.value
         setSelectedModuleId(moduleId)
@@ -141,12 +142,13 @@ const AddQuestion = ({ question_data, level_data, module_data },props) => {
         let questionTypeValue = event.target.value
         setQuestionType(questionTypeValue)
     }
+    console.log("145",cookie);
     const handleFormChange = async (index, event) => {
         let data = [...inputFields]
         data[index].option = event.target.value
         setInputFields(data)
         data = JSON.stringify(data)
-
+        // console.log("line no 150");
         if (editForm) {
             let question_id = router.query.question_id
 
@@ -166,23 +168,24 @@ const AddQuestion = ({ question_data, level_data, module_data },props) => {
                 })
         } else {
             console.log("add question cookies",cookie);
-            // await axios({
-            //     // url: `${SERVER_LINK}/questions/create`,
-            //     method: 'POST',
-            //     headers: {
-            //         Accept: 'application/json',
-            //         'Content-Type': 'application/json;charset=UTF-8',
-            //         Authorization: cookie,
-            //     },
-            //     data,
-            // })
-                // .then((response) => {
-                //     router.push('/dashboard/questions')
-                //     // reset();
-                // })
-                // .catch((err) => {
-                //     console.log(err)
-                // })
+            await axios({
+                url: `${SERVER_LINK}/questions/create`,
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json;charset=UTF-8',
+                    Authorization: cookie,
+                },
+                data,
+            })
+                .then((response) => {
+                    console.log("response in handle form");
+                    router.push('/dashboard/questions')
+                    // reset();
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
         }
     }
 
@@ -197,8 +200,9 @@ const AddQuestion = ({ question_data, level_data, module_data },props) => {
         data.splice(index, 1)
         setInputFields(data)
     }
-
+    console.log("203",cookie);
     const checkWithDatabase = async (data) => {
+        console.log("205");
         data.question_type = questionType
         data.question = question
         data.marks = marks
@@ -221,7 +225,7 @@ const AddQuestion = ({ question_data, level_data, module_data },props) => {
         }
 
         data = JSON.stringify(data)
-
+        console.log("api control");
         if (editForm) {
             let question_id = router.query.question_id
 

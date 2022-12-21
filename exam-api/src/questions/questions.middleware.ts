@@ -13,32 +13,21 @@ export class Questions implements NestMiddleware {
 
 
 
-    if (bearerHeader) {
-      // console.log("inside if");
+    // if (!bearerHeader) {
+    //   // console.log("inside if");
 
-      // res.writeHead(401)
-      // res.end('UNAUTHORIZED');
-      const Login_token = await this.prisma.login.findUnique({
-        where: {
-          token: `${bearerHeader}`
-        }
-      })
-    }
+    //   res.writeHead(401)
+    //   res.end('UNAUTHORIZED');
+    // }
     // else {
-      // const Login_token = await this.prisma.login.findUnique({
-      //   where: {
-      //     token: `${bearerHeader}`
-      //   }
-      // })
-      // console.log("login", Login_token);
-    //   next()
+    //   const Login_token = await this.prisma.login.findUnique({
+    //     where: {
+    //       token: `${bearerHeader}`
+    //     }
+    //   })
 
-    //   // if (!Login_token) {
-    //   //   res.writeHead(401,)
-    //   //   res.end('UNAUTHORIZED');
-    //   // } else {
          next()
-    //   // }
+
     // }
   }
 }
