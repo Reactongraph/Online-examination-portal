@@ -38,5 +38,6 @@ jobs:
       - name: Run ESlint
         uses: CultureHQ/actions-yarn@v1.0.1
         with:
-          cmd: style:all
+          cmd: run
+          args: style:all
           
