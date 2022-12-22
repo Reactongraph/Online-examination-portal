@@ -7,11 +7,11 @@ import axios from 'axios'
 import { SERVER_LINK } from '../../../helpers/config'
 
 // You can't name a function as MODULE...
-export default function modules({ question_data }) {
+export default function modules({ question_data,level_data,module_data }) {
 	return (
 		<>
 			<Layout title='Questions'>
-				<AddQuestion />
+				<AddQuestion level_data={level_data} module_data={module_data}/>
 				{/* <Level level_data={module_data} /> */}
 
 				{/* <h1 style={{color: "red"}}>This is questions add   </h1> */}
@@ -28,7 +28,7 @@ export async function getServerSideProps(data) {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json;charset=UTF-8",
-      authorization: data.req.cookies.jwt,
+      authorization: data.req.cookies.access_token,
     },
   });
 
@@ -36,14 +36,14 @@ export async function getServerSideProps(data) {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json;charset=UTF-8",
-      Authorization: data.req.cookies.jwt,
+      Authorization: data.req.cookies.access_token,
     },
   });
   const modules = await axios.get(`${SERVER_LINK}/module/find`, {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json;charset=UTF-8",
-      Authorization: data.req.cookies.jwt,
+      Authorization: data.req.cookies.access_token,
     },
   });
 
