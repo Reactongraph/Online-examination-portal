@@ -134,60 +134,20 @@ const AddQuestion = ({ question_data, level_data, module_data },props) => {
         setOptionType(optionType)
     }
 
-    const handleTimeLimitSelect = (event) => {
-        let timeLimitValue = event.target.value
-        setTimeLimitSelect(timeLimitValue)
-    }
-    const handleQuestionTypeSelect = (event) => {
-        let questionTypeValue = event.target.value
-        setQuestionType(questionTypeValue)
-    }
-    console.log("145",cookie);
-    const handleFormChange = async (index, event) => {
-        let data = [...inputFields]
-        data[index].option = event.target.value
-        setInputFields(data)
-        data = JSON.stringify(data)
-        // console.log("line no 150");
-        if (editForm) {
-            let question_id = router.query.question_id
+	const handleTimeLimitSelect = (event) => {
+		let timeLimitValue = event.target.value
+		setTimeLimitSelect(timeLimitValue)
+	}
+	const handleQuestionTypeSelect = (event) => {
+		let questionTypeValue = event.target.value
+		setQuestionType(questionTypeValue)
+	}
 
-            await axios
-                .patch(`${SERVER_LINK}/questions/${question_id}`, data, {
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json;charset=UTF-8',
-                        Authorization: cookie,
-                    },
-                })
-                .then((response) => {
-                    router.push('/dashboard/questions')
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-        } else {
-            console.log("add question cookies",cookie);
-            await axios({
-                url: `${SERVER_LINK}/questions/create`,
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json;charset=UTF-8',
-                    Authorization: cookie,
-                },
-                data,
-            })
-                .then((response) => {
-                    console.log("response in handle form");
-                    router.push('/dashboard/questions')
-                    // reset();
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-        }
-    }
+	const handleFormChange = async (index, event) => {
+		let data = [...inputFields]
+		data[index].option = event.target.value
+		setInputFields(data)		
+	}
 
     const addFields = () => {
         let newfield = { option: '', correct: '' }

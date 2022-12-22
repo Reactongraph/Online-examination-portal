@@ -12,69 +12,69 @@ import { useState } from 'react'
 
 // To check for the refresh token on every page
 export default function Layout({ children }) {
-    const data = useCookie(children.cookie)
-    let [cookie, setName] = useState(data.get('refresh_token') || '')
-    const router = useRouter()
-    const dispatch = useDispatch()
+	const data = useCookie(children.cookie)
+	let [cookie, setName] = useState(data.get('refresh_token') || '')
+	const router = useRouter()
+	const dispatch = useDispatch()
 
-    const { token } = router.query
+	const { token } = router.query
 
-    const { get } = useApi()
-    const refreshToken = async () => {
-        if (cookie) {
-            await axios
-                .get(`${SERVER_LINK}/auth/refresh_token`, {
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json;charset=UTF-8',
-                        xaccesstoken: cookie,
-                    },
-                })
-                .then((response) => {
-                    const newToken = response.data.access_token
-                    const payload = response.data.payload
-                    if (newToken) {
-                        if (
-                            router.asPath == '/login' ||
-                            router.asPath == '/' ||
-                            router.asPath == '/passwordReset' ||
-                            router.asPath == 'forgotPassword'
-                        ) {
-                            dispatch({
-                                type: 'UPDATE_ACCESS_TOKEN',
-                                token: newToken,
-                                payload: payload,
-                            })
+	const { get } = useApi()
+	const refreshToken = async () => {
+		// if (cookie) {
 
-                            router.push(`/dashboard`)
-                        } else {
+		try {
+			const response = await axios.get(`${SERVER_LINK}/auth/refresh_token`, {
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json;charset=UTF-8',
+					xaccesstoken: cookie,
+				},
+			})
 
-                            dispatch({
-                                type: 'UPDATE_ACCESS_TOKEN',
-                                token: newToken,
-                                payload: payload,
-                            })
-                            router.push(`${router.asPath}`)
-                        }
-                    }
-                })
-                .catch((err) => {
-                    // for allowing user to access some pages without token
-                    if (
-                        router.pathname == `/passwordReset` ||
-                        router.asPath == '/forgotPassword'
-                    ) {
-                        router.push(`${router.asPath}`)
-                    } else {
-                        router.push('/login')
-                    }
-                })
-        }
-    }
+            console.log('this is  the resposne 0');
+            console.log(response);
 
-    useEffect(() => {
-        refreshToken()
-    }, [])
+			const newToken = response.data.access_token
+			const payload = response.data.payload
+			if (newToken) {
+				if (
+					router.asPath == '/login' ||
+					router.asPath == '/' ||
+					router.asPath == '/passwordReset' ||
+					router.asPath == 'forgotPassword'
+				) {
+					dispatch({
+						type: 'UPDATE_ACCESS_TOKEN',
+						token: newToken,
+						payload: payload,
+					})
 
-    return <>{children}</>
+					router.push(`/dashboard`)
+				} else {
+					dispatch({
+						type: 'UPDATE_ACCESS_TOKEN',
+						token: newToken,
+						payload: payload,
+					})
+					router.push(`${router.asPath}`)
+				}
+			}
+		} catch (error) {
+			if (
+				router.pathname == `/passwordReset` ||
+				router.asPath == '/forgotPassword'
+			) {
+				router.push(`${router.asPath}`)
+			} else {
+				router.push('/login')
+			}
+		}
+	}
+
+	useEffect(() => {
+		refreshToken()
+	}, [])
+
+	return <>{children}</>
 }

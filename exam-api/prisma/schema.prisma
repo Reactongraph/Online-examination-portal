@@ -98,14 +98,14 @@ model Questions {
 }
 
 model Quiz {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
   quiz_name   String
   quiz_image  String?
   description String?
   start_date  DateTime?
   end_date    DateTime?
   buffer_time DateTime?
-  module_id   String[] @db.ObjectId
+  module_id   String[]  @db.ObjectId
   level_id    String
   status      Boolean  @default(true)
   createdAt   DateTime @default(now())

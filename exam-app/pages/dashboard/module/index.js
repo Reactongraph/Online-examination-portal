@@ -20,7 +20,6 @@ export default function modules({ module_data }) {
 // function for ssr data
 
 export async function getServerSideProps(data) {
-<<<<<<< HEAD
   // Fetch data from external API
   const res = await axios.get(`${SERVER_LINK}/module/find`, {
     headers: {
@@ -29,16 +28,6 @@ export async function getServerSideProps(data) {
       "Authorization":data.req.cookies.access_token
     },
   });
-=======
-	// Fetch data from external API
-	const res = await axios.get(`${SERVER_LINK}/module/find`, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: data.req.cookies.jwt,
-		},
-	})
->>>>>>> 9b5f3505979669bc124d8a0cdb26d00fcecfc962
 
 	let module_data = res.data
 
