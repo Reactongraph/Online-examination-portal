@@ -9,7 +9,6 @@ const UserMenu = () => {
   const buttonOutsideClick = OutsideClick(buttonRef);
   const username=useSelector((state) => state.user)
   // const login_token = useSelector((state)=>state.user.token)
-  // console.log("username",username.payload.name);
 
 	const userMenuhandle = () => {
 		setUserMenuStatus(!userMenuStatus)

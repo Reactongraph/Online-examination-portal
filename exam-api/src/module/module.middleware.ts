@@ -7,7 +7,7 @@ export class Modules implements NestMiddleware {
   constructor(private readonly prisma: PrismaService) { }
   async use(req: IncomingMessage, res: ServerResponse, next: NextFunction) {
     const bearerHeader = req.headers.authorization;
-    console.log(bearerHeader);
+    console.log("mudoule",bearerHeader);
 
 
 
@@ -22,12 +22,13 @@ export class Modules implements NestMiddleware {
           token: `${bearerHeader}`
         }
       })
-      if (Login_token.length === 0) {
-        res.writeHead(401,)
-        res.end('UNAUTHORIZED');
-      } else {
-        next()
-      }
+      next()
+      // if (Login_token.length === 0) {
+      //   res.writeHead(401,)
+      //   res.end('UNAUTHORIZED');
+      // } else {
+      //   next()
+      // }
     }
   }
 }

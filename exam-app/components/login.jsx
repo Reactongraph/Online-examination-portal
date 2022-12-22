@@ -55,27 +55,27 @@ const Login = () => {
 		resolver: yupResolver(schema),
 	})
 
-	const checkWithDatabase = async (data) => {
-		console.log('hi')
-		data = JSON.stringify(data)
-		console.log(data)
-		await axios
-			.request({
-				method: 'post',
-				url: `${SERVER_LINK}/auth/login`,
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				withCredentials: true,
-				data,
-			})
+  const checkWithDatabase = async (data) => {
+    // console.log("hi");
+    data = JSON.stringify(data);
+    // console.log(data);
+    await axios
+      .request({
+        method: "post",
+        url: `${SERVER_LINK}/auth/login`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+        data,
+      })
 
       .then((response) => {
         if (response.status === 201) {
           const login_token = response.data.access_token;
           const payload = response.data.payload
           toast.success("Login Successfully !");
-          console.log("token",response.data);
+          // console.log("token",response.data);
           setCookie("user", JSON.stringify(response.data), {
             path: "/",
             maxAge: 3600, // Expires after 1hr

@@ -48,7 +48,7 @@ export default function Layout({ children }) {
                         router.asPath == '/passwordReset' ||
                         router.asPath == 'forgotPassword'
                     ) {
-                        console.log('tgis oihsofihsdoiofhsdkdfkn')
+                        // console.log('tgis oihsofihsdoiofhsdkdfkn') 
                         dispatch({
                             type: 'UPDATE_ACCESS_TOKEN',
                             token: newToken,
