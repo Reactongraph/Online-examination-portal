@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { useRouter } from "next/router";
-import { CSVLink } from "react-csv";
-import { csvObject } from "./SampleCsvData";
-import {CsvReader} from './CsvReader';
+import React, { useState } from 'react'
+import { useRouter } from 'next/router'
+import { CSVLink } from 'react-csv'
+import { csvObject } from './SampleCsvData'
+import { CsvReader } from './CsvReader'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 import { ToastContainer, toast } from 'react-toastify'
 if (typeof window !== 'undefined') {
@@ -10,32 +10,31 @@ if (typeof window !== 'undefined') {
 }
 
 const PageComponentTitle = ({
-  title,
-  titleDescription,
-  buttonTitle,
-  editForm,
+	title,
+	titleDescription,
+	buttonTitle,
+	editForm,
 }) => {
-  const [modal, setModal] = useState(false);
-  const [csvData, setCsvData] = useState();
-  const [csvArray, setCsvArray] = useState([]);
-  const router = useRouter();
+	const [modal, setModal] = useState(false)
+	const [csvData, setCsvData] = useState()
+	const [csvArray, setCsvArray] = useState([])
+	const router = useRouter()
 
-  const checkModal = (title) => {};
-  const handleAddClick = () => {
-    router.push("/dashboard/questions/addQuestion");
-  };
+	const checkModal = (title) => {}
+	const handleAddClick = () => {
+		router.push('/dashboard/questions/addQuestion')
+	}
 
-  const handleCsv = (e) => {
-    const result = CsvReader(e.target.files[0])
-    if(result==1){
-      console.log('this is the resullt ');
-      setTimeout(() => {        
-        router.replace(router.asPath) 
-        toast.success("CSV uploaded successfully!")
-        e.target.value = null;
-      }, 500);
-    }
-  };
+	const handleCsv = (e) => {
+		const result = CsvReader(e.target.files[0])
+		if (result == 1) {
+			setTimeout(() => {
+				router.replace(router.asPath)
+				toast.success('CSV uploaded successfully!')
+				e.target.value = null
+			}, 500)
+		}
+	}
 
 	return (
 		<>
@@ -44,55 +43,50 @@ const PageComponentTitle = ({
 				<h2 className='text-gray-600 ml-0.5'>{titleDescription}</h2>
 			</div>
 
-      <div className="flex  flex-wrap items-start justify-end -mb-3">
-        <CSVLink {...csvObject}>
-          <button
-            type="button"
-            className="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
-          >
-            Download sample (.csv)
-          </button>
-        </CSVLink>
+			<div className='flex  flex-wrap items-start justify-end -mb-3'>
+				<CSVLink {...csvObject}>
+					<button
+						type='button'
+						className='inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out'>
+						Download sample (.csv)
+					</button>
+				</CSVLink>
 
-        <input
-          type="file"
-          accept=".csv"
-          placeholder="Add Questions (.csv) "
-          onChange={(e) => {
-            handleCsv(e);
-          }}
-          className="px-6 py-2 mx-2 bg-blue-400 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-500 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
-        />
-      {/* <p className='pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600'>
+				<input
+					type='file'
+					accept='.csv'
+					placeholder='Add Questions (.csv) '
+					onChange={(e) => {
+						handleCsv(e)
+					}}
+					className='px-6 py-2 mx-2 bg-blue-400 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-500 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out'
+				/>
+				{/* <p className='pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600'>
 																		Attach a file
 										</p> */}
-        
-        <button
-          className="inline-flex px-5 py-3 text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 rounded-md ml-6 mb-3"
-          onClick={handleAddClick}
-        >
-          <svg
-            aria-hidden="true"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            className="flex-shrink-0 h-6 w-6 text-white -ml-1 mr-2"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-            />
-          </svg>
-          {buttonTitle}
-        </button>
-        <ToastContainer />
 
-      </div>
-    </>
-  );
-};
+				<button
+					className='inline-flex px-5 py-3 text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 rounded-md ml-6 mb-3'
+					onClick={handleAddClick}>
+					<svg
+						aria-hidden='true'
+						fill='none'
+						viewBox='0 0 24 24'
+						stroke='currentColor'
+						className='flex-shrink-0 h-6 w-6 text-white -ml-1 mr-2'>
+						<path
+							strokeLinecap='round'
+							strokeLinejoin='round'
+							strokeWidth={2}
+							d='M12 6v6m0 0v6m0-6h6m-6 0H6'
+						/>
+					</svg>
+					{buttonTitle}
+				</button>
+				<ToastContainer />
+			</div>
+		</>
+	)
+}
 
-export default PageComponentTitle;
-
+export default PageComponentTitle
