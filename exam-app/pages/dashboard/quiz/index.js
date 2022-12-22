@@ -47,15 +47,15 @@ export async function getServerSideProps(data) {
     },
   });
 
-	let quiz_data = res.data.quiz
-	let level_data = levels.data
-	let module_data = modules.data
-	module_data = module_data.map((object) => {
-		object.value = object.module
-		object.label = object.module
-		return object
-	})
+  let quiz_data = res.data.quiz;
+  let level_data = levels.data;
+  let module_data = modules.data;
+  module_data = module_data.map((object) => {
+    object.value = object.module;
+    object.label = object.module;
+    return object;
+  });
 
-	// Pass data to the page via props
-	return { props: { quiz_data, level_data, module_data } }
+  // Pass data to the page via props
+  return { props: { quiz_data, level_data, module_data } };
 }

@@ -12,11 +12,8 @@ import { useState } from 'react'
 
 // To check for the refresh token on every page
 export default function Layout({ children }) {
-    // const [cookies, setCookie] = useCookies();
-    // console.log("cookie",cookies);
     const data = useCookie(children.cookie)
     let [cookie, setName] = useState(data.get('refresh_token') || '')
-    console.log('next cookie', cookie)
     const router = useRouter()
     const dispatch = useDispatch()
 
@@ -55,33 +52,30 @@ export default function Layout({ children }) {
                             payload: payload,
                         })
 
-                        router.push(`/dashboard`)
-                    } else {
-                        console.log('this is else ')
+                            router.push(`/dashboard`)
+                        } else {
 
-                        dispatch({
-                            type: 'UPDATE_ACCESS_TOKEN',
-                            token: newToken,
-                            payload: payload,
-                        })
-                        console.log('new token in else', newToken)
-                        router.push(`${router.asPath}`)
+                            dispatch({
+                                type: 'UPDATE_ACCESS_TOKEN',
+                                token: newToken,
+                                payload: payload,
+                            })
+                            router.push(`${router.asPath}`)
+                        }
                     }
-                }
-            })
-            .catch((err) => {
-                // for allowing user to access some pages without token
-                if (
-                    router.pathname == `/passwordReset` ||
-                    router.asPath == '/forgotPassword'
-                ) {
-                    router.push(`${router.asPath}`)
-                } else {
-                    router.push('/login')
-                    // router.push(`${router.asPath}`)
-                }
-            })
-    }
+                })
+                .catch((err) => {
+                    // for allowing user to access some pages without token
+                    if (
+                        router.pathname == `/passwordReset` ||
+                        router.asPath == '/forgotPassword'
+                    ) {
+                        router.push(`${router.asPath}`)
+                    } else {
+                        router.push('/login')
+                    }
+                })
+        }
 
     useEffect(() => {
         refreshToken()

@@ -48,10 +48,10 @@ export async function getServerSideProps(data) {
     },
   });
 
-	let question_data = res.data
-	let level_data = levels.data
-	let module_data = modules.data
+    let question_data = res.data
+    let level_data = levels.data
+    let module_data = modules.data
 
-	// Pass data to the page via props
-	return { props: { question_data, level_data, module_data } }
+  // Pass data to the page via props
+  return { props: { question_data,level_data,module_data } };
 }

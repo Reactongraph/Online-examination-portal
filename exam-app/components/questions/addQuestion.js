@@ -6,9 +6,11 @@ import { useForm } from 'react-hook-form'
 
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
+import { useCookie } from 'next-cookie'
 
-const AddQuestion = ({ question_data, level_data, module_data }) => {
+const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 	const router = useRouter()
+
 	const [selectedImage, setSelectedImage] = useState(null)
 	const [pageTitle, setPageTitle] = useState('Add')
 	const [question, setQuestion] = useState('')
@@ -23,7 +25,9 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
 	const [marks, setMarks] = useState()
 	const [numberOfOptionSelect, setNumberOfOptionSelect] = useState(0)
 	const [selectedOptionIndex, setSelectedOptionIndex] = useState()
-	const [editForm, setEditForm] = useState(false)
+	const [editForm, setEditForm] = useState(
+		router?.query?.question_id ? true : false
+	)
 	let [posts, setPosts] = useState([])
 	const [inputFields, setInputFields] = useState([
 		{ option: '', correct: '' },
@@ -31,11 +35,13 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
 		{ option: '', correct: '' },
 		{ option: '', correct: '' },
 	])
+	const data = useCookie(props.cookie)
+	let [cookie, setName] = useState(data.get('refresh_token') || '')
+	// console.log("cookie",cookie);
 	const login_token = useSelector((state) => state.user.token)
 
 	useEffect(() => {
 		let question_id = router.query.question_id
-		// pageTitle = "Edit"
 
 		async function getQuestionData() {
 			const results = await axios.get(
@@ -44,7 +50,7 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
 					headers: {
 						Accept: 'application/json',
 						'Content-Type': 'application/json;charset=UTF-8',
-						Authorization: login_token,
+						Authorization: cookie,
 					},
 				}
 			)
@@ -62,13 +68,23 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
 					if (one.correct) setNumberOfOptionSelect(numberOfOptionSelect + 1)
 				}
 			})
+			setQuestionType(questionData.question_type)
+			setTimeLimitSelect(questionData.question_time)
+			setOptionType(questionData.option_type)
+			setSelectedLevelId(questionData.level.id)
+			setSelectedModuleId(questionData.module.id)
+
+			setMarks(questionData.marks)
+			setEditForm(true)
+
+			setPosts(results.data)
 		}
 
 		if (router.query.question_id) {
 			getQuestionData()
 		}
 	}, [router.query?.question_id])
-
+	console.log('line no 76')
 	const {
 		register,
 		handleSubmit,
@@ -83,10 +99,9 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
 			setRequiredOptionField(true)
 		}
 	}, [numberOfOptionSelect])
-
+	console.log('line no 91')
 	const handleSelectedOption = (index, event) => {
-		// setRequiredOptionField(false);
-
+		// console.log("93");
 		if (optionType == 'Single') {
 			inputFields.map((one, i) => {
 				if (index != i) one.correct = false
@@ -101,7 +116,7 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
 		}
 
 		let data = [...inputFields]
-
+		console.log('line no 108')
 		data[index].correct = event.target.checked
 		setInputFields(data)
 
@@ -114,7 +129,7 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
 			setNumberOfOptionSelect(1)
 		}
 	}
-
+	console.log('121')
 	const handleModuleTypeSelect = (event) => {
 		let moduleId = event.target.value
 		setSelectedModuleId(moduleId)
@@ -138,12 +153,13 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
 		let questionTypeValue = event.target.value
 		setQuestionType(questionTypeValue)
 	}
+	console.log('145', cookie)
 	const handleFormChange = async (index, event) => {
 		let data = [...inputFields]
 		data[index].option = event.target.value
 		setInputFields(data)
 		data = JSON.stringify(data)
-
+		// console.log("line no 150");
 		if (editForm) {
 			let question_id = router.query.question_id
 
@@ -152,7 +168,7 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
 					headers: {
 						Accept: 'application/json',
 						'Content-Type': 'application/json;charset=UTF-8',
-						Authorization: login_token,
+						Authorization: cookie,
 					},
 				})
 				.then((response) => {
@@ -162,17 +178,19 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
 					console.log(err)
 				})
 		} else {
+			console.log('add question cookies', cookie)
 			await axios({
 				url: `${SERVER_LINK}/questions/create`,
 				method: 'POST',
 				headers: {
 					Accept: 'application/json',
 					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: login_token,
+					Authorization: cookie,
 				},
 				data,
 			})
 				.then((response) => {
+					console.log('response in handle form')
 					router.push('/dashboard/questions')
 					// reset();
 				})
@@ -193,8 +211,9 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
 		data.splice(index, 1)
 		setInputFields(data)
 	}
-
+	console.log('203', cookie)
 	const checkWithDatabase = async (data) => {
+		console.log('205')
 		data.question_type = questionType
 		data.question = question
 		data.marks = marks
@@ -217,7 +236,7 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
 		}
 
 		data = JSON.stringify(data)
-
+		console.log('api control')
 		if (editForm) {
 			let question_id = router.query.question_id
 
@@ -226,6 +245,7 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
 					headers: {
 						Accept: 'application/json',
 						'Content-Type': 'application/json;charset=UTF-8',
+						Authorization: cookie,
 					},
 				})
 				.then((response) => {
@@ -241,12 +261,12 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
 				headers: {
 					Accept: 'application/json',
 					'Content-Type': 'application/json;charset=UTF-8',
+					Authorization: cookie,
 				},
 				data,
 			})
 				.then((response) => {
 					router.push('/dashboard/questions')
-					// reset();
 				})
 				.catch((err) => {
 					console.log(err)
@@ -273,12 +293,8 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
 						</div>
 
 						<section className='flex md:grid-cols-1 xl:grid-cols-1 gap-6'>
-							{/* <form className = "flex-auto  items-center p-8 bg-white shadow rounded-lg"> */}
 							<div className='flex-auto  items-center p-8 bg-white shadow rounded-lg'>
 								<div className='mr-6'>
-									{/* <h1 className="text-4xl font-semibold mb-2">Add Question</h1> */}
-									{/* <h2 className="text-gray-600 ml-0.5">Question </h2> */}
-
 									<div className='flex justify-center mt-8'>
 										<div className='max-w-2xl rounded-lg shadow-xl bg-gray-50'>
 											<div className='m-4'>
@@ -468,10 +484,10 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
 								hidden>
 								Select
 							</option>
-							<option value='10 Seconds'>10 Seconds</option>
-							<option value='20 Seconds'>20 Seconds</option>
-							<option value='30 Seconds'>30 Seconds</option>
-							<option value='40 Seconds'>40 Seconds</option>
+							<option value='10 seconds'>10 Seconds</option>
+							<option value='20 seconds'>20 Seconds</option>
+							<option value='30 seconds'>30 Seconds</option>
+							<option value='40 seconds'>40 Seconds</option>
 						</select>
 						<label
 							htmlFor='default'
@@ -491,10 +507,10 @@ const AddQuestion = ({ question_data, level_data, module_data }) => {
 							</option>
 							<option
 								selected
-								value='Single'>
+								value='single'>
 								Single
 							</option>
-							<option value='Multiple'>Multiple</option>
+							<option value='multiple'>Multiple</option>
 						</select>
 						<label
 							htmlFor='default'

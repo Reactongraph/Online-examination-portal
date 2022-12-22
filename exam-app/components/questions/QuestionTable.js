@@ -143,8 +143,8 @@ const QuestionTable = ({ question_data }) => {
 	const rowsDataArray = question_data.map((element) => {
 		let question = element.question
 		let question_type = element.question_type
-		let level = element.level.level
-		let modules = element.module.module
+		let level = element?.level?.level
+		let modules = element?.module?.module
 		let question_id = element.id
 		let question_status = element.status
 		return createData(
