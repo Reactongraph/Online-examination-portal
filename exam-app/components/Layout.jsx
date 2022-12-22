@@ -21,7 +21,7 @@ export default function Layout({ children }) {
 
     const { get } = useApi()
     const refreshToken = async () => {
-        if (cookie) {
+        // if (cookie) {
             await axios
                 .get(`${SERVER_LINK}/auth/refresh_token`, {
                     headers: {
@@ -69,7 +69,7 @@ export default function Layout({ children }) {
                         router.push('/login')
                     }
                 })
-        }
+        // }
     }
 
     useEffect(() => {

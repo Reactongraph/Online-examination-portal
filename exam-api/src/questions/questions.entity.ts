@@ -1,37 +1,45 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, Length } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsNotEmpty } from 'class-validator'
 
 class QuestionDTO {
-  id: Int32Array;
+  id: Int32Array
 
   @ApiProperty()
   @IsNotEmpty()
-  question: string;
+    question: string
 
   @ApiProperty()
-  question_type: string;
+    question_type: string
 
   @ApiProperty()
-  question_time: string;
+    question_time: string
 
   @ApiProperty()
-  options: object;
+    options: object
+
   @ApiProperty()
-  images: string;
+    images: string
+
   @ApiProperty()
-  createdAt: Date;
+    createdAt: Date
+
   @ApiProperty()
-  updatedAt: Date;
+    updatedAt: Date
+
   @ApiProperty()
-  status: boolean;
+    status: boolean
+
   @ApiProperty()
-  level_id: string;
+    level_id: string
+
   @ApiProperty()
-  module_id: string;
+    module_id: string
+
   @ApiProperty()
-  marks: string;
+    marks: string
+
   @ApiProperty()
-  option_type: string;
+    option_type: string
 }
 
-export { QuestionDTO };
+export { QuestionDTO }
