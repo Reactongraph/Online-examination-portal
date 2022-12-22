@@ -50,3 +50,4 @@ export async function getServerSideProps(data) {
 		return { props: { error_data } }
 	}
 }
+}
