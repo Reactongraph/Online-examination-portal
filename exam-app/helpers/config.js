@@ -1,13 +1,8 @@
-import getConfig from 'next/config';
-const { publicRuntimeConfig } = getConfig();
+import getConfig from 'next/config'
+const { publicRuntimeConfig } = getConfig()
 
 // extract - Env variables
 
-const SERVER_LINK = publicRuntimeConfig.SERVER_LINK;
+const SERVER_LINK = publicRuntimeConfig.SERVER_LINK
 
-
-
-export {
-
-    SERVER_LINK
-}
+export { SERVER_LINK }

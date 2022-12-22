@@ -96,18 +96,18 @@ model Questions {
 }
 
 model Quiz {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
   quiz_name   String
   quiz_image  String?
   description String?
-  start_date  DateTime
-  end_date    DateTime
-  buffer_time DateTime
-  module_id   String[] @db.ObjectId
+  start_date  DateTime?
+  end_date    DateTime?
+  buffer_time DateTime?
+  module_id   String[]  @db.ObjectId
   level_id    String
-  status      Boolean @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  status      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   module      Module?   @relation(fields: [module_id], references: [id])
-  level       Level    @relation(fields: [level_id], references: [id])
+  level       Level     @relation(fields: [level_id], references: [id])
 }

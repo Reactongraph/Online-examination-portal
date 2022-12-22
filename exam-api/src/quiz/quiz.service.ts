@@ -9,6 +9,8 @@ export class QuizService {
     // date comes in string and in db status column data type is boolean so we convert string to boolean
     const myBool = Boolean(createQuizDto?.status);
     try {
+      console.log("hello");
+      
       const quiz = await this.prisma.quiz.create({
         data: {
           quiz_name: createQuizDto.quiz_name,
@@ -22,6 +24,8 @@ export class QuizService {
           level_id: createQuizDto.level_id,
         },
       });
+      console.log("hello1");
+      
       return quiz;
     } catch (err) {
       return { error: err };
@@ -32,6 +36,8 @@ export class QuizService {
     const leveldata = await this.prisma.quiz.findMany({
       include: { level: true },
     });
+    console.log(leveldata);
+    
 
     const quiz = await this.prisma.quiz.aggregateRaw({
       pipeline: [

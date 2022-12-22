@@ -1,82 +1,107 @@
 const sampleData = [
   {
-    question: "What is 2+2?",
-    question_type: "MCQ",
-    option_type: "Single",
-    option0: "sum is 2",
-    correct0: false,
-    option1: "sum is 4",
-    correct1: true,
-    option2: "sum is 5",
-    correct2: false,
-    question_time: "10 seconds",
-    status: true,
-    level_name: "easy",
-    module_name: "c++",
-    marks: "1",
+    questionData: "What is 2+2?",
+    question_typeData: "MCQ",
+    option_typeData: "Single",
+    option1Data: "sum is 2",
+    correct1Data: false,
+    option2Data: "sum is 4",
+    correct2Data: true,
+    option3Data: "sum is 5",
+    correct3Data: false,
+    option4Data: "sum is 6" ,
+    correct4Data: false,
+    option5Data: "sum is 7",
+    correct5Data : false,
+    option6Data: "sum is 8",
+    correct6Data : false,
+    question_timeData: "10 seconds",
+    level_name: "6395bd17a6fb787286b7dc3a",
+    module_name: "6395bd23a6fb787286b7dc3b",
+    marksData: "1",
   },
 ];
 
 const headers = [
   {
-    label: "Question",
-    key: "question",
+    label: "question",
+    key: "questionData",
   },
   {
-    label: "Question type",
-    key: "question_type",
+    label: "question_type",
+    key: "question_typeData",
   },
   {
-    label: "Option type",
-    key: "option_type",
+    label: "option_type",
+    key: "option_typeData",
   },
   {
-    label: "Option A",
-    key: "option0",
+    label: "option1",
+    key: "option1Data",
   },
   {
-    label: "Correct A",
-    key: "correct0",
+    label: "correct1",
+    key: "correct1Data",
   },
   {
-    label: "Option B",
-    key: "option1",
+    label: "option2",
+    key: "option2Data",
   },
   {
-    label: "Correct B",
-    key: "correct1",
+    label: "correct2",
+    key: "correct2Data",
   },
   {
-    label: "Option etc...",
-    key: "option2",
+    label: "option3",
+    key: "option3Data",
   },
   {
-    label: "Correct etc...",
-    key: "option2",
+    label: "correct3",
+    key: "correct3Data",
   },
   {
-    label: "Question time",
-    key: "question_time",
+    label: "option4",
+    key: "option4Data",
   },
   {
-    label: "Question Status",
-    key: "status",
+    label: "correct4",
+    key: "correct4Data",
   },
   {
-    label: "Level",
+    label: "option5",
+    key: "option5Data",
+  },
+  {
+    label: "correct5",
+    key: "correct5Data",
+  },
+  {
+    label: "option6",
+    key: "option6Data",
+  },
+  {
+    label: "correct6",
+    key: "correct6Data",
+  },
+  {
+    label: "question_time",
+    key: "question_timeData",
+  },
+  {
+    label: "level",
     key: "level_name",
   },
   {
-    label: "Module",
+    label: "module",
     key: "module_name",
   },
   {
-    label: "Marks",
-    key: "marks",
+    label: "marks",
+    key: "marksData",
   },
 ];
 
-export const csvlink = {
+export const csvObject = {
   filename: "sampleQuestions.csv",
   headers: headers,
   data: sampleData,
