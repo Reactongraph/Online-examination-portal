@@ -40,9 +40,11 @@ const ModuleTable = ({ module_data }) => {
 			})
 			.then((result) => {
 				router.replace(router.asPath)
+				toast.success('module deleted!')
 			})
 			.catch((err) => {
 				console.log(err)
+				toast.error('something went wrong!')
 			})
 	}
 
@@ -63,9 +65,13 @@ const ModuleTable = ({ module_data }) => {
 			.then((response) => {
 				// setModal(!modal);
 				router.replace(router.asPath)
+				// toast.success("module updated!")
+				toast.success('module status updated')
 			})
 			.catch((err) => {
 				console.log(err)
+				toast.error('something went wrong with status button update!')
+
 			})
 	}
 
@@ -89,6 +95,7 @@ const ModuleTable = ({ module_data }) => {
 				let singleModuleData = response.data
 
 				setModules(singleModuleData.module)
+
 			})
 			.catch((err) => {
 				console.log(err)
@@ -113,9 +120,11 @@ const ModuleTable = ({ module_data }) => {
 				.then((response) => {
 					setModal(!modal)
 					router.replace(router.asPath)
+					toast.success("module updated!")
 				})
 				.catch((err) => {
 					console.log(err)
+					toast.error("module already exist")
 				})
 		} else {
 			toast.error("Field Can't be empty ")

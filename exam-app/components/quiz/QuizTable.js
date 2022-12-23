@@ -59,9 +59,11 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 			})
 			.then((result) => {
 				router.replace(router.asPath)
+				toast.success('Quiz deleted!')
 			})
 			.catch((err) => {
 				console.log(err)
+				toast.error("something went wrong ")
 			})
 	}
 
@@ -88,9 +90,12 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 					Authorization: login_token,
 				},
 			})
-			.then((response) => {})
+			.then((response) => {
+				toast.success("status button updated!")
+			})
 			.catch((err) => {
 				console.log(err)
+				toast.error('something went wrong with status update!')
 			})
 	}
 
@@ -173,9 +178,11 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 			.then((response) => {
 				setModal(!modal)
 				router.replace(router.asPath)
+				toast.success("Quiz updated!")
 			})
 			.catch((err) => {
 				console.log(err)
+				toast.error("Quiz already exist!")
 			})
 	}
 

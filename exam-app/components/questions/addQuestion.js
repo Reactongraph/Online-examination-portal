@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import { useCookie } from 'next-cookie'
+import { toast } from 'react-toastify'
 
 const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 	const router = useRouter()
@@ -210,9 +211,11 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 				})
 				.then((response) => {
 					router.push('/dashboard/questions')
+					toast.success("question created")
 				})
 				.catch((err) => {
 					console.log(err)
+					toast.error('question already exist!')
 				})
 		} else {
 			await axios({
@@ -227,9 +230,11 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 			})
 				.then((response) => {
 					router.push('/dashboard/questions')
+					toast.success("question created")
 				})
 				.catch((err) => {
 					console.log(err)
+					toast.error("question already exist!")
 				})
 		}
 	}

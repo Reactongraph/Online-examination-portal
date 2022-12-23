@@ -38,9 +38,12 @@ const QuestionTable = ({ question_data }) => {
 			})
 			.then((result) => {
 				router.replace(router.asPath)
+				console.log(result);
+				toast.success(result.data)
 			})
 			.catch((err) => {
 				console.log(err)
+				toast.error(result.data)
 			})
 	}
 
@@ -59,9 +62,12 @@ const QuestionTable = ({ question_data }) => {
 			})
 			.then((response) => {
 				router.replace(router.asPath)
+				console.log(response);
+				toast.success("status updated!")
 			})
 			.catch((err) => {
 				console.log(err)
+				toast.error("something went wrong while updating status!")
 			})
 	}
 
@@ -89,6 +95,7 @@ const QuestionTable = ({ question_data }) => {
 				.then((response) => {
 					setModal(!modal)
 					router.replace(router.asPath)
+
 				})
 				.catch((err) => {
 					console.log(err)

@@ -52,9 +52,11 @@ const ModuleModal = ({
 					router.replace(router.asPath)
 					setModules('')
 					setModal(!modal)
+					toast.success("module created!")
 				})
 				.catch((err) => {
 					console.log(err)
+					toast.error("module already exist!")
 				})
 		}
 

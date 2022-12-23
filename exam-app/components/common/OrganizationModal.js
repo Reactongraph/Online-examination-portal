@@ -7,6 +7,8 @@ import { SERVER_LINK } from '../../helpers/config'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
+import { toast ,} from 'react-toastify'
+// import { response } from 'express'
 
 const OrganizationModal = ({
 	modal,
@@ -59,11 +61,13 @@ const OrganizationModal = ({
 			data: OrganizationData,
 		})
 			.then((response) => {
+				toast.success(response.data.message)
 				router.replace(router.asPath)
 				setModal(!modal)
 			})
 			.catch((err) => {
 				console.log(err)
+				toast.error("Organization with this email already exist")
 			})
 	}
 

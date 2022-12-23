@@ -11,6 +11,7 @@ import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { login_token } from '../login'
 import { useSelector, useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
 
 const ParticipantTable = ({ participant_data }) => {
 	const router = useRouter()
@@ -107,9 +108,11 @@ const ParticipantTable = ({ participant_data }) => {
 				.then((response) => {
 					setModal(!modal)
 					router.replace(router.asPath)
+					toast.success("participant updated!")
 				})
 				.catch((err) => {
 					console.log(err)
+					toast.error("participant already exist!")
 				})
 		}
 

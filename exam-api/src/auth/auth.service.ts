@@ -1,18 +1,18 @@
-import { Injectable } from '@nestjs/common';
-import { auth_dto } from './auth.entity';
-import { PrismaService } from 'src/prisma.service';
-import { JwtService } from '@nestjs/jwt';
-import { jwtConstants } from './constant';
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+import { Injectable } from '@nestjs/common'
+import { auth_dto } from './auth.entity'
+import { PrismaService } from 'src/prisma.service'
+import { JwtService } from '@nestjs/jwt'
+import { jwtConstants } from './constant'
+const { PrismaClient } = require('@prisma/client')
+const prisma = new PrismaClient()
 @Injectable()
 export class AuthService {
   constructor (
     private readonly jwtService: JwtService,
-    private readonly prisma: PrismaService,
+    private readonly prisma: PrismaService
   ) { }
 
-  async changepass(Headers: auth_dto, body: auth_dto) {
+  async changepass (Headers: auth_dto, body: auth_dto) {
     const token_check = await this.prisma.reset_token.findMany({
       where: { token: `${Headers}` }
     })
@@ -53,56 +53,54 @@ export class AuthService {
       const payload = {
         id: user.id,
         username: user.name,
-        email: user.email,
-      };
-      return payload;
+        email: user.email
+      }
+      return payload
     } else {
       return 'invalid credentials'
     }
   }
 
-  async create_token(userdata: any) {
+  async create_token (userdata: any) {
     const access_token = await this.jwtService.signAsync(
       { id: userdata.id, username: userdata.name, email: userdata.email },
-      { secret: jwtConstants.access_tokensecret },
-    );
+      { secret: jwtConstants.access_tokensecret }
+    )
     const refresh_token = await this.jwtService.signAsync(
       { id: userdata.id, username: userdata.name, email: userdata.email },
-      { secret: jwtConstants.refresh_tokensecret },
-    );
-    return { access_token, refresh_token };
+      { secret: jwtConstants.refresh_tokensecret }
+    )
+    return { access_token, refresh_token }
   }
 
-  async decode_Token(tokenn: any) {
+  async decode_Token (tokenn: any) {
     try {
       if (tokenn) {
-        const decode: any = this.jwtService.decode(tokenn);
+        const decode: any = this.jwtService.decode(tokenn)
         const find_username = await this.prisma.user_auth.findUnique({
-          where: { email: decode.email },
-        });
-        const payload = { username: find_username.name, email: decode.email };
+          where: { email: decode.email }
+        })
+        const payload = { username: find_username.name, email: decode.email }
 
-        const new_token = await this.create_token(decode);
-        prisma.$connect();
+        const new_token = await this.create_token(decode)
+        prisma.$connect()
         await this.prisma.login.findUnique({
           where: {
-            refresh_token: tokenn,
-          },
-        });
+            refresh_token: tokenn
+          }
+        })
 
         await prisma.login.create({
           data: {
             token: new_token.access_token,
             refresh_token: new_token.refresh_token,
             email: decode.email,
-            token_id: decode.id,
-          },
-        });
-        return { token: new_token, payload };
+            token_id: decode.id
+          }
+        })
+        return { token: new_token, payload }
       }
-    }
-
-    catch (error) {
+    } catch (error) {
 
     }
   }

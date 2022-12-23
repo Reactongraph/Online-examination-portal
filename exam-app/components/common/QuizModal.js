@@ -13,6 +13,7 @@ import { components } from 'react-select'
 import 'react-datepicker/dist/react-datepicker.css'
 import { login_token } from '../login'
 import { useSelector, useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
 
 const QuizModal = ({
 	modal,
@@ -97,9 +98,11 @@ const QuizModal = ({
 				router.replace(router.asPath)
 				setName('')
 				setModal(!modal)
+				toast.success('Quiz created!')
 			})
 			.catch((err) => {
 				console.log(err)
+				toast.error('Quiz already exist!')
 			})
 	}
 
@@ -296,7 +299,7 @@ const QuizModal = ({
 										}}
 										onChange={handleModuleTypeSelect}
 										allowSelectAll={true}
-										// value={optionSelected}
+									// value={optionSelected}
 									/>
 								</div>
 							</div>

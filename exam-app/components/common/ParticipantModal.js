@@ -6,6 +6,7 @@ import { SERVER_LINK } from '../../helpers/config'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
 const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
 	//For Image Preview
@@ -53,9 +54,12 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
 				setPassword('')
 				setOrganizationId('')
 				setModal(!modal)
+				console.log(response);
+				toast.success("participant created!")
 			})
 			.catch((err) => {
 				console.log(err)
+				toast.error("participant already exist")
 			})
 	}
 

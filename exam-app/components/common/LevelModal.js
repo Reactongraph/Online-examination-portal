@@ -46,9 +46,11 @@ const LevelModal = ({ modal, setModal, editForm, organizationId, orgData }) => {
 					router.replace(router.asPath)
 					setLevel('')
 					setModal(!modal)
+					toast.success('level inserted')
 				})
 				.catch((err) => {
 					console.log(err)
+					toast.error('level already exist!')
 				})
 		}
 

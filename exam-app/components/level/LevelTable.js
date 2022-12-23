@@ -93,9 +93,12 @@ const LevelTable = ({ level_data }) => {
 			.then((response) => {
 				// setModal(!modal);
 				router.replace(router.asPath)
+				console.log("res", response);
+				toast.success("level updated!")
 			})
 			.catch((err) => {
 				console.log(err)
+				toast.error("level already exist!")
 			})
 	}
 	const checkWithDatabase = async (data) => {
@@ -118,9 +121,12 @@ const LevelTable = ({ level_data }) => {
 				.then((response) => {
 					setModal(!modal)
 					router.replace(router.asPath)
+					console.log("res", response);
+					toast.success("level updated!")
 				})
 				.catch((err) => {
 					console.log(err)
+					toast.error("level already exist!")
 				})
 		} else {
 			toast.error("Field Can't be empty ")
