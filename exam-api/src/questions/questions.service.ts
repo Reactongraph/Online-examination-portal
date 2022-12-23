@@ -1,29 +1,29 @@
-import { Injectable } from '@nestjs/common'
-import { PrismaService } from 'src/prisma.service'
-import { QuestionDTO } from './questions.entity'
-const csv = require('csvtojson')
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma.service';
+import { QuestionDTO } from './questions.entity';
+const csv = require('csvtojson');
 @Injectable()
 export class QuestionsService {
-  constructor (private readonly prisma: PrismaService) {}
-  async Bulk_insertion (file: any) {
+  constructor(private readonly prisma: PrismaService) {}
+  async Bulk_insertion(file: any) {
     try {
-      const csvfilepath = process.cwd() + '/' + file.path
+      const csvfilepath = process.cwd() + '/' + file.path;
 
-      const QUESTION_CSV = await csv().fromFile(csvfilepath)
+      const QUESTION_CSV = await csv().fromFile(csvfilepath);
       //  map function convert status field from string to boolean because data from csv comes in string format but in database status is boolean type format
       QUESTION_CSV.map((OneRow) => {
-        OneRow.status = JSON.parse(OneRow.status)
-      })
+        OneRow.status = JSON.parse(OneRow.status);
+      });
       const CREATE_CSV = await this.prisma.questions.createMany({
-        data: QUESTION_CSV
-      })
-      return CREATE_CSV
+        data: QUESTION_CSV,
+      });
+      return CREATE_CSV;
     } catch (err) {
-      return err
+      return err;
     }
   }
 
-  async create (createQuestionDto: QuestionDTO) {
+  async create(createQuestionDto: QuestionDTO) {
     const question = await this.prisma.questions.create({
       data: {
         question: createQuestionDto?.question,
@@ -34,65 +34,65 @@ export class QuestionsService {
         level_id: createQuestionDto?.level_id,
         module_id: createQuestionDto?.module_id,
         marks: createQuestionDto?.marks,
-        option_type: createQuestionDto?.option_type
-      }
-    })
+        option_type: createQuestionDto?.option_type,
+      },
+    });
 
-    return question
+    return question;
   }
 
-  async findAll () {
+  async findAll() {
     const FIND_QUESTIONS = await this.prisma.questions.findMany({
-      include: { level: true, module: true }
-    })
-    return FIND_QUESTIONS
+      include: { level: true, module: true },
+    });
+    return FIND_QUESTIONS;
   }
 
-  async findOne (id: string) {
+  async findOne(id: string) {
     const question = await this.prisma.questions.findUnique({
       where: {
-        id
+        id,
       },
       include: {
         level: true,
-        module: true
-      }
-    })
+        module: true,
+      },
+    });
 
     if (!question) {
-      return `user not found with this  ${id}`
+      return `user not found with this  ${id}`;
     }
-    return question
+    return question;
   }
 
-  async update (id: string, updateRestApiDto: QuestionDTO) {
-    const find = await this.prisma.questions.findUnique({ where: { id } })
+  async update(id: string, updateRestApiDto: QuestionDTO) {
+    const find = await this.prisma.questions.findUnique({ where: { id } });
     if (!find) {
-      return 'data does not exist!'
+      return 'data does not exist!';
     }
 
     const updatedOptions = await this.prisma.questions.update({
       where: {
-        id
+        id,
       },
-      data: updateRestApiDto
-    })
-    return updatedOptions
+      data: updateRestApiDto,
+    });
+    return updatedOptions;
   }
 
-  async remove (idd: string) {
+  async remove(idd: string) {
     const FIND_DEL = await this.prisma.questions.findUnique({
-      where: { id: idd }
-    })
+      where: { id: idd },
+    });
     if (!FIND_DEL) {
-      return 'data does not exist!'
+      return 'data does not exist!';
     }
     await this.prisma.questions.delete({
       where: {
-        id: idd
-      }
-    })
+        id: idd,
+      },
+    });
 
-    return 'question deleted'
+    return 'question deleted';
   }
 }

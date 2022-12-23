@@ -1,18 +1,18 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty } from '@nestjs/swagger';
 
 export class participants_dto {
   @ApiProperty()
-    name: string
+  name: string;
 
   @ApiProperty()
-    email: string
+  email: string;
 
   @ApiProperty()
-    password: string
+  password: string;
 
   @ApiProperty()
-    mobile: string
+  mobile: string;
 
   @ApiProperty()
-    id: string
+  id: string;
 }

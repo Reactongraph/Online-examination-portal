@@ -1,9 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty } from '@nestjs/swagger';
 
 export class level_dto {
   @ApiProperty()
-    level: string
+  level: string;
 
   @ApiProperty()
-    status: boolean
+  status: boolean;
 }

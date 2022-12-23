@@ -1,39 +1,39 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty } from '@nestjs/swagger';
 
 class QuizDTO {
-  id: Int32Array
+  id: Int32Array;
   @ApiProperty()
-    quiz_name: string
+  quiz_name: string;
 
   @ApiProperty()
-    quiz_image: string
+  quiz_image: string;
 
   @ApiProperty()
-    description: string
+  description: string;
 
   @ApiProperty()
-    start_date: Date
+  start_date: Date;
 
   @ApiProperty()
-    end_date: Date
+  end_date: Date;
 
   @ApiProperty()
-    buffer_time: Date
+  buffer_time: Date;
 
   @ApiProperty()
-    level_id: string
+  level_id: string;
 
   @ApiProperty()
-    module_id: string[]
+  module_id: string[];
 
   @ApiProperty()
-    createdAt: Date
+  createdAt: Date;
 
   @ApiProperty()
-    updatedAt: Date
+  updatedAt: Date;
 
   @ApiProperty()
-    status: boolean
+  status: boolean;
 }
 
-export { QuizDTO }
+export { QuizDTO };

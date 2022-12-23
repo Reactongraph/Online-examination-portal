@@ -8,7 +8,7 @@ import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import { useCookie } from 'next-cookie'
 
-const AddQuestion = ({ question_data, level_data, module_data },props) => {
+const AddQuestion = ({ question_data, level_data, module_data }, props) => {
     const router = useRouter()
 
     const [selectedImage, setSelectedImage] = useState(null)
@@ -37,20 +37,20 @@ const AddQuestion = ({ question_data, level_data, module_data },props) => {
     let [cookie, setName] = useState(data.get('refresh_token') || '')
     // console.log("cookie",cookie);
     const login_token = useSelector((state) => state.user.token)
-    
+
     useEffect(() => {
         let question_id = router.query.question_id
 
         async function getQuestionData() {
 
             const results = await axios
-            .get(`${SERVER_LINK}/questions/find/${question_id}`, {
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json;charset=UTF-8',
-                    Authorization: cookie,
-                },
-            })
+                .get(`${SERVER_LINK}/questions/find/${question_id}`, {
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json;charset=UTF-8',
+                        Authorization: cookie,
+                    },
+                })
             const questionData = results.data
             setPageTitle('Edit')
             setQuestion(questionData.question)
@@ -66,6 +66,16 @@ const AddQuestion = ({ question_data, level_data, module_data },props) => {
                         setNumberOfOptionSelect(numberOfOptionSelect + 1)
                 }
             })
+            setQuestionType(questionData.question_type);
+            setTimeLimitSelect(questionData.question_time);
+            setOptionType(questionData.option_type);
+            setSelectedLevelId(questionData.level.id);
+            setSelectedModuleId(questionData.module.id);
+
+            setMarks(questionData.marks);
+            setEditForm(true);
+
+            setPosts(results.data);
         }
         console.log("line no 70");
 
@@ -142,7 +152,7 @@ const AddQuestion = ({ question_data, level_data, module_data },props) => {
         let questionTypeValue = event.target.value
         setQuestionType(questionTypeValue)
     }
-    console.log("145",cookie);
+    console.log("145", cookie);
     const handleFormChange = async (index, event) => {
         let data = [...inputFields]
         data[index].option = event.target.value
@@ -167,7 +177,7 @@ const AddQuestion = ({ question_data, level_data, module_data },props) => {
                     console.log(err)
                 })
         } else {
-            console.log("add question cookies",cookie);
+            console.log("add question cookies", cookie);
             await axios({
                 url: `${SERVER_LINK}/questions/create`,
                 method: 'POST',
@@ -200,7 +210,7 @@ const AddQuestion = ({ question_data, level_data, module_data },props) => {
         data.splice(index, 1)
         setInputFields(data)
     }
-    console.log("203",cookie);
+    console.log("203", cookie);
     const checkWithDatabase = async (data) => {
         console.log("205");
         data.question_type = questionType
@@ -517,10 +527,10 @@ const AddQuestion = ({ question_data, level_data, module_data },props) => {
                             <option value="" hidden>
                                 Select
                             </option>
-                            <option value="10 Seconds">10 Seconds</option>
-                            <option value="20 Seconds">20 Seconds</option>
-                            <option value="30 Seconds">30 Seconds</option>
-                            <option value="40 Seconds">40 Seconds</option>
+                            <option value="10 seconds">10 Seconds</option>
+                            <option value="20 seconds">20 Seconds</option>
+                            <option value="30 seconds">30 Seconds</option>
+                            <option value="40 seconds">40 Seconds</option>
                         </select>
                         <label
                             htmlFor="default"
@@ -538,10 +548,8 @@ const AddQuestion = ({ question_data, level_data, module_data },props) => {
                             <option value="" hidden>
                                 Select
                             </option>
-                            <option selected value="Single">
-                                Single
-                            </option>
-                            <option value="Multiple">Multiple</option>
+                            <option selected value="single">Single</option>
+                            <option value="multiple">Multiple</option>
                         </select>
                         <label
                             htmlFor="default"

@@ -1,4 +1,4 @@
 export const jwtConstants = {
   access_tokensecret: 'secretaccessKey',
-  refresh_tokensecret: 'secretrefreshkey'
-}
+  refresh_tokensecret: 'secretrefreshkey',
+};

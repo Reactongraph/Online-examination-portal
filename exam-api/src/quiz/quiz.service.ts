@@ -1,13 +1,13 @@
-import { Injectable } from '@nestjs/common'
-import { QuizDTO } from './quiz.entity'
-import { PrismaService } from 'src/prisma.service'
+import { Injectable } from '@nestjs/common';
+import { QuizDTO } from './quiz.entity';
+import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class QuizService {
-  constructor (private readonly prisma: PrismaService) { }
-  async create (createQuizDto: QuizDTO) {
+  constructor(private readonly prisma: PrismaService) {}
+  async create(createQuizDto: QuizDTO) {
     // date comes in string and in db status column data type is boolean so we convert string to boolean
-    const myBool = Boolean(createQuizDto?.status)
+    const myBool = Boolean(createQuizDto?.status);
     try {
       const quiz = await this.prisma.quiz.create({
         data: {
@@ -19,20 +19,20 @@ export class QuizService {
           description: createQuizDto.description,
           status: myBool,
           module_id: createQuizDto.module_id,
-          level_id: createQuizDto.level_id
-        }
-      })
+          level_id: createQuizDto.level_id,
+        },
+      });
 
-      return quiz
+      return quiz;
     } catch (err) {
-      return { error: err }
+      return { error: err };
     }
   }
 
-  async findAll () {
+  async findAll() {
     const leveldata = await this.prisma.quiz.findMany({
-      include: { level: true }
-    })
+      include: { level: true },
+    });
 
     const quiz = await this.prisma.quiz.aggregateRaw({
       pipeline: [
@@ -41,63 +41,63 @@ export class QuizService {
             from: 'Module',
             localField: 'module_id',
             foreignField: '_id',
-            as: 'module'
-          }
-        }
-      ]
-    })
+            as: 'module',
+          },
+        },
+      ],
+    });
 
     for (const [index] of leveldata.entries()) {
-      quiz[index]['level'] = leveldata[index].level
+      quiz[index]['level'] = leveldata[index].level;
     }
-    return { quiz }
+    return { quiz };
   }
 
-  async findOne (id: string) {
+  async findOne(id: string) {
     try {
       const quiz = await this.prisma.quiz.findMany({
         where: {
-          id
+          id,
         },
-        include: { level: true, module: true }
-      })
+        include: { level: true, module: true },
+      });
 
       if (!quiz) {
-        return `quiz not found with this  ${id}`
+        return `quiz not found with this  ${id}`;
       }
-      return quiz
+      return quiz;
     } catch (err) {
-      return { error: err }
+      return { error: err };
     }
   }
 
-  async update (id: string, updateRestApiDto: QuizDTO) {
+  async update(id: string, updateRestApiDto: QuizDTO) {
     try {
       const updateQuiz = await this.prisma.quiz.update({
         where: {
-          id
+          id,
         },
-        data: updateRestApiDto
-      })
+        data: updateRestApiDto,
+      });
       if (!updateQuiz) {
-        return `quiz not found for this ${id}`
+        return `quiz not found for this ${id}`;
       }
-      return updateQuiz
+      return updateQuiz;
     } catch (err) {
-      return { error: err }
+      return { error: err };
     }
   }
 
-  async remove (id: string) {
+  async remove(id: string) {
     try {
       const deleteQuiz = await this.prisma.quiz.delete({
         where: {
-          id
-        }
-      })
-      return deleteQuiz
+          id,
+        },
+      });
+      return deleteQuiz;
     } catch (err) {
-      return err
+      return err;
     }
   }
 }
