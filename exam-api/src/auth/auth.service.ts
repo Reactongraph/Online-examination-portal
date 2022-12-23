@@ -7,47 +7,47 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 @Injectable()
 export class AuthService {
-  constructor(
+  constructor (
     private readonly jwtService: JwtService,
     private readonly prisma: PrismaService,
   ) { }
 
   async changepass(Headers: auth_dto, body: auth_dto) {
     const token_check = await this.prisma.reset_token.findMany({
-      where: { token: `${Headers}` },
-    });
+      where: { token: `${Headers}` }
+    })
 
     if (token_check.length !== 0) {
       const email_from_organization = await this.prisma.organization.findUnique(
         {
-          where: { id: `${body.decodeid}` },
-        },
-      );
+          where: { id: `${body.decodeid}` }
+        }
+      )
 
       const dataa = await this.prisma.user_auth.update({
         where: { email: `${email_from_organization?.email}` },
-        data: { password: body.password },
-      });
+        data: { password: body.password }
+      })
       if (!dataa) {
-        return 'error';
+        return 'error'
       }
 
       await this.prisma.reset_token.delete({
-        where: { user_id: token_check[0].user_id },
-      });
-      return 'password change';
+        where: { user_id: token_check[0].user_id }
+      })
+      return 'password change'
     } else {
-      return 'token expired';
+      return 'token expired'
     }
   }
 
-  async login(login: auth_dto) {
+  async login (login: auth_dto) {
     const user = await this.prisma.user_auth.findUnique({
-      where: { email: login?.email },
-    });
+      where: { email: login?.email }
+    })
 
     if (!user) {
-      return 'invalid username';
+      return 'invalid username'
     }
     if (login?.email === user.email && login?.password === user.password) {
       const payload = {
@@ -57,7 +57,7 @@ export class AuthService {
       };
       return payload;
     } else {
-      return 'invalid credentials';
+      return 'invalid credentials'
     }
   }
 

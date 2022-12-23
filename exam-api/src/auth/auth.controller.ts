@@ -21,24 +21,24 @@ export class AuthController {
     private readonly authService: AuthService,
     private readonly jwtService: JwtService,
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
   // this controller is used to change password using rest link
   @Post('change-password')
   async create(
     @Headers('xaccesstoken') Headers: auth_dto,
-    @Body() body: auth_dto,
+    @Body() body: auth_dto
   ) {
-    const change_password = await this.authService.changepass(Headers, body);
+    const change_password = await this.authService.changepass(Headers, body)
 
-    return change_password;
+    return change_password
   }
 
   // this controller is used to Login user by email id and password with token
   @Post('login')
   async login(
     @Body() login: auth_dto,
-    @Res({ passthrough: true }) response: Response,
+    @Res({ passthrough: true }) response: Response
   ) {
     const users = await this.authService.login(login);
 
@@ -77,31 +77,35 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ) {
     try {
-    const decode = await this.authService.decode_Token(Headers);
+      const decode = await this.authService.decode_Token(Headers);
 
-    const data = {
-      message: 'new token generated',
-      payload: decode.payload,
-      access_token: decode.token.access_token,
-      refresh_token: decode.token.refresh_token,
-    };
+      const data = {
+        message: 'new token generated',
+        payload: decode.payload,
+        access_token: decode.token.access_token,
+        refresh_token: decode.token.refresh_token,
+      };
 
-    response.cookie('access_token', decode.token.access_token, {
-      httpOnly: true,
-    });
-    response.cookie('refresh_token', decode.token.refresh_token, {
-      httpOnly: false,
-    });
-    response.send(data).status(HttpStatus.ACCEPTED);
+      response.cookie('access_token', decode.token.access_token, {
+        httpOnly: true,
+      });
+      response.cookie('refresh_token', decode.token.refresh_token, {
+        httpOnly: false,
+      });
+      response.send(data).status(HttpStatus.ACCEPTED);
+    }
+    catch (error) {
+      response.send('token not provided').status(HttpStatus.BAD_REQUEST)
+    }
   }
-  catch(error) {
-    response.send('token not provided').status(HttpStatus.BAD_REQUEST)
-  }
-  }
-
-  @Get('logout')
+  @Post('logout')
   async logout(@Req() req, @Res({ passthrough: true }) response: Response) {
-    response.clearCookie('access_token');
-    response.send('user logout');
+    response.clearCookie('access_token')
+    response.clearCookie('refresh_token')
+    response.send('user logout')
+
   }
 }
+
+
+

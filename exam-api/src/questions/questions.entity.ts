@@ -2,8 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 
 class QuestionDTO {
-  id: Int32Array;
-
   @ApiProperty()
   @IsNotEmpty()
   question: string;

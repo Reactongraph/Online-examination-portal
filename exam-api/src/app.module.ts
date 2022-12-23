@@ -31,15 +31,15 @@ import { QuizService } from './quiz/quiz.service';
     QuizModule,
     QuestionsModule,
     MulterModule.register({
-      dest: './images',
-    }),
+      dest: './images'
+    })
   ],
   controllers: [AppController, QuestionsController, QuizController],
   providers: [AppService, QuestionsService, PrismaService, QuizService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(Oraganization).forRoutes('organization');
+    // consumer.apply(Oraganization).forRoutes('organization');
     consumer.apply(Participants).forRoutes('participants');
     consumer.apply(Modules).forRoutes('module');
     consumer.apply(Levels).forRoutes('level');

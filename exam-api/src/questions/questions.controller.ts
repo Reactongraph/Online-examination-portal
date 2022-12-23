@@ -9,35 +9,38 @@ import {
   UseInterceptors,
   UploadedFile,
   Res,
-  StreamableFile,
-} from '@nestjs/common';
-import { QuestionsService } from './questions.service';
-import { QuestionDTO } from './questions.entity';
-import { ApiTags } from '@nestjs/swagger';
-import { FileInterceptor } from '@nestjs/platform-express';
+  StreamableFile
+} from '@nestjs/common'
+import { QuestionsService } from './questions.service'
+import { QuestionDTO } from './questions.entity'
+import { ApiTags } from '@nestjs/swagger'
+import { FileInterceptor } from '@nestjs/platform-express'
 
 @ApiTags('Questions')
 @Controller('questions')
 export class QuestionsController {
-  constructor(private readonly questionservice: QuestionsService) {}
+  constructor (private readonly questionservice: QuestionsService) {}
   @Post('uploads')
   @UseInterceptors(FileInterceptor('File'))
-  async uploadFile(
+  async uploadFile (
     @UploadedFile() file: Express.Multer.File,
-    @Res() res,
+      @Res() res,
+      @Body() createquestion: QuestionDTO
   ): Promise<StreamableFile> {
-    const data = await this.questionservice.Bulk_insertion(file);
+    console.log('data from client', createquestion)
+
+    const data = await this.questionservice.Bulk_insertion(createquestion)
     if (!data) {
-      return res.end('data is not inserted');
+      return res.end('data is not inserted')
     }
-    return res.end('data inserted');
+    return res.end('data inserted')
   }
 
   @Post('create')
-  async create_question(@Body() createquestion: QuestionDTO) {
-    const data = this.questionservice.create(createquestion);
+  async create_question (@Body() createquestion: QuestionDTO) {
+    const data = this.questionservice.create(createquestion)
 
-    return await data;
+    return await data
   }
 
   @Get('find')

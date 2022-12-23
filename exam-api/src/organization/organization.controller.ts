@@ -6,12 +6,15 @@ import {
   Patch,
   Param,
   Delete,
+  Res,
 } from '@nestjs/common';
 import { RestApiService } from './organization.service';
 import { organization_dto } from './post';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma.service';
 import { ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
+import { HttpStatus } from '@nestjs/common/enums';
 
 @ApiTags('Organization')
 @Controller('organization')
@@ -20,16 +23,20 @@ export class RestApiController {
     private readonly restApiService: RestApiService,
     private readonly jwtService: JwtService,
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
   // this controller is used to create Oraganization data
   @Post()
-  async create(@Body() createRestApiDto: organization_dto) {
+  async create(@Body() createRestApiDto: organization_dto, @Res({ passthrough: true }) response: Response,) {
     const user = await this.restApiService.create(createRestApiDto);
+    console.log("org controller", user);
+
     if (user.id == null) {
-      return {
-        message: 'user already exist',
-      };
+      // return {
+      //   message: 'user already exist',
+      // };
+
+      response.status(HttpStatus.BAD_REQUEST).json([]);
     } else {
       const jwt = await this.jwtService.signAsync({ id: user.id });
       await this.prisma.reset_token.create({
@@ -39,7 +46,7 @@ export class RestApiController {
       });
       await this.restApiService.reset_link(jwt, user.id, user.email);
       return {
-        message: 'email-send',
+        message: 'Organinzation created',
       };
     }
   }
@@ -61,8 +68,16 @@ export class RestApiController {
   async update(
     @Param('id') id: string,
     @Body() updateRestApiDto: organization_dto,
+    @Res({ passthrough: true }) response: Response,
+    // @Res() response: Response
   ) {
-    return await this.restApiService.update(id, updateRestApiDto);
+    const update = await this.restApiService.update(id, updateRestApiDto);
+    console.log(update);
+    if (update === null) {
+      response.status(HttpStatus.BAD_REQUEST).json([]);
+    }
+
+    return update
   }
 
   // this controller is used to delete Oraganization data
