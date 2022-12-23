@@ -157,7 +157,7 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 	const handleFormChange = async (index, event) => {
 		let data = [...inputFields]
 		data[index].option = event.target.value
-		setInputFields(data)		
+		setInputFields(data)
 	}
 
 	const addFields = () => {
@@ -467,10 +467,10 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 							</option>
 							<option
 								selected
-								value='single'>
+								value='Single'>
 								Single
 							</option>
-							<option value='multiple'>Multiple</option>
+							<option value='Multiple'>Multiple</option>
 						</select>
 						<label
 							htmlFor='default'
