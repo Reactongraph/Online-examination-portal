@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import { CSVLink } from 'react-csv'
-import { csvObject } from './SampleCsvData'
 import { CsvReader } from './CsvReader'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 import { ToastContainer, toast } from 'react-toastify'
@@ -44,13 +42,15 @@ const PageComponentTitle = ({
 			</div>
 
 			<div className='flex  flex-wrap items-start justify-end -mb-3'>
-				<CSVLink {...csvObject}>
+				<a
+					href='/Images/sampleQuestions.csv'
+					download>
 					<button
 						type='button'
 						className='inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out'>
 						Download sample (.csv)
 					</button>
-				</CSVLink>
+				</a>
 
 				<input
 					type='file'
