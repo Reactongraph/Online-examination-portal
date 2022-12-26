@@ -17,7 +17,7 @@ const LogOutButton = () => {
 				{},
 				{ withCredentials: true }
 			)
-			toast.success('User Logout Successfully!')
+			toast.success('Logout Successfully!')
 			setTimeout(() => {
 				router.push('/login')
 			}, 1000)

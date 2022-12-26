@@ -74,7 +74,7 @@ const AddQuestion = (
 			setMarks(questionData.marks)
 			setEditForm(true)
 
-			// setPosts(results.data)/
+			// setPosts(results.data)
 		}
 
 		if (router.query.question_id) {

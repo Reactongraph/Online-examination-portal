@@ -8,7 +8,7 @@ import PureModal from 'react-pure-modal'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { injectStyle } from 'react-toastify/dist/inject-style'
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 import DatePicker from 'react-datepicker'
 import { default as ReactSelect } from 'react-select'
 // import Select from 'react-select'
@@ -60,6 +60,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 			})
 			.then(() => {
 				router.replace(router.asPath)
+				toast.success('Quiz deleted!')
 			})
 			.catch((err) => {
 				return err
@@ -174,6 +175,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 			.then(() => {
 				setModal(!modal)
 				router.replace(router.asPath)
+				toast.success('Quiz updated!')
 			})
 			.catch((err) => {
 				return err

@@ -44,7 +44,7 @@ const OrganizationModal = ({ modal, setModal }) => {
 		// for new data registration
 
 		await axios({
-			url: `${SERVER_LINK}/rest-api`,
+			url: `${SERVER_LINK}/organization`,
 			method: 'POST',
 			headers: {
 				Accept: 'application/json',

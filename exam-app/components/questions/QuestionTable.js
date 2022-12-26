@@ -5,7 +5,7 @@ import { SERVER_LINK } from '../../helpers/config'
 import { useRouter } from 'next/router'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { injectStyle } from 'react-toastify/dist/inject-style'
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 
 // CALL IT ONCE IN YOUR APP
@@ -25,8 +25,9 @@ const QuestionTable = ({ question_data }) => {
 					Authorization: login_token,
 				},
 			})
-			.then(() => {
+			.then((result) => {
 				router.replace(router.asPath)
+				toast.success(result.data)
 			})
 			.catch((err) => {
 				return err
@@ -48,6 +49,7 @@ const QuestionTable = ({ question_data }) => {
 			})
 			.then(() => {
 				router.replace(router.asPath)
+				toast.success('status updated!')
 			})
 			.catch((err) => {
 				return err

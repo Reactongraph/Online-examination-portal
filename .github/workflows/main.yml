@@ -26,17 +26,13 @@ jobs:
         with:
           node-version: 16
           
-      - name: Yarn CLI
-        uses: CultureHQ/actions-yarn@v1.0.1
-
       # ESLint and Prettier must be in `package.json`
       - name: Install Node.js dependencies
-        uses: CultureHQ/actions-yarn@v1.0.1
+        uses: CultureHQ/actions-yarn@master
         with: 
-          cmd: ci
+          args: "--cwd exam-app install --immutable --immutable-cache --check-cache" 
 
-      - name: Run ESlint
-        uses: CultureHQ/actions-yarn@v1.0.1
+      - name: Run ESlint and Prettier
+        uses: CultureHQ/actions-yarn@master
         with:
-          cmd: style:all
-          
+          args: "--cwd exam-app style:all"

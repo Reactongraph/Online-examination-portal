@@ -39,6 +39,7 @@ const ModuleTable = ({ module_data }) => {
 			})
 			.then(() => {
 				router.replace(router.asPath)
+				toast.success('module deleted!')
 			})
 			.catch((err) => {
 				return err
@@ -62,6 +63,8 @@ const ModuleTable = ({ module_data }) => {
 			.then(() => {
 				// setModal(!modal);
 				router.replace(router.asPath)
+				// toast.success("module updated!")
+				toast.success('module status updated')
 			})
 			.catch((err) => {
 				return err
@@ -112,6 +115,7 @@ const ModuleTable = ({ module_data }) => {
 				.then(() => {
 					setModal(!modal)
 					router.replace(router.asPath)
+					toast.success('module updated!')
 				})
 				.catch((err) => {
 					return err

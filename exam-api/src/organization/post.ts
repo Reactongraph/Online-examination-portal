@@ -1,43 +1,42 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger'
 class organization_dto {
-
-  id: Int32Array;
-
-  @ApiProperty({})
-  email: string;
+  id: Int32Array
 
   @ApiProperty({})
-  name: string;
+    email: string
 
   @ApiProperty({})
-  quota: string;
+    name: string
 
   @ApiProperty({})
-  status: boolean;
+    quota: string
 
   @ApiProperty({})
-  mobile: string;
+    status: boolean
 
   @ApiProperty({})
-  address: string;
+    mobile: string
 
   @ApiProperty({})
-  city: string;
+    address: string
 
   @ApiProperty({})
-  state: string;
+    city: string
 
   @ApiProperty({})
-  pincode: string;
+    state: string
 
   @ApiProperty({})
-  createdAt: Date;
+    pincode: string
 
   @ApiProperty({})
-  updatedAt: Date;
+    createdAt: Date
 
   @ApiProperty({})
-  password: string;
+    updatedAt: Date
+
+  @ApiProperty({})
+    password: string
 }
 
-export { organization_dto };
+export { organization_dto }

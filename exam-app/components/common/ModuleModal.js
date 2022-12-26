@@ -46,6 +46,7 @@ const ModuleModal = ({ modal, setModal }) => {
 					router.replace(router.asPath)
 					setModules('')
 					setModal(!modal)
+					toast.success('module created!')
 				})
 				.catch((err) => {
 					return err

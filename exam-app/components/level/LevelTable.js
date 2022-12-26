@@ -92,6 +92,7 @@ const LevelTable = ({ level_data }) => {
 			.then(() => {
 				// setModal(!modal);
 				router.replace(router.asPath)
+				toast.success('level updated!')
 			})
 			.catch((err) => {
 				return err
@@ -117,6 +118,7 @@ const LevelTable = ({ level_data }) => {
 				.then(() => {
 					setModal(!modal)
 					router.replace(router.asPath)
+					toast.success('level updated!')
 				})
 				.catch((err) => {
 					return err

@@ -59,9 +59,7 @@ var AuthController = /** @class */ (function () {
             var change_password;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        console.log(Headers);
-                        console.log(body);
+                    case 0:;
                         return [4 /*yield*/, this.authService.changepass(Headers, body)];
                     case 1:
                         change_password = _a.sent();
@@ -77,11 +75,9 @@ var AuthController = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        console.log(login);
                         return [4 /*yield*/, this.authService.login(login)];
                     case 1:
                         users = _a.sent();
-                        console.log('in controller', users);
                         if (!(users === 'invalid credentials' || users === 'invalid username')) return [3 /*break*/, 2];
                         response.status(common_1.HttpStatus.BAD_REQUEST)
                             .send('Login failed');
@@ -89,7 +85,6 @@ var AuthController = /** @class */ (function () {
                     case 2: return [4 /*yield*/, this.jwtService.signAsync({ id: users.id })];
                     case 3:
                         jwt = _a.sent();
-                        console.log('jwt', jwt, login === null || login === void 0 ? void 0 : login.email);
                         return [4 /*yield*/, this.prisma.login.create({
                                 data: {
                                     token: jwt,
@@ -98,7 +93,6 @@ var AuthController = /** @class */ (function () {
                             })];
                     case 4:
                         login_date = _a.sent();
-                        console.log(login_date);
                         response.cookie('jwt', jwt, { httpOnly: true });
                         response.send('login success ' + 'token: ' + JSON.stringify(jwt))
                             .status(common_1.HttpStatus.ACCEPTED);

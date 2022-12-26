@@ -7,6 +7,7 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import DatePicker from 'react-datepicker'
 import { default as ReactSelect } from 'react-select'
+import { toast } from 'react-toastify'
 // import Select from 'react-select'
 import { components } from 'react-select'
 // import { Multiselect } from "multiselect-react-dropdown";
@@ -99,6 +100,7 @@ const QuizModal = ({
 				router.replace(router.asPath)
 				setName('')
 				setModal(!modal)
+				toast.success('Quiz created!')
 			})
 			.catch((err) => {
 				return err

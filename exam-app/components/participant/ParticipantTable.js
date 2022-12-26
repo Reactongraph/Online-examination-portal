@@ -11,6 +11,7 @@ import PureModal from 'react-pure-modal'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 // import { login_token } from '../login'
 import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
 const ParticipantTable = ({ participant_data }) => {
 	const router = useRouter()
@@ -107,6 +108,7 @@ const ParticipantTable = ({ participant_data }) => {
 				.then(() => {
 					setModal(!modal)
 					router.replace(router.asPath)
+					toast.success('participant updated!')
 				})
 				.catch((err) => {
 					return err

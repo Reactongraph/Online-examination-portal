@@ -6,6 +6,7 @@ import { SERVER_LINK } from '../../helpers/config'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
 const ParticipantModal = ({ modal, setModal }) => {
 	//For Image Preview
@@ -54,6 +55,7 @@ const ParticipantModal = ({ modal, setModal }) => {
 				setPassword('')
 				setOrganizationId('')
 				setModal(!modal)
+				toast.success('participant created!')
 			})
 			.catch((err) => {
 				return err

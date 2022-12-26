@@ -46,6 +46,7 @@ const LevelModal = ({ modal, setModal }) => {
 					router.replace(router.asPath)
 					setLevel('')
 					setModal(!modal)
+					toast.success('level inserted')
 				})
 				.catch((err) => {
 					return err
