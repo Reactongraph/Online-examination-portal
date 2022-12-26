@@ -81,7 +81,7 @@ model Login {
 
 model Questions {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  question      String   @unique
+  question      String 
   question_type String?
   option_type   String?
   options       Json?

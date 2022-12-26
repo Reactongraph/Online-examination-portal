@@ -18,11 +18,6 @@ export class QuestionsService {
 
   async create (createQuestionDto: QuestionDTO) {
     try {
-      const question_find = await this.prisma.questions.findUnique({ where: { question: createQuestionDto?.question } })
-
-      if (question_find) {
-        return null
-      }
 
       const question = await this.prisma.questions.create({
         data: {
@@ -78,7 +73,7 @@ export class QuestionsService {
 
   async update (id: string, updateRestApiDto: QuestionDTO) {
     try {
-      const find = await this.prisma.questions.findUnique({ where: { question: updateRestApiDto?.question } })
+      const find = await this.prisma.questions.findUnique({ where: { id: id } })
       if (find) {
         return null
       }
