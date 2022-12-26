@@ -1,5 +1,5 @@
 import React from 'react'
-import { BiCopyright } from 'react-icons/bi'
+// import { BiCopyright } from 'react-icons/bi'
 
 const Footer = () => {
 	return <></>

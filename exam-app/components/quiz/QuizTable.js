@@ -1,6 +1,6 @@
 import Table from './Table'
 import React, { useState } from 'react'
-import Pagination from 'react-js-pagination'
+// import Pagination from 'react-js-pagination'
 import axios from 'axios'
 import { SERVER_LINK } from '../../helpers/config'
 import { useRouter } from 'next/router'
@@ -8,13 +8,13 @@ import PureModal from 'react-pure-modal'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { injectStyle } from 'react-toastify/dist/inject-style'
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import DatePicker from 'react-datepicker'
 import { default as ReactSelect } from 'react-select'
-import Select from 'react-select'
+// import Select from 'react-select'
 import { components } from 'react-select'
 import moment from 'moment'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
@@ -22,14 +22,16 @@ if (typeof window !== 'undefined') {
 
 const QuizTable = ({ quiz_data, module_data, level_data }) => {
 	const router = useRouter()
-	const [editForm, setEditForm] = useState(false)
+	// const [editForm, setEditForm] = useState(false)
 	const [modal, setModal] = useState(false)
 	const [quizId, setQuizId] = useState('')
 	// const [orgData, setOrgData] = useState();
 	const [buttonText, setButtonText] = useState('Add')
 	const [name, setName] = useState('')
-	const [levelData, setLevelData] = useState(level_data)
-	const [moduleData, setModuleData] = useState(module_data)
+	const levelData = level_data
+	const moduleData = module_data
+	// const [levelData, setLevelData] = useState(level_data)
+	// const [moduleData, setModuleData] = useState(module_data)
 	const [selectedLevelId, setSelectedLevelId] = useState('')
 	const [description, setDescription] = useState('')
 	const [selectedBufferDate, setSelectedBufferDate] = useState(null)
@@ -37,11 +39,10 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 	const [selectedEndDate, setSelectedEndDate] = useState(null)
 	const [optionModuleSelected, setOptionModuleSelected] = useState()
 	const [selectedModules, setSelectedModules] = useState()
-	const [modules, setModules] = useState('')
+	// const [modules, setModules] = useState('')
 	const login_token = useSelector((state) => state.user.token)
-	console.log(login_token, 'login_token')
 
-	const { register, handleSubmit } = useForm()
+	const { handleSubmit } = useForm()
 
 	const handleLevelTypeSelect = (event) => {
 		let levelId = event.target.value
@@ -57,11 +58,11 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 					Authorization: login_token,
 				},
 			})
-			.then((result) => {
+			.then(() => {
 				router.replace(router.asPath)
 			})
 			.catch((err) => {
-				console.log(err)
+				return err
 			})
 	}
 
@@ -88,15 +89,15 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 					Authorization: login_token,
 				},
 			})
-			.then((response) => {})
+			.then(() => {})
 			.catch((err) => {
-				console.log(err)
+				return err
 			})
 	}
 
 	const handleEditClick = async (quiz_id) => {
 		setButtonText('Update')
-		setEditForm(true)
+		// setEditForm(true)
 		setQuizId(quiz_id)
 		setModal(true)
 		let seletedModuleDataArray = []
@@ -119,7 +120,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 				let startDate = moment(singleQuizData.start_date).toDate()
 				let endDate = moment(singleQuizData.end_date).toDate()
 
-				moduleData.map((oneModule, index) => {
+				moduleData.map((oneModule) => {
 					singleQuizData.module_id.map((oneID) => {
 						if (oneID == oneModule.id) {
 							seletedModuleDataArray.push(oneModule)
@@ -132,13 +133,13 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 				setSelectedStartDate(startDate)
 			})
 			.catch((err) => {
-				console.log(err)
+				return err
 			})
 	}
 
 	const Option = (props) => {
 		// props.isSelected = true
-		let setChecked = props
+		// let setChecked = props
 		return (
 			<div>
 				<components.Option {...props}>
@@ -161,7 +162,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 		data.description = description
 		data.module_id = selectedModules
 
-		let QuizData = JSON.stringify(data)
+		// let QuizData = JSON.stringify(data)
 		await axios
 			.patch(`${SERVER_LINK}/quiz/${quizId}`, data, {
 				headers: {
@@ -170,12 +171,12 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 					Authorization: login_token,
 				},
 			})
-			.then((response) => {
+			.then(() => {
 				setModal(!modal)
 				router.replace(router.asPath)
 			})
 			.catch((err) => {
-				console.log(err)
+				return err
 			})
 	}
 
@@ -325,11 +326,11 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 	// data by using which table data is creating using api call
 	const data = rowsDataArray
 
-	const [activePage, setActivePage] = useState(15)
+	// const [activePage, setActivePage] = useState(15)
 
-	const handlePageChange = (pageNumber) => {
-		setActivePage(pageNumber)
-	}
+	// const handlePageChange = (pageNumber) => {
+	// 	setActivePage(pageNumber)
+	// }
 
 	return (
 		<>

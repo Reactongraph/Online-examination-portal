@@ -1,6 +1,5 @@
 import Table from './Table'
 import React, { useState } from 'react'
-import Pagination from 'react-js-pagination'
 import axios from 'axios'
 import { SERVER_LINK } from '../../helpers/config'
 import { useRouter } from 'next/router'
@@ -9,8 +8,8 @@ import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 import { ToastContainer, toast } from 'react-toastify'
-import { login_token } from '../login'
-import { useSelector, useDispatch } from 'react-redux'
+// import { login_token } from '../login'
+import { useSelector } from 'react-redux'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
@@ -19,14 +18,14 @@ if (typeof window !== 'undefined') {
 
 const ModuleTable = ({ module_data }) => {
 	const router = useRouter()
-	const [editForm, setEditForm] = useState(false)
+	// const [editForm, setEditForm] = useState(false)
 	const [modal, setModal] = useState(false)
 	const [moduleId, setModuleId] = useState('')
-	const [orgData, setOrgData] = useState()
+	// const [orgData, setOrgData] = useState()
 	const [buttonText, setButtonText] = useState('Add')
 	const [modules, setModules] = useState('')
 
-	const { register, handleSubmit } = useForm()
+	const { handleSubmit } = useForm()
 	const login_token = useSelector((state) => state.user.token)
 
 	const handleRemoveClick = (module_id) => {
@@ -38,11 +37,11 @@ const ModuleTable = ({ module_data }) => {
 					Authorization: login_token,
 				},
 			})
-			.then((result) => {
+			.then(() => {
 				router.replace(router.asPath)
 			})
 			.catch((err) => {
-				console.log(err)
+				return err
 			})
 	}
 
@@ -60,19 +59,19 @@ const ModuleTable = ({ module_data }) => {
 					Authorization: login_token,
 				},
 			})
-			.then((response) => {
+			.then(() => {
 				// setModal(!modal);
 				router.replace(router.asPath)
 			})
 			.catch((err) => {
-				console.log(err)
+				return err
 			})
 	}
 
 	const handleEditClick = (module_id) => {
 		// setOpen(true);
 		setButtonText('Update')
-		setEditForm(true)
+		// setEditForm(true)
 		setModuleId(module_id)
 		setModal(true)
 
@@ -91,7 +90,7 @@ const ModuleTable = ({ module_data }) => {
 				setModules(singleModuleData.module)
 			})
 			.catch((err) => {
-				console.log(err)
+				return err
 			})
 	}
 
@@ -110,12 +109,12 @@ const ModuleTable = ({ module_data }) => {
 						Authorization: login_token,
 					},
 				})
-				.then((response) => {
+				.then(() => {
 					setModal(!modal)
 					router.replace(router.asPath)
 				})
 				.catch((err) => {
-					console.log(err)
+					return err
 				})
 		} else {
 			toast.error("Field Can't be empty ")
@@ -199,10 +198,10 @@ const ModuleTable = ({ module_data }) => {
 	// data by using which table data is creating using api call
 	const data = rowsDataArray
 
-	const [activePage, setActivePage] = useState(15)
-	const handlePageChange = (pageNumber) => {
-		setActivePage(pageNumber)
-	}
+	// const [activePage, setActivePage] = useState(15)
+	// const handlePageChange = (pageNumber) => {
+	// 	setActivePage(pageNumber)
+	// }
 
 	return (
 		<>

@@ -1,8 +1,5 @@
 import { MdLockOutline } from 'react-icons/md'
-
-import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
 import axios from 'axios'
 
 import { useRouter } from 'next/router'
@@ -16,17 +13,6 @@ import { ToastContainer, toast } from 'react-toastify'
 if (typeof window !== 'undefined') {
 	injectStyle()
 }
-
-const schema = yup.object({
-	password: yup
-		.string()
-		.required('Please enter your password.')
-		.min(8, 'Your password is too short.'),
-	confirmPassword: yup
-		.string()
-		.required('Please retype your password.')
-		.oneOf([yup.ref('password')], 'Your passwords do not match.'),
-})
 
 export default function PasswordReset() {
 	const router = useRouter()
@@ -56,7 +42,7 @@ export default function PasswordReset() {
 				withCredentials: true,
 				data: apiData,
 			})
-			.then((response) => {
+			.then(() => {
 				toast.success('Password Changed successfully 🤩')
 				setTimeout(() => {
 					toast.info('Try Login with new Credential 🙂')
@@ -64,21 +50,12 @@ export default function PasswordReset() {
 				router.push('/login')
 			})
 			.catch((err) => {
-				toast.error(err.response.data)
-				return console.log(err)
+				return toast.error(err.response.data)
 			})
 	}
 
-	const paperStyle = {
-		padding: 20,
-		height: '70vh',
-		width: 280,
-		margin: '20px auto',
-	}
-	const btnStyle = { margin: '15px 0' }
-
 	return (
-		<main className='flex flex-col items-center justif-center w-full flex-1 px-20 text-center mt-20'>
+		<main className='flex flex-col items-center justify-center w-full flex-1 px-20 text-center mt-20'>
 			<div className='bg-white rounded-2xl shadow-2xl flex w-2/3 max-w-4xl'>
 				<div className='w-3/5 p-5'>
 					<div className='text-left font-bold '>
@@ -128,6 +105,7 @@ export default function PasswordReset() {
 					<p className='mb-2'>Fill up details To change your password.</p>
 				</div>
 			</div>
+			<ToastContainer />
 		</main>
 	)
 }

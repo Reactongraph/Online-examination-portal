@@ -24,38 +24,38 @@ export default function Quiz({ quiz_data, module_data, level_data }) {
 // function for ssr data
 
 export async function getServerSideProps(data) {
-  // Fetch data from external API
-  const res = await axios.get(`${SERVER_LINK}/quiz/find`, {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json;charset=UTF-8",
-      Authorization: data.req.cookies.access_token,
-    },
-  });
-  const levels = await axios.get(`${SERVER_LINK}/level/find`, {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json;charset=UTF-8",
-      Authorization: data.req.cookies.access_token,
-    },
-  });
-  const modules = await axios.get(`${SERVER_LINK}/module/find`, {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json;charset=UTF-8",
-      Authorization: data.req.cookies.access_token,
-    },
-  });
+	// Fetch data from external API
+	const res = await axios.get(`${SERVER_LINK}/quiz/find`, {
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json;charset=UTF-8',
+			Authorization: data.req.cookies.access_token,
+		},
+	})
+	const levels = await axios.get(`${SERVER_LINK}/level/find`, {
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json;charset=UTF-8',
+			Authorization: data.req.cookies.access_token,
+		},
+	})
+	const modules = await axios.get(`${SERVER_LINK}/module/find`, {
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json;charset=UTF-8',
+			Authorization: data.req.cookies.access_token,
+		},
+	})
 
-  let quiz_data = res.data.quiz;
-  let level_data = levels.data;
-  let module_data = modules.data;
-  module_data = module_data.map((object) => {
-    object.value = object.module;
-    object.label = object.module;
-    return object;
-  });
+	let quiz_data = res.data.quiz
+	let level_data = levels.data
+	let module_data = modules.data
+	module_data = module_data.map((object) => {
+		object.value = object.module
+		object.label = object.module
+		return object
+	})
 
-  // Pass data to the page via props
-  return { props: { quiz_data, level_data, module_data } };
+	// Pass data to the page via props
+	return { props: { quiz_data, level_data, module_data } }
 }

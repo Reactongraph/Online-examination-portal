@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { FaRegEnvelope } from 'react-icons/fa'
-import { useState } from 'react'
-import { object, string, array, number } from 'yup'
+import { object, string } from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SERVER_LINK } from '../helpers/config'
 import axios from 'axios'
@@ -21,24 +20,16 @@ const schema = object({
 })
 
 const ForgotPassword = () => {
-	const [emailError, setEmailError] = useState('')
-	const [invalidEmail, setInvalidEmail] = useState(false)
-	const [LoadingApiResponse, setLoadingApiResponse] = useState(false)
+	// const [emailError, setEmailError] = useState('')
+	// const [invalidEmail, setInvalidEmail] = useState(false)
+	// const [LoadingApiResponse, setLoadingApiResponse] = useState(false)
 
-	const {
-		register,
-		handleSubmit,
-		formState: { errors, touchedFields },
-	} = useForm({
+	const { register, handleSubmit } = useForm({
 		resolver: yupResolver(schema),
 	})
 
-	const handleApiResponse = () => {
-		setLoadingApiResponse(true)
-	}
-
 	const SendPasswordReset = async (data) => {
-		handleApiResponse()
+		// setLoadingApiResponse(true)
 		data = JSON.stringify(data)
 		await axios
 			.request({
@@ -51,16 +42,15 @@ const ForgotPassword = () => {
 				data,
 			})
 			.then((response) => {
-				setLoadingApiResponse(false)
+				// setLoadingApiResponse(false)
 				if (response.status != 200) {
-					setInvalidEmail(true)
-					setEmailError('Email is not registered !')
-
-					setTimeout(() => {
-						setEmailError('')
-					}, 2000)
+					// setInvalidEmail(true)
+					// setEmailError('Email is not registered !')
+					// setTimeout(() => {
+					// 	setEmailError('')
+					// }, 2000)
 				} else if (response.status == 200) {
-					setInvalidEmail(false)
+					// setInvalidEmail(false)
 					toast.success('Email sent Successfully! 📧')
 					setTimeout(() => {
 						toast.success('Please check your mailbox 📬')
@@ -68,17 +58,9 @@ const ForgotPassword = () => {
 				}
 			})
 			.catch((err) => {
-				return console.log(err)
+				return err
 			})
 	}
-
-	const paperStyle = {
-		padding: 20,
-		height: '70vh',
-		width: 280,
-		margin: '20px auto',
-	}
-	const btnStyle = { margin: '15px 0' }
 
 	return (
 		<>

@@ -1,6 +1,5 @@
 import Table from './Table'
 import React, { useState } from 'react'
-import Pagination from 'react-js-pagination'
 import axios from 'axios'
 import { SERVER_LINK } from '../../helpers/config'
 import { useRouter } from 'next/router'
@@ -10,7 +9,7 @@ import { useForm } from 'react-hook-form'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 import { ToastContainer, toast } from 'react-toastify'
 // import { login_token } from '../login'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
@@ -19,10 +18,10 @@ if (typeof window !== 'undefined') {
 
 const LevelTable = ({ level_data }) => {
 	const router = useRouter()
-	const [editForm, setEditForm] = useState(false)
+	// const [editForm, setEditForm] = useState(false)
 	const [modal, setModal] = useState(false)
 	const [levelId, setLevelId] = useState('')
-	const [orgData, setOrgData] = useState()
+	// const [orgData, setOrgData] = useState()
 	const [buttonText, setButtonText] = useState('Add')
 	const [level, setLevel] = useState('')
 
@@ -40,11 +39,11 @@ const LevelTable = ({ level_data }) => {
 						Authorization: login_token,
 					},
 				})
-				.then((result) => {
+				.then(() => {
 					router.replace(router.asPath)
 				})
 				.catch((err) => {
-					console.log(err)
+					return err
 				})
 		}
 	}
@@ -52,7 +51,7 @@ const LevelTable = ({ level_data }) => {
 	const handleEditClick = async (level_id) => {
 		// setOpen(true);
 		setButtonText('Update')
-		setEditForm(true)
+		// setEditForm(true)
 		setLevelId(level_id)
 		setModal(true)
 
@@ -66,13 +65,13 @@ const LevelTable = ({ level_data }) => {
 				},
 			})
 			.then((response) => {
-				console.log(response)
+				// console.log(response)
 				let singleLevelData = response.data
 
 				setLevel(singleLevelData.level)
 			})
 			.catch((err) => {
-				console.log(err)
+				return err
 			})
 	}
 
@@ -90,12 +89,12 @@ const LevelTable = ({ level_data }) => {
 					Authorization: login_token,
 				},
 			})
-			.then((response) => {
+			.then(() => {
 				// setModal(!modal);
 				router.replace(router.asPath)
 			})
 			.catch((err) => {
-				console.log(err)
+				return err
 			})
 	}
 	const checkWithDatabase = async (data) => {
@@ -115,12 +114,12 @@ const LevelTable = ({ level_data }) => {
 						Authorization: login_token,
 					},
 				})
-				.then((response) => {
+				.then(() => {
 					setModal(!modal)
 					router.replace(router.asPath)
 				})
 				.catch((err) => {
-					console.log(err)
+					return err
 				})
 		} else {
 			toast.error("Field Can't be empty ")
@@ -205,10 +204,10 @@ const LevelTable = ({ level_data }) => {
 	// data by using which table data is creating using api call
 	const data = rowsDataArray
 
-	const [activePage, setActivePage] = useState(15)
-	const handlePageChange = (pageNumber) => {
-		setActivePage(pageNumber)
-	}
+	// const [activePage, setActivePage] = useState(15)
+	// const handlePageChange = (pageNumber) => {
+	// 	setActivePage(pageNumber)
+	// }
 
 	return (
 		<>

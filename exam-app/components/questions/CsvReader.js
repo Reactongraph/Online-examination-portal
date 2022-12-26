@@ -1,18 +1,14 @@
-import React, { useState } from 'react'
 import { SERVER_LINK } from '../../helpers/config'
 import axios from 'axios'
-import { useCookie } from 'next-cookie'
 import { toast } from 'react-toastify'
 
-const CsvReader = (cdata, props) => {
-	const data = useCookie(cdata.cookie)
-	let [cookie, setName] = useState(data.get('refresh_token') || '')
-
+const CsvReader = (cdata) => {
 	let csvFile = cdata
 	const reader = new FileReader()
 
 	const processCSV = async (str, delim = ',') => {
 		const headers = str.slice(0, str.indexOf('\n')).split(delim)
+
 		const rows = str.slice(str.indexOf('\n') + 1).split('\n')
 
 		const newArray = rows.map((row) => {
@@ -69,16 +65,17 @@ const CsvReader = (cdata, props) => {
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json;charset=UTF-8',
-				Authorization: cookie,
+				// Authorization: cookie,
 			},
 			data: newCSVDataArray,
 		})
-			.then((response) => {
+			.then(() => {
 				toast.success('CSV uploaded successfully!')
 			})
 			.catch((err) => {
 				toast.error('Problem while uploading CSV!')
-				console.log(err)
+
+				return err
 			})
 	}
 

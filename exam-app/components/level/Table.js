@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import { useEffect } from 'react'
 import {
 	useTable,
 	useFilters,
@@ -13,6 +14,7 @@ import {
 	ChevronDoubleRightIcon,
 } from '@heroicons/react/solid'
 import { Button, PageButton } from '../shared/Button'
+// import { classNames } from '../shared/Utils'
 import { SortIcon, SortUpIcon, SortDownIcon } from '../shared/Icons'
 
 // Define a default UI for filtering
@@ -45,7 +47,7 @@ function Table({ columns, data }) {
 
 		state,
 		preGlobalFilteredRows,
-		setGlobalFilter,
+		// setGlobalFilter,
 	} = useTable(
 		{
 			columns,
@@ -125,14 +127,16 @@ function Table({ columns, data }) {
 								{...getTableProps()}
 								className='min-w-full divide-y divide-gray-200'>
 								<thead className='bg-gray-50'>
-									{headerGroups.map((headerGroup) => (
+									{headerGroups.map((headerGroup, i) => (
 										<tr
+											key={`column-${i}`}
 											{...headerGroup.getHeaderGroupProps()}
 											className='bg-slate-200 '>
-											{headerGroup.headers.map((column) => (
+											{headerGroup.headers.map((column, i) => (
 												// Add the sorting props to control sorting. For this example
 												// we can add them into the header props
 												<th
+													key={`head-${i}`}
 													scope='col'
 													className='group px-6 py-3 text-center font-bold text-black-700 uppercase tracking-wider'
 													{...column.getHeaderProps(
@@ -166,11 +170,13 @@ function Table({ columns, data }) {
 										prepareRow(row)
 										return (
 											<tr
+												key={`row-${i}`}
 												{...row.getRowProps()}
 												className='bg-slate-50'>
-												{row.cells.map((cell) => {
+												{row.cells.map((cell, i) => {
 													return (
 														<td
+															key={`cell-${i}`}
 															{...cell.getCellProps()}
 															className='px-6 py-4  uppercase whitespace-nowrap'
 															role='cell'>
