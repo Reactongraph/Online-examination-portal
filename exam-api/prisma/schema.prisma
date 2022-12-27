@@ -72,10 +72,11 @@ model Module {
 
 model Login {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  token         String?  @unique
-  refresh_token String   @unique
+  token         String? @unique 
+  refresh_token String? @unique   
   email         String
   token_id      String
+  role          String?
   createdAt     DateTime @default(now())
 }
 

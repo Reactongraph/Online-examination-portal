@@ -13,7 +13,7 @@ import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
-const ParticipantTable = ({ participant_data }) => {
+const ParticipantTable = ({ participant_data, organization_data }) => {
 	const router = useRouter()
 	const [editForm, setEditForm] = useState(false)
 	const [modal, setModal] = useState(false)
@@ -27,6 +27,7 @@ const ParticipantTable = ({ participant_data }) => {
 
 	const [password, setPassword] = useState('')
 	const [organizationId, setOrganizationId] = useState('')
+	const [showPassword, setShowPassword] = useState(false)
 
 	const { handleSubmit } = useForm()
 	const login_token = useSelector((state) => state.user.token)
@@ -47,7 +48,10 @@ const ParticipantTable = ({ participant_data }) => {
 				return err
 			})
 	}
-
+	const handleOrganizationIdTypeSelect = (event) => {
+		let organizationId = event.target.value
+		setOrganizationId(organizationId)
+	}
 	const handleEditClick = async (participantId) => {
 		// setOpen(true);
 		setModal(true)
@@ -278,15 +282,23 @@ const ParticipantTable = ({ participant_data }) => {
 										htmlFor='grid-password'>
 										Password
 									</label>
-									<input
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										id='password'
-										type='password'
-										placeholder='******************'
-										required='required'
-										value={password}
-										onChange={(e) => setPassword(e.target.value)}
-									/>
+									<div class='relative'>
+										<input
+											className='appearance-none block w-full p-4  bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+											id='password'
+											type={!showPassword ? 'password' : 'text'}
+											placeholder='******************'
+											required='required'
+											value={password}
+											onChange={(e) => setPassword(e.target.value)}
+										/>
+										<button
+											type='button'
+											onClick={() => setShowPassword(!showPassword)}
+											class='text-white absolute right-2.5 bottom-2.5 bg-blue-400 hover:bg-blue-500   font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-300 dark:hover:bg-blue-400 '>
+											{!showPassword ? 'Show' : 'Hide'}
+										</button>
+									</div>
 									<p className='text-gray-600 text-xs italic'>
 										Make it as long and as crazy as you'd like
 									</p>
@@ -312,19 +324,32 @@ const ParticipantTable = ({ participant_data }) => {
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
 									<label
-										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										htmlFor='grid-last-name'>
-										Organization Id
+										htmlFor='default'
+										className='block mb-2 text-sm font-medium text-gray-900 '>
+										Organization Name
 									</label>
-									<input
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										id='org_id'
-										type='text'
-										placeholder='e.g. 1000'
-										required='required'
+									<select
+										id='default'
 										value={organizationId}
-										onChange={(e) => setOrganizationId(e.target.value)}
-									/>
+										onChange={(e) => {
+											handleOrganizationIdTypeSelect(e)
+										}}
+										required
+										className='bg-gray-50 border w-40 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500'>
+										<option
+											value=''
+											hidden>
+											Select
+										</option>
+										{organization_data &&
+											organization_data.map((response) => (
+												<option
+													key={response.id}
+													value={response.id}>
+													{response.name}
+												</option>
+											))}
+									</select>
 								</div>
 							</div>
 							<button

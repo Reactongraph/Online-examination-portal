@@ -18,6 +18,8 @@ const userReducer = (state = initialState, action) => {
 				isLogin: true,
 				token: action.token,
 				payload: action.payload,
+				role: action.role,
+				Org_id: action.Org_id,
 			}
 
 		case userActionType.SET_LOGOUT:
@@ -32,6 +34,8 @@ const userReducer = (state = initialState, action) => {
 				isLogin: true,
 				token: action.token,
 				payload: action.payload,
+				role: action.role,
+				Org_id: action.Org_id,
 			}
 
 		default:

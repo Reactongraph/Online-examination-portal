@@ -1,22 +1,16 @@
 import { MdLockOutline } from 'react-icons/md'
-
-// import Link from 'next/link'
 import { FaRegEnvelope } from 'react-icons/fa'
-
 import { object, string } from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-// import { useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { SERVER_LINK } from '../helpers/config'
-
-// import { useApi } from '../hooks'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 
 import { ToastContainer, toast } from 'react-toastify'
-// import { setCookie } from 'cookies-next'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
@@ -35,21 +29,22 @@ const schema = object({
 const Login = () => {
 	const router = useRouter()
 	const dispatch = useDispatch()
-	// const login_token = useSelector((state) => state.user.token)
 
 	// const [invalid, setInvalid] = useState(false)
 	// const [errorMessage, setErrorMessage] = useState('')
 
-	// const { get, post } = useApi()
-
 	const { register, handleSubmit } = useForm({
 		resolver: yupResolver(schema),
 	})
+	const [optionValue, setOptionValue] = useState(' ')
 
+	const handleSelect = (e) => {
+		setOptionValue(e.target.value)
+	}
 	const checkWithDatabase = async (data) => {
-		// console.log("hi");
+		data.role = optionValue
 		data = JSON.stringify(data)
-		// console.log(data);
+
 		await axios
 			.request({
 				method: 'post',
@@ -59,32 +54,43 @@ const Login = () => {
 				},
 				withCredentials: true,
 				data,
+				optionValue,
 			})
 
 			.then((response) => {
 				if (response.status === 201) {
 					const login_token = response.data.access_token
 					const payload = response.data.payload
+					const userRole = response.data.role
+					const Org_id = response.data.organization_id
+
 					toast.success('Login Successfully !')
-					// console.log("token",response.data);
+
 					// setCookie("user", JSON.stringify(response.data), {
 					//   path: "/",
 					//   maxAge: 3600, // Expires after 1hr
 					//   sameSite: true,
 					// })
-					dispatch({ type: 'SET_LOGIN', token: login_token, payload: payload })
+
+					dispatch({
+						type: 'SET_LOGIN',
+						token: login_token,
+						payload: payload,
+						role: userRole,
+						Org_id: Org_id,
+					})
 					// router.push("/dashboard");
 					router.push({
 						pathname: '/dashboard',
-						// query: { token: login_token },
+						// query: { role : optionValue },
 					})
 				}
-				//  else {
-				// 	// setInvalid(true)
-				// 	// setErrorMessage('Invalid Credentials !')
-				// 	// setTimeout(() => {
-				// 	// 	setErrorMessage('')
-				// 	// }, 2000)
+				// else {
+				// 	setInvalid(true)
+				// 	setErrorMessage('Invalid Credentials !')
+				// 	setTimeout(() => {
+				// 		setErrorMessage('')
+				// 	}, 2000)
 				// }
 			})
 			.catch((err) => {
@@ -94,25 +100,17 @@ const Login = () => {
 				//   setErrorMessage("");
 				// }, 2000);
 				const { data } = err.response
-				toast.error(data)
+				toast.error(data.error)
 				// console.log(err.response.data);
 
 				// return console.log(err);
 			})
 	}
 
-	// const paperStyle = {
-	//   padding: 20,
-	//   height: "70vh",
-	//   width: 280,
-	//   margin: "20px auto",
-	// };
-	// const btnStyle = { margin: "15px 0" };
-
 	return (
 		<>
 			<div className=''>
-				<main className='flex flex-col  items-center justif-center w-full flex-1 px-20 text-center mt-20'>
+				<main className='flex flex-col  items-center justify-center w-full flex-1 px-20 text-center mt-20'>
 					<div className=' rounded-2xl shadow-2xl flex w-2/3 max-w-4xl'>
 						<div className='w-3/5 p-5'>
 							<div className='text-left font-bold '>
@@ -134,6 +132,7 @@ const Login = () => {
 									<FaRegEnvelope className='text-gray-400 m-2' />
 									<input
 										type='email'
+										required
 										{...register('email')}
 										name='email'
 										placeholder='Email'
@@ -145,6 +144,7 @@ const Login = () => {
 									<MdLockOutline className='text-gray-400 m-2' />
 									<input
 										type='password'
+										required
 										{...register('password')}
 										name='password'
 										placeholder='Password'
@@ -162,6 +162,27 @@ const Login = () => {
 										className='border-2 border-blue rounded-full px-12 py-2 inline-block font-semibold bg-blue-500 hover:bg-blue-700  ml-20 md-15 mr-25 '>
 										SignIn
 									</button>
+								</div>
+								<div className='flex items-center px-8 bg-dark '>
+									<label
+										htmlFor='default'
+										className='mr-2 text-sm font-medium text-gray-900 '>
+										Login As
+									</label>
+									<select
+										id='default'
+										// value={timeLimitSelect}
+										onChange={handleSelect}
+										required
+										className='bg-gray-50 border  w-40 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500'>
+										<option
+											value=''
+											hidden>
+											Role
+										</option>
+										<option value='SuperAdminUser'>Super-admin User</option>
+										<option value='OrganizationUser'>Organizations User</option>
+									</select>
 								</div>
 							</form>
 						</div>

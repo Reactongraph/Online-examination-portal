@@ -1,29 +1,20 @@
 import { useEffect } from 'react'
-// import { useApi } from '../hooks'
+
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
-// import { useCookies } from 'react-cookie';
 import { SERVER_LINK } from '../helpers/config'
 import axios from 'axios'
 import { useCookie } from 'next-cookie'
-// import { useState } from 'react'
-
-// import Footer from './Footer';
 
 // To check for the refresh token on every page
 export default function Layout({ children }) {
 	const data = useCookie(children.cookie)
-	// let [cookie, setName] = useState(data.get('refresh_token') || '')
+
 	let cookie = data.get('refresh_token') || ''
 	const router = useRouter()
 	const dispatch = useDispatch()
 
-	// const { token } = router.query
-
-	// const { get } = useApi()
 	const refreshToken = async () => {
-		// if (cookie) {
-
 		try {
 			const response = await axios.get(`${SERVER_LINK}/auth/refresh_token`, {
 				headers: {
@@ -33,11 +24,10 @@ export default function Layout({ children }) {
 				},
 			})
 
-			// console.log('this is  the resposne 0')
-			// console.log(response)
-
 			const newToken = response.data.access_token
 			const payload = response.data.payload
+			const userRole = response.data.role
+			const Org_id = response.data.organization_id
 			if (newToken) {
 				if (
 					router.asPath == '/login' ||
@@ -49,6 +39,8 @@ export default function Layout({ children }) {
 						type: 'UPDATE_ACCESS_TOKEN',
 						token: newToken,
 						payload: payload,
+						role: userRole,
+						Org_id: Org_id,
 					})
 
 					router.push(`/dashboard`)
@@ -57,6 +49,8 @@ export default function Layout({ children }) {
 						type: 'UPDATE_ACCESS_TOKEN',
 						token: newToken,
 						payload: payload,
+						role: userRole,
+						Org_id: Org_id,
 					})
 					router.push(`${router.asPath}`)
 				}
@@ -75,7 +69,7 @@ export default function Layout({ children }) {
 
 	useEffect(() => {
 		refreshToken()
-	})
+	}, [])
 
 	return <>{children}</>
 }

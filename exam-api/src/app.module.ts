@@ -22,28 +22,28 @@ import { QuizController } from './quiz/quiz.controller'
 import { QuizService } from './quiz/quiz.service'
 
 @Module({
-  imports: [
-    RestApiModule,
-    ParticipantsModule,
-    LevelModule,
-    ModuleModule,
-    AuthModule,
-    QuizModule,
-    QuestionsModule,
-    MulterModule.register({
-      dest: './images'
-    })
-  ],
-  controllers: [AppController, QuestionsController],
-  providers: [AppService, QuestionsService, PrismaService]
+	imports: [
+		RestApiModule,
+		ParticipantsModule,
+		LevelModule,
+		ModuleModule,
+		AuthModule,
+		QuizModule,
+		QuestionsModule,
+		MulterModule.register({
+			dest: './images',
+		}),
+	],
+	controllers: [AppController, QuestionsController],
+	providers: [AppService, QuestionsService, PrismaService],
 })
 export class AppModule implements NestModule {
-  configure (consumer: MiddlewareConsumer) {
-    consumer.apply(Oraganization).forRoutes('organization')
-    consumer.apply(Participants).forRoutes('participants')
-    consumer.apply(Modules).forRoutes('module')
-    consumer.apply(Levels).forRoutes('level')
-    consumer.apply(Questions).forRoutes('questions')
-    consumer.apply(Quiz).forRoutes('quiz')
-  }
+	configure(consumer: MiddlewareConsumer) {
+		consumer.apply(Oraganization).forRoutes('organization')
+		consumer.apply(Participants).forRoutes('participants')
+		consumer.apply(Modules).forRoutes('module')
+		consumer.apply(Levels).forRoutes('level')
+		consumer.apply(Questions).forRoutes('questions')
+		consumer.apply(Quiz).forRoutes('quiz')
+	}
 }
