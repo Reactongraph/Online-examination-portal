@@ -35,4 +35,4 @@ jobs:
       - name: Run ESlint and Prettier
         uses: CultureHQ/actions-yarn@master
         with:
-          args: "--cwd exam-app style:all --ignore-engines"
+          args: "--cwd exam-app run style:all --ignore-engines"
