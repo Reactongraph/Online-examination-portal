@@ -33,9 +33,6 @@ export default function Layout({ children }) {
 				},
 			})
 
-			// console.log('this is  the resposne 0')
-			// console.log(response)
-
 			const newToken = response.data.access_token
 			const payload = response.data.payload
 			if (newToken) {

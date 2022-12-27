@@ -1,6 +1,5 @@
 import { MdLockOutline } from 'react-icons/md'
 
-// import Link from 'next/link'
 import { FaRegEnvelope } from 'react-icons/fa'
 
 import { object, string } from 'yup'
@@ -8,15 +7,12 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-// import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { SERVER_LINK } from '../helpers/config'
 
-// import { useApi } from '../hooks'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 
 import { ToastContainer, toast } from 'react-toastify'
-// import { setCookie } from 'cookies-next'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
@@ -47,9 +43,8 @@ const Login = () => {
 	})
 
 	const checkWithDatabase = async (data) => {
-		// console.log("hi");
 		data = JSON.stringify(data)
-		// console.log(data);
+
 		await axios
 			.request({
 				method: 'post',
@@ -100,14 +95,6 @@ const Login = () => {
 				// return console.log(err);
 			})
 	}
-
-	// const paperStyle = {
-	//   padding: 20,
-	//   height: "70vh",
-	//   width: 280,
-	//   margin: "20px auto",
-	// };
-	// const btnStyle = { margin: "15px 0" };
 
 	return (
 		<>
