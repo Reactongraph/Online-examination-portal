@@ -14,5 +14,5 @@ jobs:
         with:
           node-version: '16.x'
       - run: npm install -g yarn
-      - run: yarn run ci
-      - run: npm run style:all
+      - run: yarn run ci --cwd exam-app
+      - run: npm run style:all --cwd exam-app
