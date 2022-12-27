@@ -30,9 +30,9 @@ jobs:
       - name: Install Node.js dependencies
         uses: CultureHQ/actions-yarn@master
         with: 
-          args: "--cwd exam-app install --immutable --immutable-cache --check-cache" 
+          args: "--cwd exam-app install --immutable --immutable-cache --check-cache --ignore-engines" 
 
       - name: Run ESlint and Prettier
         uses: CultureHQ/actions-yarn@master
         with:
-          args: "--cwd exam-app style:all"
+          args: "--cwd exam-app style:all --ignore-engines"
