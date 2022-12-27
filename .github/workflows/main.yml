@@ -26,7 +26,8 @@ jobs:
         with:
           node-version: 16
           
-      - shell: bash
+      - name: Print NODE ENV
+        shell: bash
         run: echo "$NODE_ENV"
         
           
