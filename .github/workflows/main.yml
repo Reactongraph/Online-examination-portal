@@ -14,5 +14,5 @@ jobs:
         with:
           node-version: '16.x'
       - run: npm install -g yarn
-      - run: yarn --cwd exam-app run ci
+      - run: yarn --cwd exam-app install --immutable --immutable-cache --check-cache 
       - run: yarn --cwd exam-app run style:all
