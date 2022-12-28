@@ -40,7 +40,7 @@ const UserMenu = () => {
 			</div>
 			<span className='h-12 w-12 ml-2 sm:ml-3 mr-2 bg-gray-100 rounded-full overflow-hidden'>
 				<img
-					src='https://randomuser.me/api/portraits/women/68.jpg'
+					src='/Images/userProfileAvtar.png'
 					alt='user profile photo'
 					className='h-full w-full object-cover'
 				/>

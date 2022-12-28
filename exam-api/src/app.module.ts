@@ -39,7 +39,7 @@ import { QuizService } from './quiz/quiz.service'
 })
 export class AppModule implements NestModule {
 	configure(consumer: MiddlewareConsumer) {
-		consumer.apply(Oraganization).forRoutes('organization')
+		// consumer.apply(Oraganization).forRoutes('organization')
 		consumer.apply(Participants).forRoutes('participants')
 		consumer.apply(Modules).forRoutes('module')
 		consumer.apply(Levels).forRoutes('level')

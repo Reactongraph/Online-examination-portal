@@ -7,6 +7,7 @@ import { SERVER_LINK } from '../../helpers/config'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
 const OrganizationModal = ({ modal, setModal }) => {
 	const router = useRouter()
@@ -58,7 +59,8 @@ const OrganizationModal = ({ modal, setModal }) => {
 				setModal(!modal)
 			})
 			.catch((err) => {
-				return err
+				let message = err.response.data.message
+				toast.error(message)
 			})
 	}
 
