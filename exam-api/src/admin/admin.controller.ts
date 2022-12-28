@@ -29,6 +29,7 @@ export class AdminController
     }
     @Get(':id')
 	async findOne(@Param('id') id: string) {
+		
 		const find_one = await this.adminService.findOne(id)
         
 		return find_one

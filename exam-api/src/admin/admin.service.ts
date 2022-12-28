@@ -12,11 +12,13 @@ export class AdminService{
     }
     async findOne(id: string) {
 		try {
+			
 			const user = await this.prisma.user_auth.findUnique({
 				where: {
-					id,
+					id:id,
 				},
 			})
+			
 			if (!user) {
 				return `data not found with this  ${id}`
 			}

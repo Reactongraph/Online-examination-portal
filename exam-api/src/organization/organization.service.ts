@@ -32,13 +32,13 @@ export class RestApiService {
 						pincode: createRestApiDto.pincode,
 					},
 				})
-				await this.prisma.user_auth.create({
-					data: {
-						name: createRestApiDto?.name,
-						email: createRestApiDto?.email,
-						password: createRestApiDto?.password,
-					},
-				})
+				// await this.prisma.user_auth.create({
+				// 	data: {
+				// 		name: createRestApiDto?.name,
+				// 		email: createRestApiDto?.email,
+				// 		password: createRestApiDto?.password,
+				// 	},
+				// })
 				return user
 			}
 		} catch (err) {
