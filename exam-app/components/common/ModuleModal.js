@@ -15,10 +15,9 @@ if (typeof window !== 'undefined') {
 }
 
 const ModuleModal = ({ modal, setModal }) => {
-	// const [selectedImage, setSelectedImage] = useState()
 	const router = useRouter()
 	const [modules, setModules] = useState('')
-	// const [buttonText, setButtonText] = useState('Add')
+
 	const buttonText = 'Add'
 	const { handleSubmit } = useForm()
 	const login_token = useSelector((state) => state.user.token)
@@ -48,8 +47,8 @@ const ModuleModal = ({ modal, setModal }) => {
 					setModal(!modal)
 					toast.success('module created!')
 				})
-				.catch((err) => {
-					return err
+				.catch(() => {
+					toast.error('Invalid Request')
 				})
 		}
 

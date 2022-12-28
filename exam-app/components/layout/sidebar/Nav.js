@@ -15,7 +15,6 @@ import NavItem from './NavItem'
 
 const Nav = ({ sidebarOutsideClick }) => {
 	const [sidebarStatus, setSidebarStatus] = useState(false)
-	// const [subMenuToggleStatus, setSubMenuToggleStatus] = useState(false)
 
 	const sidebarClose = () => {
 		setSidebarStatus(false)
@@ -25,32 +24,12 @@ const Nav = ({ sidebarOutsideClick }) => {
 		setSidebarStatus(true)
 	}
 
-	// const subMenuToggle = () => {
-	// 	setSubMenuToggleStatus(!subMenuToggleStatus)
-	// }
-
-	//if menu has chile menu then  use seperate array
-	// const childMenu = [
-	// 	{
-	// 		subMenuTitle: 'child One',
-	// 		linkHref: '/',
-	// 	},
-	// 	{
-	// 		subMenuTitle: 'child Two',
-	// 		linkHref: '/',
-	// 	},
-	// 	{
-	// 		subMenuTitle: 'child Three',
-	// 		linkHref: '/',
-	// 	},
-	// ]
-
 	useEffect(() => {
 		if (sidebarOutsideClick) {
 			setSidebarStatus(false)
 		}
 	}, [sidebarOutsideClick])
-	//console.log("sidebar Nav", sidebarOutsideClick)
+
 	return (
 		<>
 			<nav className='flex   flex-col mx-4 my-6 space-y-4'>
@@ -119,21 +98,6 @@ const Nav = ({ sidebarOutsideClick }) => {
 					subMenuArray={null}>
 					<MdQuiz size={30} />
 				</NavItem>
-
-				{/* this menu has child Menu     */}
-				{/*                                     
-        
-        kept for reference  */}
-
-				{/* <NavItem
-          hrefLink="/dashboard/examination"
-          sidebarStatus={sidebarStatus}
-          menuTitle="Examination"
-          subMenu={true}
-          subMenuArray={childMenu}
-        >
-          <CgNotes size={30} />
-        </NavItem> */}
 			</nav>
 		</>
 	)

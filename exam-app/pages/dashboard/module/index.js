@@ -21,6 +21,7 @@ export default function modules({ module_data }) {
 
 export async function getServerSideProps(data) {
 	// Fetch data from external API
+
 	const res = await axios.get(`${SERVER_LINK}/module/find`, {
 		headers: {
 			Accept: 'application/json',

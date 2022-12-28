@@ -31,12 +31,6 @@ const schema = object({
 const Login = () => {
 	const router = useRouter()
 	const dispatch = useDispatch()
-	// const login_token = useSelector((state) => state.user.token)
-
-	// const [invalid, setInvalid] = useState(false)
-	// const [errorMessage, setErrorMessage] = useState('')
-
-	// const { get, post } = useApi()
 
 	const { register, handleSubmit } = useForm({
 		resolver: yupResolver(schema),
@@ -61,38 +55,17 @@ const Login = () => {
 					const login_token = response.data.access_token
 					const payload = response.data.payload
 					toast.success('Login Successfully !')
-					// console.log("token",response.data);
-					// setCookie("user", JSON.stringify(response.data), {
-					//   path: "/",
-					//   maxAge: 3600, // Expires after 1hr
-					//   sameSite: true,
-					// })
+
 					dispatch({ type: 'SET_LOGIN', token: login_token, payload: payload })
-					// router.push("/dashboard");
+
 					router.push({
 						pathname: '/dashboard',
-						// query: { token: login_token },
 					})
 				}
-				//  else {
-				// 	// setInvalid(true)
-				// 	// setErrorMessage('Invalid Credentials !')
-				// 	// setTimeout(() => {
-				// 	// 	setErrorMessage('')
-				// 	// }, 2000)
-				// }
 			})
 			.catch((err) => {
-				// setInvalid(true);
-				// setErrorMessage("Invalid Credentials !");
-				// setTimeout(() => {
-				//   setErrorMessage("");
-				// }, 2000);
 				const { data } = err.response
 				toast.error(data)
-				// console.log(err.response.data);
-
-				// return console.log(err);
 			})
 	}
 
@@ -114,7 +87,7 @@ const Login = () => {
 							<p className='text-gray-1000 mr-20'>use your login details</p>
 							<div className='flex flex-col items-center'></div>
 							<form
-								class='w-full max-w-lg'
+								className='w-full max-w-lg'
 								onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 								<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
 									{' '}

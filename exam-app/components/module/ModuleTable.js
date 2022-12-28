@@ -8,7 +8,7 @@ import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 import { ToastContainer, toast } from 'react-toastify'
-// import { login_token } from '../login'
+
 import { useSelector } from 'react-redux'
 
 // CALL IT ONCE IN YOUR APP
@@ -18,10 +18,9 @@ if (typeof window !== 'undefined') {
 
 const ModuleTable = ({ module_data }) => {
 	const router = useRouter()
-	// const [editForm, setEditForm] = useState(false)
 	const [modal, setModal] = useState(false)
 	const [moduleId, setModuleId] = useState('')
-	// const [orgData, setOrgData] = useState()
+
 	const [buttonText, setButtonText] = useState('Add')
 	const [modules, setModules] = useState('')
 
@@ -41,8 +40,8 @@ const ModuleTable = ({ module_data }) => {
 				router.replace(router.asPath)
 				toast.success('module deleted!')
 			})
-			.catch((err) => {
-				return err
+			.catch(() => {
+				toast.error('Invalid Request')
 			})
 	}
 
@@ -61,20 +60,18 @@ const ModuleTable = ({ module_data }) => {
 				},
 			})
 			.then(() => {
-				// setModal(!modal);
 				router.replace(router.asPath)
-				// toast.success("module updated!")
+
 				toast.success('module status updated')
 			})
-			.catch((err) => {
-				return err
+			.catch(() => {
+				toast.error('Invalid Request')
 			})
 	}
 
 	const handleEditClick = (module_id) => {
-		// setOpen(true);
 		setButtonText('Update')
-		// setEditForm(true)
+
 		setModuleId(module_id)
 		setModal(true)
 
@@ -92,13 +89,12 @@ const ModuleTable = ({ module_data }) => {
 
 				setModules(singleModuleData.module)
 			})
-			.catch((err) => {
-				return err
+			.catch(() => {
+				toast.error('Invalid Request')
 			})
 	}
 
 	const checkWithDatabase = async (data) => {
-		// data.status = true;
 		data.module = modules
 		let moduleData = JSON.stringify(data)
 
@@ -117,8 +113,8 @@ const ModuleTable = ({ module_data }) => {
 					router.replace(router.asPath)
 					toast.success('module updated!')
 				})
-				.catch((err) => {
-					return err
+				.catch(() => {
+					toast.error('Invalid Request')
 				})
 		} else {
 			toast.error("Field Can't be empty ")
@@ -202,11 +198,6 @@ const ModuleTable = ({ module_data }) => {
 	// data by using which table data is creating using api call
 	const data = rowsDataArray
 
-	// const [activePage, setActivePage] = useState(15)
-	// const handlePageChange = (pageNumber) => {
-	// 	setActivePage(pageNumber)
-	// }
-
 	return (
 		<>
 			<Table
@@ -244,9 +235,7 @@ const ModuleTable = ({ module_data }) => {
 										id='grid-level'
 										type='text'
 										value={modules}
-										// {...register("modules", {
 										onChange={(e) => setModules(e.target.value)}
-										// })}
 										placeholder='e.g. C++, JAVA '
 									/>
 								</div>

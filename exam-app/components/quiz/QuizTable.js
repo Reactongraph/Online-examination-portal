@@ -22,16 +22,15 @@ if (typeof window !== 'undefined') {
 
 const QuizTable = ({ quiz_data, module_data, level_data }) => {
 	const router = useRouter()
-	// const [editForm, setEditForm] = useState(false)
+
 	const [modal, setModal] = useState(false)
 	const [quizId, setQuizId] = useState('')
-	// const [orgData, setOrgData] = useState();
+
 	const [buttonText, setButtonText] = useState('Add')
 	const [name, setName] = useState('')
 	const levelData = level_data
 	const moduleData = module_data
-	// const [levelData, setLevelData] = useState(level_data)
-	// const [moduleData, setModuleData] = useState(module_data)
+
 	const [selectedLevelId, setSelectedLevelId] = useState('')
 	const [description, setDescription] = useState('')
 	const [selectedBufferDate, setSelectedBufferDate] = useState(null)
@@ -39,7 +38,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 	const [selectedEndDate, setSelectedEndDate] = useState(null)
 	const [optionModuleSelected, setOptionModuleSelected] = useState()
 	const [selectedModules, setSelectedModules] = useState()
-	// const [modules, setModules] = useState('')
+
 	const login_token = useSelector((state) => state.user.token)
 
 	const { handleSubmit } = useForm()
@@ -62,8 +61,8 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 				router.replace(router.asPath)
 				toast.success('Quiz deleted!')
 			})
-			.catch((err) => {
-				return err
+			.catch(() => {
+				toast.error('invalid request')
 			})
 	}
 
@@ -91,8 +90,8 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 				},
 			})
 			.then(() => {})
-			.catch((err) => {
-				return err
+			.catch(() => {
+				toast.error('invalid request')
 			})
 	}
 
@@ -133,14 +132,12 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 				setSelectedEndDate(endDate)
 				setSelectedStartDate(startDate)
 			})
-			.catch((err) => {
-				return err
+			.catch(() => {
+				toast.error('invalid request')
 			})
 	}
 
 	const Option = (props) => {
-		// props.isSelected = true
-		// let setChecked = props
 		return (
 			<div>
 				<components.Option {...props}>
@@ -177,8 +174,8 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 				router.replace(router.asPath)
 				toast.success('Quiz updated!')
 			})
-			.catch((err) => {
-				return err
+			.catch(() => {
+				toast.error('invalid request')
 			})
 	}
 
@@ -271,7 +268,6 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 			key: 'level',
 			width: 400,
 			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-			//   rowClassName: "bg-black-ripon",
 		},
 		{
 			Header: 'Modules',
@@ -281,7 +277,6 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 			key: 'modules',
 			width: 400,
 			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-			//   rowClassName: "bg-black-ripon",
 		},
 
 		{
@@ -292,7 +287,6 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 			key: 'start_date',
 			width: 400,
 			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-			//   rowClassName: "bg-black-ripon",
 		},
 		{
 			Header: 'End Date',
@@ -302,7 +296,6 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 			key: 'end_date',
 			width: 400,
 			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-			//   rowClassName: "bg-black-ripon",
 		},
 
 		{
@@ -327,12 +320,6 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 
 	// data by using which table data is creating using api call
 	const data = rowsDataArray
-
-	// const [activePage, setActivePage] = useState(15)
-
-	// const handlePageChange = (pageNumber) => {
-	// 	setActivePage(pageNumber)
-	// }
 
 	return (
 		<>
@@ -390,7 +377,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 										Choose Quiz image
 									</label>
 
-									<div class='flex items-center justify-center'>
+									<div className='flex items-center justify-center'>
 										<div
 											className='datepicker bg-gray-200relative form-floating mb-3 xl:w-96'
 											data-mdb-toggle-button='false'>
@@ -403,7 +390,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 												type='file'
 											/>
 											<p
-												class='mt-1 text-sm text-gray-500 dark:text-gray-300'
+												className='mt-1 text-sm text-gray-500 dark:text-gray-300'
 												id='file_input_help'>
 												SVG, PNG, JPG *.
 											</p>

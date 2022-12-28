@@ -3,9 +3,10 @@ import { useRouter } from 'next/router'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import { SERVER_LINK } from '../../helpers/config'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 import axios from 'axios'
-// import { useSelector } from 'react-redux'
+
 import { useCookie } from 'next-cookie'
 
 const AddQuestion = (
@@ -73,8 +74,6 @@ const AddQuestion = (
 
 			setMarks(questionData.marks)
 			setEditForm(true)
-
-			// setPosts(results.data)
 		}
 
 		if (router.query.question_id) {
@@ -197,8 +196,8 @@ const AddQuestion = (
 				.then(() => {
 					router.push('/dashboard/questions')
 				})
-				.catch((err) => {
-					return err
+				.catch(() => {
+					toast.error('invalid request')
 				})
 		} else {
 			await axios({
@@ -214,8 +213,8 @@ const AddQuestion = (
 				.then(() => {
 					router.push('/dashboard/questions')
 				})
-				.catch((err) => {
-					return err
+				.catch(() => {
+					toast.error('invalid request')
 				})
 		}
 	}
@@ -311,9 +310,8 @@ const AddQuestion = (
 								</div>
 								<br />
 								<br />
-								{/* for question type section  */}
+
 								<div className='mb-6'>
-									{/* <label for="default-input" className="block mb-2 text-sm font-medium">Default input</label> */}
 									<input
 										type='text'
 										id='default-input'
@@ -333,7 +331,6 @@ const AddQuestion = (
 											<div
 												className='flex items-center'
 												key={index}>
-												{/* <p>{String.fromCharCode(65+index)} */}
 												<input
 													type='text'
 													id='default-input'
@@ -341,7 +338,6 @@ const AddQuestion = (
 													name='option'
 													required
 													value={input.option}
-													// {...register(`options.${index}.option`)}
 													onChange={(event) => handleFormChange(index, event)}
 													placeholder={`Option ${String.fromCharCode(
 														65 + index
@@ -353,7 +349,6 @@ const AddQuestion = (
 													className='mx-5'
 													checked={input.correct}
 													required={requiredOptionField}
-													// {...register(`options.${index}.correct`)}
 													id={index}
 													name='fav_language'
 													onClick={(event) =>
