@@ -38,7 +38,7 @@ export class RestApiController {
 			//   message: 'user already exist',
 			// };
 
-			response.status(HttpStatus.BAD_REQUEST).json([])
+			response.status(HttpStatus.BAD_REQUEST).json(user)
 		} else {
 			const jwt = await this.jwtService.signAsync({ id: user.id })
 			await this.prisma.reset_token.create({

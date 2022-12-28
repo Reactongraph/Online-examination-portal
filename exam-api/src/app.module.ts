@@ -20,6 +20,7 @@ import { PrismaService } from './prisma.service'
 import { QuizModule } from './quiz/quiz.module'
 import { QuizController } from './quiz/quiz.controller'
 import { QuizService } from './quiz/quiz.service'
+import { AdminModule } from './admin/admin.module'
 
 @Module({
 	imports: [
@@ -30,6 +31,7 @@ import { QuizService } from './quiz/quiz.service'
 		AuthModule,
 		QuizModule,
 		QuestionsModule,
+		AdminModule,
 		MulterModule.register({
 			dest: './images',
 		}),
