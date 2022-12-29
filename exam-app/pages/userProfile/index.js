@@ -24,32 +24,34 @@ export default function UserProfile({ profile_data }) {
 	)
 }
 export async function getServerSideProps(data) {
-    let decoded= jwt_decode(data.req.cookies.access_token)
-	let organization;
-	let admin;
-	let profile_data;
-	if (decoded.role==='OrganizationUser')
-	{
-	organization = await axios.get(`${SERVER_LINK}/organization/${decoded.id}`, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: data.req.cookies.access_token,
-		},
-	})
-	profile_data = organization.data
-}
-else {
-	admin = await axios.get(`${SERVER_LINK}/admin/${decoded.id}`, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: data.req.cookies.access_token,
-		},
-	})
-	profile_data = admin.data
-}
+	let decoded = jwt_decode(data.req.cookies.access_token)
+	let organization
+	let admin
+	let profile_data
+	if (decoded.role === 'OrganizationUser') {
+		organization = await axios.get(
+			`${SERVER_LINK}/organization/${decoded.id}`,
+			{
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json;charset=UTF-8',
+					Authorization: data.req.cookies.access_token,
+				},
+			}
+		)
+		profile_data = organization.data
+	} else {
+		admin = await axios.get(`${SERVER_LINK}/admin/${decoded.id}`, {
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json;charset=UTF-8',
+				Authorization: data.req.cookies.access_token,
+			},
+		})
+		profile_data = admin.data
+	}
 
 	// Pass data to the page via props
+	profile_data.role = decoded.role
 	return { props: { profile_data } }
 }
