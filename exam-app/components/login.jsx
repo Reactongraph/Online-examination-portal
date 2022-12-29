@@ -30,9 +30,6 @@ const Login = () => {
 	const router = useRouter()
 	const dispatch = useDispatch()
 
-	// const [invalid, setInvalid] = useState(false)
-	// const [errorMessage, setErrorMessage] = useState('')
-
 	const { register, handleSubmit } = useForm({
 		resolver: yupResolver(schema),
 	})
@@ -85,21 +82,10 @@ const Login = () => {
 						// query: { role : optionValue },
 					})
 				}
-				// else {
-				// 	setInvalid(true)
-				// 	setErrorMessage('Invalid Credentials !')
-				// 	setTimeout(() => {
-				// 		setErrorMessage('')
-				// 	}, 2000)
-				// }
 			})
 			.catch((err) => {
-				// setInvalid(true);
-				// setErrorMessage("Invalid Credentials !");
-				// setTimeout(() => {
-				//   setErrorMessage("");
-				// }, 2000);
 				const { data } = err.response
+				toast.error(data)
 				toast.error(data.error)
 				// console.log(err.response.data);
 
@@ -125,7 +111,7 @@ const Login = () => {
 							<p className='text-gray-1000 mr-20'>use your login details</p>
 							<div className='flex flex-col items-center'></div>
 							<form
-								class='w-full max-w-lg'
+								className='w-full max-w-lg'
 								onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 								<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
 									{' '}

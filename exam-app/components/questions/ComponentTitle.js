@@ -8,9 +8,6 @@ if (typeof window !== 'undefined') {
 }
 
 const PageComponentTitle = ({ title, titleDescription, buttonTitle }) => {
-	// const [modal, setModal] = useState(false)
-	// const [csvData, setCsvData] = useState()
-	// const [csvArray, setCsvArray] = useState([])
 	const router = useRouter()
 
 	// const checkModal = (title) => {}
@@ -20,12 +17,11 @@ const PageComponentTitle = ({ title, titleDescription, buttonTitle }) => {
 
 	const handleCsv = (e) => {
 		const result = CsvReader(e.target.files[0])
-		// console.log('this is the result')
-		// console.log(e.target.files[0])
+
 		if (result == 1) {
 			setTimeout(() => {
 				router.replace(router.asPath)
-				// toast.success('CSV uploaded successfully!')
+
 				e.target.value = null
 			}, 500)
 		}
@@ -58,9 +54,6 @@ const PageComponentTitle = ({ title, titleDescription, buttonTitle }) => {
 					}}
 					className='px-6 py-2 mx-2 bg-blue-400 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-500 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out'
 				/>
-				{/* <p className='pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600'>
-																		Attach a file
-										</p> */}
 
 				<button
 					className='inline-flex px-5 py-3 text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 rounded-md ml-6 mb-3'

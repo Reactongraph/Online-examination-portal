@@ -18,8 +18,6 @@ const PageComponentTitle = ({
 }) => {
 	const [modal, setModal] = useState(false)
 
-	// const checkModal = (title) => {}
-
 	return (
 		<>
 			<div className='mr-6'>

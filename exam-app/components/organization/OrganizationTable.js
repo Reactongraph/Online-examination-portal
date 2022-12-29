@@ -7,13 +7,14 @@ import PureModal from 'react-pure-modal'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
 const OrganizationTable = ({ org_data }) => {
 	const router = useRouter()
 	const [editForm, setEditForm] = useState(false)
 	const [modal, setModal] = useState(false)
 	const [organizationId, setOrganizationId] = useState('')
-	// const [orgData, setOrgData] = useState()
+
 	const [buttonText, setButtonText] = useState('Add')
 
 	const [name, setName] = useState('')
@@ -41,8 +42,8 @@ const OrganizationTable = ({ org_data }) => {
 			.then(() => {
 				router.replace(router.asPath)
 			})
-			.catch((err) => {
-				return err
+			.catch(() => {
+				toast.error('invalid request')
 			})
 	}
 
@@ -62,8 +63,8 @@ const OrganizationTable = ({ org_data }) => {
 			.then(() => {
 				router.replace(router.asPath)
 			})
-			.catch((err) => {
-				return err
+			.catch(() => {
+				toast.error('invalid request')
 			})
 	}
 	const handleEditClick = async (org_id) => {
@@ -92,13 +93,12 @@ const OrganizationTable = ({ org_data }) => {
 				setPincode(singleOrgData.pincode)
 				setQuota(singleOrgData.quota)
 			})
-			.catch((err) => {
-				return err
+			.catch(() => {
+				toast.error('invalid request')
 			})
 	}
 
 	const checkWithDatabase = async (data) => {
-		// data.status = true;
 		data.name = name
 		data.email = email
 		data.mobile = mobile
@@ -128,8 +128,8 @@ const OrganizationTable = ({ org_data }) => {
 					setModal(!modal)
 					router.replace(router.asPath)
 				})
-				.catch((err) => {
-					return err
+				.catch(() => {
+					toast.error('invalid request')
 				})
 		}
 
@@ -149,8 +149,8 @@ const OrganizationTable = ({ org_data }) => {
 					setModal(!modal)
 					router.replace(router.asPath)
 				})
-				.catch((err) => {
-					return err
+				.catch(() => {
+					toast.error('invalid request')
 				})
 		}
 	}
@@ -237,12 +237,6 @@ const OrganizationTable = ({ org_data }) => {
 	]
 
 	const data = rowsDataArray
-
-	//Pagination
-	// const [activePage, setActivePage] = useState(15)
-	// const handlePageChange = (pageNumber) => {
-	// 	setActivePage(pageNumber)
-	// }
 
 	return (
 		<>

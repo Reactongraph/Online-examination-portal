@@ -15,10 +15,9 @@ if (typeof window !== 'undefined') {
 }
 
 const LevelModal = ({ modal, setModal }) => {
-	// const [selectedImage, setSelectedImage] = useState()
 	const router = useRouter()
 	const [level, setLevel] = useState('')
-	// const [buttonText, setButtonText] = useState('Add')
+
 	const buttonText = 'Add'
 	const { handleSubmit } = useForm()
 	const login_token = useSelector((state) => state.user.token)
@@ -48,8 +47,8 @@ const LevelModal = ({ modal, setModal }) => {
 					setModal(!modal)
 					toast.success('level inserted')
 				})
-				.catch((err) => {
-					return err
+				.catch(() => {
+					toast.error('Invalid Request')
 				})
 		}
 

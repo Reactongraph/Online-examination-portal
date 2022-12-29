@@ -20,7 +20,7 @@ const OrganizationModal = ({ modal, setModal }) => {
 	const [state, setState] = useState('')
 	const [mobile, setMobile] = useState('')
 	const [quota, setQuota] = useState('')
-	// const [buttonText, setButtonText] = useState('Add')
+
 	const buttonText = 'Add'
 
 	const [password, setPassword] = useState('')
@@ -58,9 +58,8 @@ const OrganizationModal = ({ modal, setModal }) => {
 				router.replace(router.asPath)
 				setModal(!modal)
 			})
-			.catch((err) => {
-				let message = err.response.data.message
-				toast.error(message)
+			.catch(() => {
+				toast.error('Invalid Request')
 			})
 	}
 

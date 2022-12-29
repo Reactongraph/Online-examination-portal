@@ -8,37 +8,34 @@ import { useRouter } from 'next/router'
 import DatePicker from 'react-datepicker'
 import { default as ReactSelect } from 'react-select'
 import { toast } from 'react-toastify'
-// import Select from 'react-select'
+
 import { components } from 'react-select'
-// import { Multiselect } from "multiselect-react-dropdown";
+
 import 'react-datepicker/dist/react-datepicker.css'
-// import { login_token } from '../login'
+
 import { useSelector } from 'react-redux'
 
 const QuizModal = ({
 	modal,
 	setModal,
-	// editForm,
-	// participantId,
+
 	module_data: moduleData,
 	level_data: levelData,
 }) => {
 	//For Image Preview
-	// const [selectedImage, setSelectedImage] = useState()
+
 	const router = useRouter()
-	// const [buttonText, setButtonText] = useState('Add')
+
 	const buttonText = 'Add'
 	const [name, setName] = useState('')
 
-	// const [levelData, setLevelData] = useState(level_data)
-	// const [moduleData, setModuleData] = useState(module_data)
 	const [description, setDescription] = useState('')
 
 	const { handleSubmit } = useForm()
 	const [selectedStartDate, setSelectedStartDate] = useState(null)
 	const [selectedEndDate, setSelectedEndtDate] = useState(null)
 	const [selectedBufferDate, setSelectedBufferDate] = useState(null)
-	// const [moduleArray, setModuleArray] = useState([])
+
 	const [selectedLevelId, setSelectedLevelId] = useState('')
 	const [selectedModules, setSelectedModules] = useState([])
 
@@ -102,8 +99,8 @@ const QuizModal = ({
 				setModal(!modal)
 				toast.success('Quiz created!')
 			})
-			.catch((err) => {
-				return err
+			.catch(() => {
+				toast.error('Invalid Request')
 			})
 	}
 
@@ -117,7 +114,7 @@ const QuizModal = ({
 					setSelectedBufferDate('')
 					setSelectedEndtDate('')
 					setSelectedStartDate('')
-					// setModuleArray([])
+
 					setDescription('')
 					setSelectedLevelId('')
 					setModal(false)
