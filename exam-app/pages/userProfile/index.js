@@ -24,22 +24,31 @@ export default function UserProfile({ profile_data }) {
 	)
 }
 export async function getServerSideProps(data) {
-	// Fetch data from external API
-	let accessToken = data.req.cookies.access_token
-	let decodedData = jwt_decode(accessToken)
-
-	const organization = await axios.get(
-		`${SERVER_LINK}/organization/${decodedData.id}`,
-		{
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json;charset=UTF-8',
-				Authorization: accessToken,
-			},
-		}
-	)
-
-	let profile_data = organization.data
+    let decoded= jwt_decode(data.req.cookies.access_token)
+	let organization;
+	let admin;
+	let profile_data;
+	if (decoded.role==='OrganizationUser')
+	{
+	organization = await axios.get(`${SERVER_LINK}/organization/${decoded.id}`, {
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json;charset=UTF-8',
+			Authorization: data.req.cookies.access_token,
+		},
+	})
+	profile_data = organization.data
+}
+else {
+	admin = await axios.get(`${SERVER_LINK}/admin/${decoded.id}`, {
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json;charset=UTF-8',
+			Authorization: data.req.cookies.access_token,
+		},
+	})
+	profile_data = admin.data
+}
 
 	// Pass data to the page via props
 	return { props: { profile_data } }

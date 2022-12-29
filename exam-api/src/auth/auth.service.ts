@@ -84,13 +84,14 @@ export class AuthService {
 		}
 	}
 
-	async create_token(userdata: any) {
+	async create_token(userdata: any,role:string) {
+		
 		const access_token = await this.jwtService.signAsync(
-			{ id: userdata.id, username: userdata.name, email: userdata.email },
+			{ id: userdata.id, username: userdata.name, email: userdata.email,role:role },
 			{ secret: jwtConstants.access_tokensecret }
 		)
 		const refresh_token = await this.jwtService.signAsync(
-			{ id: userdata.id, username: userdata.name, email: userdata.email },
+			{ id: userdata.id, username: userdata.name, email: userdata.email,role:role },
 			{ secret: jwtConstants.refresh_tokensecret }
 		)
 		return { access_token, refresh_token }
@@ -107,7 +108,7 @@ export class AuthService {
 
 				const payload = { username: find_username.name, email: decode.email }
 
-				const new_token = await this.create_token(decode)
+				const new_token = await this.create_token(decode,decode.role)
 				prisma.$connect()
 				await this.prisma.login.findUnique({
 					where: {
