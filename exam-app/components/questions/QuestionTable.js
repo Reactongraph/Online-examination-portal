@@ -1,4 +1,4 @@
-import Table from './Table'
+import Table from '../common/Table'
 import React from 'react'
 import axios from 'axios'
 import { SERVER_LINK } from '../../helpers/config'
@@ -7,7 +7,7 @@ import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 import { ToastContainer, toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
-
+import { QuestionColumns } from './questionColumn'
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
@@ -119,75 +119,13 @@ const QuestionTable = ({ question_data }) => {
 		)
 	})
 
-	const columns = [
-		{
-			Header: 'Question',
-			accessor: 'question',
-			title: 'question',
-			dataIndex: 'question',
-			key: 'question',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-			rowClassName: 'bg-black-ripon',
-		},
-		{
-			Header: 'Question Type',
-			accessor: 'question_type',
-			title: 'question_type',
-			dataIndex: 'question_type',
-			key: 'question_type',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-			rowClassName: 'bg-black-ripon',
-		},
-		{
-			Header: 'Level',
-			accessor: 'level',
-			title: 'level',
-			dataIndex: 'level',
-			key: 'level',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-			rowClassName: 'bg-black-ripon',
-		},
-		{
-			Header: 'Module',
-			accessor: 'modules',
-			title: 'modules',
-			dataIndex: 'modules',
-			key: 'modules',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-			rowClassName: 'bg-black-ripon',
-		},
-
-		{
-			Header: 'Status',
-			accessor: 'status',
-			title: 'Status',
-			dataIndex: 'status',
-			key: 'status',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-		},
-		{
-			Header: 'Action',
-			accessor: 'action',
-			title: 'Action',
-			dataIndex: 'action',
-			key: 'operations',
-			width: 250,
-			className: 'text-white bg-gray-600 p-2 border-b-2',
-		},
-	]
-
 	// data by using which table data is creating using api call
 	const data = rowsDataArray
 
 	return (
 		<>
 			<Table
-				columns={columns}
+				columns={QuestionColumns}
 				data={data}
 				rowKey='id'
 				className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'

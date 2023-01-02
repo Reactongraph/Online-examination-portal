@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Table from './Table'
+import Table from '../common/Table'
 
 import axios from 'axios'
 import { useRouter } from 'next/router'
@@ -11,6 +11,7 @@ import 'react-pure-modal/dist/react-pure-modal.min.css'
 
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import { ParticipantColumns } from './participantColumn'
 
 const ParticipantTable = ({ participant_data, organization_data }) => {
 	const router = useRouter()
@@ -165,52 +166,12 @@ const ParticipantTable = ({ participant_data, organization_data }) => {
 		return createData(name, email, mobile, participantId)
 	})
 
-	const columns = [
-		{
-			Header: 'Name',
-			accessor: 'name',
-			title: 'Name',
-			dataIndex: 'name',
-			key: 'name',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-			rowClassName: 'bg-black-ripon',
-		},
-		{
-			Header: 'Email',
-			accessor: 'email',
-			title: 'Email',
-			dataIndex: 'email',
-			key: 'email',
-			width: 400,
-			className: 'text-white bg-gray-600 p-2 border-r-2 border-b-2',
-		},
-		{
-			Header: 'Mobile',
-			accessor: 'mobile',
-			title: 'Mobile',
-			dataIndex: 'mobile',
-			key: 'mobile',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-		},
-		{
-			Header: 'Action',
-			accessor: 'action',
-			title: 'Action',
-			dataIndex: 'action',
-			key: 'operations',
-			width: 250,
-			className: 'text-white bg-gray-600 p-2 border-b-2',
-		},
-	]
-
 	const data = rowsDataArray
 
 	return (
 		<>
 			<Table
-				columns={columns}
+				columns={ParticipantColumns}
 				data={data}
 				rowKey='id'
 				className='bg-white p-4 w-full text-center rc-table-custom font-semibold '

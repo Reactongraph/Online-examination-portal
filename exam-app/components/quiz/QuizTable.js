@@ -1,4 +1,4 @@
-import Table from './Table'
+import Table from '../common/Table'
 import React, { useState } from 'react'
 // import Pagination from 'react-js-pagination'
 import axios from 'axios'
@@ -15,6 +15,7 @@ import { default as ReactSelect } from 'react-select'
 import { components } from 'react-select'
 import moment from 'moment'
 import { useSelector } from 'react-redux'
+import { QuizColumns } from './quizColumn'
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
@@ -249,82 +250,13 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 		)
 	})
 
-	const columns = [
-		{
-			Header: 'Quiz',
-			accessor: 'quiz',
-			title: 'quiz',
-			dataIndex: 'quiz',
-			key: 'quiz',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-			rowClassName: 'bg-black-ripon',
-		},
-		{
-			Header: 'Level',
-			accessor: 'level',
-			title: 'level',
-			dataIndex: 'level',
-			key: 'level',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-		},
-		{
-			Header: 'Modules',
-			accessor: 'modules',
-			title: 'modules',
-			dataIndex: 'modules',
-			key: 'modules',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-		},
-
-		{
-			Header: 'Start Date ',
-			accessor: 'start_date',
-			title: 'start_date',
-			dataIndex: 'start_date',
-			key: 'start_date',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-		},
-		{
-			Header: 'End Date',
-			accessor: 'end_date',
-			title: 'end_date',
-			dataIndex: 'end_date',
-			key: 'end_date',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-		},
-
-		{
-			Header: 'Status',
-			accessor: 'status',
-			title: 'Status',
-			dataIndex: 'status',
-			key: 'status',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-		},
-		{
-			Header: 'Action',
-			accessor: 'action',
-			title: 'Action',
-			dataIndex: 'action',
-			key: 'operations',
-			width: 250,
-			className: 'text-white bg-gray-600 p-2 border-b-2',
-		},
-	]
-
 	// data by using which table data is creating using api call
 	const data = rowsDataArray
 
 	return (
 		<>
 			<Table
-				columns={columns}
+				columns={QuizColumns}
 				data={data}
 				rowKey='id'
 				className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'

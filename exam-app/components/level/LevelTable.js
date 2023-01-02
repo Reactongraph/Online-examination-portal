@@ -1,15 +1,15 @@
-import Table from './Table'
+import Table from '../common/Table'
 import React, { useState } from 'react'
 import axios from 'axios'
 import { SERVER_LINK } from '../../helpers/config'
 import { useRouter } from 'next/router'
-import PureModal from 'react-pure-modal'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 import { ToastContainer, toast } from 'react-toastify'
-// import { login_token } from '../login'
 import { useSelector } from 'react-redux'
+import LevelModulePopup from '../PopUpModals/LevelModulePopUp'
+import { Levelcolumns } from './levelColumns'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
@@ -25,7 +25,7 @@ const LevelTable = ({ level_data }) => {
 	const [buttonText, setButtonText] = useState('Add')
 	const [level, setLevel] = useState('')
 
-	const { register, handleSubmit } = useForm()
+	const { handleSubmit } = useForm()
 	const login_token = useSelector((state) => state.user.token)
 
 	const handleRemoveClick = async (level_id) => {
@@ -165,98 +165,29 @@ const LevelTable = ({ level_data }) => {
 		return createData(level, level_id, level_status)
 	})
 
-	const columns = [
-		{
-			Header: 'Level',
-			accessor: 'level',
-			title: 'Level',
-			dataIndex: 'level',
-			key: 'level',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-			rowClassName: 'bg-black-ripon',
-		},
-
-		{
-			Header: 'Status',
-			accessor: 'status',
-			title: 'Status',
-			dataIndex: 'status',
-			key: 'status',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-		},
-		{
-			Header: 'Action',
-			accessor: 'action',
-			title: 'Action',
-			dataIndex: 'action',
-			key: 'operations',
-			width: 250,
-			className: 'text-white bg-gray-600 p-2 border-b-2',
-			//
-		},
-	]
-
 	// data by using which table data is creating using api call
 	const data = rowsDataArray
 
 	return (
 		<>
 			<Table
-				columns={columns}
+				columns={Levelcolumns}
 				data={data}
 				rowKey='id'
 				className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'
 			/>
 
-			<PureModal
-				isOpen={modal}
-				width='800px'
-				onClose={() => {
-					setModal(false)
-					return true
-				}}>
-				<div className='flex-row space-y-3 relative'>
-					<div className='bg-blue-600 p-2 font-bold text-lg text-center text-white -mt-4 -mx-4 mb-5 pb-4'>
-						<p>{buttonText} Level</p>
-					</div>
-
-					<div className='py-6 px-6 lg:px-8'>
-						<form
-							className='w-full max-w-lg'
-							onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
-							<div className='flex flex-wrap -mx-3 mb-6'>
-								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
-									<label
-										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-first-name'>
-										Enter Level
-									</label>
-									<input
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
-										id='grid-level'
-										type='text'
-										value={level}
-										{...register('level', {
-											onChange: (e) => setLevel(e.target.value),
-										})}
-										placeholder='e.g. Easy , Hard ...'
-									/>
-								</div>
-							</div>
-
-							<button
-								type='submit'
-								className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
-								{buttonText}
-							</button>
-						</form>
-					</div>
-
-					{/* */}
-				</div>
-			</PureModal>
+			<LevelModulePopup
+				setStateName={setLevel}
+				stateName={level}
+				checkWithDatabase={checkWithDatabase}
+				handleSubmit={handleSubmit}
+				setModal={setModal}
+				modal={modal}
+				modalName={'LEVEL'}
+				buttonText={buttonText}
+				placeholderText={'eg. Easy , Moderate , etc ...'}
+			/>
 			<ToastContainer />
 		</>
 	)
