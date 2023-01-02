@@ -1,9 +1,7 @@
 import Head from 'next/head'
-import Image from 'next/image'
-// import styles from '../styles/Home.module.css'
-import Login from '../../components/login'
+import LoginComponent from '../../components/login'
 
-export default function login() {
+export default function Login() {
 	return (
 		<div>
 			<Head>
@@ -14,7 +12,7 @@ export default function login() {
 				/>
 			</Head>
 
-			<Login />
+			<LoginComponent />
 		</div>
 	)
 }

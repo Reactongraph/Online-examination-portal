@@ -6,15 +6,10 @@ import { useForm } from 'react-hook-form'
 import { SERVER_LINK } from '../../helpers/config'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
-const OrganizationModal = ({
-	modal,
-	setModal,
-	editForm,
-	organizationId,
-	orgData,
-}) => {
+const OrganizationModal = ({ modal, setModal }) => {
 	const router = useRouter()
 
 	const [name, setName] = useState('')
@@ -25,11 +20,12 @@ const OrganizationModal = ({
 	const [state, setState] = useState('')
 	const [mobile, setMobile] = useState('')
 	const [quota, setQuota] = useState('')
-	const [buttonText, setButtonText] = useState('Add')
+
+	const buttonText = 'Add'
 
 	const [password, setPassword] = useState('')
 
-	const { register, handleSubmit } = useForm()
+	const { handleSubmit } = useForm()
 
 	const login_token = useSelector((state) => state.user.token)
 	// for sending the data to the backend
@@ -58,12 +54,12 @@ const OrganizationModal = ({
 			},
 			data: OrganizationData,
 		})
-			.then((response) => {
+			.then(() => {
 				router.replace(router.asPath)
 				setModal(!modal)
 			})
-			.catch((err) => {
-				console.log(err)
+			.catch(() => {
+				toast.error('Invalid Request')
 			})
 	}
 

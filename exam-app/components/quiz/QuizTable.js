@@ -1,6 +1,6 @@
 import Table from './Table'
 import React, { useState } from 'react'
-import Pagination from 'react-js-pagination'
+// import Pagination from 'react-js-pagination'
 import axios from 'axios'
 import { SERVER_LINK } from '../../helpers/config'
 import { useRouter } from 'next/router'
@@ -11,10 +11,10 @@ import { injectStyle } from 'react-toastify/dist/inject-style'
 import { ToastContainer, toast } from 'react-toastify'
 import DatePicker from 'react-datepicker'
 import { default as ReactSelect } from 'react-select'
-import Select from 'react-select'
+// import Select from 'react-select'
 import { components } from 'react-select'
 import moment from 'moment'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
@@ -22,14 +22,15 @@ if (typeof window !== 'undefined') {
 
 const QuizTable = ({ quiz_data, module_data, level_data }) => {
 	const router = useRouter()
-	const [editForm, setEditForm] = useState(false)
+
 	const [modal, setModal] = useState(false)
 	const [quizId, setQuizId] = useState('')
-	// const [orgData, setOrgData] = useState();
+
 	const [buttonText, setButtonText] = useState('Add')
 	const [name, setName] = useState('')
-	const [levelData, setLevelData] = useState(level_data)
-	const [moduleData, setModuleData] = useState(module_data)
+	const levelData = level_data
+	const moduleData = module_data
+
 	const [selectedLevelId, setSelectedLevelId] = useState('')
 	const [description, setDescription] = useState('')
 	const [selectedBufferDate, setSelectedBufferDate] = useState(null)
@@ -37,11 +38,10 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 	const [selectedEndDate, setSelectedEndDate] = useState(null)
 	const [optionModuleSelected, setOptionModuleSelected] = useState()
 	const [selectedModules, setSelectedModules] = useState()
-	const [modules, setModules] = useState('')
-	const login_token = useSelector((state) => state.user.token)
-	console.log(login_token, 'login_token')
 
-	const { register, handleSubmit } = useForm()
+	const login_token = useSelector((state) => state.user.token)
+
+	const { handleSubmit } = useForm()
 
 	const handleLevelTypeSelect = (event) => {
 		let levelId = event.target.value
@@ -57,11 +57,12 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 					Authorization: login_token,
 				},
 			})
-			.then((result) => {
+			.then(() => {
 				router.replace(router.asPath)
+				toast.success('Quiz deleted!')
 			})
-			.catch((err) => {
-				console.log(err)
+			.catch(() => {
+				toast.error('invalid request')
 			})
 	}
 
@@ -88,15 +89,15 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 					Authorization: login_token,
 				},
 			})
-			.then((response) => {})
-			.catch((err) => {
-				console.log(err)
+			.then(() => {})
+			.catch(() => {
+				toast.error('invalid request')
 			})
 	}
 
 	const handleEditClick = async (quiz_id) => {
 		setButtonText('Update')
-		setEditForm(true)
+		// setEditForm(true)
 		setQuizId(quiz_id)
 		setModal(true)
 		let seletedModuleDataArray = []
@@ -119,7 +120,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 				let startDate = moment(singleQuizData.start_date).toDate()
 				let endDate = moment(singleQuizData.end_date).toDate()
 
-				moduleData.map((oneModule, index) => {
+				moduleData.map((oneModule) => {
 					singleQuizData.module_id.map((oneID) => {
 						if (oneID == oneModule.id) {
 							seletedModuleDataArray.push(oneModule)
@@ -131,14 +132,12 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 				setSelectedEndDate(endDate)
 				setSelectedStartDate(startDate)
 			})
-			.catch((err) => {
-				console.log(err)
+			.catch(() => {
+				toast.error('invalid request')
 			})
 	}
 
 	const Option = (props) => {
-		// props.isSelected = true
-		let setChecked = props
 		return (
 			<div>
 				<components.Option {...props}>
@@ -161,7 +160,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 		data.description = description
 		data.module_id = selectedModules
 
-		let QuizData = JSON.stringify(data)
+		// let QuizData = JSON.stringify(data)
 		await axios
 			.patch(`${SERVER_LINK}/quiz/${quizId}`, data, {
 				headers: {
@@ -170,12 +169,13 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 					Authorization: login_token,
 				},
 			})
-			.then((response) => {
+			.then(() => {
 				setModal(!modal)
 				router.replace(router.asPath)
+				toast.success('Quiz updated!')
 			})
-			.catch((err) => {
-				console.log(err)
+			.catch(() => {
+				toast.error('invalid request')
 			})
 	}
 
@@ -268,7 +268,6 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 			key: 'level',
 			width: 400,
 			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-			//   rowClassName: "bg-black-ripon",
 		},
 		{
 			Header: 'Modules',
@@ -278,7 +277,6 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 			key: 'modules',
 			width: 400,
 			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-			//   rowClassName: "bg-black-ripon",
 		},
 
 		{
@@ -289,7 +287,6 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 			key: 'start_date',
 			width: 400,
 			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-			//   rowClassName: "bg-black-ripon",
 		},
 		{
 			Header: 'End Date',
@@ -299,7 +296,6 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 			key: 'end_date',
 			width: 400,
 			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-			//   rowClassName: "bg-black-ripon",
 		},
 
 		{
@@ -324,12 +320,6 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 
 	// data by using which table data is creating using api call
 	const data = rowsDataArray
-
-	const [activePage, setActivePage] = useState(15)
-
-	const handlePageChange = (pageNumber) => {
-		setActivePage(pageNumber)
-	}
 
 	return (
 		<>
@@ -387,7 +377,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 										Choose Quiz image
 									</label>
 
-									<div class='flex items-center justify-center'>
+									<div className='flex items-center justify-center'>
 										<div
 											className='datepicker bg-gray-200relative form-floating mb-3 xl:w-96'
 											data-mdb-toggle-button='false'>
@@ -400,7 +390,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 												type='file'
 											/>
 											<p
-												class='mt-1 text-sm text-gray-500 dark:text-gray-300'
+												className='mt-1 text-sm text-gray-500 dark:text-gray-300'
 												id='file_input_help'>
 												SVG, PNG, JPG *.
 											</p>

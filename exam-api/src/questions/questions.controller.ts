@@ -15,11 +15,13 @@ import { QuestionsService } from './questions.service'
 import { QuestionDTO } from './questions.entity'
 import { ApiTags } from '@nestjs/swagger'
 import { FileInterceptor } from '@nestjs/platform-express'
+import { Response } from 'express'
+import { HttpStatus } from '@nestjs/common/enums'
 
 @ApiTags('Questions')
 @Controller('questions')
 export class QuestionsController {
-  constructor (private readonly questionservice: QuestionsService) {}
+  constructor (private readonly questionservice: QuestionsService) { }
   @Post('uploads')
   @UseInterceptors(FileInterceptor('File'))
   async uploadFile (
@@ -27,8 +29,6 @@ export class QuestionsController {
       @Res() res,
       @Body() createquestion: QuestionDTO
   ): Promise<StreamableFile> {
-    console.log('data from client', createquestion)
-
     const data = await this.questionservice.Bulk_insertion(createquestion)
     if (!data) {
       return res.end('data is not inserted')
@@ -37,37 +37,42 @@ export class QuestionsController {
   }
 
   @Post('create')
-  async create_question (@Body() createquestion: QuestionDTO) {
+  async create_question (@Body() createquestion: QuestionDTO, @Res({ passthrough: true }) response: Response) {
     const data = this.questionservice.create(createquestion)
-
+    if (data === null) {
+      response.status(HttpStatus.BAD_REQUEST).json([])
+    }
     return await data
   }
 
   @Get('find')
   async findAll () {
-    const question_read = await this.questionservice.findAll()
-    return question_read
+    const QUESTION_READ = await this.questionservice.findAll()
+    return QUESTION_READ
   }
 
   @Get('find/:id')
   async findOne (@Param('id') id: string) {
-    const find_one = await this.questionservice.findOne(id)
-    return find_one
+    const FIND_ONE = await this.questionservice.findOne(id)
+    return FIND_ONE
   }
 
   @Patch(':id')
-  async update (@Param('id') id: string, @Body() updatequestion: QuestionDTO) {
-    const update_questions = await this.questionservice.update(
+  async update (@Param('id') id: string, @Body() updatequestion: QuestionDTO, @Res({ passthrough: true }) response: Response) {
+    const UPDATE_QUESTIONS = await this.questionservice.update(
       id,
       updatequestion
     )
-    return update_questions
+    if (UPDATE_QUESTIONS === null) {
+      response.status(HttpStatus.BAD_REQUEST).json([])
+    }
+    return UPDATE_QUESTIONS
   }
 
   // this controller is used to delete  participant data
   @Delete(':id')
   async remove (@Param('id') id: string) {
-    const delete_questions = await this.questionservice.remove(id)
-    return delete_questions
+    const DELETE_QUESTIONS = await this.questionservice.remove(id)
+    return DELETE_QUESTIONS
   }
 }

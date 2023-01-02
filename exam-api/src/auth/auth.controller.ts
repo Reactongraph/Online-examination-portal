@@ -14,7 +14,6 @@ import { auth_dto } from './auth.entity'
 import { Response } from 'express'
 import { PrismaService } from 'src/prisma.service'
 import { ApiTags } from '@nestjs/swagger'
-import { jwtConstants } from './constant'
 @Controller('auth')
 @ApiTags('Auth')
 export class AuthController {
@@ -55,7 +54,6 @@ export class AuthController {
           refresh_token: token.refresh_token,
           email: login?.email,
           token_id: users.id
-
         }
       })
 
@@ -66,15 +64,18 @@ export class AuthController {
         refresh_token: token.refresh_token
       }
       response.cookie('access_token', token.access_token, { httpOnly: true })
-      response.cookie('refresh_token', token.refresh_token, { httpOnly: false })
-      response
-        .send(data)
-        .status(HttpStatus.ACCEPTED)
+      response.cookie('refresh_token', token.refresh_token, {
+        httpOnly: false
+      })
+      response.send(data).status(HttpStatus.ACCEPTED)
     }
   }
 
   @Get('Refresh_token')
-  async refresh_token (@Headers('xaccesstoken') Headers: any, @Res({ passthrough: true }) response: Response) {
+  async refresh_token (
+  @Headers('xaccesstoken') Headers: any,
+    @Res({ passthrough: true }) response: Response
+  ) {
     try {
       const decode = await this.authService.decode_Token(Headers)
 
@@ -85,11 +86,13 @@ export class AuthController {
         refresh_token: decode.token.refresh_token
       }
 
-      response.cookie('access_token', decode.token.access_token, { httpOnly: true })
-      response.cookie('refresh_token', decode.token.refresh_token, { httpOnly: false })
-      response
-        .send(data)
-        .status(HttpStatus.ACCEPTED)
+      response.cookie('access_token', decode.token.access_token, {
+        httpOnly: true
+      })
+      response.cookie('refresh_token', decode.token.refresh_token, {
+        httpOnly: false
+      })
+      response.send(data).status(HttpStatus.ACCEPTED)
     } catch (error) {
       response.send('token not provided').status(HttpStatus.BAD_REQUEST)
     }

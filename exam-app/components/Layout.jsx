@@ -1,25 +1,20 @@
 import { useEffect } from 'react'
-import { useApi } from '../hooks'
+
 import { useRouter } from 'next/router'
-import { useSelector, useDispatch } from 'react-redux'
-// import { useCookies } from 'react-cookie';
+import { useDispatch } from 'react-redux'
+
 import { SERVER_LINK } from '../helpers/config'
 import axios from 'axios'
 import { useCookie } from 'next-cookie'
-import { useState } from 'react'
-
-// import Footer from './Footer';
 
 // To check for the refresh token on every page
 export default function Layout({ children }) {
 	const data = useCookie(children.cookie)
-	let [cookie, setName] = useState(data.get('refresh_token') || '')
+
+	let cookie = data.get('refresh_token') || ''
 	const router = useRouter()
 	const dispatch = useDispatch()
 
-	const { token } = router.query
-
-	const { get } = useApi()
 	const refreshToken = async () => {
 		// if (cookie) {
 
@@ -31,9 +26,6 @@ export default function Layout({ children }) {
 					xaccesstoken: cookie,
 				},
 			})
-
-            console.log('this is  the resposne 0');
-            console.log(response);
 
 			const newToken = response.data.access_token
 			const payload = response.data.payload

@@ -9,14 +9,11 @@ const PageComponentTitle = ({
 	title,
 	titleDescription,
 	buttonTitle,
-	editForm,
 	quiz_data,
 	module_data,
 	level_data,
 }) => {
 	const [modal, setModal] = useState(false)
-
-	const checkModal = (title) => {}
 
 	return (
 		<>

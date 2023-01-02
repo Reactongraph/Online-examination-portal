@@ -1,16 +1,16 @@
-import Table from './Table'
 import React, { useState } from 'react'
-import Pagination from 'react-js-pagination'
+import Table from './Table'
+
 import axios from 'axios'
-import { SERVER_LINK } from '../../helpers/config'
 import { useRouter } from 'next/router'
-import PageComponentTitle from '../common/PageComponentTitle'
-import ParticipantModal from '../common/ParticipantModal'
+import { SERVER_LINK } from '../../helpers/config'
+
+import { useForm } from 'react-hook-form'
 import PureModal from 'react-pure-modal'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
-import { useForm } from 'react-hook-form'
-import { login_token } from '../login'
-import { useSelector, useDispatch } from 'react-redux'
+
+import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
 const ParticipantTable = ({ participant_data }) => {
 	const router = useRouter()
@@ -27,7 +27,7 @@ const ParticipantTable = ({ participant_data }) => {
 	const [password, setPassword] = useState('')
 	const [organizationId, setOrganizationId] = useState('')
 
-	const { register, handleSubmit } = useForm()
+	const { handleSubmit } = useForm()
 	const login_token = useSelector((state) => state.user.token)
 
 	const handleRemoveClick = async (participantId) => {
@@ -39,18 +39,17 @@ const ParticipantTable = ({ participant_data }) => {
 					Authorization: login_token,
 				},
 			})
-			.then((result) => {
+			.then(() => {
 				router.replace(router.asPath)
 			})
-			.catch((err) => {
-				console.log(err)
+			.catch(() => {
+				toast.error('invalid request')
 			})
 	}
 
 	const handleEditClick = async (participantId) => {
-		// setOpen(true);
 		setModal(true)
-		// setButtonText('Update')
+
 		setButtonText('Update')
 		setEditForm(true)
 		setParticipantId(participantId)
@@ -73,8 +72,8 @@ const ParticipantTable = ({ participant_data }) => {
 				setOrganizationId(singleParticipantData.Organization_id)
 				setPassword(singleParticipantData.password)
 			})
-			.catch((err) => {
-				console.log(err)
+			.catch(() => {
+				toast.error('invalid request')
 			})
 	}
 
@@ -86,7 +85,6 @@ const ParticipantTable = ({ participant_data }) => {
 		data.Organization_id = organizationId
 		data.password = password
 
-		// data.status = true;
 		let participantData = JSON.stringify(data)
 
 		// for taking the patch api data
@@ -104,12 +102,13 @@ const ParticipantTable = ({ participant_data }) => {
 					}
 					//
 				)
-				.then((response) => {
+				.then(() => {
 					setModal(!modal)
 					router.replace(router.asPath)
+					toast.success('participant updated!')
 				})
-				.catch((err) => {
-					console.log(err)
+				.catch(() => {
+					toast.error('invalid request')
 				})
 		}
 
@@ -125,12 +124,12 @@ const ParticipantTable = ({ participant_data }) => {
 				},
 				data,
 			})
-				.then((response) => {
+				.then(() => {
 					router.replace(router.asPath)
 					setModal(!modal)
 				})
-				.catch((err) => {
-					console.log(err)
+				.catch(() => {
+					toast.error('invalid request')
 				})
 		}
 	}
@@ -203,11 +202,6 @@ const ParticipantTable = ({ participant_data }) => {
 	]
 
 	const data = rowsDataArray
-	//Pagination
-	const [activePage, setActivePage] = useState(15)
-	const handlePageChange = (pageNumber) => {
-		setActivePage(pageNumber)
-	}
 
 	return (
 		<>

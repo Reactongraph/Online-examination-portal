@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { useState } from 'react'
 import PureModal from 'react-pure-modal'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
@@ -8,25 +7,19 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 import { ToastContainer, toast } from 'react-toastify'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
 }
 
-const ModuleModal = ({
-	modal,
-	setModal,
-	editForm,
-	organizationId,
-	orgData,
-}) => {
-	const [selectedImage, setSelectedImage] = useState()
+const ModuleModal = ({ modal, setModal }) => {
 	const router = useRouter()
 	const [modules, setModules] = useState('')
-	const [buttonText, setButtonText] = useState('Add')
-	const { register, handleSubmit } = useForm()
+
+	const buttonText = 'Add'
+	const { handleSubmit } = useForm()
 	const login_token = useSelector((state) => state.user.token)
 
 	// for sending the data to the backend
@@ -48,13 +41,14 @@ const ModuleModal = ({
 				},
 				data: LevelData,
 			})
-				.then((response) => {
+				.then(() => {
 					router.replace(router.asPath)
 					setModules('')
 					setModal(!modal)
+					toast.success('module created!')
 				})
-				.catch((err) => {
-					console.log(err)
+				.catch(() => {
+					toast.error('Invalid Request')
 				})
 		}
 

@@ -2,10 +2,8 @@ import { Injectable } from '@nestjs/common'
 import { auth_dto } from './auth.entity'
 import { PrismaService } from 'src/prisma.service'
 import { JwtService } from '@nestjs/jwt'
-// import { ConfigService } from '@nestjs/config';
 import { jwtConstants } from './constant'
 const { PrismaClient } = require('@prisma/client')
-// const prisma= require('prisma')
 const prisma = new PrismaClient()
 @Injectable()
 export class AuthService {
@@ -19,7 +17,7 @@ export class AuthService {
       where: { token: `${Headers}` }
     })
 
-    if (token_check.length != 0) {
+    if (token_check.length !== 0) {
       const email_from_organization = await this.prisma.organization.findUnique(
         {
           where: { id: `${body.decodeid}` }
@@ -51,7 +49,7 @@ export class AuthService {
     if (!user) {
       return 'invalid username'
     }
-    if (login?.email == user.email && login?.password == user.password) {
+    if (login?.email === user.email && login?.password === user.password) {
       const payload = {
         id: user.id,
         username: user.name,
@@ -64,8 +62,14 @@ export class AuthService {
   }
 
   async create_token (userdata: any) {
-    const access_token = await this.jwtService.signAsync({ id: userdata.id, username: userdata.name, email: userdata.email }, { secret: jwtConstants.access_tokensecret })
-    const refresh_token = await this.jwtService.signAsync({ id: userdata.id, username: userdata.name, email: userdata.email }, { secret: jwtConstants.refresh_tokensecret })
+    const access_token = await this.jwtService.signAsync(
+      { id: userdata.id, username: userdata.name, email: userdata.email },
+      { secret: jwtConstants.access_tokensecret }
+    )
+    const refresh_token = await this.jwtService.signAsync(
+      { id: userdata.id, username: userdata.name, email: userdata.email },
+      { secret: jwtConstants.refresh_tokensecret }
+    )
     return { access_token, refresh_token }
   }
 
@@ -73,15 +77,14 @@ export class AuthService {
     try {
       if (tokenn) {
         const decode: any = this.jwtService.decode(tokenn)
-
-        const find_username = await this.prisma.user_auth.findUnique({ where: { email: decode.email } })
-
+        const find_username = await this.prisma.user_auth.findUnique({
+          where: { email: decode.email }
+        })
         const payload = { username: find_username.name, email: decode.email }
-
 
         const new_token = await this.create_token(decode)
         prisma.$connect()
-        const finddata = await this.prisma.login.findUnique({
+        await this.prisma.login.findUnique({
           where: {
             refresh_token: tokenn
           }
@@ -95,11 +98,10 @@ export class AuthService {
             token_id: decode.id
           }
         })
-
         return { token: new_token, payload }
       }
     } catch (error) {
-      return error
+
     }
   }
 }

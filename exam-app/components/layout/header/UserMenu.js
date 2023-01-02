@@ -1,13 +1,13 @@
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/solid";
-import React, { useEffect, useRef, useState } from "react";
-import OutsideClick from "../../../utils/outsideClick";
-import { useSelector } from "react-redux";
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
+import React, { useEffect, useRef, useState } from 'react'
+import OutsideClick from '../../../utils/outsideClick'
+import { useSelector } from 'react-redux'
 
 const UserMenu = () => {
-  const [userMenuStatus, setUserMenuStatus] = useState(false);
-  const buttonRef = useRef(null);
-  const buttonOutsideClick = OutsideClick(buttonRef);
-  const username=useSelector((state) => state.user)
+	const [userMenuStatus, setUserMenuStatus] = useState(false)
+	const buttonRef = useRef(null)
+	const buttonOutsideClick = OutsideClick(buttonRef)
+	const username = useSelector((state) => state.user)
 
 	const userMenuhandle = () => {
 		setUserMenuStatus(!userMenuStatus)
@@ -19,24 +19,25 @@ const UserMenu = () => {
 		}
 	}, [buttonOutsideClick])
 
-  return (
-    <button
-      className="inline-flex items-center p-2 hover:bg-gray-100 focus:bg-gray-100 rounded-lg relative"
-      onClick={userMenuhandle}
-      ref={buttonRef}
-    >
-      <span className="sr-only">User Menu</span>
-      <div className="hidden md:flex md:flex-col md:items-end md:leading-tight">
-        <span className="font-semibold">{username?.payload?.username}</span>
-        <span className="text-sm text-gray-600">{username?.payload?.email}</span>
-      </div>
-      <span className="h-12 w-12 ml-2 sm:ml-3 mr-2 bg-gray-100 rounded-full overflow-hidden">
-        <img
-          src="https://randomuser.me/api/portraits/women/68.jpg"
-          alt="user profile photo"
-          className="h-full w-full object-cover"
-        />
-      </span>
+	return (
+		<button
+			className='inline-flex items-center p-2 hover:bg-gray-100 focus:bg-gray-100 rounded-lg relative'
+			onClick={userMenuhandle}
+			ref={buttonRef}>
+			<span className='sr-only'>User Menu</span>
+			<div className='hidden md:flex md:flex-col md:items-end md:leading-tight'>
+				<span className='font-semibold'>{username?.payload?.username}</span>
+				<span className='text-sm text-gray-600'>
+					{username?.payload?.email}
+				</span>
+			</div>
+			<span className='h-12 w-12 ml-2 sm:ml-3 mr-2 bg-gray-100 rounded-full overflow-hidden'>
+				<img
+					src='https://randomuser.me/api/portraits/women/68.jpg'
+					alt='user profile photo'
+					className='h-full w-full object-cover'
+				/>
+			</span>
 
 			{userMenuStatus && (
 				<div className='absolute right-0 sm:-bottom-16 bg-slate-500 px-2 py-1 space-x-2 text-yellow-50 w-full -bottom-28'>

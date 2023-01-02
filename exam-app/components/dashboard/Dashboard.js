@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter } from 'next/router'
 
-const Dashboard = (props) => {
+const Dashboard = () => {
 	return (
 		<>
 			<main className='p-6 sm:p-10 space-y-6'>

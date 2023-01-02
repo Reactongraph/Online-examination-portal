@@ -4,105 +4,109 @@ import { QuestionDTO } from './questions.entity'
 const csv = require('csvtojson')
 @Injectable()
 export class QuestionsService {
-	constructor(private readonly prisma: PrismaService) {}
-	async Bulk_insertion(dataa: QuestionDTO) {
-		console.log('data in service', dataa[0].options)
+  constructor (private readonly prisma: PrismaService) { }
+  async Bulk_insertion (dataa: QuestionDTO) {
+    try {
+      const CREATE_CSV = await this.prisma.questions.createMany({
+        data: dataa
+      })
+      return CREATE_CSV
+    } catch (err) {
+      return err
+    }
+  }
 
-		try {
-			// const csvfilepath = process.cwd() + '/' + file.path;
+  async create (createQuestionDto: QuestionDTO) {
+    try {
 
-			// const question_csv = await csv().fromFile(csvfilepath);
-			//  map function convert status field from string to boolean because data from csv comes in string format but in database status is boolean type format
-			// question_csv.map((OneRow) => {
-			//   OneRow.status = JSON.parse(OneRow.status);
-			// });
-			console.log('before insertion', dataa[0].options)
+      const question = await this.prisma.questions.create({
+        data: {
+          question: createQuestionDto?.question,
+          question_type: createQuestionDto?.question_type,
+          options: createQuestionDto.options,
+          question_time: createQuestionDto?.question_time,
+          status: createQuestionDto?.status,
+          level_id: createQuestionDto?.level_id,
+          module_id: createQuestionDto?.module_id,
+          marks: createQuestionDto?.marks,
+          option_type: createQuestionDto?.option_type
+        }
+      })
 
-			const create_csv = await this.prisma.questions.createMany({
-				data: dataa,
-			})
-			console.log('after insert ', create_csv)
+      return question
+    } catch (error) {
 
-			return create_csv
-		} catch (err) {
-			console.log('hello')
+    }
+  }
 
-			return err
-		}
-	}
+  async findAll () {
+    try {
+      const FIND_QUESTIONS = await this.prisma.questions.findMany({
+        include: { level: true, module: true }
+      })
+      return FIND_QUESTIONS
+    } catch (err) {
+      return { error: err }
+    }
+  }
 
-	async create(createQuestionDto: QuestionDTO) {
-		console.log("run");
-		
-		const question = await this.prisma.questions.create({
-			data: {
-				question: createQuestionDto?.question,
-				question_type: createQuestionDto?.question_type,
-				options: createQuestionDto.options,
-				question_time: createQuestionDto?.question_time,
-				status: createQuestionDto?.status,
-				level_id: createQuestionDto?.level_id,
-				module_id: createQuestionDto?.module_id,
-				marks: createQuestionDto?.marks,
-				option_type: createQuestionDto?.option_type,
-			},
-		})
+  async findOne (id: string) {
+    try {
+      const question = await this.prisma.questions.findUnique({
+        where: {
+          id
+        },
+        include: {
+          level: true,
+          module: true
+        }
+      })
 
-		return question
-	}
+      if (!question) {
+        return `user not found with this  ${id}`
+      }
+      return question
+    } catch (err) {
+      return { error: err }
+    }
+  }
 
-	async findAll() {
-		const find_questions = await this.prisma.questions.findMany({
-			include: { level: true, module: true },
-		})
-		return find_questions
-	}
+  async update (id: string, updateRestApiDto: QuestionDTO) {
+    try {
+      const find = await this.prisma.questions.findUnique({ where: { id: id } })
+      if (find) {
+        return null
+      }
 
-	async findOne(id: string) {
-		const question = await this.prisma.questions.findUnique({
-			where: {
-				id,
-			},
-			include: {
-				level: true,
-				module: true,
-			},
-		})
+      const updatedOptions = await this.prisma.questions.update({
+        where: {
+          id
+        },
+        data: updateRestApiDto
+      })
+      return updatedOptions
+    } catch (err) {
+      return { error: err }
+    }
+  }
 
-		if (!question) {
-			return `user not found with this  ${id}`
-		}
-		return question
-	}
+  async remove (idd: string) {
+    try {
+      const FIND_DEL = await this.prisma.questions.findUnique({
+        where: { id: idd }
+      })
+      if (!FIND_DEL) {
+        return 'data does not exist!'
+      }
+      await this.prisma.questions.delete({
+        where: {
+          id: idd
+        }
+      })
 
-	async update(id: string, updateRestApiDto: QuestionDTO) {
-		const find = await this.prisma.questions.findUnique({ where: { id } })
-		if (!find) {
-			return 'data does not exist!'
-		}
-
-		const updatedOptions = await this.prisma.questions.update({
-			where: {
-				id,
-			},
-			data: updateRestApiDto,
-		})
-		return updatedOptions
-	}
-
-	async remove(idd: string) {
-		const find_del = await this.prisma.questions.findUnique({
-			where: { id: idd },
-		})
-		if (!find_del) {
-			return 'data does not exist!'
-		}
-		await this.prisma.questions.delete({
-			where: {
-				id: idd,
-			},
-		})
-
-		return 'question deleted'
-	}
+      return 'question deleted'
+    } catch (err) {
+      return { error: err }
+    }
+  }
 }

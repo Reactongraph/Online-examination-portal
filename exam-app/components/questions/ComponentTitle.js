@@ -1,36 +1,27 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useRouter } from 'next/router'
-import { CSVLink } from 'react-csv'
-import { csvObject } from './SampleCsvData'
 import { CsvReader } from './CsvReader'
 import { injectStyle } from 'react-toastify/dist/inject-style'
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 if (typeof window !== 'undefined') {
 	injectStyle()
 }
 
-const PageComponentTitle = ({
-	title,
-	titleDescription,
-	buttonTitle,
-	editForm,
-}) => {
-	const [modal, setModal] = useState(false)
-	const [csvData, setCsvData] = useState()
-	const [csvArray, setCsvArray] = useState([])
+const PageComponentTitle = ({ title, titleDescription, buttonTitle }) => {
 	const router = useRouter()
 
-	const checkModal = (title) => {}
+	// const checkModal = (title) => {}
 	const handleAddClick = () => {
 		router.push('/dashboard/questions/addQuestion')
 	}
 
 	const handleCsv = (e) => {
 		const result = CsvReader(e.target.files[0])
+
 		if (result == 1) {
 			setTimeout(() => {
 				router.replace(router.asPath)
-				toast.success('CSV uploaded successfully!')
+
 				e.target.value = null
 			}, 500)
 		}
@@ -44,13 +35,15 @@ const PageComponentTitle = ({
 			</div>
 
 			<div className='flex  flex-wrap items-start justify-end -mb-3'>
-				<CSVLink {...csvObject}>
+				<a
+					href='/Images/sampleQuestions.csv'
+					download>
 					<button
 						type='button'
 						className='inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out'>
 						Download sample (.csv)
 					</button>
-				</CSVLink>
+				</a>
 
 				<input
 					type='file'
@@ -61,9 +54,6 @@ const PageComponentTitle = ({
 					}}
 					className='px-6 py-2 mx-2 bg-blue-400 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-500 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out'
 				/>
-				{/* <p className='pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600'>
-																		Attach a file
-										</p> */}
 
 				<button
 					className='inline-flex px-5 py-3 text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 rounded-md ml-6 mb-3'

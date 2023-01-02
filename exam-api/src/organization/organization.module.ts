@@ -5,11 +5,13 @@ import { JwtModule } from '@nestjs/jwt'
 import { PrismaService } from 'src/prisma.service'
 
 @Module({
-  imports: [JwtModule.register({
-    secret: 'secret',
-    signOptions: { expiresIn: '1d' }
-  })],
+  imports: [
+    JwtModule.register({
+      secret: 'secret',
+      signOptions: { expiresIn: '1d' }
+    })
+  ],
   controllers: [RestApiController],
-  providers: [RestApiService,PrismaService]
+  providers: [RestApiService, PrismaService]
 })
-export class RestApiModule { }
+export class RestApiModule {}

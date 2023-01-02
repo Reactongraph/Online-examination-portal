@@ -6,6 +6,12 @@ import { ParticipantsModule } from './participants/participants.module'
 import { LevelModule } from './level/level.module'
 import { ModuleModule } from './module/module.module'
 import { AuthModule } from './auth/auth.module'
+import { Oraganization } from './organization/organization.middleware'
+import { Participants } from './participants/participants.middlesware'
+import { Modules } from './module/module.middleware'
+import { Levels } from './level/level.middleware'
+import { Questions } from './questions/questions.middleware'
+import { Quiz } from './quiz/quiz.middleware'
 import { QuestionsController } from './questions/questions.controller'
 import { QuestionsModule } from './questions/questions.module'
 import { QuestionsService } from './questions/questions.service'
@@ -14,12 +20,6 @@ import { PrismaService } from './prisma.service'
 import { QuizModule } from './quiz/quiz.module'
 import { QuizController } from './quiz/quiz.controller'
 import { QuizService } from './quiz/quiz.service'
-import { Oraganization } from './organization/organization.middleware'
-import { Participants } from './participants/participants.middlesware'
-import { Modules } from './module/module.middleware'
-import { Levels } from './level/level.middleware'
-import { Questions } from './questions/questions.middleware'
-import { Quiz } from './quiz/quiz.middleware'
 
 @Module({
   imports: [
@@ -34,11 +34,10 @@ import { Quiz } from './quiz/quiz.middleware'
       dest: './images'
     })
   ],
-  controllers: [AppController, QuestionsController, QuizController],
-  providers: [AppService, QuestionsService, PrismaService, QuizService]
+  controllers: [AppController, QuestionsController],
+  providers: [AppService, QuestionsService, PrismaService]
 })
 export class AppModule implements NestModule {
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   configure (consumer: MiddlewareConsumer) {
     consumer.apply(Oraganization).forRoutes('organization')
     consumer.apply(Participants).forRoutes('participants')

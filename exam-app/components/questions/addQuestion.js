@@ -3,12 +3,16 @@ import { useRouter } from 'next/router'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import { SERVER_LINK } from '../../helpers/config'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 import axios from 'axios'
-import { useSelector, useDispatch } from 'react-redux'
+
 import { useCookie } from 'next-cookie'
 
-const AddQuestion = ({ question_data, level_data, module_data }, props) => {
+const AddQuestion = (
+	{ level_data: levelData, module_data: moduleData },
+	props
+) => {
 	const router = useRouter()
 
 	const [selectedImage, setSelectedImage] = useState(null)
@@ -20,15 +24,10 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 	const [selectedModuleId, setSelectedModuleId] = useState('')
 	const [timeLimitSelect, setTimeLimitSelect] = useState('')
 	const [requiredOptionField, setRequiredOptionField] = useState(true)
-	const [levelData, setLevelData] = useState(level_data)
-	const [moduleData, setModuleData] = useState(module_data)
 	const [marks, setMarks] = useState()
 	const [numberOfOptionSelect, setNumberOfOptionSelect] = useState(0)
 	const [selectedOptionIndex, setSelectedOptionIndex] = useState()
-	const [editForm, setEditForm] = useState(
-		router?.query?.question_id ? true : false
-	)
-	let [posts, setPosts] = useState([])
+	const [editForm, setEditForm] = useState(false)
 	const [inputFields, setInputFields] = useState([
 		{ option: '', correct: '' },
 		{ option: '', correct: '' },
@@ -36,9 +35,7 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 		{ option: '', correct: '' },
 	])
 	const data = useCookie(props.cookie)
-	let [cookie, setName] = useState(data.get('refresh_token') || '')
-	// console.log("cookie",cookie);
-	const login_token = useSelector((state) => state.user.token)
+	let cookie = data.get('refresh_token') || ''
 
 	useEffect(() => {
 		let question_id = router.query.question_id
@@ -56,6 +53,7 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 			)
 			const questionData = results.data
 			setPageTitle('Edit')
+			setEditForm(true)
 			setQuestion(questionData.question)
 			setInputFields(questionData.options)
 			questionData.options.map((one, index) => {
@@ -76,21 +74,13 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 
 			setMarks(questionData.marks)
 			setEditForm(true)
-
-			setPosts(results.data)
 		}
 
 		if (router.query.question_id) {
 			getQuestionData()
 		}
 	}, [router.query?.question_id])
-	console.log('line no 76')
-	const {
-		register,
-		handleSubmit,
-		reset,
-		formState: { errors },
-	} = useForm()
+	const { handleSubmit } = useForm()
 
 	useEffect(() => {
 		if (numberOfOptionSelect > 0) {
@@ -99,9 +89,7 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 			setRequiredOptionField(true)
 		}
 	}, [numberOfOptionSelect])
-	console.log('line no 91')
 	const handleSelectedOption = (index, event) => {
-		// console.log("93");
 		if (optionType == 'Single') {
 			inputFields.map((one, i) => {
 				if (index != i) one.correct = false
@@ -116,7 +104,6 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 		}
 
 		let data = [...inputFields]
-		console.log('line no 108')
 		data[index].correct = event.target.checked
 		setInputFields(data)
 
@@ -129,7 +116,6 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 			setNumberOfOptionSelect(1)
 		}
 	}
-	console.log('121')
 	const handleModuleTypeSelect = (event) => {
 		let moduleId = event.target.value
 		setSelectedModuleId(moduleId)
@@ -171,9 +157,8 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 		data.splice(index, 1)
 		setInputFields(data)
 	}
-	console.log('203', cookie)
+
 	const checkWithDatabase = async (data) => {
-		console.log('205')
 		data.question_type = questionType
 		data.question = question
 		data.marks = marks
@@ -190,13 +175,13 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 			})
 		} else {
 			data.options = inputFields
-			data.options.map((oneOption, i) => {
+			data.options.map((oneOption) => {
 				if (!oneOption.correct) oneOption.correct = false
 			})
 		}
 
 		data = JSON.stringify(data)
-		console.log('api control')
+
 		if (editForm) {
 			let question_id = router.query.question_id
 
@@ -208,11 +193,11 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 						Authorization: cookie,
 					},
 				})
-				.then((response) => {
+				.then(() => {
 					router.push('/dashboard/questions')
 				})
-				.catch((err) => {
-					console.log(err)
+				.catch(() => {
+					toast.error('invalid request')
 				})
 		} else {
 			await axios({
@@ -225,11 +210,11 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 				},
 				data,
 			})
-				.then((response) => {
+				.then(() => {
 					router.push('/dashboard/questions')
 				})
-				.catch((err) => {
-					console.log(err)
+				.catch(() => {
+					toast.error('invalid request')
 				})
 		}
 	}
@@ -325,9 +310,8 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 								</div>
 								<br />
 								<br />
-								{/* for question type section  */}
+
 								<div className='mb-6'>
-									{/* <label for="default-input" className="block mb-2 text-sm font-medium">Default input</label> */}
 									<input
 										type='text'
 										id='default-input'
@@ -347,7 +331,6 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 											<div
 												className='flex items-center'
 												key={index}>
-												{/* <p>{String.fromCharCode(65+index)} */}
 												<input
 													type='text'
 													id='default-input'
@@ -355,7 +338,6 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 													name='option'
 													required
 													value={input.option}
-													// {...register(`options.${index}.option`)}
 													onChange={(event) => handleFormChange(index, event)}
 													placeholder={`Option ${String.fromCharCode(
 														65 + index
@@ -367,7 +349,6 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 													className='mx-5'
 													checked={input.correct}
 													required={requiredOptionField}
-													// {...register(`options.${index}.correct`)}
 													id={index}
 													name='fav_language'
 													onClick={(event) =>
@@ -444,10 +425,10 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 								hidden>
 								Select
 							</option>
-							<option value='10 seconds'>10 Seconds</option>
-							<option value='20 seconds'>20 Seconds</option>
-							<option value='30 seconds'>30 Seconds</option>
-							<option value='40 seconds'>40 Seconds</option>
+							<option value='10 Seconds'>10 Seconds</option>
+							<option value='20 Seconds'>20 Seconds</option>
+							<option value='30 Seconds'>30 Seconds</option>
+							<option value='40 Seconds'>40 Seconds</option>
 						</select>
 						<label
 							htmlFor='default'
@@ -491,8 +472,12 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 								Select
 							</option>
 							{levelData &&
-								levelData.map((response) => (
-									<option value={response.id}>{response.level}</option>
+								levelData.map((response, i) => (
+									<option
+										key={`levelOption-${i}`}
+										value={response.id}>
+										{response.level}
+									</option>
 								))}
 						</select>
 						<label
@@ -514,8 +499,12 @@ const AddQuestion = ({ question_data, level_data, module_data }, props) => {
 								Select
 							</option>
 							{moduleData &&
-								moduleData.map((response) => (
-									<option value={response.id}>{response.module}</option>
+								moduleData.map((response, i) => (
+									<option
+										key={`moduleOption-${i}`}
+										value={response.id}>
+										{response.module}
+									</option>
 								))}
 						</select>
 						<label

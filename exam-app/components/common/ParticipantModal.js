@@ -6,8 +6,9 @@ import { SERVER_LINK } from '../../helpers/config'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
-const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
+const ParticipantModal = ({ modal, setModal }) => {
 	//For Image Preview
 	const router = useRouter()
 
@@ -15,12 +16,13 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
 	const [email, setEmail] = useState('')
 
 	const [mobile, setMobile] = useState('')
-	const [buttonText, setButtonText] = useState('Add')
+
+	const buttonText = 'Add'
 
 	const [password, setPassword] = useState('')
 	const [organizationId, setOrganizationId] = useState('')
 
-	const { register, handleSubmit } = useForm()
+	const { handleSubmit } = useForm()
 
 	const login_token = useSelector((state) => state.user.token)
 	// for sending the data to the backend
@@ -45,7 +47,7 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
 			},
 			data: participantData,
 		})
-			.then((response) => {
+			.then(() => {
 				router.replace(router.asPath)
 				setName('')
 				setEmail('')
@@ -53,9 +55,10 @@ const ParticipantModal = ({ modal, setModal, editForm, participantId }) => {
 				setPassword('')
 				setOrganizationId('')
 				setModal(!modal)
+				toast.success('participant created!')
 			})
-			.catch((err) => {
-				console.log(err)
+			.catch(() => {
+				toast.error('Invalid Request')
 			})
 	}
 

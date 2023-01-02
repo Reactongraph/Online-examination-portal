@@ -12,7 +12,7 @@ const LogOutButton = () => {
 	const router = useRouter()
 	const handleLogout = async () => {
 		try {
-			const response = await axios.post(
+			await axios.post(
 				`${SERVER_LINK}/auth/logout`,
 				{},
 				{ withCredentials: true }
@@ -22,7 +22,7 @@ const LogOutButton = () => {
 				router.push('/login')
 			}, 1000)
 		} catch (error) {
-			console.log('this is error in catch')
+			toast.error('Invalid Request')
 		}
 	}
 	return (

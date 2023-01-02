@@ -11,34 +11,31 @@ const initialState = {
 }
 
 const userReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case userActionType.SET_LOGIN:
-            return {
-                ...state,
-                isLogin: true,
-                token: action.token,
-                payload: action.payload
-            }
-            break
+	switch (action.type) {
+		case userActionType.SET_LOGIN:
+			return {
+				...state,
+				isLogin: true,
+				token: action.token,
+				payload: action.payload,
+			}
 
 		case userActionType.SET_LOGOUT:
 			return {
 				...state,
 				defaultValues,
 			}
-			break
 
-        case userActionType.UPDATE_ACCESS_TOKEN:
-            return {
-                ...state,
-                isLogin: true,
-                token: action.token,
-                payload: action.payload
-            }
+		case userActionType.UPDATE_ACCESS_TOKEN:
+			return {
+				...state,
+				isLogin: true,
+				token: action.token,
+				payload: action.payload,
+			}
 
 		default:
 			return state
-			break
 	}
 }
 
