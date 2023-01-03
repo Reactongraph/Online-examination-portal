@@ -63,13 +63,6 @@ const Login = () => {
 					const Org_id = response.data.organization_id
 
 					toast.success('Login Successfully !')
-
-					// setCookie("user", JSON.stringify(response.data), {
-					//   path: "/",
-					//   maxAge: 3600, // Expires after 1hr
-					//   sameSite: true,
-					// })
-
 					dispatch({
 						type: 'SET_LOGIN',
 						token: login_token,
@@ -77,26 +70,15 @@ const Login = () => {
 						role: userRole,
 						Org_id: Org_id,
 					})
-					// router.push("/dashboard");
 					router.push({
 						pathname: '/dashboard',
 						// query: { role : optionValue },
 					})
 				}
-				// else {
-				// 	setInvalid(true)
-				// 	setErrorMessage('Invalid Credentials !')
-				// 	setTimeout(() => {
-				// 		setErrorMessage('')
-				// 	}, 2000)
-				// }
 			})
 			.catch((err) => {
 				const { data } = err.response
 				toast.error(data.error)
-				// console.log(err.response.data);
-
-				// return console.log(err);
 			})
 	}
 
