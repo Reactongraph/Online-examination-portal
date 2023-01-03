@@ -5,14 +5,11 @@ import axios from 'axios'
 import { SERVER_LINK } from '../../../helpers/config'
 
 // You can't name a function as MODULE...
-export default function modules({ question_data }) {
+export default function Questions({ question_data }) {
 	return (
 		<>
 			<Layout title='Questions'>
 				<Question question_data={question_data} />
-				{/* <Level level_data={module_data} /> */}
-
-				{/* <h1 style={{color: "red"}}>This is questions  </h1> */}
 			</Layout>
 		</>
 	)

@@ -20,16 +20,11 @@ const schema = object({
 })
 
 const ForgotPassword = () => {
-	// const [emailError, setEmailError] = useState('')
-	// const [invalidEmail, setInvalidEmail] = useState(false)
-	// const [LoadingApiResponse, setLoadingApiResponse] = useState(false)
-
 	const { register, handleSubmit } = useForm({
 		resolver: yupResolver(schema),
 	})
 
 	const SendPasswordReset = async (data) => {
-		// setLoadingApiResponse(true)
 		data = JSON.stringify(data)
 		await axios
 			.request({
@@ -42,23 +37,15 @@ const ForgotPassword = () => {
 				data,
 			})
 			.then((response) => {
-				// setLoadingApiResponse(false)
-				if (response.status != 200) {
-					// setInvalidEmail(true)
-					// setEmailError('Email is not registered !')
-					// setTimeout(() => {
-					// 	setEmailError('')
-					// }, 2000)
-				} else if (response.status == 200) {
-					// setInvalidEmail(false)
+				if (response.status == 200) {
 					toast.success('Email sent Successfully! 📧')
 					setTimeout(() => {
 						toast.success('Please check your mailbox 📬')
 					}, 1000)
 				}
 			})
-			.catch((err) => {
-				return err
+			.catch(() => {
+				toast.error('Invalid Request')
 			})
 	}
 
@@ -92,10 +79,8 @@ const ForgotPassword = () => {
 									className='bg-gray-100 outline-none text-sm'
 								/>{' '}
 							</div>
-							{/* <div className="bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20" > <MdLockOutline className="text-gray-400 m-2" />
-              <input type="password" {...register("password")} name="password"placeholder="Password" className="bg-gray-100 outline-none text-sm" /> </div> */}
+
 							<div className='flex  justify-between w-64 mb-5'>
-								{/* <a href="#" className="text-xs mr-1 ml-20  md-20 text-gray-1000">Forget Password?</a> */}
 								<button
 									type='submit'
 									className='border-2 border-blue rounded-full px-12 py-2 inline-block font-semibold bg-blue-500 hover:bg-blue-700  mr-25 ml-20   '>

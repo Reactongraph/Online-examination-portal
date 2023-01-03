@@ -29,8 +29,8 @@ const QuestionTable = ({ question_data }) => {
 				router.replace(router.asPath)
 				toast.success(result.data)
 			})
-			.catch((err) => {
-				return err
+			.catch(() => {
+				toast.error('invalid request')
 			})
 	}
 
@@ -51,8 +51,8 @@ const QuestionTable = ({ question_data }) => {
 				router.replace(router.asPath)
 				toast.success('status updated!')
 			})
-			.catch((err) => {
-				return err
+			.catch(() => {
+				toast.error('invalid request')
 			})
 	}
 

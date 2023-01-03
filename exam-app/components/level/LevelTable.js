@@ -18,10 +18,10 @@ if (typeof window !== 'undefined') {
 
 const LevelTable = ({ level_data }) => {
 	const router = useRouter()
-	// const [editForm, setEditForm] = useState(false)
+
 	const [modal, setModal] = useState(false)
 	const [levelId, setLevelId] = useState('')
-	// const [orgData, setOrgData] = useState()
+
 	const [buttonText, setButtonText] = useState('Add')
 	const [level, setLevel] = useState('')
 
@@ -42,16 +42,15 @@ const LevelTable = ({ level_data }) => {
 				.then(() => {
 					router.replace(router.asPath)
 				})
-				.catch((err) => {
-					return err
+				.catch(() => {
+					toast.error('Invalid Request')
 				})
 		}
 	}
 
 	const handleEditClick = async (level_id) => {
-		// setOpen(true);
 		setButtonText('Update')
-		// setEditForm(true)
+
 		setLevelId(level_id)
 		setModal(true)
 
@@ -65,13 +64,12 @@ const LevelTable = ({ level_data }) => {
 				},
 			})
 			.then((response) => {
-				// console.log(response)
 				let singleLevelData = response.data
 
 				setLevel(singleLevelData.level)
 			})
-			.catch((err) => {
-				return err
+			.catch(() => {
+				toast.error('Invalid Request')
 			})
 	}
 
@@ -90,16 +88,14 @@ const LevelTable = ({ level_data }) => {
 				},
 			})
 			.then(() => {
-				// setModal(!modal);
 				router.replace(router.asPath)
 				toast.success('level updated!')
 			})
-			.catch((err) => {
-				return err
+			.catch(() => {
+				toast.error('Invalid Request')
 			})
 	}
 	const checkWithDatabase = async (data) => {
-		// data.status = true;
 		data.level = level
 
 		let LevelData = JSON.stringify(data)
@@ -120,8 +116,8 @@ const LevelTable = ({ level_data }) => {
 					router.replace(router.asPath)
 					toast.success('level updated!')
 				})
-				.catch((err) => {
-					return err
+				.catch(() => {
+					toast.error('Invalid Request')
 				})
 		} else {
 			toast.error("Field Can't be empty ")
@@ -147,7 +143,6 @@ const LevelTable = ({ level_data }) => {
 		const status = (
 			<>
 				<div className='flex'>
-					{/* <div className="form-check form-switch"> */}
 					<input
 						onClick={() => handleBoxClick(level_id, level_status)}
 						className='form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm'
@@ -164,7 +159,7 @@ const LevelTable = ({ level_data }) => {
 
 	const rowsDataArray = level_data.map((element) => {
 		let level = element.level
-		// let email = element.email;
+
 		let level_id = element.id
 		let level_status = element.status
 		return createData(level, level_id, level_status)
@@ -205,11 +200,6 @@ const LevelTable = ({ level_data }) => {
 
 	// data by using which table data is creating using api call
 	const data = rowsDataArray
-
-	// const [activePage, setActivePage] = useState(15)
-	// const handlePageChange = (pageNumber) => {
-	// 	setActivePage(pageNumber)
-	// }
 
 	return (
 		<>

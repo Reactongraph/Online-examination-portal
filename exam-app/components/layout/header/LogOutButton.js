@@ -22,7 +22,7 @@ const LogOutButton = () => {
 				router.push('/login')
 			}, 1000)
 		} catch (error) {
-			return error
+			toast.error('Invalid Request')
 		}
 	}
 	return (

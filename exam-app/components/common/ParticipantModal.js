@@ -16,7 +16,7 @@ const ParticipantModal = ({ modal, setModal, organization_data }) => {
 	const [email, setEmail] = useState('')
 
 	const [mobile, setMobile] = useState('')
-	// const [buttonText, setButtonText] = useState('Add')
+
 	const buttonText = 'Add'
 
 	const [password, setPassword] = useState('')
@@ -62,8 +62,8 @@ const ParticipantModal = ({ modal, setModal, organization_data }) => {
 				setModal(!modal)
 				toast.success('participant created!')
 			})
-			.catch((err) => {
-				return err
+			.catch(() => {
+				toast.error('Invalid Request')
 			})
 	}
 

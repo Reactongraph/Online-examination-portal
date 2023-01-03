@@ -50,7 +50,7 @@ export default function PasswordReset() {
 				router.push('/login')
 			})
 			.catch((err) => {
-				return toast.error(err.response.data)
+				toast.error(err.response.data)
 			})
 	}
 

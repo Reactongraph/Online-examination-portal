@@ -7,6 +7,7 @@ import { SERVER_LINK } from '../../helpers/config'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
 const OrganizationModal = ({ modal, setModal }) => {
 	const router = useRouter()
@@ -19,7 +20,7 @@ const OrganizationModal = ({ modal, setModal }) => {
 	const [state, setState] = useState('')
 	const [mobile, setMobile] = useState('')
 	const [quota, setQuota] = useState('')
-	// const [buttonText, setButtonText] = useState('Add')
+
 	const buttonText = 'Add'
 
 	const [password, setPassword] = useState('')
@@ -57,8 +58,8 @@ const OrganizationModal = ({ modal, setModal }) => {
 				router.replace(router.asPath)
 				setModal(!modal)
 			})
-			.catch((err) => {
-				return err
+			.catch(() => {
+				toast.error('Invalid Request')
 			})
 	}
 

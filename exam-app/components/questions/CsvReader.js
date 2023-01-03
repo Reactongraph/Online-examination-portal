@@ -72,10 +72,8 @@ const CsvReader = (cdata) => {
 			.then(() => {
 				toast.success('CSV uploaded successfully!')
 			})
-			.catch((err) => {
+			.catch(() => {
 				toast.error('Problem while uploading CSV!')
-
-				return err
 			})
 	}
 
