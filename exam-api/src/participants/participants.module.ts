@@ -4,6 +4,6 @@ import { ParticipantsService } from './participants.service'
 import { PrismaService } from 'src/prisma.service'
 @Module({
   controllers: [ParticipantsController],
-  providers: [ParticipantsService,PrismaService]
+  providers: [ParticipantsService, PrismaService]
 })
-export class ParticipantsModule { }
+export class ParticipantsModule {}

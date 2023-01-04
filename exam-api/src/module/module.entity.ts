@@ -1,4 +1,9 @@
+import { ApiProperty } from '@nestjs/swagger'
+
 export class module_dto {
-  module: string
-  status: boolean
+  @ApiProperty()
+    module: string
+
+  @ApiProperty()
+    status: boolean
 }

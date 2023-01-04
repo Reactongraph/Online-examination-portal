@@ -1,295 +1,265 @@
-// import Table from 'rc-table';
-import Table from "./Table";
-import React, { useState } from "react";
-import Pagination from "react-js-pagination";
-import axios from "axios";
-import { SERVER_LINK } from "../../helpers/config";
-import { useRouter } from "next/router";
-import Modal from "../common/Modal";
-import PureModal from "react-pure-modal";
-import "react-pure-modal/dist/react-pure-modal.min.css";
-import { useForm } from "react-hook-form";
-import { injectStyle } from "react-toastify/dist/inject-style";
-import { ToastContainer, toast } from "react-toastify";
+import Table from './Table'
+import React, { useState } from 'react'
+import axios from 'axios'
+import { SERVER_LINK } from '../../helpers/config'
+import { useRouter } from 'next/router'
+import PureModal from 'react-pure-modal'
+import 'react-pure-modal/dist/react-pure-modal.min.css'
+import { useForm } from 'react-hook-form'
+import { injectStyle } from 'react-toastify/dist/inject-style'
+import { ToastContainer, toast } from 'react-toastify'
+// import { login_token } from '../login'
+import { useSelector } from 'react-redux'
 
 // CALL IT ONCE IN YOUR APP
-if (typeof window !== "undefined") {
-  injectStyle();
+if (typeof window !== 'undefined') {
+	injectStyle()
 }
 
 const LevelTable = ({ level_data }) => {
-  // console.log('this is the talbe ');
+	const router = useRouter()
 
-  const router = useRouter();
-  const [editForm, setEditForm] = useState(false);
-  const [modal, setModal] = useState(false);
-  const [levelId, setLevelId] = useState("");
-  const [orgData, setOrgData] = useState();
-  const [buttonText, setButtonText] = useState("Add");
-  const [level, setLevel] = useState("");
+	const [modal, setModal] = useState(false)
+	const [levelId, setLevelId] = useState('')
 
-  const { register, handleSubmit } = useForm();
+	const [buttonText, setButtonText] = useState('Add')
+	const [level, setLevel] = useState('')
 
-  const handleRemoveClick = (level_id) => {
-    axios
-      .delete(`${SERVER_LINK}/level/${level_id}`)
-      .then((result) => {
-        router.replace(router.asPath);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+	const { register, handleSubmit } = useForm()
+	const login_token = useSelector((state) => state.user.token)
 
-  const handleEditClick = (level_id) => {
-    // setOpen(true);
-    setButtonText("Update");
-    setEditForm(true);
-    setLevelId(level_id);
-    setModal(true);
+	const handleRemoveClick = async (level_id) => {
+		var shouldDelete = confirm('Do you really want to delete ?')
+		if (shouldDelete) {
+			await axios
+				.delete(`${SERVER_LINK}/level/${level_id}`, {
+					headers: {
+						Accept: 'application/json',
+						'Content-Type': 'application/json;charset=UTF-8',
+						Authorization: login_token,
+					},
+				})
+				.then(() => {
+					router.replace(router.asPath)
+				})
+				.catch(() => {
+					toast.error('Invalid Request')
+				})
+		}
+	}
 
-    // first find the user with the id
-    axios
-      .get(`${SERVER_LINK}/level/${level_id}`)
-      .then((response) => {
-        let singleLevelData = response.data;
+	const handleEditClick = async (level_id) => {
+		setButtonText('Update')
 
-        setLevel(singleLevelData.level);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+		setLevelId(level_id)
+		setModal(true)
 
-  const handleBoxClick = async (level_id,level_status) =>{
-    console.log('This is hte box click');
-    console.log(level_id);
-    let new_status = {
-      status : ! level_status
-    }
-    new_status = JSON.stringify(new_status)
-    console.log(new_status);
-    
-    
-    await axios
-        .patch(`${SERVER_LINK}/level/${level_id}`, new_status, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json;charset=UTF-8",
-          },
-        })
-        .then((response) => {
-          // setModal(!modal);
-          router.replace(router.asPath);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+		// first find the user with the id
+		await axios
+			.get(`${SERVER_LINK}/level/${level_id}`, {
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json;charset=UTF-8',
+					Authorization: login_token,
+				},
+			})
+			.then((response) => {
+				let singleLevelData = response.data
 
-    
-    
-  }
-  const checkWithDatabase = async (data) => {
-    // data.status = true;
-    data.level = level
+				setLevel(singleLevelData.level)
+			})
+			.catch(() => {
+				toast.error('Invalid Request')
+			})
+	}
 
-    let LevelData = JSON.stringify(data);
-    // console.log(LevelData);
+	const handleBoxClick = async (level_id, level_status) => {
+		let new_status = {
+			status: !level_status,
+		}
+		new_status = JSON.stringify(new_status)
 
-    // for taking the patch api data
+		await axios
+			.patch(`${SERVER_LINK}/level/${level_id}`, new_status, {
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json;charset=UTF-8',
+					Authorization: login_token,
+				},
+			})
+			.then(() => {
+				router.replace(router.asPath)
+				toast.success('level updated!')
+			})
+			.catch(() => {
+				toast.error('Invalid Request')
+			})
+	}
+	const checkWithDatabase = async (data) => {
+		data.level = level
 
-    
-    if (data.level !=null && data.level != "") {
-      await axios
-        .patch(`${SERVER_LINK}/level/${levelId}`, LevelData, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json;charset=UTF-8",
-          },
-        })
-        .then((response) => {
-          setModal(!modal);
-          router.replace(router.asPath);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-    else{
-      toast.error("Field Can't be empty ");
+		let LevelData = JSON.stringify(data)
 
-    }
+		// for taking the patch api data
 
-    // for new data registration
-    // else {
-    //   await axios({
-    //     url: `${SERVER_LINK}/level`,
-    //     method: "POST",
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Content-Type": "application/json;charset=UTF-8",
-    //     },
-    //     data,
-    //   })
-    //     .then((response) => {
-    //       setModal(!modal);
-    //       router.replace(router.asPath);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // }
-  };
+		if (data.level != null && data.level != '') {
+			await axios
+				.patch(`${SERVER_LINK}/level/${levelId}`, LevelData, {
+					headers: {
+						Accept: 'application/json',
+						'Content-Type': 'application/json;charset=UTF-8',
+						Authorization: login_token,
+					},
+				})
+				.then(() => {
+					setModal(!modal)
+					router.replace(router.asPath)
+					toast.success('level updated!')
+				})
+				.catch(() => {
+					toast.error('Invalid Request')
+				})
+		} else {
+			toast.error("Field Can't be empty ")
+		}
+	}
 
-  function createData(level, level_id,level_status) {
-    const action = (
-      <>
-        <button
-          onClick={() => handleEditClick(level_id)}
-          className="bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full"
-        >
-          Edit
-        </button>
-        &nbsp;
-        <button
-          onClick={() => handleRemoveClick(level_id)}
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
-        >
-          Delete
-        </button>
-      </>
-    );
-    const status = (
-      <>
-        <div className="flex">
-          {/* <div className="form-check form-switch"> */}
-          <input
-            onClick = {() => handleBoxClick(level_id,level_status)}
-            className="form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
-            type="checkbox"
-            role="switch"
-            id="flexSwitchCheckDefault"
-            defaultChecked = {level_status}
-          />
-        </div>
-      </>
-    );
-    return { level, status, action };
-  }
+	function createData(level, level_id, level_status) {
+		const action = (
+			<>
+				<button
+					onClick={() => handleEditClick(level_id)}
+					className='bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'>
+					Edit
+				</button>
+				&nbsp;
+				<button
+					onClick={() => handleRemoveClick(level_id)}
+					className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'>
+					Delete
+				</button>
+			</>
+		)
+		const status = (
+			<>
+				<div className='flex'>
+					<input
+						onClick={() => handleBoxClick(level_id, level_status)}
+						className='form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm'
+						type='checkbox'
+						role='switch'
+						id='flexSwitchCheckDefault'
+						defaultChecked={level_status}
+					/>
+				</div>
+			</>
+		)
+		return { level, status, action }
+	}
 
-  const rowsDataArray = level_data.map((element) => {
-    let level = element.level;
-    // let email = element.email;
-    let level_id = element.id;
-    let level_status = element.status
-    return createData(level, level_id,level_status);
-  });
+	const rowsDataArray = level_data.map((element) => {
+		let level = element.level
 
-  const columns = [
-    {
-      Header: "Level",
-      accessor: "level",
-      title: "Level",
-      dataIndex: "level",
-      key: "level",
-      width: 400,
-      className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
-      rowClassName: "bg-black-ripon",
-    },
+		let level_id = element.id
+		let level_status = element.status
+		return createData(level, level_id, level_status)
+	})
 
-    {
-      Header: "Status",
-      accessor: "status",
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      width: 400,
-      className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
-    },
-    {
-      Header: "Action",
-      accessor: "action",
-      title: "Action",
-      dataIndex: "action",
-      key: "operations",
-      width: 250,
-      className: "text-white bg-gray-600 p-2 border-b-2",
-      //
-    },
-  ];
+	const columns = [
+		{
+			Header: 'Level',
+			accessor: 'level',
+			title: 'Level',
+			dataIndex: 'level',
+			key: 'level',
+			width: 400,
+			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
+			rowClassName: 'bg-black-ripon',
+		},
 
-  // data by using which table data is creating using api call
-  const data = rowsDataArray;
+		{
+			Header: 'Status',
+			accessor: 'status',
+			title: 'Status',
+			dataIndex: 'status',
+			key: 'status',
+			width: 400,
+			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
+		},
+		{
+			Header: 'Action',
+			accessor: 'action',
+			title: 'Action',
+			dataIndex: 'action',
+			key: 'operations',
+			width: 250,
+			className: 'text-white bg-gray-600 p-2 border-b-2',
+			//
+		},
+	]
 
-  const [activePage, setActivePage] = useState(15);
-  const handlePageChange = (pageNumber) => {
-    setActivePage(pageNumber);
-  };
+	// data by using which table data is creating using api call
+	const data = rowsDataArray
 
-  return (
-    <>
-      <Table
-        columns={columns}
-        data={data}
-        rowKey="id"
-        className="bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed"
-      />
+	return (
+		<>
+			<Table
+				columns={columns}
+				data={data}
+				rowKey='id'
+				className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'
+			/>
 
-      <PureModal
-        isOpen={modal}
-        width="800px"
-        onClose={() => {
-          setModal(false);
-          return true;
-        }}
-      >
-        <div className="flex-row space-y-3 relative">
-          <div className="bg-blue-600 p-2 font-bold text-lg text-center text-white -mt-4 -mx-4 mb-5 pb-4">
-            <p>{buttonText} Level</p>
-          </div>
+			<PureModal
+				isOpen={modal}
+				width='800px'
+				onClose={() => {
+					setModal(false)
+					return true
+				}}>
+				<div className='flex-row space-y-3 relative'>
+					<div className='bg-blue-600 p-2 font-bold text-lg text-center text-white -mt-4 -mx-4 mb-5 pb-4'>
+						<p>{buttonText} Level</p>
+					</div>
 
-          <div className="py-6 px-6 lg:px-8">
-            <form
-              className="w-full max-w-lg"
-              onSubmit={handleSubmit((data) => checkWithDatabase(data))}
-            >
-              <div className="flex flex-wrap -mx-3 mb-6">
-                <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                  <label
-                    className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                    for="grid-first-name"
-                  >
-                    Enter Level for Module
-                  </label>
-                  <input
-                    className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                    id="grid-level"
-                    type="text"
-                    value={level}
-                    {...register("level", {
-                      onChange: (e) => setLevel(e.target.value),
-                    })}
-                    placeholder="e.g. Easy , Hard ..."
-                  />
-                </div>
-              </div>
+					<div className='py-6 px-6 lg:px-8'>
+						<form
+							className='w-full max-w-lg'
+							onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
+							<div className='flex flex-wrap -mx-3 mb-6'>
+								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
+									<label
+										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
+										for='grid-first-name'>
+										Enter Level
+									</label>
+									<input
+										className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+										id='grid-level'
+										type='text'
+										value={level}
+										{...register('level', {
+											onChange: (e) => setLevel(e.target.value),
+										})}
+										placeholder='e.g. Easy , Hard ...'
+									/>
+								</div>
+							</div>
 
-              <button
-                type="submit"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                {buttonText}
-              </button>
-            </form>
-          </div>
+							<button
+								type='submit'
+								className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
+								{buttonText}
+							</button>
+						</form>
+					</div>
 
-          {/* */}
-        </div>
-      </PureModal>
-      <ToastContainer />
+					{/* */}
+				</div>
+			</PureModal>
+			<ToastContainer />
+		</>
+	)
+}
 
-    </>
-  );
-};
-
-export default LevelTable;
+export default LevelTable

@@ -1,78 +1,100 @@
-import { Injectable } from '@nestjs/common';
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
-import { module_dto } from './module.entity';
+import { Injectable } from '@nestjs/common'
+import { PrismaService } from 'src/prisma.service'
+import { module_dto } from './module.entity'
 @Injectable()
 export class ModuleService {
-  async create(params: module_dto) {
-    prisma.$connect();
-    console.log('in service ', params?.module);
-    const module = params?.module;
-    const status = params?.status;
-    const toLowerCaseModule = params?.module.toLowerCase();
-    const users = await prisma.module.create({
-      data: {
-        module: toLowerCaseModule,
-        status: status,
-      },
-    });
-    return 'module inserted';
-  }
-  async findAll() {
-    prisma.$connect();
-    const users = await prisma.Module.findMany();
-    console.log(users);
+  constructor (private readonly prisma: PrismaService) { }
+  async create (params: module_dto) {
+    try {
+      const toLowerCaseModule = params?.module.toLowerCase()
 
-    return `${JSON.stringify(users)}`;
-  }
-  async findOne(id: string) {
-    console.log(id);
-
-    const user = await prisma.Module.findUnique({
-      where: {
-        id: id,
-      },
-    });
-    console.log(user);
-    if (!user) {
-      return `data not found with this  ${id}`;
-    }
-
-    return `${JSON.stringify(user)} `;
-  }
-  async update(id: string, updateRestApiDto: module_dto) {
-    const check_id = await prisma.Module.findUnique({
-      where: {
-        id: id,
-      },
-    });
-    console.log('checkid', check_id.module);
-    if (updateRestApiDto?.module == check_id.module) {
-      return { message: 'module already exist' };
-    }
-
-    if (check_id == null) {
-      return 'invalid id ';
-    } else {
-      const updateUser = await prisma.Module.update({
+      const find = await this.prisma.module.findUnique({
         where: {
-          id: id,
-        },
-        data: updateRestApiDto,
-      });
-      if (!updateUser) {
-        return `user not found for this ${id}`;
+          module: toLowerCaseModule
+        }
+      })
+
+      if (find != null) {
+        return null
       }
-      return `${id} `;
+      const status = params?.status
+      await this.prisma.module.create({
+        data: {
+          module: toLowerCaseModule,
+          status
+        }
+      })
+      return 'module inserted'
+    } catch (err) {
+      return { error: err }
     }
   }
 
-  async remove(id: string) {
-    const delete_user = await prisma.Module.delete({
-      where: {
-        id: id,
-      },
-    });
-    return `This action removes a #${id} restApi`;
+  async findAll () {
+    try {
+      const users = await this.prisma.module.findMany()
+
+      return `${JSON.stringify(users)}`
+    } catch (err) {
+      return { error: err }
+    }
+  }
+
+  async findOne (id: string) {
+    try {
+      const user = await this.prisma.module.findUnique({
+        where: {
+          id
+        }
+      })
+      if (!user) {
+        return `data not found with this  ${id}`
+      }
+
+      return `${JSON.stringify(user)} `
+    } catch (err) {
+      return { error: err }
+    }
+  }
+
+  async update (id: string, updateRestApiDto: module_dto) {
+    try {
+      const toLowerCaseModule = updateRestApiDto?.module.toLowerCase()
+      const CHECK_ID = await this.prisma.module.findUnique({
+        where: {
+          module: toLowerCaseModule
+        }
+      })
+
+      if (CHECK_ID) {
+        return null
+      } else {
+        const UPDATE_USER = await this.prisma.module.update({
+          where: {
+            id
+          },
+          data: updateRestApiDto
+        })
+        if (!UPDATE_USER) {
+          return `user not found for this ${id}`
+        }
+        return `module updated ${id} `
+      }
+    } catch (err) {
+      return { error: err }
+    }
+  }
+
+  async remove (id: string) {
+    try {
+      const DELETE_USER = await this.prisma.module.delete({
+        where: {
+          id
+        }
+      })
+      return DELETE_USER
+    } catch (err) {
+      return { error: err }
+    }
   }
 }

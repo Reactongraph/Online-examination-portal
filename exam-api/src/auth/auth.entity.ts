@@ -1,7 +1,20 @@
+import { ApiProperty } from '@nestjs/swagger'
+import { IsEmail, IsNotEmpty, Length } from 'class-validator'
+
 export class auth_dto {
-  email: string
-  password: string
-  cpassword: string
-  xaccesstoken: string
-  decodeid: string
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsEmail()
+    email: string
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @Length(8, 24)
+    password: string
+
+  @ApiProperty()
+    decodeid: string
+
+  @ApiProperty()
+    token: string
 }
