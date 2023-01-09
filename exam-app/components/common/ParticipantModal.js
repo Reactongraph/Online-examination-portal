@@ -2,11 +2,10 @@ import React, { useState } from 'react'
 import PureModal from 'react-pure-modal'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
-import { SERVER_LINK } from '../../helpers/config'
-import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import { AddParticipant } from '../../apis/participants'
 
 const ParticipantModal = ({ modal, setModal }) => {
 	//For Image Preview
@@ -23,7 +22,7 @@ const ParticipantModal = ({ modal, setModal }) => {
 	const [showPassword, setShowPassword] = useState(false)
 
 	const { handleSubmit } = useForm()
-	const Org = useSelector((state) => state.user?.payload)
+	const Org = useSelector((state) => state?.user)
 	const login_token = useSelector((state) => state.user.token)
 
 	// for sending the data to the backend
@@ -31,23 +30,14 @@ const ParticipantModal = ({ modal, setModal }) => {
 		data.name = name
 		data.email = email
 		data.mobile = mobile
-		data.id = Org.id
+		data.id = Org.Org_id
 		data.password = password
 
 		let participantData = JSON.stringify(data)
 
 		// for new data registration
 
-		await axios({
-			url: `${SERVER_LINK}/participants`,
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json;charset=UTF-8',
-				Authorization: login_token,
-			},
-			data: participantData,
-		})
+		AddParticipant(participantData, login_token)
 			.then(() => {
 				router.replace(router.asPath)
 				setName('')
@@ -178,7 +168,7 @@ const ParticipantModal = ({ modal, setModal }) => {
 										id='org_id'
 										type='text'
 										disabled={true}
-										value={Org?.username}
+										value={Org?.payload?.username}
 									/>
 								</div>
 							</div>
