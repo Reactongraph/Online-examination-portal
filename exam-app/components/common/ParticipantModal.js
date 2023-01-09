@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
-const ParticipantModal = ({ modal, setModal, organization_data }) => {
+const ParticipantModal = ({ modal, setModal }) => {
 	//For Image Preview
 	const router = useRouter()
 
@@ -20,22 +20,18 @@ const ParticipantModal = ({ modal, setModal, organization_data }) => {
 	const buttonText = 'Add'
 
 	const [password, setPassword] = useState('')
-	const [selectedorganizationId, setSelectedOrganizationId] = useState('')
 	const [showPassword, setShowPassword] = useState(false)
 
 	const { handleSubmit } = useForm()
-
+	const Org = useSelector((state) => state.user?.payload)
 	const login_token = useSelector((state) => state.user.token)
-	const handleOrganizationIdTypeSelect = (event) => {
-		let organizationId = event.target.value
-		setSelectedOrganizationId(organizationId)
-	}
+
 	// for sending the data to the backend
 	const checkWithDatabase = async (data) => {
 		data.name = name
 		data.email = email
 		data.mobile = mobile
-		data.id = selectedorganizationId
+		data.id = Org.id
 		data.password = password
 
 		let participantData = JSON.stringify(data)
@@ -58,7 +54,6 @@ const ParticipantModal = ({ modal, setModal, organization_data }) => {
 				setEmail('')
 				setMobile('')
 				setPassword('')
-				setSelectedOrganizationId('')
 				setModal(!modal)
 				toast.success('participant created!')
 			})
@@ -77,7 +72,6 @@ const ParticipantModal = ({ modal, setModal, organization_data }) => {
 					setEmail('')
 					setMobile('')
 					setPassword('')
-					setSelectedOrganizationId('')
 					setModal(false)
 					return true
 				}}>
@@ -151,7 +145,7 @@ const ParticipantModal = ({ modal, setModal, organization_data }) => {
 										</button>
 									</div>
 									<p className='text-gray-600 text-xs italic'>
-										Make it as long and as crazy as you'd like
+										Make it as long and as crazy as you{`&apos;`}d like
 									</p>
 								</div>
 							</div>
@@ -179,28 +173,13 @@ const ParticipantModal = ({ modal, setModal, organization_data }) => {
 										className='block mb-2 text-sm font-medium text-gray-900 '>
 										Organization Name
 									</label>
-									<select
-										id='default'
-										value={selectedorganizationId}
-										onChange={(e) => {
-											handleOrganizationIdTypeSelect(e)
-										}}
-										required
-										className='bg-gray-50 border w-40 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500'>
-										<option
-											value=''
-											hidden>
-											Select
-										</option>
-										{organization_data &&
-											organization_data.map((response) => (
-												<option
-													key={response.id}
-													value={response.id}>
-													{response.name}
-												</option>
-											))}
-									</select>
+									<input
+										className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+										id='org_id'
+										type='text'
+										disabled={true}
+										value={Org?.username}
+									/>
 								</div>
 							</div>
 							<button

@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 import axios from 'axios'
 
 import { useCookie } from 'next-cookie'
+import Image from 'next/image'
 
 const AddQuestion = (
 	{ level_data: levelData, module_data: moduleData },
@@ -250,7 +251,7 @@ const AddQuestion = (
 															Your Image
 														</label>
 														<div>
-															<img
+															<Image
 																alt='not fount'
 																width={'250px'}
 																src={URL.createObjectURL(selectedImage)}
@@ -406,7 +407,7 @@ const AddQuestion = (
 							<option value='MCQ'>MCQ</option>
 							<option value='TRUE/FALSE'>TRUE/FALSE</option>
 							<option value='ONE-WORD'>ONE-WORD</option>
-							<option value="DON'T KNOW">Don't Know</option>
+							<option value="DON'T KNOW">Don{`&apos;`}t Know</option>
 						</select>
 
 						<label

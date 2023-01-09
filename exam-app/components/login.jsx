@@ -9,14 +9,7 @@ import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { SERVER_LINK } from '../helpers/config'
-import { injectStyle } from 'react-toastify/dist/inject-style'
-
 import { ToastContainer, toast } from 'react-toastify'
-
-// CALL IT ONCE IN YOUR APP
-if (typeof window !== 'undefined') {
-	injectStyle()
-}
 
 // validation schema
 const schema = object({

@@ -1,4 +1,3 @@
-import Table from './Table'
 import React, { useState } from 'react'
 import axios from 'axios'
 import { SERVER_LINK } from '../../helpers/config'
@@ -8,6 +7,7 @@ import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import Table from '../common/Table'
 
 const OrganizationTable = ({ org_data }) => {
 	const router = useRouter()
@@ -322,7 +322,7 @@ const OrganizationTable = ({ org_data }) => {
 									/>
 
 									<p className='text-gray-600 text-xs italic'>
-										Make it as long and as crazy as you'd like
+										Make it as long and as crazy as you{`&apos;`}d like
 									</p>
 								</div>
 							</div>

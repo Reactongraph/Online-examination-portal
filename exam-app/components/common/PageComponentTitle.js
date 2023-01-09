@@ -12,7 +12,6 @@ const PageComponentTitle = ({
 	quiz_data,
 	module_data,
 	level_data,
-	organization_data,
 }) => {
 	const [modal, setModal] = useState(false)
 
@@ -48,7 +47,6 @@ const PageComponentTitle = ({
 						<ParticipantModal
 							modal={modal}
 							setModal={setModal}
-							organization_data={organization_data}
 						/>
 					</>
 				) : title == 'LEVEL' ? (

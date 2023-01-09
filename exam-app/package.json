@@ -17,7 +17,7 @@
 		"@babel/runtime": "^7.20.7",
 		"@emotion/react": "^11.10.5",
 		"@emotion/styled": "^11.10.5",
-		"@heroicons/react": "v2",
+		"@heroicons/react": "v1",
 		"@hookform/resolvers": "^2.9.10",
 		"@mui/icons-material": "^5.11.0",
 		"@mui/joy": "^5.0.0-alpha.60",
@@ -51,6 +51,7 @@
 		"react-transition-group": "^4.4.5",
 		"redis": "^4.5.1",
 		"redux": "^4.2.0",
+		"swr": "^2.0.0",
 		"tls": "^0.0.1",
 		"yup": "^0.32.11"
 	},

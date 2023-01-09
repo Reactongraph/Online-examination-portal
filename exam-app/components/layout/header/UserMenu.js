@@ -2,6 +2,7 @@ import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
 import React, { useEffect, useRef, useState } from 'react'
 import OutsideClick from '../../../utils/outsideClick'
 import { useSelector } from 'react-redux'
+import Image from 'next/image'
 
 const UserMenu = () => {
 	const [userMenuStatus, setUserMenuStatus] = useState(false)
@@ -32,10 +33,12 @@ const UserMenu = () => {
 				</span>
 			</div>
 			<span className='h-12 w-12 ml-2 sm:ml-3 mr-2 bg-gray-100 rounded-full overflow-hidden'>
-				<img
+				<Image
 					src='https://randomuser.me/api/portraits/women/68.jpg'
 					alt='user profile photo'
 					className='h-full w-full object-cover'
+					width={50}
+					height={50}
 				/>
 			</span>
 
