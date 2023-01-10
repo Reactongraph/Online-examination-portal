@@ -29,7 +29,7 @@ const OrganizationTable = ({ org_data }) => {
 
 	const [password, setPassword] = useState('')
 
-	const { register, handleSubmit } = useForm()
+	const { handleSubmit } = useForm()
 	const login_token = useSelector((state) => state.user.token)
 	const handleRemoveClick = (org_id) => {
 		axios

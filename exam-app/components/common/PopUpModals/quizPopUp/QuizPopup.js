@@ -1,7 +1,9 @@
 import PureModal from 'react-pure-modal'
 import { default as ReactSelect } from 'react-select'
 import QuizDatePicker from './QuizDatePicker'
-import { components } from 'react-select'
+import QuizLevelSelect from './QuizLevelSelect'
+import QuizImage from './QuizImage'
+import Option from './QuizOption'
 function QuizPopUp(props) {
 	const {
 		name,
@@ -10,8 +12,8 @@ function QuizPopUp(props) {
 		setModal,
 		selectedLevelId,
 		setSelectedLevelId,
-		selectedModules,
-		setSelectedModules,
+		// selectedModules,
+		// setSelectedModules,
 		handleSubmit,
 		buttonText,
 		checkWithDatabase,
@@ -28,20 +30,6 @@ function QuizPopUp(props) {
 		moduleData,
 		levelData,
 	} = props
-	const Option = (props) => {
-		return (
-			<div>
-				<components.Option {...props}>
-					<input
-						type='checkbox'
-						checked={props.isSelected}
-						onChange={() => null}
-					/>{' '}
-					<label>{props.label}</label>
-				</components.Option>
-			</div>
-		)
-	}
 	return (
 		<>
 			<PureModal
@@ -83,33 +71,7 @@ function QuizPopUp(props) {
 										placeholder='Jane'
 									/>
 								</div>
-								<div className='w-full md:w-1/2 px-3'>
-									<label
-										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-last-name'>
-										Choose Quiz image
-									</label>
-
-									<div class='flex items-center justify-center'>
-										<div
-											className='datepicker bg-gray-200relative form-floating mb-3 xl:w-96'
-											data-mdb-toggle-button='false'>
-											<input
-												className='block w-full text-sm appearance-none  bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
-												aria-describedby='file_input_help'
-												accept='image/*'
-												id='file_input'
-												type='file'
-											/>
-											<p
-												class='mt-1 text-sm text-gray-500 dark:text-gray-300'
-												id='file_input_help'>
-												SVG, PNG, JPG *.
-											</p>
-										</div>
-									</div>
-								</div>
-
+								<QuizImage />
 								<div className='w-full md:w-1/2 px-3'>
 									<QuizDatePicker
 										timeTitle='Start Time'
@@ -140,28 +102,11 @@ function QuizPopUp(props) {
 										for='grid-last-name'>
 										Question Level
 									</label>
-									<select
-										id='default'
-										value={selectedLevelId}
-										onChange={(e) => {
-											handleLevelTypeSelect(e)
-										}}
-										required
-										className='bg-gray-50 border w-40 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500'>
-										<option
-											value=''
-											hidden>
-											Select
-										</option>
-										{levelData &&
-											levelData.map((response, i) => (
-												<option
-													key={i}
-													value={response.id}>
-													{response.level}
-												</option>
-											))}
-									</select>
+									<QuizLevelSelect
+										selectedLevelId={selectedLevelId}
+										handleLevelTypeSelect={handleLevelTypeSelect}
+										levelData={levelData}
+									/>
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
 									<label
@@ -180,7 +125,7 @@ function QuizPopUp(props) {
 										}}
 										onChange={handleModuleTypeSelect}
 										allowSelectAll={true}
-										// value={optionSelected}
+										// value={selectedModules}
 									/>
 								</div>
 							</div>

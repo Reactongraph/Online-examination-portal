@@ -1,16 +1,11 @@
 import React, { useState } from 'react'
-import PureModal from 'react-pure-modal'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { SERVER_LINK } from '../../helpers/config'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import DatePicker from 'react-datepicker'
-import { default as ReactSelect } from 'react-select'
 import { toast } from 'react-toastify'
 import QuizPopUp from './PopUpModals/quizPopUp/QuizPopup'
-
-
 
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -101,7 +96,7 @@ const QuizModal = ({
 				setName={setName}
 				modal={modal}
 				setModal={setModal}
-				selectedLevelId ={selectedLevelId}
+				selectedLevelId={selectedLevelId}
 				setSelectedLevelId={setSelectedLevelId}
 				selectedModules={selectedModules}
 				setSelectedModules={setSelectedModules}

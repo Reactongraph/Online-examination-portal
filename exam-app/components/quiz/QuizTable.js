@@ -11,6 +11,8 @@ import moment from 'moment'
 import { useSelector } from 'react-redux'
 import { QuizColumns } from './quizColumn'
 import QuizPopUp from '../common/PopUpModals/quizPopUp/QuizPopup'
+import QuizDataArray from './QuizDataArray'
+
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
@@ -161,78 +163,13 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 			})
 	}
 
-	function createData(
-		quiz,
-		quiz_id,
-		quiz_status,
-		modules,
-		level,
-		end_date,
-		start_date
-	) {
-		const action = (
-			<>
-				<button
-					onClick={() => handleEditClick(quiz_id)}
-					className='bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'>
-					Edit
-				</button>
-				&nbsp;
-				<button
-					onClick={() => handleRemoveClick(quiz_id)}
-					className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'>
-					Delete
-				</button>
-			</>
-		)
-		const status = (
-			<>
-				<div className='flex'>
-					<input
-						onClick={() => handleBoxClick(quiz_id, quiz_status)}
-						className='form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-gray-300 bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm'
-						type='checkbox'
-						role='switch'
-						id='flexSwitchCheckDefault'
-						defaultChecked={quiz_status}
-					/>
-				</div>
-			</>
-		)
-		return { quiz, status, action, modules, level, end_date, start_date }
-	}
-
-	const rowsDataArray = quiz_data.map((element) => {
-		let quiz = element.quiz_name
-		let quiz_id = element._id.$oid
-		let quiz_status = element.status
-		let moduleNameArray = []
-		let moduleArray = element.module
-		moduleArray.map((oneModule) => {
-			moduleNameArray.push(oneModule.module)
-		})
-
-		let modules = moduleNameArray.join()
-		let { level } = element.level
-		let start_date = element.start_date.$date
-		start_date = moment(start_date).format('llll')
-
-		let end_date = element.end_date.$date
-		end_date = moment(end_date).format('llll')
-
-		return createData(
-			quiz,
-			quiz_id,
-			quiz_status,
-			modules,
-			level,
-			end_date,
-			start_date
-		)
-	})
-
 	// data by using which table data is creating using api call
-	const data = rowsDataArray
+	const data = QuizDataArray(
+		quiz_data,
+		handleEditClick,
+		handleBoxClick,
+		handleRemoveClick
+	)
 
 	return (
 		<>
