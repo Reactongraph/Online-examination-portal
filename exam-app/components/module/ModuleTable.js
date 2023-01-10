@@ -7,7 +7,7 @@ import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 import { ToastContainer, toast } from 'react-toastify'
-import LevelModulePopup from '../PopUpModals/LevelModulePopUp'
+import LevelModulePopup from '../common/PopUpModals/LevelModulePopUp'
 import { ModuleColumns } from './ moduleColumns'
 
 import { useSelector } from 'react-redux'

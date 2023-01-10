@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 import { ToastContainer, toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
-import LevelModulePopup from '../PopUpModals/LevelModulePopUp'
+import LevelModulePopup from '../common/PopUpModals/LevelModulePopUp'
 import { Levelcolumns } from './levelColumns'
 
 // CALL IT ONCE IN YOUR APP
