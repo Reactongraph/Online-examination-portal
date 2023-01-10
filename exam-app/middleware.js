@@ -1,14 +1,15 @@
 import { NextResponse } from 'next/server'
 
 export async function middleware(req) {
-	const { cookies } = req
+	// const { cookies } = req
 	const url = req.url
 
 	const publicRoutes = ['/login', '/forgotPassword', '/passwordReset']
 
-	const { value } = cookies.getWithOptions('access_token')
+	// const { value } = cookies?.getWithOptions('access_token')
+	const cookie = req.cookies.get('access_token')?.value
 
-	let isAuthenticated = value === undefined ? false : true
+	let isAuthenticated = cookie === undefined ? false : true
 
 	if (publicRoutes.some((v) => url.includes(v))) {
 		if (
