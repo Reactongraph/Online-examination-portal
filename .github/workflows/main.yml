@@ -1,38 +1,18 @@
-name: Lint
+name: Node.js CI
 
-on:
-  # Trigger the workflow on push or pull request,
-  # but only for the main branch
-  push:
-    branches:
-      - main
-      - development
-  pull_request:
-    branches:
-      - main
-      - development
+on: [push]
 
 jobs:
-  run-linters:
-    name: Run linters
+  build:
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: 16
-          
-      # ESLint and Prettier must be in `package.json`
-      - name: Install Node.js dependencies
-        uses: CultureHQ/actions-yarn@master
-        with: 
-          args: "--cwd exam-app install --immutable --immutable-cache --check-cache" 
-
-      - name: Run ESlint and Prettier
-        uses: CultureHQ/actions-yarn@master
-        with:
-          args: "--cwd exam-app style:all"
+          node-version: '16.x'
+      - run: npm install -g yarn
+      - run: yarn --cwd exam-app install --immutable --immutable-cache --check-cache 
+      - run: yarn --cwd exam-app run style:all
