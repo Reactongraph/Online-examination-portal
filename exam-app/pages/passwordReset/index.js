@@ -5,14 +5,7 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import { SERVER_LINK } from '../../helpers/config'
 import jwt_decode from 'jwt-decode'
-
-import { injectStyle } from 'react-toastify/dist/inject-style'
 import { ToastContainer, toast } from 'react-toastify'
-
-// CALL IT ONCE IN YOUR APP
-if (typeof window !== 'undefined') {
-	injectStyle()
-}
 
 export default function PasswordReset() {
 	const router = useRouter()

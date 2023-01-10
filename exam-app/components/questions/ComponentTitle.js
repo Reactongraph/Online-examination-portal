@@ -1,11 +1,7 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import { CsvReader } from './CsvReader'
-import { injectStyle } from 'react-toastify/dist/inject-style'
 import { ToastContainer } from 'react-toastify'
-if (typeof window !== 'undefined') {
-	injectStyle()
-}
 
 const PageComponentTitle = ({ title, titleDescription, buttonTitle }) => {
 	const router = useRouter()

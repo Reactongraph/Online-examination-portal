@@ -5,17 +5,11 @@ import { SERVER_LINK } from '../../helpers/config'
 import { useRouter } from 'next/router'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
-import { injectStyle } from 'react-toastify/dist/inject-style'
 import { ToastContainer, toast } from 'react-toastify'
 import LevelModulePopup from '../common/PopUpModals/LevelModulePopUp'
 import { ModuleColumns } from './ moduleColumns'
 
 import { useSelector } from 'react-redux'
-
-// CALL IT ONCE IN YOUR APP
-if (typeof window !== 'undefined') {
-	injectStyle()
-}
 
 const ModuleTable = ({ module_data }) => {
 	const router = useRouter()

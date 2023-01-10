@@ -4,15 +4,14 @@ import { useForm } from 'react-hook-form'
 import { SERVER_LINK } from '../../helpers/config'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import { injectStyle } from 'react-toastify/dist/inject-style'
 import { ToastContainer, toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import LevelModulePopup from './PopUpModals/LevelModulePopUp'
 
 // CALL IT ONCE IN YOUR APP
-if (typeof window !== 'undefined') {
-	injectStyle()
-}
+// if (typeof window !== 'undefined') {
+// 	injectStyle()
+// }
 
 const LevelModal = (props) => {
 	const { modal, setModal } = props

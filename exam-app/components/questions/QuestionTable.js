@@ -4,10 +4,10 @@ import axios from 'axios'
 import { SERVER_LINK } from '../../helpers/config'
 import { useRouter } from 'next/router'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
-import { injectStyle } from 'react-toastify/dist/inject-style'
 import { ToastContainer, toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { QuestionColumns } from './questionColumn'
+import { injectStyle } from 'react-toastify/dist/inject-style'
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()

@@ -5,13 +5,13 @@ import { SERVER_LINK } from '../../helpers/config'
 import { useRouter } from 'next/router'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
-import { injectStyle } from 'react-toastify/dist/inject-style'
 import { ToastContainer, toast } from 'react-toastify'
 import moment from 'moment'
 import { useSelector } from 'react-redux'
 import { QuizColumns } from './quizColumn'
 import QuizPopUp from '../common/PopUpModals/quizPopUp/QuizPopup'
 import QuizDataArray from './QuizDataArray'
+import { injectStyle } from 'react-toastify/dist/inject-style'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
