@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import PureModal from 'react-pure-modal'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
@@ -9,8 +8,6 @@ import {
 	AddParticipant,
 	DeleteParticipant,
 	EditParticipant,
-	GetParticipantData,
-	GetParticipantDataWithOrgId,
 } from '../../apis/participants'
 import Table from '../common/Table'
 import { columns } from './TableColumn'
@@ -67,14 +64,14 @@ const ParticipantTable = ({ participant_data, mutate }) => {
 					mutate()
 					toast.success('participant updated!')
 				})
-				.catch((error) => {
+				.catch(() => {
 					toast.error('invalid request')
 				})
 		}
 		// for new data registration
 		else {
 			AddParticipant(data, user?.token)
-				.then(async (data) => {
+				.then(async () => {
 					setModal(!modal)
 					mutate()
 					toast.success('participant added!')
