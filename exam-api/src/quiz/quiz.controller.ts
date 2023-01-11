@@ -18,9 +18,12 @@ import { HttpStatus } from '@nestjs/common/enums'
 @ApiTags('Quiz')
 @Controller('quiz')
 export class QuizController {
-  constructor (private readonly quizService: QuizService) { }
+  constructor (private readonly quizService: QuizService) {}
   @Post('create')
-  async create_question (@Body() createquiz: QuizDTO, @Res({ passthrough: true }) response: Response) {
+  async create_question (
+  @Body() createquiz: QuizDTO,
+    @Res({ passthrough: true }) response: Response
+  ) {
     const data = await this.quizService.create(createquiz)
     if (data === null) {
       response.status(HttpStatus.BAD_REQUEST).json([])
@@ -43,7 +46,11 @@ export class QuizController {
   }
 
   @Patch(':id')
-  async update (@Param('id') id: string, @Body() updatequiz: QuizDTO, @Res({ passthrough: true }) response: Response) {
+  async update (
+  @Param('id') id: string,
+    @Body() updatequiz: QuizDTO,
+    @Res({ passthrough: true }) response: Response
+  ) {
     const UPDATE_QUIZ = await this.quizService.update(id, updatequiz)
     if (UPDATE_QUIZ === null) {
       response.status(HttpStatus.BAD_REQUEST).json([])

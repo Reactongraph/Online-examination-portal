@@ -1,80 +1,54 @@
-import React, { useState } from 'react'
-import Table from './Table'
-
-import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { SERVER_LINK } from '../../helpers/config'
-
 import { useForm } from 'react-hook-form'
 import PureModal from 'react-pure-modal'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
-
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import {
+	AddParticipant,
+	DeleteParticipant,
+	EditParticipant,
+	GetParticipantData,
+	GetParticipantDataWithOrgId,
+} from '../../apis/participants'
+import Table from '../common/Table'
+import { columns } from './TableColumn'
 
-const ParticipantTable = ({ participant_data }) => {
-	const router = useRouter()
+const ParticipantTable = ({ participant_data, mutate }) => {
 	const [editForm, setEditForm] = useState(false)
 	const [modal, setModal] = useState(false)
 	const [participantId, setParticipantId] = useState('')
-
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
-
 	const [mobile, setMobile] = useState('')
 	const [buttonText, setButtonText] = useState('Add')
-
 	const [password, setPassword] = useState('')
 	const [organizationId, setOrganizationId] = useState('')
-
+	const [showPassword, setShowPassword] = useState(false)
 	const { handleSubmit } = useForm()
-	const login_token = useSelector((state) => state.user.token)
+	const user = useSelector((state) => state?.user)
 
 	const handleRemoveClick = async (participantId) => {
-		await axios
-			.delete(`${SERVER_LINK}/participants/${participantId}`, {
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: login_token,
-				},
-			})
-			.then(() => {
-				router.replace(router.asPath)
-			})
-			.catch(() => {
-				toast.error('invalid request')
-			})
+		try {
+			DeleteParticipant(participantId, user?.token)
+			mutate()
+			toast.success('participant deleted!')
+		} catch (error) {
+			toast.error('invalid request')
+		}
 	}
 
-	const handleEditClick = async (participantId) => {
+	const handleEditClick = async (participant) => {
 		setModal(true)
-
 		setButtonText('Update')
 		setEditForm(true)
-		setParticipantId(participantId)
-
-		// first find the user with the id
-		await axios
-			.get(`${SERVER_LINK}/participants/${participantId}`, {
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: login_token,
-				},
-			})
-			.then((response) => {
-				let singleParticipantData = response.data
-
-				setName(singleParticipantData.name)
-				setEmail(singleParticipantData.email)
-				setMobile(singleParticipantData.mobile)
-				setOrganizationId(singleParticipantData.Organization_id)
-				setPassword(singleParticipantData.password)
-			})
-			.catch(() => {
-				toast.error('invalid request')
-			})
+		setParticipantId(participant.id)
+		setName(participant.name)
+		setEmail(participant.email)
+		setMobile(participant.mobile)
+		setOrganizationId(participant.Organization_id)
+		setPassword(participant.password)
 	}
 
 	// for sending the data to the backend
@@ -84,49 +58,26 @@ const ParticipantTable = ({ participant_data }) => {
 		data.mobile = mobile
 		data.Organization_id = organizationId
 		data.password = password
-
 		let participantData = JSON.stringify(data)
-
 		// for taking the patch api data
 		if (editForm) {
-			await axios
-				.patch(
-					`${SERVER_LINK}/participants/${participantId}`,
-					participantData,
-					{
-						headers: {
-							Accept: 'application/json',
-							'Content-Type': 'application/json;charset=UTF-8',
-							Authorization: login_token,
-						},
-					}
-					//
-				)
+			EditParticipant(participantData, participantId, user?.token)
 				.then(() => {
 					setModal(!modal)
-					router.replace(router.asPath)
+					mutate()
 					toast.success('participant updated!')
 				})
-				.catch(() => {
+				.catch((error) => {
 					toast.error('invalid request')
 				})
 		}
-
 		// for new data registration
 		else {
-			await axios({
-				url: `${SERVER_LINK}/participants`,
-				method: 'POST',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: login_token,
-				},
-				data,
-			})
-				.then(() => {
-					router.replace(router.asPath)
+			AddParticipant(data, user?.token)
+				.then(async (data) => {
 					setModal(!modal)
+					mutate()
+					toast.success('participant added!')
 				})
 				.catch(() => {
 					toast.error('invalid request')
@@ -134,80 +85,39 @@ const ParticipantTable = ({ participant_data }) => {
 		}
 	}
 
-	function createData(name, email, mobile, participantId) {
+	function createData(participant) {
 		const action = (
 			<>
 				<button
-					onClick={() => handleEditClick(participantId)}
+					onClick={() => handleEditClick(participant)}
 					className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full'>
 					Edit
 				</button>
 				&nbsp;
 				<button
-					onClick={() => handleRemoveClick(participantId)}
+					onClick={() => handleRemoveClick(participant.id)}
 					className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'>
 					Delete
 				</button>
 			</>
 		)
-		return { name, email, mobile, action }
+		return {
+			name: participant.name,
+			email: participant.email,
+			mobile: participant.mobile,
+			action,
+		}
 	}
 
-	const rowsDataArray = participant_data.map((element) => {
-		let name = element.name
-		let email = element.email
-		let mobile = element.mobile
-		let participantId = element.id
-		return createData(name, email, mobile, participantId)
+	const rowsDataArray = participant_data?.map((element) => {
+		return createData(element)
 	})
-
-	const columns = [
-		{
-			Header: 'Name',
-			accessor: 'name',
-			title: 'Name',
-			dataIndex: 'name',
-			key: 'name',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-			rowClassName: 'bg-black-ripon',
-		},
-		{
-			Header: 'Email',
-			accessor: 'email',
-			title: 'Email',
-			dataIndex: 'email',
-			key: 'email',
-			width: 400,
-			className: 'text-white bg-gray-600 p-2 border-r-2 border-b-2',
-		},
-		{
-			Header: 'Mobile',
-			accessor: 'mobile',
-			title: 'Mobile',
-			dataIndex: 'mobile',
-			key: 'mobile',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-		},
-		{
-			Header: 'Action',
-			accessor: 'action',
-			title: 'Action',
-			dataIndex: 'action',
-			key: 'operations',
-			width: 250,
-			className: 'text-white bg-gray-600 p-2 border-b-2',
-		},
-	]
-
-	const data = rowsDataArray
 
 	return (
 		<>
 			<Table
 				columns={columns}
-				data={data}
+				data={rowsDataArray || []}
 				rowKey='id'
 				className='bg-white p-4 w-full text-center rc-table-custom font-semibold '
 			/>
@@ -270,17 +180,25 @@ const ParticipantTable = ({ participant_data }) => {
 										htmlFor='grid-password'>
 										Password
 									</label>
-									<input
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										id='password'
-										type='password'
-										placeholder='******************'
-										required='required'
-										value={password}
-										onChange={(e) => setPassword(e.target.value)}
-									/>
+									<div className='relative'>
+										<input
+											className='appearance-none block w-full p-4  bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+											id='password'
+											type={!showPassword ? 'password' : 'text'}
+											placeholder='******************'
+											required='required'
+											value={password}
+											onChange={(e) => setPassword(e.target.value)}
+										/>
+										<button
+											type='button'
+											onClick={() => setShowPassword(!showPassword)}
+											className='text-white absolute right-2.5 bottom-2.5 bg-blue-400 hover:bg-blue-500   font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-300 dark:hover:bg-blue-400 '>
+											{!showPassword ? 'Show' : 'Hide'}
+										</button>
+									</div>
 									<p className='text-gray-600 text-xs italic'>
-										Make it as long and as crazy as you&apos;d like
+										Make it as long and as crazy as you{`&apos;`}d like
 									</p>
 								</div>
 							</div>
@@ -304,18 +222,16 @@ const ParticipantTable = ({ participant_data }) => {
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
 									<label
-										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										htmlFor='grid-last-name'>
-										Organization Id
+										htmlFor='default'
+										className='block mb-2 text-sm font-medium text-gray-900 '>
+										Organization Name
 									</label>
 									<input
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+										className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
 										id='org_id'
 										type='text'
-										placeholder='e.g. 1000'
-										required='required'
-										value={organizationId}
-										onChange={(e) => setOrganizationId(e.target.value)}
+										disabled={true}
+										value={user?.payload?.username}
 									/>
 								</div>
 							</div>
@@ -326,8 +242,6 @@ const ParticipantTable = ({ participant_data }) => {
 							</button>
 						</form>
 					</div>
-
-					{/* */}
 				</div>
 			</PureModal>
 		</>

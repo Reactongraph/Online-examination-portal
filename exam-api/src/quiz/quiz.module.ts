@@ -7,4 +7,4 @@ import { QuizController } from './quiz.controller'
   controllers: [QuizController],
   exports: [QuizService]
 })
-export class QuizModule { }
+export class QuizModule {}

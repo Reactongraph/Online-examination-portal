@@ -2,11 +2,10 @@ import React, { useState } from 'react'
 import PureModal from 'react-pure-modal'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
-import { SERVER_LINK } from '../../helpers/config'
-import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import { AddParticipant } from '../../apis/participants'
 
 const ParticipantModal = ({ modal, setModal }) => {
 	//For Image Preview
@@ -20,40 +19,31 @@ const ParticipantModal = ({ modal, setModal }) => {
 	const buttonText = 'Add'
 
 	const [password, setPassword] = useState('')
-	const [organizationId, setOrganizationId] = useState('')
+	const [showPassword, setShowPassword] = useState(false)
 
 	const { handleSubmit } = useForm()
-
+	const Org = useSelector((state) => state?.user)
 	const login_token = useSelector((state) => state.user.token)
+
 	// for sending the data to the backend
 	const checkWithDatabase = async (data) => {
 		data.name = name
 		data.email = email
 		data.mobile = mobile
-		data.id = organizationId
+		data.id = Org.Org_id
 		data.password = password
 
 		let participantData = JSON.stringify(data)
 
 		// for new data registration
 
-		await axios({
-			url: `${SERVER_LINK}/participants`,
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json;charset=UTF-8',
-				Authorization: login_token,
-			},
-			data: participantData,
-		})
+		AddParticipant(participantData, login_token)
 			.then(() => {
 				router.replace(router.asPath)
 				setName('')
 				setEmail('')
 				setMobile('')
 				setPassword('')
-				setOrganizationId('')
 				setModal(!modal)
 				toast.success('participant created!')
 			})
@@ -72,7 +62,6 @@ const ParticipantModal = ({ modal, setModal }) => {
 					setEmail('')
 					setMobile('')
 					setPassword('')
-					setOrganizationId('')
 					setModal(false)
 					return true
 				}}>
@@ -127,17 +116,26 @@ const ParticipantModal = ({ modal, setModal }) => {
 										for='grid-password'>
 										Password
 									</label>
-									<input
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										id='password'
-										type='password'
-										placeholder='******************'
-										required='required'
-										value={password}
-										onChange={(e) => setPassword(e.target.value)}
-									/>
+
+									<div class='relative'>
+										<input
+											className='appearance-none block w-full p-4  bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+											id='password'
+											type={!showPassword ? 'password' : 'text'}
+											placeholder='******************'
+											required='required'
+											value={password}
+											onChange={(e) => setPassword(e.target.value)}
+										/>
+										<button
+											type='button'
+											onClick={() => setShowPassword(!showPassword)}
+											class='text-white absolute right-2.5 bottom-2.5 bg-blue-400 hover:bg-blue-500   font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-300 dark:hover:bg-blue-400 '>
+											{!showPassword ? 'Show' : 'Hide'}
+										</button>
+									</div>
 									<p className='text-gray-600 text-xs italic'>
-										Make it as long and as crazy as you&apos;d like
+										Make it as long and as crazy as you{`&apos;`}d like
 									</p>
 								</div>
 							</div>
@@ -161,18 +159,16 @@ const ParticipantModal = ({ modal, setModal }) => {
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
 									<label
-										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-last-name'>
-										Organization Id
+										htmlFor='default'
+										className='block mb-2 text-sm font-medium text-gray-900 '>
+										Organization Name
 									</label>
 									<input
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+										className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
 										id='org_id'
 										type='text'
-										placeholder='e.g. 1000'
-										required='required'
-										value={organizationId}
-										onChange={(e) => setOrganizationId(e.target.value)}
+										disabled={true}
+										value={Org?.payload?.username}
 									/>
 								</div>
 							</div>

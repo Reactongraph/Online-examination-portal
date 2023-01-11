@@ -16,10 +16,13 @@ import { HttpStatus } from '@nestjs/common/enums'
 @Controller('level')
 @ApiTags('Level')
 export class LevelController {
-  constructor (private readonly Levels: LevelService) { }
+  constructor (private readonly Levels: LevelService) {}
   // this controller is used to create Levels
   @Post()
-  async create (@Body() level: level_dto, @Res({ passthrough: true }) response: Response) {
+  async create (
+  @Body() level: level_dto,
+    @Res({ passthrough: true }) response: Response
+  ) {
     const level_create = await this.Levels.create(level)
     if (level_create === null) {
       response.status(HttpStatus.BAD_REQUEST).json([])
@@ -43,7 +46,11 @@ export class LevelController {
 
   // this controller is used to update all Levels data
   @Patch(':id')
-  async update (@Param('id') id: string, @Body() update_level: level_dto, @Res({ passthrough: true }) response: Response) {
+  async update (
+  @Param('id') id: string,
+    @Body() update_level: level_dto,
+    @Res({ passthrough: true }) response: Response
+  ) {
     const update_levels = await this.Levels.update(id, update_level)
     if (update_levels === null) {
       response.status(HttpStatus.BAD_REQUEST).json([])

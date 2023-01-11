@@ -23,11 +23,14 @@ export class RestApiController {
     private readonly restApiService: RestApiService,
     private readonly jwtService: JwtService,
     private readonly prisma: PrismaService
-  ) { }
+  ) {}
 
   // this controller is used to create Oraganization data
   @Post()
-  async create (@Body() createRestApiDto: organization_dto, @Res({ passthrough: true }) response: Response) {
+  async create (
+  @Body() createRestApiDto: organization_dto,
+    @Res({ passthrough: true }) response: Response
+  ) {
     const user = await this.restApiService.create(createRestApiDto)
 
     if (user.id == null) {

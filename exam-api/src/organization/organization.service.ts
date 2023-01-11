@@ -5,7 +5,7 @@ const nodemailer = require('nodemailer')
 
 @Injectable()
 export class RestApiService {
-  constructor (private readonly prisma: PrismaService) { }
+  constructor (private readonly prisma: PrismaService) {}
   async create (createRestApiDto: organization_dto) {
     try {
       const EMAIL_CHECK = await this.prisma.organization.findUnique({
@@ -30,13 +30,6 @@ export class RestApiService {
             city: createRestApiDto?.city,
             state: createRestApiDto?.state,
             pincode: createRestApiDto.pincode
-          }
-        })
-        await this.prisma.user_auth.create({
-          data: {
-            name: createRestApiDto?.name,
-            email: createRestApiDto?.email,
-            password: createRestApiDto?.password
           }
         })
         return user
@@ -103,14 +96,14 @@ export class RestApiService {
       }
 
       return `${JSON.stringify(user)}`
-    } catch (error) {
-
-    }
+    } catch (error) {}
   }
 
   async update (id: string, updateRestApiDto: organization_dto) {
     try {
-      const FIND_USER = await this.prisma.organization.findUnique({ where: { email: updateRestApiDto?.email } })
+      const FIND_USER = await this.prisma.organization.findUnique({
+        where: { email: updateRestApiDto?.email }
+      })
       if (FIND_USER) {
         return null
       }
@@ -125,9 +118,7 @@ export class RestApiService {
         return `user not found for this ${id}`
       }
       return ' organization updated  '
-    } catch (error) {
-
-    }
+    } catch (error) {}
   }
 
   async remove (id: string) {
@@ -138,8 +129,6 @@ export class RestApiService {
         }
       })
       return DELETE_USER
-    } catch (error) {
-
-    }
+    } catch (error) {}
   }
 }

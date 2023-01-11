@@ -9,12 +9,16 @@ import { BsSpeedometer } from 'react-icons/bs'
 import { FaSuitcase } from 'react-icons/fa'
 import { MdRateReview } from 'react-icons/md'
 import { MdQuiz } from 'react-icons/md'
+import { useSelector } from 'react-redux'
 
 import React, { useEffect, useState } from 'react'
 import NavItem from './NavItem'
 
 const Nav = ({ sidebarOutsideClick }) => {
 	const [sidebarStatus, setSidebarStatus] = useState(false)
+	const userRole = useSelector((state) => state.user.role)
+
+	// const [subMenuToggleStatus, setSubMenuToggleStatus] = useState(false)
 
 	const sidebarClose = () => {
 		setSidebarStatus(false)
@@ -49,14 +53,16 @@ const Nav = ({ sidebarOutsideClick }) => {
 					)}
 				</div>
 
-				<NavItem
-					hrefLink='/dashboard/organization'
-					sidebarStatus={sidebarStatus}
-					menuTitle='Organization'
-					subMenu={false}
-					subMenuArray={null}>
-					<CgOrganisation size={30} />
-				</NavItem>
+				{userRole == 'SuperAdminUser' && (
+					<NavItem
+						hrefLink='/dashboard/organization'
+						sidebarStatus={sidebarStatus}
+						menuTitle='Organization'
+						subMenu={false}
+						subMenuArray={null}>
+						<CgOrganisation size={30} />
+					</NavItem>
+				)}
 
 				<NavItem
 					hrefLink='/dashboard/participant'
@@ -66,30 +72,40 @@ const Nav = ({ sidebarOutsideClick }) => {
 					subMenuArray={null}>
 					<TiGroup size={30} />
 				</NavItem>
-				<NavItem
-					hrefLink='/dashboard/level'
-					sidebarStatus={sidebarStatus}
-					menuTitle='Level'
-					subMenu={false}
-					subMenuArray={null}>
-					<BsSpeedometer size={30} />
-				</NavItem>
-				<NavItem
-					hrefLink='/dashboard/module'
-					sidebarStatus={sidebarStatus}
-					menuTitle='Module'
-					subMenu={false}
-					subMenuArray={null}>
-					<FaSuitcase size={30} />
-				</NavItem>
-				<NavItem
-					hrefLink='/dashboard/questions'
-					sidebarStatus={sidebarStatus}
-					menuTitle='Questions'
-					subMenu={false}
-					subMenuArray={null}>
-					<MdRateReview size={30} />
-				</NavItem>
+
+				{userRole == 'SuperAdminUser' && (
+					<NavItem
+						hrefLink='/dashboard/level'
+						sidebarStatus={sidebarStatus}
+						menuTitle='Level'
+						subMenu={false}
+						subMenuArray={null}>
+						<BsSpeedometer size={30} />
+					</NavItem>
+				)}
+
+				{userRole == 'SuperAdminUser' && (
+					<NavItem
+						hrefLink='/dashboard/module'
+						sidebarStatus={sidebarStatus}
+						menuTitle='Module'
+						subMenu={false}
+						subMenuArray={null}>
+						<FaSuitcase size={30} />
+					</NavItem>
+				)}
+
+				{userRole == 'SuperAdminUser' && (
+					<NavItem
+						hrefLink='/dashboard/questions'
+						sidebarStatus={sidebarStatus}
+						menuTitle='Questions'
+						subMenu={false}
+						subMenuArray={null}>
+						<MdRateReview size={30} />
+					</NavItem>
+				)}
+
 				<NavItem
 					hrefLink='/dashboard/quiz'
 					sidebarStatus={sidebarStatus}

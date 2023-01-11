@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma.service'
 const nodemailer = require('nodemailer')
 @Injectable()
 export class ParticipantsService {
-  constructor (private readonly prisma: PrismaService) { }
+  constructor (private readonly prisma: PrismaService) {}
   async create (params: participants_dto) {
     try {
       const email = params?.email
@@ -26,7 +26,7 @@ export class ParticipantsService {
           data: {
             name: params?.name,
             email: params?.email,
-            password: hash,
+            password,
             mobile: params?.mobile,
             Organization_id: params?.id
           }
@@ -78,6 +78,17 @@ export class ParticipantsService {
     }
   }
 
+  async findParticipantId (id: string) {
+    try {
+      const find_data = await this.prisma.participants.findMany({
+        where: { Organization_id: id }
+      })
+      return find_data
+    } catch (err) {
+      return { error: err }
+    }
+  }
+
   async findOne (id: string) {
     try {
       const user = await this.prisma.participants.findUnique({
@@ -97,11 +108,11 @@ export class ParticipantsService {
 
   async update (id: string, updateRestApiDto: participants_dto) {
     try {
-      const FIND_USER = await this.prisma.participants.findUnique({ where: { email: updateRestApiDto?.email } })
+      // const FIND_USER = await this.prisma.participants.findUnique({ where: { email: updateRestApiDto?.email } })
 
-      if (FIND_USER) {
-        return null
-      }
+      // if (FIND_USER) {
+      //   return null
+      // }
       const updateUser = await this.prisma.participants.update({
         where: {
           id
@@ -125,8 +136,6 @@ export class ParticipantsService {
         }
       })
       return DELETE_USER
-    } catch (err) {
-
-    }
+    } catch (err) {}
   }
 }

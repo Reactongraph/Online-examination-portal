@@ -3,7 +3,7 @@ import { PrismaService } from 'src/prisma.service'
 import { module_dto } from './module.entity'
 @Injectable()
 export class ModuleService {
-  constructor (private readonly prisma: PrismaService) { }
+  constructor (private readonly prisma: PrismaService) {}
   async create (params: module_dto) {
     try {
       const toLowerCaseModule = params?.module.toLowerCase()

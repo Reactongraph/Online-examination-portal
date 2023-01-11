@@ -3,7 +3,7 @@ import { level_dto } from './level.entity'
 import { PrismaService } from 'src/prisma.service'
 @Injectable()
 export class LevelService {
-  constructor (private readonly prisma: PrismaService) { }
+  constructor (private readonly prisma: PrismaService) {}
   async create (params: level_dto) {
     try {
       const status = params?.status

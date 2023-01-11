@@ -37,6 +37,8 @@ const UserMenu = () => {
 					src='https://randomuser.me/api/portraits/women/68.jpg'
 					alt='user profile photo'
 					className='h-full w-full object-cover'
+					width={50}
+					height={50}
 				/>
 			</span>
 

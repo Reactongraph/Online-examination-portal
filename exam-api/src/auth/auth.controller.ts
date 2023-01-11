@@ -21,7 +21,7 @@ export class AuthController {
     private readonly authService: AuthService,
     private readonly jwtService: JwtService,
     private readonly prisma: PrismaService
-  ) { }
+  ) {}
 
   // this controller is used to change password using rest link
   @Post('change-password')
@@ -43,17 +43,18 @@ export class AuthController {
     const users = await this.authService.login(login)
 
     if (users === 'invalid credentials' || users === 'invalid username') {
-      const data = { error: 'Login Failed' }
+      const data = { error: 'Invalid credentials' }
       response.status(HttpStatus.BAD_REQUEST).send(data)
     } else {
       const token = await this.authService.create_token(users)
-
+      const jwt_decode: any = this.jwtService.decode(token.access_token)
       await this.prisma.login.create({
         data: {
           token: token.access_token,
           refresh_token: token.refresh_token,
           email: login?.email,
-          token_id: users.id
+          token_id: users.id,
+          role: login.role
         }
       })
 
@@ -61,7 +62,9 @@ export class AuthController {
         message: 'Login success',
         payload: users,
         access_token: token.access_token,
-        refresh_token: token.refresh_token
+        refresh_token: token.refresh_token,
+        role: login.role,
+        organization_id: jwt_decode.id
       }
       response.cookie('access_token', token.access_token, { httpOnly: true })
       response.cookie('refresh_token', token.refresh_token, {
@@ -83,7 +86,9 @@ export class AuthController {
         message: 'new token generated',
         payload: decode.payload,
         access_token: decode.token.access_token,
-        refresh_token: decode.token.refresh_token
+        refresh_token: decode.token.refresh_token,
+        role: decode.role,
+        organization_id: decode.organization_id
       }
 
       response.cookie('access_token', decode.token.access_token, {

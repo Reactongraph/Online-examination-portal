@@ -407,7 +407,7 @@ const AddQuestion = (
 							<option value='MCQ'>MCQ</option>
 							<option value='TRUE/FALSE'>TRUE/FALSE</option>
 							<option value='ONE-WORD'>ONE-WORD</option>
-							<option value="DON'T KNOW">Don&apos;t Know</option>
+							<option value="DON'T KNOW">Don{`&apos;`}t Know</option>
 						</select>
 
 						<label

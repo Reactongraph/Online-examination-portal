@@ -16,8 +16,6 @@ export default function Layout({ children }) {
 	const dispatch = useDispatch()
 
 	const refreshToken = async () => {
-		// if (cookie) {
-
 		try {
 			const response = await axios.get(`${SERVER_LINK}/auth/refresh_token`, {
 				headers: {
@@ -29,6 +27,8 @@ export default function Layout({ children }) {
 
 			const newToken = response.data.access_token
 			const payload = response.data.payload
+			const userRole = response.data.role
+			const Org_id = response.data.organization_id
 			if (newToken) {
 				if (
 					router.asPath == '/login' ||
@@ -40,6 +40,8 @@ export default function Layout({ children }) {
 						type: 'UPDATE_ACCESS_TOKEN',
 						token: newToken,
 						payload: payload,
+						role: userRole,
+						Org_id: Org_id,
 					})
 
 					router.push(`/dashboard`)
@@ -48,6 +50,8 @@ export default function Layout({ children }) {
 						type: 'UPDATE_ACCESS_TOKEN',
 						token: newToken,
 						payload: payload,
+						role: userRole,
+						Org_id: Org_id,
 					})
 					router.push(`${router.asPath}`)
 				}

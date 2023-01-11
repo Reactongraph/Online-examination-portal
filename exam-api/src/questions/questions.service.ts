@@ -4,7 +4,7 @@ import { QuestionDTO } from './questions.entity'
 const csv = require('csvtojson')
 @Injectable()
 export class QuestionsService {
-  constructor (private readonly prisma: PrismaService) { }
+  constructor (private readonly prisma: PrismaService) {}
   async Bulk_insertion (dataa: QuestionDTO) {
     try {
       const CREATE_CSV = await this.prisma.questions.createMany({
@@ -18,7 +18,6 @@ export class QuestionsService {
 
   async create (createQuestionDto: QuestionDTO) {
     try {
-
       const question = await this.prisma.questions.create({
         data: {
           question: createQuestionDto?.question,
@@ -34,9 +33,7 @@ export class QuestionsService {
       })
 
       return question
-    } catch (error) {
-
-    }
+    } catch (error) {}
   }
 
   async findAll () {
@@ -73,7 +70,7 @@ export class QuestionsService {
 
   async update (id: string, updateRestApiDto: QuestionDTO) {
     try {
-      const find = await this.prisma.questions.findUnique({ where: { id: id } })
+      const find = await this.prisma.questions.findUnique({ where: { id } })
       if (find) {
         return null
       }
