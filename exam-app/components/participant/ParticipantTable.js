@@ -10,13 +10,12 @@ import {
 	DeleteParticipant,
 	EditParticipant,
 	GetParticipantData,
-	GetParticipantDataWithOrgId
+	GetParticipantDataWithOrgId,
 } from '../../apis/participants'
 import Table from '../common/Table'
 import { columns } from './TableColumn'
 
 const ParticipantTable = ({ participant_data, mutate }) => {
-
 	const [editForm, setEditForm] = useState(false)
 	const [modal, setModal] = useState(false)
 	const [participantId, setParticipantId] = useState('')
@@ -35,8 +34,7 @@ const ParticipantTable = ({ participant_data, mutate }) => {
 			DeleteParticipant(participantId, user?.token)
 			mutate()
 			toast.success('participant deleted!')
-		}
-		catch (error) {
+		} catch (error) {
 			toast.error('invalid request')
 		}
 	}
@@ -68,7 +66,8 @@ const ParticipantTable = ({ participant_data, mutate }) => {
 					setModal(!modal)
 					mutate()
 					toast.success('participant updated!')
-				}).catch(error => {
+				})
+				.catch((error) => {
 					toast.error('invalid request')
 				})
 		}
@@ -113,7 +112,6 @@ const ParticipantTable = ({ participant_data, mutate }) => {
 	const rowsDataArray = participant_data?.map((element) => {
 		return createData(element)
 	})
-
 
 	return (
 		<>
