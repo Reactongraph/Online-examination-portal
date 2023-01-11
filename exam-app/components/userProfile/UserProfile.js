@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 const UserProfile = ({ profile_data }) => {
 	const userName = profile_data.name
-	const userRole = profile_data.role
+	const userRole = profile_data?.role
 	return (
 		<>
 			<main className='p-6 sm:p-10 space-y-6'>

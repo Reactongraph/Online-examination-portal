@@ -52,6 +52,6 @@ export async function getServerSideProps(data) {
 	}
 
 	// Pass data to the page via props
-	profile_data.role = decoded.role
+	// profile_data["role"] = decoded?.role
 	return { props: { profile_data } }
 }

@@ -31,6 +31,7 @@ import { AdminModule } from './admin/admin.module'
     AuthModule,
     QuizModule,
     QuestionsModule,
+    AdminModule,
     MulterModule.register({
       dest: './images'
     })
