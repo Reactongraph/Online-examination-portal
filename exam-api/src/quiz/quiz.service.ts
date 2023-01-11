@@ -28,8 +28,8 @@ export class QuizService {
           buffer_time: createQuizDto.buffer_time,
           description: createQuizDto.description,
           status: myBool,
-          module_id: createQuizDto.module_id,
-          level_id: createQuizDto.level_id
+          module_id: createQuizDto?.module_id,
+          level_id: createQuizDto?.level_id
         }
       })
 

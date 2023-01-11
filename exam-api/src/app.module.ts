@@ -17,9 +17,9 @@ import { QuestionsModule } from './questions/questions.module'
 import { QuestionsService } from './questions/questions.service'
 import { MulterModule } from '@nestjs/platform-express'
 import { PrismaService } from './prisma.service'
-import { QuizModule } from './quiz/quiz.module'
-import { QuizController } from './quiz/quiz.controller'
-import { QuizService } from './quiz/quiz.service'
+// import { QuizModule } from './quiz/quiz.module'
+// import { QuizController } from './quiz/quiz.controller'
+// import { QuizService } from './quiz/quiz.service'
 
 @Module({
   imports: [
@@ -28,7 +28,7 @@ import { QuizService } from './quiz/quiz.service'
     LevelModule,
     ModuleModule,
     AuthModule,
-    QuizModule,
+    // QuizModule,
     QuestionsModule,
     MulterModule.register({
       dest: './images'

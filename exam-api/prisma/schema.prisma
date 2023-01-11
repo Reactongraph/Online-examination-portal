@@ -58,7 +58,7 @@ model Level {
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
   questions Questions[]
-  Quiz      Quiz[]
+  Quiz Quiz[]
 }
 
 model Module {
@@ -68,7 +68,8 @@ model Module {
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
   questions Questions[]
-  Quiz      Quiz[]
+  Quiz Quiz[]
+
 }
 
 model Login {
@@ -107,13 +108,13 @@ model Quiz {
   start_date  DateTime?
   end_date    DateTime?
   buffer_time DateTime?
-  module_id   String[]  @db.ObjectId
-  level_id    String
-  organization_id String
+  level_id      String?
+  module_id     String[]
+  Organization_id String?
+  level        Level?   @relation(fields: [level_id], references: [id])
+  module       Module?  @relation(fields: [module_id], references: [id])
   status      Boolean   @default(true)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  module      Module?   @relation(fields: [module_id], references: [id])
-  level       Level     @relation(fields: [level_id], references: [id])
-  organization    Organization @relation(fields: [Organization_id], references: [id])
+  organization    Organization? @relation(fields: [Organization_id], references: [id])
 }
