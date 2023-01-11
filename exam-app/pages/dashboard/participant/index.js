@@ -13,12 +13,14 @@ export default function Participant() {
 		user?.role == 'SuperAdminUser'
 			? GetParticipantData(user.token)
 			: GetParticipantDataWithOrgId(user.token, user.Org_id)
-	console.log(data, "data")
 
 	return (
 		<>
 			<Layout title='Participant'>
-				<ParticipantComponent participant_data={data} mutate={mutate} />
+				<ParticipantComponent
+					participant_data={data}
+					mutate={mutate}
+				/>
 			</Layout>
 		</>
 	)

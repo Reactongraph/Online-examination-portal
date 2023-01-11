@@ -1,58 +1,59 @@
-import axios from 'axios';
+import axios from 'axios'
 import useSWR from 'swr'
-import { SERVER_LINK } from '../helpers/config';
+import { SERVER_LINK } from '../helpers/config'
 
-const fetcher = (url, token) => axios.get(url, {
-    headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json;charset=UTF-8',
-        Authorization: token,
-    }
-}).then(res => res.data)
+const fetcher = (url, token) =>
+	axios
+		.get(url, {
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json;charset=UTF-8',
+				Authorization: token,
+			},
+		})
+		.then((res) => res.data)
 
-export function GetLevelData(token) { 
-    const { data, error, isLoading } = useSWR([`${SERVER_LINK}/level/find`, token], ([url, token]) => fetcher(url, token))
-    return {
-        data, error, isLoading
-    }
+export function GetLevelData(token) {
+	const { data, error, isLoading } = useSWR(
+		[`${SERVER_LINK}/level/find`, token],
+		([url, token]) => fetcher(url, token)
+	)
+	return {
+		data,
+		error,
+		isLoading,
+	}
 }
 
-
 export async function DeleteLevel(id, token) {
-    return await axios
-        .delete(`${SERVER_LINK}/level/${id}`, {
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json;charset=UTF-8',
-                Authorization: token,
-            },
-        })
+	return await axios.delete(`${SERVER_LINK}/level/${id}`, {
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json;charset=UTF-8',
+			Authorization: token,
+		},
+	})
 }
 
 export async function AddLevel(data, token) {
-    return await axios({
-        url: `${SERVER_LINK}/level`,
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json;charset=UTF-8',
-            Authorization: token,
-        },
-        data,
-    })
+	return await axios({
+		url: `${SERVER_LINK}/level`,
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json;charset=UTF-8',
+			Authorization: token,
+		},
+		data,
+	})
 }
 
 export async function EditLevel(data, id, token) {
-    await axios
-        .patch(
-            `${SERVER_LINK}/level/${id}`,
-            data,
-            {
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json;charset=UTF-8',
-                    Authorization: token,
-                },
-            }
-        )
+	await axios.patch(`${SERVER_LINK}/level/${id}`, data, {
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json;charset=UTF-8',
+			Authorization: token,
+		},
+	})
 }

@@ -16,7 +16,10 @@ const Participant = ({ participant_data, mutate }) => {
 
 			<section className='grid md:grid-cols-1 xl:grid-cols-1 gap-6'>
 				<div className='flex-grow items-center p-8 bg-white shadow rounded-lg'>
-					<ParticipantTable participant_data={participant_data} mutate={mutate} />
+					<ParticipantTable
+						participant_data={participant_data}
+						mutate={mutate}
+					/>
 				</div>
 			</section>
 		</main>
