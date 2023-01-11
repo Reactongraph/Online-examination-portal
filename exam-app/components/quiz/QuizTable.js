@@ -1,4 +1,3 @@
-import Table from './Table'
 import React, { useState } from 'react'
 // import Pagination from 'react-js-pagination'
 import axios from 'axios'
@@ -7,7 +6,6 @@ import { useRouter } from 'next/router'
 import PureModal from 'react-pure-modal'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
-import { injectStyle } from 'react-toastify/dist/inject-style'
 import { ToastContainer, toast } from 'react-toastify'
 import DatePicker from 'react-datepicker'
 import { default as ReactSelect } from 'react-select'
@@ -15,10 +13,7 @@ import { default as ReactSelect } from 'react-select'
 import { components } from 'react-select'
 import moment from 'moment'
 import { useSelector } from 'react-redux'
-// CALL IT ONCE IN YOUR APP
-if (typeof window !== 'undefined') {
-	injectStyle()
-}
+import Table from '../common/Table'
 
 const QuizTable = ({ quiz_data, module_data, level_data }) => {
 	const router = useRouter()

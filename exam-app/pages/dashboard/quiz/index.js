@@ -1,8 +1,6 @@
 import * as React from 'react'
-
 import Quiz from '../../../components/quiz/Quiz'
 import Layout from '../../../components/layout/Layout'
-
 import axios from 'axios'
 import { SERVER_LINK } from '../../../helpers/config'
 
@@ -47,7 +45,7 @@ export async function getServerSideProps(data) {
 		},
 	})
 
-	let quiz_data = res.data.quiz
+	let quiz_data = res?.data?.quiz
 	let level_data = levels.data
 	let module_data = modules.data
 	module_data = module_data.map((object) => {

@@ -4,13 +4,7 @@ import { object, string } from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SERVER_LINK } from '../helpers/config'
 import axios from 'axios'
-import { injectStyle } from 'react-toastify/dist/inject-style'
 import { toast } from 'react-toastify'
-
-// CALL IT ONCE IN YOUR APP
-if (typeof window !== 'undefined') {
-	injectStyle()
-}
 
 // validation schema
 const schema = object({

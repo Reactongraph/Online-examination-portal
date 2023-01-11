@@ -2,11 +2,7 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import { SERVER_LINK } from '../../../helpers/config'
 import axios from 'axios'
-import { injectStyle } from 'react-toastify/dist/inject-style'
 import { ToastContainer, toast } from 'react-toastify'
-if (typeof window !== 'undefined') {
-	injectStyle()
-}
 
 const LogOutButton = () => {
 	const router = useRouter()

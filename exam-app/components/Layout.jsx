@@ -1,6 +1,4 @@
 import { useEffect } from 'react'
-
-
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { SERVER_LINK } from '../helpers/config'
@@ -70,7 +68,7 @@ export default function Layout({ children }) {
 
 	useEffect(() => {
 		refreshToken()
-	}, [])
+	})
 
 	return <>{children}</>
 }

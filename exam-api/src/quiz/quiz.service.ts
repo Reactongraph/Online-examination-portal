@@ -45,7 +45,7 @@ export class QuizService {
         include: { level: true }
       })
 
-      const quiz = await this.prisma.quiz.aggregateRaw({
+      const quiz: any = await this.prisma.quiz.aggregateRaw({
         pipeline: [
           {
             $lookup: {
@@ -59,7 +59,7 @@ export class QuizService {
       })
 
       for (const [index] of leveldata.entries()) {
-        quiz[index]['level'] = leveldata[index].level
+        quiz[index].level = leveldata[index].level
       }
       return { quiz }
     } catch (error) {}

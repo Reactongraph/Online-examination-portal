@@ -50,7 +50,6 @@ const PageComponentTitle = ({
 						<ParticipantModal
 							modal={modal}
 							setModal={setModal}
-							organization_data={organization_data}
 						/>
 					</>
 				) : title == 'LEVEL' ? (

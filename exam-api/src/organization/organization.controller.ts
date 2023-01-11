@@ -31,18 +31,14 @@ export class RestApiController {
   @Body() createRestApiDto: organization_dto,
     @Res({ passthrough: true }) response: Response
   ) {
-    console.log('this is org data')
-    console.log(createRestApiDto)
-
     const user = await this.restApiService.create(createRestApiDto)
-    console.log('user', user)
 
     if (user.id == null) {
       // return {
       //   message: 'user already exist',
       // };
 
-      response.status(HttpStatus.BAD_REQUEST).json(user)
+      response.status(HttpStatus.BAD_REQUEST).json([])
     } else {
       const jwt = await this.jwtService.signAsync({ id: user.id })
       await this.prisma.reset_token.create({

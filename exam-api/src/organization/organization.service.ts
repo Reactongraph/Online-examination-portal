@@ -8,12 +8,9 @@ export class RestApiService {
   constructor (private readonly prisma: PrismaService) {}
   async create (createRestApiDto: organization_dto) {
     try {
-      console.log('inside service')
-
       const EMAIL_CHECK = await this.prisma.organization.findUnique({
         where: { email: createRestApiDto?.email }
       })
-      console.log(EMAIL_CHECK)
 
       if (EMAIL_CHECK != null) {
         return {
@@ -36,13 +33,6 @@ export class RestApiService {
             password: createRestApiDto?.password
           }
         })
-        // await this.prisma.user_auth.create({
-        //   data: {
-        //     name: createRestApiDto?.name,
-        //     email: createRestApiDto?.email,
-        //     password: createRestApiDto?.password
-        //   }
-        // })
         return user
       }
     } catch (err) {
@@ -112,12 +102,6 @@ export class RestApiService {
 
   async update (id: string, updateRestApiDto: organization_dto) {
     try {
-    //   const FIND_USER = await this.prisma.organization.findUnique({
-    //     where: { email: updateRestApiDto?.email }
-    //   })
-    //   if (FIND_USER) {
-    //     return null
-    //   }
 
       const updateUser = await this.prisma.organization.update({
         where: {
