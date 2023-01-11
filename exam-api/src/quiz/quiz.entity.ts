@@ -26,6 +26,9 @@ class QuizDTO {
   @ApiProperty()
     module_id: string[]
 
+    @ApiProperty()
+    Organization_id: string
+
   @ApiProperty()
     createdAt: Date
 
