@@ -9,8 +9,9 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { OrganizationColumns } from './organizationColumn'
 import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
+import { DeleteOrganization, EditOrganization, GetOrganizationDataWithId } from '../../apis/organizations'
 
-const OrganizationTable = ({ org_data }) => {
+const OrganizationTable = ({ organization_data, mutate }) => {
 	const router = useRouter()
 	const [editForm, setEditForm] = useState(false)
 	const [modal, setModal] = useState(false)
@@ -31,21 +32,15 @@ const OrganizationTable = ({ org_data }) => {
 
 	const { handleSubmit } = useForm()
 	const login_token = useSelector((state) => state.user.token)
+	const user = useSelector((state) => state?.user)
 	const handleRemoveClick = (org_id) => {
-		axios
-			.delete(`${SERVER_LINK}/organization/${org_id}`, {
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: login_token,
-				},
-			})
-			.then(() => {
-				router.replace(router.asPath)
-			})
-			.catch(() => {
-				toast.error('invalid request')
-			})
+		try {
+			DeleteOrganization(org_id, user?.token)
+			mutate()
+			toast.success('Organization deleted!')
+		} catch (error) {
+			toast.error('invalid request')
+		}
 	}
 
 	const handleBoxClick = async (org_id, org_status) => {
@@ -53,50 +48,30 @@ const OrganizationTable = ({ org_data }) => {
 			status: !org_status,
 		}
 		new_status = JSON.stringify(new_status)
-		await axios
-			.patch(`${SERVER_LINK}/organization/${org_id}`, new_status, {
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: login_token,
-				},
-			})
+		EditOrganization(OrganizationData, organizationId, user?.token)
 			.then(() => {
-				router.replace(router.asPath)
+				setModal(!modal)
+				mutate()
+				toast.success('organization updated!')
 			})
 			.catch(() => {
 				toast.error('invalid request')
 			})
 	}
-	const handleEditClick = async (org_id) => {
+	const handleEditClick = async (org) => {
 		setButtonText('Update')
 		setEditForm(true)
-		setOrganizationId(org_id)
+		setOrganizationId(org.id)
 		setModal(true)
-		// first find the user with the id
-		await axios
-			.get(`${SERVER_LINK}/organization/${org_id}`, {
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: login_token,
-				},
-			})
-			.then((response) => {
-				let singleOrgData = response.data
-				setName(singleOrgData.name)
-				setEmail(singleOrgData.email)
-				setMobile(singleOrgData.mobile)
-				setState(singleOrgData.state)
-				setPassword(singleOrgData.password)
-				setAddress(singleOrgData.address)
-				setCity(singleOrgData.city)
-				setPincode(singleOrgData.pincode)
-				setQuota(singleOrgData.quota)
-			})
-			.catch(() => {
-				toast.error('invalid request')
-			})
+		setName(org.name)
+		setEmail(org.email)
+		setMobile(org.mobile)
+		setState(org.state)
+		setPassword(org.password)
+		setAddress(org.address)
+		setCity(org.city)
+		setPincode(org.pincode)
+		setQuota(org.quota)
 	}
 
 	const checkWithDatabase = async (data) => {
@@ -113,21 +88,11 @@ const OrganizationTable = ({ org_data }) => {
 
 		// for taking the patch api data
 		if (editForm) {
-			await axios
-				.patch(
-					`${SERVER_LINK}/organization/${organizationId}`,
-					OrganizationData,
-					{
-						headers: {
-							Accept: 'application/json',
-							'Content-Type': 'application/json;charset=UTF-8',
-							Authorization: login_token,
-						},
-					}
-				)
+			EditOrganization(OrganizationData, organizationId, user?.token)
 				.then(() => {
 					setModal(!modal)
-					router.replace(router.asPath)
+					mutate()
+					toast.success('organization updated!')
 				})
 				.catch(() => {
 					toast.error('invalid request')
@@ -136,19 +101,11 @@ const OrganizationTable = ({ org_data }) => {
 
 		// for new data registration
 		else {
-			await axios({
-				url: `${SERVER_LINK}/organization`,
-				method: 'POST',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: login_token,
-				},
-				data,
-			})
-				.then(() => {
+			AddParticipant(data, user?.token)
+				.then(async () => {
 					setModal(!modal)
-					router.replace(router.asPath)
+					mutate()
+					toast.success('organization added!')
 				})
 				.catch(() => {
 					toast.error('invalid request')
@@ -156,17 +113,17 @@ const OrganizationTable = ({ org_data }) => {
 		}
 	}
 
-	function createData(name, email, org_id, org_status) {
+	function createData(org) {
 		const action = (
 			<>
 				<button
-					onClick={() => handleEditClick(org_id)}
+					onClick={() => handleEditClick(org)}
 					className='bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'>
 					Edit
 				</button>
 				&nbsp;
 				<button
-					onClick={() => handleRemoveClick(org_id)}
+					onClick={() => handleRemoveClick(org.id)}
 					className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'>
 					Delete
 				</button>
@@ -176,25 +133,30 @@ const OrganizationTable = ({ org_data }) => {
 			<>
 				<div className='flex '>
 					<input
-						onClick={() => handleBoxClick(org_id, org_status)}
+						onClick={() => handleBoxClick(org.d, org?.status)}
 						className='form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm'
 						type='checkbox'
 						role='switch'
 						id='flexSwitchCheckDefault'
-						defaultChecked={org_status}
+						defaultChecked={org.status}
 					/>
 				</div>
 			</>
 		)
-		return { name, email, status, action }
+		return {
+			name: org.name,
+			email: org.email,
+			mobile: org.mobile,
+			action,
+		}
 	}
 
-	const rowsDataArray = org_data.map((element) => {
+	const rowsDataArray = organization_data?.map((element) => {
 		let name = element.name
 		let email = element.email
 		let org_id = element.id
 		let org_status = element.status
-		return createData(name, email, org_id, org_status)
+		return createData(element)
 	})
 
 	const data = rowsDataArray
@@ -203,7 +165,7 @@ const OrganizationTable = ({ org_data }) => {
 		<>
 			<Table
 				columns={OrganizationColumns}
-				data={data}
+				data={data || [] }
 				rowKey='id'
 				className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'
 			/>

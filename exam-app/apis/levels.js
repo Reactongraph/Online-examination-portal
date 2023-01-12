@@ -24,7 +24,18 @@ export function GetLevelData(token) {
 		isLoading,
 	}
 }
-
+export function GetLevelDataWithId(token, id) {
+	const { data, error, isLoading, mutate } = useSWR(
+		[`${SERVER_LINK}/level/${id}`, token],
+		([url, token]) => fetcher(url, token)
+	)
+	return {
+		data,
+		error,
+		isLoading,
+		mutate,
+	}
+}
 export async function DeleteLevel(id, token) {
 	return await axios.delete(`${SERVER_LINK}/level/${id}`, {
 		headers: {

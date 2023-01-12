@@ -25,7 +25,6 @@ function OrganizationPopUp(props) {
 		handleSubmit,
 		checkWithDatabase,
 	} = props
-
 	return (
 		<PureModal
 			isOpen={modal}
