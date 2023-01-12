@@ -7,6 +7,7 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
+import { Label } from './micro/label'
 
 const LevelModal = ({ modal, setModal }) => {
 	const router = useRouter()
@@ -72,11 +73,10 @@ const LevelModal = ({ modal, setModal }) => {
 							onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 							<div class='flex flex-wrap -mx-3 mb-6'>
 								<div class='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
-									<label
-										class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-first-name'>
-										Enter Level
-									</label>
+									<Label
+										key='grid-first-name'
+										labelvalue='Enter Level'
+									/>
 									<input
 										class='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
 										id='grid-first-name'
