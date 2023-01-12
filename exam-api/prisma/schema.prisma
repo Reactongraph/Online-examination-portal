@@ -58,7 +58,7 @@ model Level {
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
   questions Questions[]
-  Quiz Quiz[]
+  Quiz      Quiz[]
 }
 
 model Module {
@@ -68,14 +68,13 @@ model Module {
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
   questions Questions[]
-  Quiz Quiz[]
-
+  Quiz      Quiz[]
 }
 
 model Login {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  token         String? @unique 
-  refresh_token String? @unique   
+  token         String?  @unique
+  refresh_token String?  @unique
   email         String
   token_id      String
   role          String?
@@ -84,7 +83,7 @@ model Login {
 
 model Questions {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  question      String 
+  question      String
   question_type String?
   option_type   String?
   options       Json?
@@ -101,20 +100,68 @@ model Questions {
 }
 
 model Quiz {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  quiz_name   String    @unique
-  quiz_image  String?
-  description String?
-  start_date  DateTime?
-  end_date    DateTime?
-  buffer_time DateTime?
-  level_id      String?
-  module_id     String[]
+  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+  quiz_name       String        @unique
+  quiz_image      String?
+  description     String?
+  start_date      DateTime?
+  end_date        DateTime?
+  buffer_time     DateTime?
+  level_id        String?
+  module_id       String[]
   Organization_id String?
-  level        Level?   @relation(fields: [level_id], references: [id])
-  module       Module?  @relation(fields: [module_id], references: [id])
-  status      Boolean   @default(true)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  level           Level?        @relation(fields: [level_id], references: [id])
+  module          Module?       @relation(fields: [module_id], references: [id])
+  status          Boolean       @default(true)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
   organization    Organization? @relation(fields: [Organization_id], references: [id])
+}
+
+model Role {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  role String
+  user User[]
+}
+
+model User {
+  id                   String                 @id @default(auto()) @map("_id") @db.ObjectId
+  email                String                 @unique
+  role_id              String?
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  role                 Role?                  @relation(fields: [role_id], references: [id])
+  organization_profile Organization_profile[]
+  participant_profile Participant_profile[]
+}
+
+model Organization_profile {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  user_id   String?
+  email     String   @unique
+  password  String?
+  name      String?
+  quota     String?
+  status    Boolean?
+  mobile    String?
+  address   String?
+  city      String?
+  state     String?
+  pincode   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User?    @relation(fields: [user_id], references: [id])
+  patricipant_profile  Participant_profile[]
+}
+
+model Participant_profile {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  user_id   String?
+  OrganizationProfile_id String
+  name            String?
+  email           String       @unique
+  password        String?
+  mobile          String?
+    user      User?    @relation(fields: [user_id], references: [id])
+  organization_profile    Organization_profile? @relation(fields: [OrganizationProfile_id], references: [id])
 }
