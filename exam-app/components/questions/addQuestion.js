@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { RiDeleteBinLine } from 'react-icons/ri'
-import { SERVER_LINK } from '../../helpers/config'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
-import axios from 'axios'
 
 import { useCookie } from 'next-cookie'
 import Image from 'next/image'
+import { Addquestion, EditQuestion, GetQuestionDataWithId } from '../../apis/questions'
+import { useSelector } from 'react-redux'
 
 const AddQuestion = (
 	{ level_data: levelData, module_data: moduleData },
 	props
 ) => {
-	const router = useRouter()
-
+	const user = useSelector((state) => state?.user)
+	const router= useRouter();
 	const [selectedImage, setSelectedImage] = useState(null)
 	const [pageTitle, setPageTitle] = useState('Add')
 	const [question, setQuestion] = useState('')
@@ -42,16 +42,7 @@ const AddQuestion = (
 		let question_id = router.query.question_id
 
 		async function getQuestionData() {
-			const results = await axios.get(
-				`${SERVER_LINK}/questions/find/${question_id}`,
-				{
-					headers: {
-						Accept: 'application/json',
-						'Content-Type': 'application/json;charset=UTF-8',
-						Authorization: cookie,
-					},
-				}
-			)
+			const results = await  GetQuestionDataWithId(user?.token,question_id);
 			const questionData = results.data
 			setPageTitle('Edit')
 			setEditForm(true)
@@ -70,8 +61,8 @@ const AddQuestion = (
 			setQuestionType(questionData.question_type)
 			setTimeLimitSelect(questionData.question_time)
 			setOptionType(questionData.option_type)
-			setSelectedLevelId(questionData.level.id)
-			setSelectedModuleId(questionData.module.id)
+			setSelectedLevelId(questionData?.level?.id)
+			setSelectedModuleId(questionData?.module?.id)
 
 			setMarks(questionData.marks)
 			setEditForm(true)
@@ -185,32 +176,15 @@ const AddQuestion = (
 
 		if (editForm) {
 			let question_id = router.query.question_id
-
-			await axios
-				.patch(`${SERVER_LINK}/questions/${question_id}`, data, {
-					headers: {
-						Accept: 'application/json',
-						'Content-Type': 'application/json;charset=UTF-8',
-						Authorization: cookie,
-					},
-				})
+			EditQuestion(data,question_id,user?.token)
 				.then(() => {
 					router.push('/dashboard/questions')
 				})
 				.catch(() => {
-					toast.error('invalid request')
+					toast.error('invalid requestssss')
 				})
 		} else {
-			await axios({
-				url: `${SERVER_LINK}/questions/create`,
-				method: 'POST',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: cookie,
-				},
-				data,
-			})
+			Addquestion(data,user?.token)
 				.then(() => {
 					router.push('/dashboard/questions')
 				})

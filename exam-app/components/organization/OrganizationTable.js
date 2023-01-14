@@ -150,7 +150,6 @@ const OrganizationTable = ({ organization_data, mutate }) => {
 			action,
 		}
 	}
-
 	const rowsDataArray = organization_data?.map((element) => {
 		let name = element.name
 		let email = element.email

@@ -6,7 +6,7 @@ function QuizDataArray(
 	handleBoxClick,
 	handleRemoveClick
 ) {
-	const rowsDataArray = quiz_data.map((element) => {
+	const rowsDataArray = quiz_data.data?.quiz.map((element) => {
 		let quiz = element.quiz_name
 		let quiz_id = element._id.$oid
 		let quiz_status = element.status

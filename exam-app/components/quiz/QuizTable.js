@@ -1,6 +1,5 @@
 import Table from '../common/Table'
 import React, { useState } from 'react'
-import axios from 'axios'
 import { SERVER_LINK } from '../../helpers/config'
 import { useRouter } from 'next/router'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
@@ -12,6 +11,7 @@ import { QuizColumns } from './quizColumn'
 import QuizPopUp from '../common/PopUpModals/quizPopUp/QuizPopup'
 import QuizDataArray from './QuizDataArray'
 import { injectStyle } from 'react-toastify/dist/inject-style'
+import { DeleteQuiz, EditQuiz, GetQuizDataWithId } from '../../apis/quizzes'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
@@ -20,7 +20,7 @@ if (typeof window !== 'undefined') {
 
 const QuizTable = ({ quiz_data, module_data, level_data }) => {
 	const router = useRouter()
-
+	const user = useSelector((state) => state?.user)
 	const [modal, setModal] = useState(false)
 	const [quizId, setQuizId] = useState('')
 
@@ -37,7 +37,6 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 	const [optionModuleSelected, setOptionModuleSelected] = useState()
 	const [selectedModules, setSelectedModules] = useState()
 
-	const login_token = useSelector((state) => state.user.token)
 
 	const { handleSubmit } = useForm()
 
@@ -47,14 +46,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 	}
 
 	const handleRemoveClick = (quiz_id) => {
-		axios
-			.delete(`${SERVER_LINK}/quiz/${quiz_id}`, {
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: login_token,
-				},
-			})
+		DeleteQuiz(quiz_id,user?.token)
 			.then(() => {
 				router.replace(router.asPath)
 				toast.success('Quiz deleted!')
@@ -79,14 +71,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 			status: !quiz_status,
 		}
 		new_status = JSON.stringify(new_status)
-		await axios
-			.patch(`${SERVER_LINK}/quiz/${quiz_id}`, new_status, {
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: login_token,
-				},
-			})
+		EditQuiz(data,quiz_id,user?.token)
 			.then(() => {})
 			.catch(() => {
 				toast.error('invalid request')
@@ -101,14 +86,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 		let seletedModuleDataArray = []
 
 		// first find the user with the id
-		await axios
-			.get(`${SERVER_LINK}/quiz/find/${quiz_id}`, {
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: login_token,
-				},
-			})
+		GetQuizDataWithId(user?.token,quiz_id)
 			.then((response) => {
 				let singleQuizData = response.data[0]
 				setName(singleQuizData.quiz_name)
@@ -117,8 +95,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 				let bufferDate = moment(singleQuizData.buffer_time).toDate()
 				let startDate = moment(singleQuizData.start_date).toDate()
 				let endDate = moment(singleQuizData.end_date).toDate()
-
-				moduleData.map((oneModule) => {
+				moduleData.data.map((oneModule) => {
 					singleQuizData.module_id.map((oneID) => {
 						if (oneID == oneModule.id) {
 							seletedModuleDataArray.push(oneModule)
@@ -143,16 +120,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 		data.level_id = selectedLevelId
 		data.description = description
 		data.module_id = selectedModules
-
-		// let QuizData = JSON.stringify(data)
-		await axios
-			.patch(`${SERVER_LINK}/quiz/${quizId}`, data, {
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: login_token,
-				},
-			})
+		EditQuiz(data,quizId,user?.token)
 			.then(() => {
 				setModal(!modal)
 				router.replace(router.asPath)
@@ -171,11 +139,12 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 		handleRemoveClick
 	)
 
+
 	return (
 		<>
 			<Table
 				columns={QuizColumns}
-				data={data}
+				data={data || []}
 				rowKey='id'
 				className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'
 			/>

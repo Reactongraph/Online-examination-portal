@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import LevelModulePopup from './PopUpModals/LevelModulePopUp'
+import { AddLevel } from '../../apis/levels'
 
 // CALL IT ONCE IN YOUR APP
 // if (typeof window !== 'undefined') {
@@ -21,6 +22,7 @@ const LevelModal = (props) => {
 	const buttonText = 'Add'
 	const { handleSubmit } = useForm()
 	const login_token = useSelector((state) => state.user.token)
+	const user = useSelector((state) => state?.user)
 
 	// for sending the data to the backend
 	const checkWithDatabase = async (data) => {
@@ -31,16 +33,7 @@ const LevelModal = (props) => {
 
 		// for taking the patch api data
 		if (data.level !== null && data.level != '') {
-			await axios({
-				url: `${SERVER_LINK}/level`,
-				method: 'POST',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: login_token,
-				},
-				data: LevelData,
-			})
+			AddLevel(LevelData,user?.token)
 				.then(() => {
 					router.replace(router.asPath)
 					setLevel('')

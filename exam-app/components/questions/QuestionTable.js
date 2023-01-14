@@ -1,13 +1,12 @@
 import Table from '../common/Table'
 import React from 'react'
-import axios from 'axios'
-import { SERVER_LINK } from '../../helpers/config'
 import { useRouter } from 'next/router'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { ToastContainer, toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { QuestionColumns } from './questionColumn'
 import { injectStyle } from 'react-toastify/dist/inject-style'
+import { DeleteQuestion, EditQuestion } from '../../apis/questions'
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
@@ -15,16 +14,9 @@ if (typeof window !== 'undefined') {
 
 const QuestionTable = ({ question_data }) => {
 	const router = useRouter()
-	const login_token = useSelector((state) => state.user.token)
+	const user = useSelector((state) => state?.user)
 	const handleRemoveClick = async (question_id) => {
-		await axios
-			.delete(`${SERVER_LINK}/questions/${question_id}`, {
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: login_token,
-				},
-			})
+		DeleteQuestion(question_id,user?.token)
 			.then((result) => {
 				router.replace(router.asPath)
 				toast.success(result.data)
@@ -34,19 +26,12 @@ const QuestionTable = ({ question_data }) => {
 			})
 	}
 
-	const handleBoxClick = async (question_id, question_status) => {
+	const handleBoxClick = async (question) => {
 		let new_status = {
-			status: !question_status,
+			status: !question.status,
 		}
 		new_status = JSON.stringify(new_status)
-		await axios
-			.patch(`${SERVER_LINK}/questions/${question_id}`, new_status, {
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: login_token,
-				},
-			})
+		EditQuestion(question,question.id,user?.token)
 			.then(() => {
 				router.replace(router.asPath)
 				toast.success('status updated!')
@@ -63,12 +48,12 @@ const QuestionTable = ({ question_data }) => {
 	function createData(
 		question,
 		question_type,
-		question_id,
-		question_status,
 		level,
-		modules
+		modules,
+		question_id,
+		question_status
 	) {
-		question = question.slice(0, 15) + '...'
+		question = question.question.slice(0, 15) + '...'
 		const action = (
 			<>
 				<button
@@ -89,20 +74,20 @@ const QuestionTable = ({ question_data }) => {
 				<div className='flex'>
 					{/* <div className="form-check form-switch"> */}
 					<input
-						onClick={() => handleBoxClick(question_id, question_status)}
+						onClick={() => handleBoxClick(question)}
 						className='form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-gray-300 bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm'
 						type='checkbox'
 						role='switch'
 						id='flexSwitchCheckDefault'
-						defaultChecked={question_status}
+						defaultChecked={question.status}
 					/>
 				</div>
 			</>
 		)
-		return { question, question_type, status, action, level, modules }
+		return { question,question_type,status,level,module,action }
 	}
 
-	const rowsDataArray = question_data.map((element) => {
+	const rowsDataArray = question_data?.map((element) => {
 		let question = element.question
 		let question_type = element.question_type
 		let level = element?.level?.level
@@ -110,12 +95,12 @@ const QuestionTable = ({ question_data }) => {
 		let question_id = element.id
 		let question_status = element.status
 		return createData(
-			question,
+			element,
 			question_type,
-			question_id,
-			question_status,
 			level,
-			modules
+			modules,
+			question_id,
+			question_status
 		)
 	})
 
@@ -126,7 +111,7 @@ const QuestionTable = ({ question_data }) => {
 		<>
 			<Table
 				columns={QuestionColumns}
-				data={data}
+				data={data || []}
 				rowKey='id'
 				className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'
 			/>

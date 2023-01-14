@@ -10,13 +10,14 @@ import { useSelector } from 'react-redux'
 import LevelModulePopup from '../common/PopUpModals/LevelModulePopUp'
 import { Levelcolumns } from './levelColumns'
 import { injectStyle } from 'react-toastify/dist/inject-style'
+import { DeleteLevel, EditLevel } from '../../apis/levels'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
 }
 
-const LevelTable = ({ level_data }) => {
+const LevelTable = ({ level_data, mutate }) => {
 	const router = useRouter()
 
 	const [modal, setModal] = useState(false)
@@ -27,18 +28,11 @@ const LevelTable = ({ level_data }) => {
 
 	const { handleSubmit } = useForm()
 	const login_token = useSelector((state) => state.user.token)
-
+	const user = useSelector((state) => state?.user)
 	const handleRemoveClick = async (level_id) => {
 		var shouldDelete = confirm('Do you really want to delete ?')
 		if (shouldDelete) {
-			await axios
-				.delete(`${SERVER_LINK}/level/${level_id}`, {
-					headers: {
-						Accept: 'application/json',
-						'Content-Type': 'application/json;charset=UTF-8',
-						Authorization: login_token,
-					},
-				})
+			DeleteLevel(level_id, user?.token)
 				.then(() => {
 					router.replace(router.asPath)
 				})
@@ -48,29 +42,14 @@ const LevelTable = ({ level_data }) => {
 		}
 	}
 
-	const handleEditClick = async (level_id) => {
+	const handleEditClick = async (level) => {
 		setButtonText('Update')
 
-		setLevelId(level_id)
+		setLevelId(level.id)
 		setModal(true)
+		setLevel(level.level)
+		
 
-		// first find the user with the id
-		await axios
-			.get(`${SERVER_LINK}/level/${level_id}`, {
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: login_token,
-				},
-			})
-			.then((response) => {
-				let singleLevelData = response.data
-
-				setLevel(singleLevelData.level)
-			})
-			.catch(() => {
-				toast.error('Invalid Request')
-			})
 	}
 
 	const handleBoxClick = async (level_id, level_status) => {
@@ -103,14 +82,7 @@ const LevelTable = ({ level_data }) => {
 		// for taking the patch api data
 
 		if (data.level != null && data.level != '') {
-			await axios
-				.patch(`${SERVER_LINK}/level/${levelId}`, LevelData, {
-					headers: {
-						Accept: 'application/json',
-						'Content-Type': 'application/json;charset=UTF-8',
-						Authorization: login_token,
-					},
-				})
+			EditLevel(LevelData,levelId,user?.token)
 				.then(() => {
 					setModal(!modal)
 					router.replace(router.asPath)
@@ -124,11 +96,11 @@ const LevelTable = ({ level_data }) => {
 		}
 	}
 
-	function createData(level, level_id, level_status) {
+	function createData(level) {
 		const action = (
 			<>
 				<button
-					onClick={() => handleEditClick(level_id)}
+					onClick={() => handleEditClick(level)}
 					className='bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'>
 					Edit
 				</button>
@@ -144,25 +116,29 @@ const LevelTable = ({ level_data }) => {
 			<>
 				<div className='flex'>
 					<input
-						onClick={() => handleBoxClick(level_id, level_status)}
+						onClick={() => handleBoxClick(level.id, level.status)}
 						className='form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm'
 						type='checkbox'
 						role='switch'
 						id='flexSwitchCheckDefault'
-						defaultChecked={level_status}
+						defaultChecked={level.status}
 					/>
 				</div>
 			</>
 		)
-		return { level, status, action }
+		return {
+			level: level.level,
+			status: status,
+			action,
+		}
 	}
 
-	const rowsDataArray = level_data.map((element) => {
+	const rowsDataArray = level_data?.map((element) => {
 		let level = element.level
 
 		let level_id = element.id
 		let level_status = element.status
-		return createData(level, level_id, level_status)
+		return createData(element)
 	})
 
 	// data by using which table data is creating using api call
@@ -172,7 +148,7 @@ const LevelTable = ({ level_data }) => {
 		<>
 			<Table
 				columns={Levelcolumns}
-				data={data}
+				data={data || []}
 				rowKey='id'
 				className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'
 			/>

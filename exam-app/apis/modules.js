@@ -14,7 +14,7 @@ const fetcher = (url, token) =>
 		.then((res) => res.data)
 
 export function GetModuleData(token) {
-	const { data, error, isLoading } = useSWR(
+	const { data, error, isLoading,mutate } = useSWR(
 		[`${SERVER_LINK}/module/find`, token],
 		([url, token]) => fetcher(url, token)
 	)
@@ -22,19 +22,28 @@ export function GetModuleData(token) {
 		data,
 		error,
 		isLoading,
+		mutate
 	}
 }
-export function GetModuleDataWithId(token, id) {
+export async function GetModuleDataWithId(token, id) {
 	const { data, error, isLoading, mutate } = useSWR(
 		[`${SERVER_LINK}/module/${id}`, token],
 		([url, token]) => fetcher(url, token)
 	)
+
 	return {
 		data,
 		error,
 		isLoading,
 		mutate,
 	}
+// return await axios.get(`${SERVER_LINK}/module/${id}`, {
+// 	headers: {
+// 		Accept: 'application/json',
+// 		'Content-Type': 'application/json;charset=UTF-8',
+// 		Authorization: token,
+// 	},
+// })
 }
 export async function DeleteModule(id, token) {
 	return await axios.delete(`${SERVER_LINK}/module/${id}`, {

@@ -1,5 +1,6 @@
 function QuizLevelSelect(props) {
 	const { selectedLevelId, handleLevelTypeSelect, levelData } = props
+	console.log("level",levelData.data);
 	return (
 		<>
 			<select
@@ -16,7 +17,7 @@ function QuizLevelSelect(props) {
 					Select
 				</option>
 				{levelData &&
-					levelData.map((response, i) => (
+					levelData.data.map((response, i) => (
 						<option
 							key={i}
 							value={response.id}>

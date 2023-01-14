@@ -11,22 +11,11 @@ const fetcher = (url, token) =>
                 Authorization: token,
             },
         })
-        .then((res) => res.data)
+        .then((res) =>res.data)
 
 export function GetQuizData(token) {
-    const { data, error, isLoading } = useSWR(
-        [`${SERVER_LINK}/quiz/find`, token],
-        ([url, token]) => fetcher(url, token)
-    )
-    return {
-        data,
-        error,
-        isLoading,
-    }
-}
-export function GetQuizDataWithId(token, id) {
     const { data, error, isLoading, mutate } = useSWR(
-        [`${SERVER_LINK}/quiz/find/${id}`, token],
+        [`${SERVER_LINK}/quiz/find`, token],
         ([url, token]) => fetcher(url, token)
     )
     return {
@@ -35,6 +24,24 @@ export function GetQuizDataWithId(token, id) {
         isLoading,
         mutate,
     }
+}
+// export async function GetQuizDataWithId(token, id) {
+//     return await axios.get(`${SERVER_LINK}/quiz/find/${id}`,{
+//         headers:{
+//             Accept:'application/json',
+//             'Content-Type':'applications/json;charset=UTF-8',
+//             Authorization:token,
+//         },
+//     })
+// }
+export async function GetQuizDataWithId(token,id) {
+    return await axios.get(`${SERVER_LINK}/quiz/find/${id}`,{
+        headers:{
+            Accept:'application/json',
+            'Content-Type':'applications/json;charset=UTF-8',
+            Authorization:token,
+        },
+    })
 }
 export async function DeleteQuiz(id, token) {
     return await axios.delete(`${SERVER_LINK}/quiz/${id}`, {

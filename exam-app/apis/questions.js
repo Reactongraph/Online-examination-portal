@@ -24,17 +24,36 @@ export function GetQuestionData(token) {
         isLoading,
     }
 }
-export function GetQuestionDataWithId(token, id) {
-    const { data, error, isLoading, mutate } = useSWR(
-        [`${SERVER_LINK}/questions/${id}`, token],
-        ([url, token]) => fetcher(url, token)
-    )
-    return {
-        data,
-        error,
-        isLoading,
-        mutate,
-    }
+// export function GetQuestionDataWithId(token, id) {
+//     const { data, error, isLoading, mutate } = useSWR(
+//         [`${SERVER_LINK}/questions/find/${id}`, token],
+//         ([url, token]) => fetcher(url, token)
+//     )
+//     return {
+//         data,
+//         error,
+//         isLoading,
+//         // mutate,
+//     }
+// }
+export async function GetQuestionDataWithId(token, id) {
+    // const { data, error, isLoading, mutate } = useSWR(
+    //     [`${SERVER_LINK}/questions/find/${id}`, token],
+    //     ([url, token]) => fetcher(url, token)
+    // )
+    // return {
+    //     data,
+    //     error,
+    //     isLoading,
+    //     // mutate,
+    // }
+    return await axios.get(`${SERVER_LINK}/questions/find/${id}`,{
+        headers:{
+            Accept:'application/json',
+            'Content-Type':'applications/json;charset=UTF-8',
+            Authorization:token,
+        },
+    })
 }
 export async function DeleteQuestion(id, token) {
     return await axios.delete(`${SERVER_LINK}/questions/${id}`, {
@@ -46,7 +65,7 @@ export async function DeleteQuestion(id, token) {
     })
 }
 
-export async function AddQuestion(data, token) {
+export async function Addquestion(data, token) {
     return await axios({
         url: `${SERVER_LINK}/questions/create`,
         method: 'POST',

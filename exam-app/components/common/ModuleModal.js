@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import LevelModulePopup from './PopUpModals/LevelModulePopUp'
+import { AddModule } from '../../apis/modules'
 
 const ModuleModal = ({ modal, setModal }) => {
 	const router = useRouter()
@@ -15,6 +16,7 @@ const ModuleModal = ({ modal, setModal }) => {
 	const buttonText = 'Add'
 	const { handleSubmit } = useForm()
 	const login_token = useSelector((state) => state.user.token)
+	const user = useSelector((state) => state?.user)
 
 	// for sending the data to the backend
 	const checkWithDatabase = async (data) => {
@@ -25,16 +27,7 @@ const ModuleModal = ({ modal, setModal }) => {
 
 		// for taking the patch api data
 		if (data.module !== null && data.module != '') {
-			await axios({
-				url: `${SERVER_LINK}/module`,
-				method: 'POST',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: login_token,
-				},
-				data: LevelData,
-			})
+			AddModule(LevelData,user?.token)
 				.then(() => {
 					router.replace(router.asPath)
 					setModules('')
