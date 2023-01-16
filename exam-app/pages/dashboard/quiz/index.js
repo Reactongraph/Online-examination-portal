@@ -11,10 +11,17 @@ import { GetModuleData } from '../../../apis/modules'
 // You can't name a function as MODULE...
 export default function Quizes() {
 	const user = useSelector((state) => state?.user)
-	const  data =
-		GetQuizData(user?.token)
-	const level_data= GetLevelData(user?.token)
-	const module_data=GetModuleData(user?.token)
+	const data = GetQuizData(user?.token)
+	const level_data = GetLevelData(user?.token)
+	let module_data = GetModuleData(user?.token)
+
+	const updatedModuleData = module_data.data?.map((item) => {
+		return {
+			...item,
+			label: item.module,
+			value: item.module,
+		}
+	})
 
 	return (
 		<>
@@ -22,7 +29,7 @@ export default function Quizes() {
 				<Quiz
 					quiz_data={data}
 					level_data={level_data}
-					module_data={module_data}
+					module_data={updatedModuleData}
 				/>
 			</Layout>
 		</>

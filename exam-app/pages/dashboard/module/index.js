@@ -10,13 +10,15 @@ export default function modules() {
 	const user = useSelector((state) => state?.user)
 	const { data, mutate } =
 		user?.role == 'SuperAdminUser'
-	?GetModuleData(user.token)
-	: GetModuleDataWithId(user.token,user.id)
+			? GetModuleData(user.token)
+			: GetModuleDataWithId(user.token, user.id)
 	return (
 		<>
 			<Layout title='Module'>
-				<Module module_data={data}
-					mutate={mutate} />
+				<Module
+					module_data={data}
+					mutate={mutate}
+				/>
 			</Layout>
 		</>
 	)

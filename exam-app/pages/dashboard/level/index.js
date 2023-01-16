@@ -17,13 +17,14 @@ export default function level() {
 	return (
 		<>
 			<Layout title='Level'>
-				<Level level_data={data}
-				mutate={mutate} />
+				<Level
+					level_data={data}
+					mutate={mutate}
+				/>
 			</Layout>
 		</>
 	)
 }
-
 
 // import * as React from 'react'
 
@@ -33,10 +34,10 @@ export default function level() {
 
 // // You can't name a function as MODULE...
 // export default function modules() {
-	// const { data, mutate } =
-	// 	user?.role == 'SuperAdminUser'
-	// ?GetModuleData(user.token)
-	// : GetModuleDataWithId(user.token,user.id)
+// const { data, mutate } =
+// 	user?.role == 'SuperAdminUser'
+// ?GetModuleData(user.token)
+// : GetModuleDataWithId(user.token,user.id)
 // 	return (
 // 		<>
 // 			<Layout title='Module'>

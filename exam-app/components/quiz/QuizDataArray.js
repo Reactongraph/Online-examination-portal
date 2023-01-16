@@ -26,6 +26,7 @@ function QuizDataArray(
 
 		return QuizCreateData(
 			quiz,
+			element,
 			quiz_id,
 			quiz_status,
 			modules,

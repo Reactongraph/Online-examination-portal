@@ -37,7 +37,6 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 	const [optionModuleSelected, setOptionModuleSelected] = useState()
 	const [selectedModules, setSelectedModules] = useState()
 
-
 	const { handleSubmit } = useForm()
 
 	const handleLevelTypeSelect = (event) => {
@@ -46,7 +45,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 	}
 
 	const handleRemoveClick = (quiz_id) => {
-		DeleteQuiz(quiz_id,user?.token)
+		DeleteQuiz(quiz_id, user?.token)
 			.then(() => {
 				router.replace(router.asPath)
 				toast.success('Quiz deleted!')
@@ -71,14 +70,16 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 			status: !quiz_status,
 		}
 		new_status = JSON.stringify(new_status)
-		EditQuiz(data,quiz_id,user?.token)
-			.then(() => {})
+		EditQuiz(new_status, quiz_id, user?.token)
+			.then(() => {
+				toast.success('Quiz updated Successfully!')
+			})
 			.catch(() => {
 				toast.error('invalid request')
 			})
 	}
 
-	const handleEditClick = async (quiz_id) => {
+	const handleEditClick = async (quiz_id, oneRowData) => {
 		setButtonText('Update')
 		// setEditForm(true)
 		setQuizId(quiz_id)
@@ -86,30 +87,25 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 		let seletedModuleDataArray = []
 
 		// first find the user with the id
-		GetQuizDataWithId(user?.token,quiz_id)
-			.then((response) => {
-				let singleQuizData = response.data[0]
-				setName(singleQuizData.quiz_name)
-				setSelectedLevelId(singleQuizData.level_id)
-				setDescription(singleQuizData.description)
-				let bufferDate = moment(singleQuizData.buffer_time).toDate()
-				let startDate = moment(singleQuizData.start_date).toDate()
-				let endDate = moment(singleQuizData.end_date).toDate()
-				moduleData.data.map((oneModule) => {
-					singleQuizData.module_id.map((oneID) => {
-						if (oneID == oneModule.id) {
-							seletedModuleDataArray.push(oneModule)
-						}
-					})
-				})
-				setOptionModuleSelected(seletedModuleDataArray)
-				setSelectedBufferDate(bufferDate)
-				setSelectedEndDate(endDate)
-				setSelectedStartDate(startDate)
+
+		let singleQuizData = oneRowData
+		setName(singleQuizData.quiz_name)
+		setSelectedLevelId(singleQuizData.level_id)
+		setDescription(singleQuizData.description)
+		let bufferDate = moment(singleQuizData.buffer_time).toDate()
+		let startDate = moment(singleQuizData.start_date).toDate()
+		let endDate = moment(singleQuizData.end_date).toDate()
+		moduleData?.map((oneModule) => {
+			singleQuizData.module_id.map((oneID) => {
+				if (oneID.$oid == oneModule.id) {
+					seletedModuleDataArray.push(oneModule)
+				}
 			})
-			.catch(() => {
-				toast.error('invalid request')
-			})
+		})
+		setOptionModuleSelected(seletedModuleDataArray)
+		setSelectedBufferDate(bufferDate)
+		setSelectedEndDate(endDate)
+		setSelectedStartDate(startDate)
 	}
 
 	const checkWithDatabase = async (data) => {
@@ -120,7 +116,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 		data.level_id = selectedLevelId
 		data.description = description
 		data.module_id = selectedModules
-		EditQuiz(data,quizId,user?.token)
+		EditQuiz(data, quizId, user?.token)
 			.then(() => {
 				setModal(!modal)
 				router.replace(router.asPath)
@@ -138,7 +134,6 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 		handleBoxClick,
 		handleRemoveClick
 	)
-
 
 	return (
 		<>
@@ -159,8 +154,9 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 				setModal={setModal}
 				selectedLevelId={selectedLevelId}
 				setSelectedLevelId={setSelectedLevelId}
-				selectedModules={selectedModules}
-				setSelectedModules={setSelectedModules}
+				optionModuleSelected={optionModuleSelected}
+				// selectedModules={optionModuleSelected}
+				// setSelectedModules={setOptionModuleSelected}
 				selectedStartDate={selectedStartDate}
 				setSelectedStartDate={setSelectedStartDate}
 				selectedBufferDate={selectedBufferDate}

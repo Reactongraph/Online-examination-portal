@@ -16,7 +16,7 @@ const QuestionTable = ({ question_data }) => {
 	const router = useRouter()
 	const user = useSelector((state) => state?.user)
 	const handleRemoveClick = async (question_id) => {
-		DeleteQuestion(question_id,user?.token)
+		DeleteQuestion(question_id, user?.token)
 			.then((result) => {
 				router.replace(router.asPath)
 				toast.success(result.data)
@@ -31,7 +31,7 @@ const QuestionTable = ({ question_data }) => {
 			status: !question.status,
 		}
 		new_status = JSON.stringify(new_status)
-		EditQuestion(question,question.id,user?.token)
+		EditQuestion(question, question.id, user?.token)
 			.then(() => {
 				router.replace(router.asPath)
 				toast.success('status updated!')
@@ -84,7 +84,7 @@ const QuestionTable = ({ question_data }) => {
 				</div>
 			</>
 		)
-		return { question,question_type,status,level,module,action }
+		return { question, question_type, status, level, modules, action }
 	}
 
 	const rowsDataArray = question_data?.map((element) => {
