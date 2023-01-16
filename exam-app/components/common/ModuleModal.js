@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
-import { SERVER_LINK } from '../../helpers/config'
-import axios from 'axios'
 import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
@@ -15,7 +13,6 @@ const ModuleModal = ({ modal, setModal }) => {
 
 	const buttonText = 'Add'
 	const { handleSubmit } = useForm()
-	const login_token = useSelector((state) => state.user.token)
 	const user = useSelector((state) => state?.user)
 
 	// for sending the data to the backend
@@ -27,7 +24,7 @@ const ModuleModal = ({ modal, setModal }) => {
 
 		// for taking the patch api data
 		if (data.module !== null && data.module != '') {
-			AddModule(LevelData,user?.token)
+			AddModule(LevelData, user?.token)
 				.then(() => {
 					router.replace(router.asPath)
 					setModules('')

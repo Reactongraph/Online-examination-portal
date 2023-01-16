@@ -10,7 +10,6 @@ function LevelModulePopup(props) {
 		setStateName,
 		modalName,
 		placeholderText,
-		module
 	} = props
 	return (
 		<>

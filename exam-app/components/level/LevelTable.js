@@ -1,7 +1,5 @@
 import Table from '../common/Table'
 import React, { useState } from 'react'
-import axios from 'axios'
-import { SERVER_LINK } from '../../helpers/config'
 import { useRouter } from 'next/router'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
@@ -27,7 +25,6 @@ const LevelTable = ({ level_data, mutate }) => {
 	const [level, setLevel] = useState('')
 
 	const { handleSubmit } = useForm()
-	const login_token = useSelector((state) => state.user.token)
 	const user = useSelector((state) => state?.user)
 	const handleRemoveClick = async (level_id) => {
 		var shouldDelete = confirm('Do you really want to delete ?')
@@ -35,6 +32,7 @@ const LevelTable = ({ level_data, mutate }) => {
 			DeleteLevel(level_id, user?.token)
 				.then(() => {
 					router.replace(router.asPath)
+					mutate()
 				})
 				.catch(() => {
 					toast.error('Invalid Request')
@@ -44,28 +42,20 @@ const LevelTable = ({ level_data, mutate }) => {
 
 	const handleEditClick = async (level) => {
 		setButtonText('Update')
-
 		setLevelId(level.id)
 		setModal(true)
 		setLevel(level.level)
-		
-
 	}
 
-	const handleBoxClick = async (level_id, level_status) => {
-		let new_status = {
-			status: !level_status,
+	const handleBoxClick = async (level) => {
+		let oldStatus = level.status
+		let new_data = {
+			level: level?.level,
+			status: !oldStatus,
 		}
-		new_status = JSON.stringify(new_status)
+		new_data = JSON.stringify(new_data)
 
-		await axios
-			.patch(`${SERVER_LINK}/level/${level_id}`, new_status, {
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: login_token,
-				},
-			})
+		EditLevel(new_data, level.id, user?.token)
 			.then(() => {
 				router.replace(router.asPath)
 				toast.success('level updated!')
@@ -82,7 +72,7 @@ const LevelTable = ({ level_data, mutate }) => {
 		// for taking the patch api data
 
 		if (data.level != null && data.level != '') {
-			EditLevel(LevelData,levelId,user?.token)
+			EditLevel(LevelData, levelId, user?.token)
 				.then(() => {
 					setModal(!modal)
 					router.replace(router.asPath)
@@ -106,7 +96,7 @@ const LevelTable = ({ level_data, mutate }) => {
 				</button>
 				&nbsp;
 				<button
-					onClick={() => handleRemoveClick(level_id)}
+					onClick={() => handleRemoveClick(level.id)}
 					className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'>
 					Delete
 				</button>
@@ -116,7 +106,7 @@ const LevelTable = ({ level_data, mutate }) => {
 			<>
 				<div className='flex'>
 					<input
-						onClick={() => handleBoxClick(level.id, level.status)}
+						onClick={() => handleBoxClick(level)}
 						className='form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm'
 						type='checkbox'
 						role='switch'
@@ -134,10 +124,6 @@ const LevelTable = ({ level_data, mutate }) => {
 	}
 
 	const rowsDataArray = level_data?.map((element) => {
-		let level = element.level
-
-		let level_id = element.id
-		let level_status = element.status
 		return createData(element)
 	})
 
