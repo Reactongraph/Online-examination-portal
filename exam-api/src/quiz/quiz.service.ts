@@ -85,14 +85,6 @@ export class QuizService {
 
   async update (id: string, updateRestApiDto: QuizDTO) {
     try {
-      const quiz_find = await this.prisma.quiz.findUnique({
-        where: {
-          quiz_name: updateRestApiDto?.quiz_name
-        }
-      })
-      if (quiz_find) {
-        return null
-      }
       const updateQuiz = await this.prisma.quiz.update({
         where: {
           id

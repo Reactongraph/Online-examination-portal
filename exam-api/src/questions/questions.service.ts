@@ -70,9 +70,6 @@ export class QuestionsService {
 
   async update (id: string, updateRestApiDto: QuestionDTO) {
     try {
-      
-      
-      
       const updatedOptions = await this.prisma.questions.update({
         where: {
           id

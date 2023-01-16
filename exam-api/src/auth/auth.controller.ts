@@ -42,21 +42,21 @@ export class AuthController {
   ) {
     const users = await this.authService.login(login)
 
-		if (users === 'invalid credentials' || users === 'invalid username') {
-			const data = { error: 'Invalid credentials' }
-			response.status(HttpStatus.BAD_REQUEST).send(data)
-		} else {
-			const token = await this.authService.create_token(users,login?.role)
-			const jwt_decode: any = this.jwtService.decode(token.access_token)
-			await this.prisma.login.create({
-				data: {
-					token: token.access_token,
-					refresh_token: token.refresh_token,
-					email: login?.email,
-					token_id: users.id,
-					role: login.role,
-				},
-			})
+    if (users === 'invalid credentials' || users === 'invalid username') {
+      const data = { error: 'Invalid credentials' }
+      response.status(HttpStatus.BAD_REQUEST).send(data)
+    } else {
+      const token = await this.authService.create_token(users, login?.role)
+      const jwt_decode: any = this.jwtService.decode(token.access_token)
+      await this.prisma.login.create({
+        data: {
+          token: token.access_token,
+          refresh_token: token.refresh_token,
+          email: login?.email,
+          token_id: users.id,
+          role: login.role
+        }
+      })
 
       const data = {
         message: 'Login success',
