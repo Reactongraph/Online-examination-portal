@@ -10,8 +10,6 @@ import {
 	AddParticipant,
 	DeleteParticipant,
 	EditParticipant,
-	// GetParticipantData,
-	// GetParticipantDataWithOrgId,
 } from '../../apis/participants'
 
 const ParticipantTable = ({ participant_data, mutate, organization_data }) => {
@@ -39,6 +37,7 @@ const ParticipantTable = ({ participant_data, mutate, organization_data }) => {
 	}
 	const handleOrganizationIdTypeSelect = (event) => {
 		let organizationId = event.target.value
+
 		setSelectedOrganizationId(organizationId)
 	}
 
@@ -138,8 +137,8 @@ const ParticipantTable = ({ participant_data, mutate, organization_data }) => {
 				setPassword={setPassword}
 				modal={modal}
 				setModal={setModal}
-				selectedorganizationId={organizationId}
-				setSelectedOrganizationId={setOrganizationId}
+				selectedorganizationId={selectedorganizationId}
+				setSelectedOrganizationId={setSelectedOrganizationId}
 				handleSubmit={handleSubmit}
 				checkWithDatabase={checkWithDatabase}
 				buttonText={buttonText}

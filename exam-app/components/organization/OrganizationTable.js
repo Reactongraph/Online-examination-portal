@@ -1,18 +1,18 @@
 import Table from '../common/Table'
 import React, { useState } from 'react'
-import axios from 'axios'
-import { SERVER_LINK } from '../../helpers/config'
-import { useRouter } from 'next/router'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { OrganizationColumns } from './organizationColumn'
 import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
-import { DeleteOrganization, EditOrganization, GetOrganizationDataWithId } from '../../apis/organizations'
+import {
+	AddOrganization,
+	DeleteOrganization,
+	EditOrganization,
+} from '../../apis/organizations'
 
 const OrganizationTable = ({ organization_data, mutate }) => {
-	const router = useRouter()
 	const [editForm, setEditForm] = useState(false)
 	const [modal, setModal] = useState(false)
 	const [organizationId, setOrganizationId] = useState('')
@@ -31,7 +31,6 @@ const OrganizationTable = ({ organization_data, mutate }) => {
 	const [password, setPassword] = useState('')
 
 	const { handleSubmit } = useForm()
-	const login_token = useSelector((state) => state.user.token)
 	const user = useSelector((state) => state?.user)
 	const handleRemoveClick = (org_id) => {
 		try {
@@ -43,14 +42,13 @@ const OrganizationTable = ({ organization_data, mutate }) => {
 		}
 	}
 
-	const handleBoxClick = async (org_id, org_status) => {
+	const handleBoxClick = async (org) => {
 		let new_status = {
-			status: !org_status,
+			status: !org.status,
 		}
 		new_status = JSON.stringify(new_status)
-		EditOrganization(OrganizationData, organizationId, user?.token)
+		EditOrganization(new_status, org.id, user?.token)
 			.then(() => {
-				setModal(!modal)
 				mutate()
 				toast.success('organization updated!')
 			})
@@ -101,7 +99,7 @@ const OrganizationTable = ({ organization_data, mutate }) => {
 
 		// for new data registration
 		else {
-			AddParticipant(data, user?.token)
+			AddOrganization(data, user?.token)
 				.then(async () => {
 					setModal(!modal)
 					mutate()
@@ -133,7 +131,7 @@ const OrganizationTable = ({ organization_data, mutate }) => {
 			<>
 				<div className='flex '>
 					<input
-						onClick={() => handleBoxClick(org.d, org?.status)}
+						onClick={() => handleBoxClick(org)}
 						className='form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm'
 						type='checkbox'
 						role='switch'
@@ -146,15 +144,12 @@ const OrganizationTable = ({ organization_data, mutate }) => {
 		return {
 			name: org.name,
 			email: org.email,
+			status: status,
 			mobile: org.mobile,
 			action,
 		}
 	}
 	const rowsDataArray = organization_data?.map((element) => {
-		let name = element.name
-		let email = element.email
-		let org_id = element.id
-		let org_status = element.status
 		return createData(element)
 	})
 
@@ -164,7 +159,7 @@ const OrganizationTable = ({ organization_data, mutate }) => {
 		<>
 			<Table
 				columns={OrganizationColumns}
-				data={data || [] }
+				data={data || []}
 				rowKey='id'
 				className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'
 			/>

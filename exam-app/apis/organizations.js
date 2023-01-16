@@ -16,7 +16,7 @@ const fetcher = (url, token) =>
 export function GetOrganizationData(token) {
 	const { data, error, isLoading, mutate } = useSWR(
 		[`${SERVER_LINK}/organization/find`, token],
-		([url, token]) => fetcher(url, token),
+		([url, token]) => fetcher(url, token)
 	)
 	return {
 		data,
@@ -28,7 +28,7 @@ export function GetOrganizationData(token) {
 export async function GetOrganizationDataWithId(token, id) {
 	const { data, error, isLoading, mutate } = useSWR(
 		[`${SERVER_LINK}/organization/${id}`, token],
-		([url, token]) => fetcher(url, token),
+		([url, token]) => fetcher(url, token)
 	)
 	return {
 		data,
