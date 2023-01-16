@@ -146,7 +146,7 @@ function ParticipantPopUp(props) {
 										Select
 									</option>
 									{organization_data &&
-										organization_data.map((response) => (
+										organization_data?.map((response) => (
 											<option
 												key={response.id}
 												value={response.id}>

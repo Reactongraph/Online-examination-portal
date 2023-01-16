@@ -66,36 +66,35 @@ export class AuthService {
         where: { email: login?.email }
       })
 
-			if (!user) {
-				return 'invalid username'
-			}
-			if (login?.email === user.email && login?.password === user.password) {
-				const payload = {
-					id: user.id,
-					username: user.name,
-					email: user.email,
-				}
-				return payload
-			} else {
-				return 'invalid credentials'
-			}
-		} catch (err) {
-			return { error: err, id: null }
-		}
-	}
+      if (!user) {
+        return 'invalid username'
+      }
+      if (login?.email === user.email && login?.password === user.password) {
+        const payload = {
+          id: user.id,
+          username: user.name,
+          email: user.email
+        }
+        return payload
+      } else {
+        return 'invalid credentials'
+      }
+    } catch (err) {
+      return { error: err, id: null }
+    }
+  }
 
-	async create_token(userdata: any,role:string) {
-		
-		const access_token = await this.jwtService.signAsync(
-			{ id: userdata.id, username: userdata.name, email: userdata.email,role:role },
-			{ secret: jwtConstants.access_tokensecret }
-		)
-		const refresh_token = await this.jwtService.signAsync(
-			{ id: userdata.id, username: userdata.name, email: userdata.email,role:role },
-			{ secret: jwtConstants.refresh_tokensecret }
-		)
-		return { access_token, refresh_token }
-	}
+  async create_token (userdata: any, role: string) {
+    const access_token = await this.jwtService.signAsync(
+      { id: userdata.id, username: userdata.name, email: userdata.email, role },
+      { secret: jwtConstants.access_tokensecret }
+    )
+    const refresh_token = await this.jwtService.signAsync(
+      { id: userdata.id, username: userdata.name, email: userdata.email, role },
+      { secret: jwtConstants.refresh_tokensecret }
+    )
+    return { access_token, refresh_token }
+  }
 
   async decode_Token (tokenn: any) {
     try {
@@ -108,13 +107,13 @@ export class AuthService {
 
         const payload = { username: find_username.name, email: decode.email }
 
-				const new_token = await this.create_token(decode,decode.role)
-				prisma.$connect()
-				await this.prisma.login.findUnique({
-					where: {
-						refresh_token: tokenn,
-					},
-				})
+        const new_token = await this.create_token(decode, decode.role)
+        prisma.$connect()
+        await this.prisma.login.findUnique({
+          where: {
+            refresh_token: tokenn
+          }
+        })
 
         await prisma.login.create({
           data: {

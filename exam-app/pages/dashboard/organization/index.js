@@ -8,7 +8,7 @@ import {
 } from '../../../apis/organizations'
 import OrganizationComponent from '../../../components/organization/Organization'
 
-export default function organization() {
+export default function Organization() {
 	const user = useSelector((state) => state?.user)
 	const { data, mutate } =
 		user?.role == 'SuperAdminUser'

@@ -27,6 +27,10 @@ const ParticipantModal = ({ modal, setModal }) => {
 	const Org = useSelector((state) => state?.user)
 	const login_token = useSelector((state) => state.user.token)
 
+	const handleOrganizationIdTypeSelect = (event) => {
+		let organizationId = event.target.value
+		setSelectedOrganizationId(organizationId)
+	}
 	// for sending the data to the backend
 	const checkWithDatabase = async (data) => {
 		data.name = name
@@ -72,7 +76,7 @@ const ParticipantModal = ({ modal, setModal }) => {
 				handleSubmit={handleSubmit}
 				checkWithDatabase={checkWithDatabase}
 				buttonText={buttonText}
-				// handleOrganizationIdTypeSelect={handleOrganizationIdTypeSelect}
+				handleOrganizationIdTypeSelect={handleOrganizationIdTypeSelect}
 				organization_data={GetOrganizationData(login_token).data}
 			/>
 		</>

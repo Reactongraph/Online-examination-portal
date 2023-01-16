@@ -1,8 +1,5 @@
 import Table from '../common/Table'
 import React, { useState } from 'react'
-import axios from 'axios'
-import { SERVER_LINK } from '../../helpers/config'
-import { useRouter } from 'next/router'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { ToastContainer, toast } from 'react-toastify'
@@ -17,7 +14,6 @@ import {
 } from '../../apis/modules'
 
 const ModuleTable = ({ module_data, mutate }) => {
-	const router = useRouter()
 	const [modal, setModal] = useState(false)
 	const [moduleId, setModuleId] = useState('')
 
@@ -25,7 +21,6 @@ const ModuleTable = ({ module_data, mutate }) => {
 	const [modules, setModules] = useState('')
 
 	const { handleSubmit } = useForm()
-	const login_token = useSelector((state) => state.user.token)
 	const user = useSelector((state) => state?.user)
 
 	const handleRemoveClick = (module_id) => {
@@ -38,16 +33,18 @@ const ModuleTable = ({ module_data, mutate }) => {
 		}
 	}
 
-	const handleBoxClick = (module_id, module_status) => {
-		let new_status = {
-			status: !module_status,
+	const handleBoxClick = (modules) => {
+		let oldStatus = modules.status
+		let new_data = {
+			module: modules?.module,
+			status: !oldStatus,
 		}
-		new_status = JSON.stringify(new_status)
-		EditModule(module_data, module_id, user?.token)
+		new_data = JSON.stringify(new_data)
+		EditModule(new_data, modules.id, user?.token)
 			.then(() => {
-				setModal(!modal)
+				// setModal(!modal)
 				mutate()
-				toast.success('organization updated!')
+				toast.success('module updated!')
 			})
 			.catch(() => {
 				toast.error('invalid request')
@@ -100,7 +97,7 @@ const ModuleTable = ({ module_data, mutate }) => {
 			<>
 				<div className='flex'>
 					<input
-						onClick={() => handleBoxClick(modules.id, modules.status)}
+						onClick={() => handleBoxClick(modules)}
 						className='form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-gray-300 bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm'
 						type='checkbox'
 						role='switch'
@@ -117,11 +114,6 @@ const ModuleTable = ({ module_data, mutate }) => {
 		}
 	}
 	const rowsDataArray = module_data?.map((element) => {
-		let modules = element.module
-
-		let module_id = element.id
-		let module_status = element.status
-
 		return createData(element)
 	})
 	// data by using which table data is creating using api call

@@ -31,7 +31,7 @@ const QuestionTable = ({ question_data }) => {
 			status: !question.status,
 		}
 		new_status = JSON.stringify(new_status)
-		EditQuestion(question, question.id, user?.token)
+		EditQuestion(new_status, question.id, user?.token)
 			.then(() => {
 				router.replace(router.asPath)
 				toast.success('status updated!')
