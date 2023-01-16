@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
-import { useCookie } from 'next-cookie'
 import OptionType from './questionForm/OptionType'
 import QuestionForm from './questionForm/QuestionForm'
 import QuestionLevel from './questionForm/QuestionLevel'
@@ -18,10 +17,7 @@ import {
 } from '../../apis/questions'
 import { useSelector } from 'react-redux'
 
-const AddQuestion = (
-	{ level_data: levelData, module_data: moduleData },
-	props
-) => {
+const AddQuestion = ({ level_data: levelData, module_data: moduleData }) => {
 	const user = useSelector((state) => state?.user)
 	const router = useRouter()
 	const [selectedImage, setSelectedImage] = useState(null)
@@ -43,8 +39,8 @@ const AddQuestion = (
 		{ option: '', correct: '' },
 		{ option: '', correct: '' },
 	])
-	const data = useCookie(props.cookie)
-	let cookie = data.get('refresh_token') || ''
+	// const data = useCookie(props.cookie)
+	// let cookie = data.get('refresh_token') || ''
 
 	useEffect(() => {
 		let question_id = router.query.question_id

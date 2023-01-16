@@ -9,7 +9,7 @@ import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
 import {
 	DeleteOrganization,
 	EditOrganization,
-	GetOrganizationDataWithId,
+	AddOrganization,
 } from '../../apis/organizations'
 
 const OrganizationTable = ({ organization_data, mutate }) => {

@@ -1,8 +1,6 @@
 import * as React from 'react'
 import Quiz from '../../../components/quiz/Quiz'
 import Layout from '../../../components/layout/Layout'
-import axios from 'axios'
-import { SERVER_LINK } from '../../../helpers/config'
 import { GetQuizData } from '../../../apis/quizzes'
 import { GetLevelData } from '../../../apis/levels'
 import { useSelector } from 'react-redux'

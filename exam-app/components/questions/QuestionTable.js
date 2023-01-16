@@ -45,14 +45,7 @@ const QuestionTable = ({ question_data }) => {
 		router.push(`/dashboard/questions/addQuestion?question_id=${question_id}`)
 	}
 
-	function createData(
-		question,
-		question_type,
-		level,
-		modules,
-		question_id,
-		question_status
-	) {
+	function createData(question, question_type, level, modules, question_id) {
 		question = question.question.slice(0, 15) + '...'
 		const action = (
 			<>
@@ -88,7 +81,7 @@ const QuestionTable = ({ question_data }) => {
 	}
 
 	const rowsDataArray = question_data?.map((element) => {
-		let question = element.question
+		// let question = element.question
 		let question_type = element.question_type
 		let level = element?.level?.level
 		let modules = element?.module?.module

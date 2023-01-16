@@ -7,11 +7,7 @@ import LevelModulePopup from '../common/PopUpModals/LevelModulePopUp'
 import { ModuleColumns } from './ moduleColumns'
 
 import { useSelector } from 'react-redux'
-import {
-	DeleteModule,
-	EditModule,
-	GetModuleDataWithId,
-} from '../../apis/modules'
+import { DeleteModule, EditModule } from '../../apis/modules'
 
 const ModuleTable = ({ module_data, mutate }) => {
 	const [modal, setModal] = useState(false)
