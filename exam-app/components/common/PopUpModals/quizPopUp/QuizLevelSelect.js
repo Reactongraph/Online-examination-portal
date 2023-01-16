@@ -1,6 +1,6 @@
 function QuizLevelSelect(props) {
 	const { selectedLevelId, handleLevelTypeSelect, levelData } = props
-	console.log("level",levelData.data);
+
 	return (
 		<>
 			<select

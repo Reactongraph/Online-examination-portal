@@ -33,7 +33,7 @@ const LevelModal = (props) => {
 
 		// for taking the patch api data
 		if (data.level !== null && data.level != '') {
-			AddLevel(LevelData,user?.token)
+			AddLevel(LevelData, user?.token)
 				.then(() => {
 					router.replace(router.asPath)
 					setLevel('')
