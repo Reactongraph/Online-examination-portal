@@ -16,8 +16,10 @@ const Organization = ({ organization_data, mutate }) => {
 
 			<section className='grid md:grid-cols-1 xl:grid-cols-1 gap-6'>
 				<div className='flex-grow items-center p-8 bg-white shadow rounded-lg'>
-					<OrganizationTable organization_data={organization_data}
-						mutate={mutate} />
+					<OrganizationTable
+						organization_data={organization_data}
+						mutate={mutate}
+					/>
 				</div>
 			</section>
 		</main>

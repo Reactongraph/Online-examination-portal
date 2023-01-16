@@ -10,7 +10,11 @@ import LevelModulePopup from '../common/PopUpModals/LevelModulePopUp'
 import { ModuleColumns } from './ moduleColumns'
 
 import { useSelector } from 'react-redux'
-import { DeleteModule, EditModule, GetModuleDataWithId } from '../../apis/modules'
+import {
+	DeleteModule,
+	EditModule,
+	GetModuleDataWithId,
+} from '../../apis/modules'
 
 const ModuleTable = ({ module_data, mutate }) => {
 	const router = useRouter()
@@ -34,12 +38,12 @@ const ModuleTable = ({ module_data, mutate }) => {
 		}
 	}
 
-	const handleBoxClick =(module_id, module_status) => {
+	const handleBoxClick = (module_id, module_status) => {
 		let new_status = {
 			status: !module_status,
 		}
 		new_status = JSON.stringify(new_status)
-		EditModule(module_data,module_id, user?.token)
+		EditModule(module_data, module_id, user?.token)
 			.then(() => {
 				setModal(!modal)
 				mutate()
@@ -61,18 +65,16 @@ const ModuleTable = ({ module_data, mutate }) => {
 		data.module = modules
 		let moduleData = JSON.stringify(data)
 
-
 		// for taking the patch api data
 		if (data.module != null && data.module != '') {
 			EditModule(moduleData, moduleId, user?.token)
-			.then(() => {
-				setModal(!modal)
-				toast.success('updated!')
-
-			})
-			.catch(() => {
-				toast.error('invalid request')
-			})
+				.then(() => {
+					setModal(!modal)
+					toast.success('updated!')
+				})
+				.catch(() => {
+					toast.error('invalid request')
+				})
 		} else {
 			toast.error("Field Can't be empty ")
 		}

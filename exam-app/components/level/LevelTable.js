@@ -44,12 +44,9 @@ const LevelTable = ({ level_data, mutate }) => {
 
 	const handleEditClick = async (level) => {
 		setButtonText('Update')
-
 		setLevelId(level.id)
 		setModal(true)
 		setLevel(level.level)
-		
-
 	}
 
 	const handleBoxClick = async (level_id, level_status) => {
@@ -82,7 +79,7 @@ const LevelTable = ({ level_data, mutate }) => {
 		// for taking the patch api data
 
 		if (data.level != null && data.level != '') {
-			EditLevel(LevelData,levelId,user?.token)
+			EditLevel(LevelData, levelId, user?.token)
 				.then(() => {
 					setModal(!modal)
 					router.replace(router.asPath)

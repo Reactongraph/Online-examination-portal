@@ -9,7 +9,11 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { OrganizationColumns } from './organizationColumn'
 import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
-import { DeleteOrganization, EditOrganization, GetOrganizationDataWithId } from '../../apis/organizations'
+import {
+	DeleteOrganization,
+	EditOrganization,
+	GetOrganizationDataWithId,
+} from '../../apis/organizations'
 
 const OrganizationTable = ({ organization_data, mutate }) => {
 	const router = useRouter()
@@ -164,7 +168,7 @@ const OrganizationTable = ({ organization_data, mutate }) => {
 		<>
 			<Table
 				columns={OrganizationColumns}
-				data={data || [] }
+				data={data || []}
 				rowKey='id'
 				className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'
 			/>

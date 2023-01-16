@@ -12,14 +12,13 @@ function QuizPopUp(props) {
 		setModal,
 		selectedLevelId,
 		setSelectedLevelId,
-		// selectedModules,
-		// setSelectedModules,
 		handleSubmit,
 		buttonText,
 		checkWithDatabase,
 		selectedStartDate,
 		setSelectedStartDate,
 		selectedBufferDate,
+		optionModuleSelected,
 		setSelectedBufferDate,
 		selectedEndDate,
 		setSelectedEndDate,
@@ -30,6 +29,7 @@ function QuizPopUp(props) {
 		moduleData,
 		levelData,
 	} = props
+
 	return (
 		<>
 			<PureModal
@@ -125,6 +125,7 @@ function QuizPopUp(props) {
 										}}
 										onChange={handleModuleTypeSelect}
 										allowSelectAll={true}
+										value={optionModuleSelected}
 										// value={selectedModules}
 									/>
 								</div>
