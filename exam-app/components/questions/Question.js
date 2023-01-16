@@ -2,7 +2,7 @@ import React from 'react'
 import ComponentTitle from './ComponentTitle'
 import QuestionTable from './QuestionTable'
 
-const Question = ({ question_data, mutate }) => {
+const Question = ({ question_data }) => {
 	return (
 		<main className='p-6 sm:p-10 space-y-6'>
 			<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
@@ -19,7 +19,6 @@ const Question = ({ question_data, mutate }) => {
 				<div className='flex-grow items-center p-8 bg-white shadow rounded-lg'>
 					<QuestionTable
 						question_data={question_data}
-						mutate={mutate}
 						// level_data={level_data}
 						// module_data={module_data}
 					/>

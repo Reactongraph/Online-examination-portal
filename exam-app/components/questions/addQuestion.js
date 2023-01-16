@@ -3,17 +3,19 @@ import { useRouter } from 'next/router'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
+
+
+import { useCookie } from 'next-cookie'
 import Image from 'next/image'
-import {
-	Addquestion,
-	EditQuestion,
-	GetQuestionDataWithId,
-} from '../../apis/questions'
+import { Addquestion, EditQuestion, GetQuestionDataWithId } from '../../apis/questions'
 import { useSelector } from 'react-redux'
 
-const AddQuestion = ({ level_data: levelData, module_data: moduleData }) => {
+const AddQuestion = (
+	{ level_data: levelData, module_data: moduleData },
+	props
+) => {
 	const user = useSelector((state) => state?.user)
-	const router = useRouter()
+	const router= useRouter();
 	const [selectedImage, setSelectedImage] = useState(null)
 	const [pageTitle, setPageTitle] = useState('Add')
 	const [question, setQuestion] = useState('')
@@ -33,12 +35,14 @@ const AddQuestion = ({ level_data: levelData, module_data: moduleData }) => {
 		{ option: '', correct: '' },
 		{ option: '', correct: '' },
 	])
+	const data = useCookie(props.cookie)
+	let cookie = data.get('refresh_token') || ''
 
 	useEffect(() => {
 		let question_id = router.query.question_id
 
 		async function getQuestionData() {
-			const results = await GetQuestionDataWithId(user?.token, question_id)
+			const results = await  GetQuestionDataWithId(user?.token,question_id);
 			const questionData = results.data
 			setPageTitle('Edit')
 			setEditForm(true)
@@ -172,7 +176,7 @@ const AddQuestion = ({ level_data: levelData, module_data: moduleData }) => {
 
 		if (editForm) {
 			let question_id = router.query.question_id
-			EditQuestion(data, question_id, user?.token)
+			EditQuestion(data,question_id,user?.token)
 				.then(() => {
 					router.push('/dashboard/questions')
 				})
@@ -180,7 +184,7 @@ const AddQuestion = ({ level_data: levelData, module_data: moduleData }) => {
 					toast.error('invalid requestssss')
 				})
 		} else {
-			Addquestion(data, user?.token)
+			Addquestion(data,user?.token)
 				.then(() => {
 					router.push('/dashboard/questions')
 				})

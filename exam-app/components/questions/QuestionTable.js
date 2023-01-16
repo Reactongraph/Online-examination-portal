@@ -16,7 +16,7 @@ const QuestionTable = ({ question_data }) => {
 	const router = useRouter()
 	const user = useSelector((state) => state?.user)
 	const handleRemoveClick = async (question_id) => {
-		DeleteQuestion(question_id, user?.token)
+		DeleteQuestion(question_id,user?.token)
 			.then((result) => {
 				router.replace(router.asPath)
 				toast.success(result.data)
@@ -27,12 +27,11 @@ const QuestionTable = ({ question_data }) => {
 	}
 
 	const handleBoxClick = async (question) => {
-		let oldStatus = question.status
 		let new_status = {
-			status: !oldStatus,
+			status: !question.status,
 		}
 		new_status = JSON.stringify(new_status)
-		EditQuestion(new_status, question.id, user?.token)
+		EditQuestion(question,question.id,user?.token)
 			.then(() => {
 				router.replace(router.asPath)
 				toast.success('status updated!')
@@ -47,7 +46,6 @@ const QuestionTable = ({ question_data }) => {
 	}
 
 	function createData(
-		element,
 		question,
 		question_type,
 		level,
@@ -55,8 +53,7 @@ const QuestionTable = ({ question_data }) => {
 		question_id,
 		question_status
 	) {
-		// console.log(question);
-		question = element.question.slice(0, 15) + '...'
+		question = question.question.slice(0, 15) + '...'
 		const action = (
 			<>
 				<button
@@ -77,17 +74,17 @@ const QuestionTable = ({ question_data }) => {
 				<div className='flex'>
 					{/* <div className="form-check form-switch"> */}
 					<input
-						onClick={() => handleBoxClick(element)}
+						onClick={() => handleBoxClick(question)}
 						className='form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-gray-300 bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm'
 						type='checkbox'
 						role='switch'
 						id='flexSwitchCheckDefault'
-						defaultChecked={question_status}
+						defaultChecked={question.status}
 					/>
 				</div>
 			</>
 		)
-		return { question, question_type, status, level, modules, action }
+		return { question,question_type,status,level,module,action }
 	}
 
 	const rowsDataArray = question_data?.map((element) => {
@@ -99,7 +96,6 @@ const QuestionTable = ({ question_data }) => {
 		let question_status = element.status
 		return createData(
 			element,
-			question,
 			question_type,
 			level,
 			modules,
