@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import { QuestionColumns } from './questionColumn'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 import { DeleteQuestion, EditQuestion } from '../../apis/questions'
+import { CheckboxInput } from '../common/micro/checkBoxInput'
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
@@ -75,12 +76,8 @@ const QuestionTable = ({ question_data, mutate }) => {
 			<>
 				<div className='flex'>
 					{/* <div className="form-check form-switch"> */}
-					<input
+					<CheckboxInput
 						onClick={() => handleBoxClick(question_id, question_status)}
-						className='form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-gray-300 bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm'
-						type='checkbox'
-						role='switch'
-						id='flexSwitchCheckDefault'
 						defaultChecked={question_status}
 					/>
 				</div>

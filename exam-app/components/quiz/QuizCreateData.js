@@ -1,3 +1,4 @@
+import { CheckboxInput } from '../common/micro/checkBoxInput'
 function QuizCreateData(
 	quiz,
 	element,
@@ -29,12 +30,8 @@ function QuizCreateData(
 	const status = (
 		<>
 			<div className='flex'>
-				<input
+				<CheckboxInput
 					onClick={() => handleBoxClick(quiz_id, quiz_status)}
-					className='form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-gray-300 bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm'
-					type='checkbox'
-					role='switch'
-					id='flexSwitchCheckDefault'
 					defaultChecked={quiz_status}
 				/>
 			</div>

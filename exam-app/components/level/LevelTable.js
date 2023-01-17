@@ -9,6 +9,7 @@ import LevelModulePopup from '../common/PopUpModals/LevelModulePopUp'
 import { Levelcolumns } from './levelColumns'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 import { DeleteLevel, EditLevel } from '../../apis/levels'
+import { CheckboxInput } from '../common/micro/checkBoxInput'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
@@ -108,12 +109,8 @@ const LevelTable = ({ level_data, mutate }) => {
 		const status = (
 			<>
 				<div className='flex'>
-					<input
+					<CheckboxInput
 						onClick={() => handleBoxClick(level)}
-						className='form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm'
-						type='checkbox'
-						role='switch'
-						id='flexSwitchCheckDefault'
 						defaultChecked={level.status}
 					/>
 				</div>

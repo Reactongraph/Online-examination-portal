@@ -7,6 +7,7 @@ import { toast } from 'react-toastify'
 import { OrganizationColumns } from './organizationColumn'
 import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
 import { DeleteOrganization, EditOrganization } from '../../apis/organizations'
+import { CheckboxInput } from '../common/micro/checkBoxInput'
 
 const OrganizationTable = ({ organization_data, mutate }) => {
 	// const [editForm, setEditForm] = useState(false)
@@ -116,12 +117,8 @@ const OrganizationTable = ({ organization_data, mutate }) => {
 		const status = (
 			<>
 				<div className='flex '>
-					<input
+					<CheckboxInput
 						onClick={() => handleBoxClick(org)}
-						className='form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm'
-						type='checkbox'
-						role='switch'
-						id='flexSwitchCheckDefault'
 						defaultChecked={org.status}
 					/>
 				</div>

@@ -8,6 +8,7 @@ import { ModuleColumns } from './ moduleColumns'
 
 import { useSelector } from 'react-redux'
 import { DeleteModule, EditModule } from '../../apis/modules'
+import { CheckboxInput } from '../common/micro/checkBoxInput'
 
 const ModuleTable = ({ module_data, mutate }) => {
 	const [modal, setModal] = useState(false)
@@ -93,12 +94,8 @@ const ModuleTable = ({ module_data, mutate }) => {
 		const status = (
 			<>
 				<div className='flex'>
-					<input
+					<CheckboxInput
 						onClick={() => handleBoxClick(modules)}
-						className='form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-gray-300 bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm'
-						type='checkbox'
-						role='switch'
-						id='flexSwitchCheckDefault'
 						defaultChecked={modules.status}
 					/>
 				</div>
