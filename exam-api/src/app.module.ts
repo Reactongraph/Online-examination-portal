@@ -23,21 +23,21 @@ import { QuizService } from './quiz/quiz.service'
 import { AdminModule } from './admin/admin.module'
 
 @Module({
-	imports: [
-		RestApiModule,
-		ParticipantsModule,
-		LevelModule,
-		ModuleModule,
-		AuthModule,
-		QuizModule,
-		QuestionsModule,
-		AdminModule,
-		MulterModule.register({
-			dest: './images',
-		}),
-	],
-	controllers: [AppController, QuestionsController],
-	providers: [AppService, QuestionsService, PrismaService],
+  imports: [
+    RestApiModule,
+    ParticipantsModule,
+    LevelModule,
+    ModuleModule,
+    AuthModule,
+    QuizModule,
+    QuestionsModule,
+    AdminModule,
+    MulterModule.register({
+      dest: './images'
+    })
+  ],
+  controllers: [AppController, QuestionsController],
+  providers: [AppService, QuestionsService, PrismaService]
 })
 export class AppModule implements NestModule {
   configure (consumer: MiddlewareConsumer) {

@@ -1,10 +1,9 @@
-import { useEffect } from 'react'
-
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { SERVER_LINK } from '../helpers/config'
 import axios from 'axios'
 import { useCookie } from 'next-cookie'
+import { useEffect } from 'react'
 
 // To check for the refresh token on every page
 export default function Layout({ children }) {
@@ -69,7 +68,7 @@ export default function Layout({ children }) {
 
 	useEffect(() => {
 		refreshToken()
-	})
+	}, [])
 
 	return <>{children}</>
 }

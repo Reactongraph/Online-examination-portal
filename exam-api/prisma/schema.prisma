@@ -58,7 +58,7 @@ model Level {
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
   questions Questions[]
-  Quiz      Quiz[]
+  Quiz Quiz[]
 }
 
 model Module {
@@ -68,7 +68,8 @@ model Module {
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
   questions Questions[]
-  Quiz      Quiz[]
+  Quiz Quiz[]
+
 }
 
 model Login {
