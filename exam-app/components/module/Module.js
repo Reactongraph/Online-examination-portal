@@ -11,6 +11,7 @@ const Modules = ({ module_data, mutate }) => {
 					titleDescription='List of all modules'
 					buttonTitle='ADD NEW MODULE'
 					editForm={false}
+					mutate={mutate}
 				/>
 			</div>
 

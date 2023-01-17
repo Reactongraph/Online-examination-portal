@@ -63,6 +63,7 @@ const ModuleTable = ({ module_data, mutate }) => {
 			EditModule(moduleData, moduleId, user?.token)
 				.then(() => {
 					setModal(!modal)
+					mutate()
 					toast.success('updated!')
 				})
 				.catch(() => {

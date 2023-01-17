@@ -6,14 +6,10 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { OrganizationColumns } from './organizationColumn'
 import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
-import {
-	DeleteOrganization,
-	EditOrganization,
-	AddOrganization,
-} from '../../apis/organizations'
+import { DeleteOrganization, EditOrganization } from '../../apis/organizations'
 
 const OrganizationTable = ({ organization_data, mutate }) => {
-	const [editForm, setEditForm] = useState(false)
+	// const [editForm, setEditForm] = useState(false)
 	const [modal, setModal] = useState(false)
 	const [organizationId, setOrganizationId] = useState('')
 
@@ -35,8 +31,13 @@ const OrganizationTable = ({ organization_data, mutate }) => {
 	const handleRemoveClick = (org_id) => {
 		try {
 			DeleteOrganization(org_id, user?.token)
-			mutate()
-			toast.success('Organization deleted!')
+				.then(() => {
+					mutate()
+					toast.success('organization deleted!')
+				})
+				.catch(() => {
+					toast.error('invalid request')
+				})
 		} catch (error) {
 			toast.error('invalid request')
 		}
@@ -58,7 +59,6 @@ const OrganizationTable = ({ organization_data, mutate }) => {
 	}
 	const handleEditClick = async (org) => {
 		setButtonText('Update')
-		setEditForm(true)
 		setOrganizationId(org.id)
 		setModal(true)
 		setName(org.name)
@@ -85,30 +85,16 @@ const OrganizationTable = ({ organization_data, mutate }) => {
 		let OrganizationData = JSON.stringify(data)
 
 		// for taking the patch api data
-		if (editForm) {
-			EditOrganization(OrganizationData, organizationId, user?.token)
-				.then(() => {
-					setModal(!modal)
-					mutate()
-					toast.success('organization updated!')
-				})
-				.catch(() => {
-					toast.error('invalid request')
-				})
-		}
 
-		// for new data registration
-		else {
-			AddOrganization(data, user?.token)
-				.then(async () => {
-					setModal(!modal)
-					mutate()
-					toast.success('organization added!')
-				})
-				.catch(() => {
-					toast.error('invalid request')
-				})
-		}
+		EditOrganization(OrganizationData, organizationId, user?.token)
+			.then(() => {
+				setModal(!modal)
+				mutate()
+				toast.success('organization updated!')
+			})
+			.catch(() => {
+				toast.error('invalid request')
+			})
 	}
 
 	function createData(org) {

@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 import LevelModulePopup from './PopUpModals/LevelModulePopUp'
 import { AddModule } from '../../apis/modules'
 
-const ModuleModal = ({ modal, setModal }) => {
+const ModuleModal = ({ modal, setModal, mutate }) => {
 	const router = useRouter()
 	const [modules, setModules] = useState('')
 
@@ -29,6 +29,7 @@ const ModuleModal = ({ modal, setModal }) => {
 					router.replace(router.asPath)
 					setModules('')
 					setModal(!modal)
+					mutate()
 					toast.success('module created!')
 				})
 				.catch(() => {

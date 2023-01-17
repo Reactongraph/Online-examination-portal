@@ -12,6 +12,7 @@ const Level = ({ level_data, mutate }) => {
 					titleDescription='List of all levels'
 					buttonTitle='ADD NEW LEVEL'
 					editForm={false}
+					mutate={mutate}
 				/>
 			</div>
 

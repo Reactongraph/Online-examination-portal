@@ -2,16 +2,14 @@
 import React, { useState } from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
-import { SERVER_LINK } from '../../helpers/config'
-import axios from 'axios'
-import { useRouter } from 'next/router'
+
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
+import { AddOrganization } from '../../apis/organizations'
 
-const OrganizationModal = ({ modal, setModal }) => {
-	const router = useRouter()
-
+const OrganizationModal = ({ modal, setModal, mutate }) => {
+	const user = useSelector((state) => state?.user)
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
 	const [pincode, setPincode] = useState('')
@@ -27,7 +25,6 @@ const OrganizationModal = ({ modal, setModal }) => {
 
 	const { handleSubmit } = useForm()
 
-	const login_token = useSelector((state) => state.user.token)
 	// for sending the data to the backend
 	const checkWithDatabase = async (data) => {
 		data.status = true
@@ -44,22 +41,14 @@ const OrganizationModal = ({ modal, setModal }) => {
 
 		// for new data registration
 
-		await axios({
-			url: `${SERVER_LINK}/organization`,
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json;charset=UTF-8',
-				Authorization: login_token,
-			},
-			data: OrganizationData,
-		})
-			.then(() => {
-				router.replace(router.asPath)
+		AddOrganization(OrganizationData, user?.token)
+			.then(async () => {
 				setModal(!modal)
+				mutate()
+				toast.success('organization added!')
 			})
 			.catch(() => {
-				toast.error('Invalid Request')
+				toast.error('invalid request')
 			})
 	}
 

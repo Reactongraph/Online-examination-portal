@@ -25,15 +25,7 @@ export function GetQuizData(token) {
 		mutate,
 	}
 }
-// export async function GetQuizDataWithId(token, id) {
-//     return await axios.get(`${SERVER_LINK}/quiz/find/${id}`,{
-//         headers:{
-//             Accept:'application/json',
-//             'Content-Type':'applications/json;charset=UTF-8',
-//             Authorization:token,
-//         },
-//     })
-// }
+
 export async function GetQuizDataWithId(token, id) {
 	return await axios.get(`${SERVER_LINK}/quiz/find/${id}`, {
 		headers: {

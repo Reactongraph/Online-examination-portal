@@ -14,39 +14,18 @@ const fetcher = (url, token) =>
 		.then((res) => res.data)
 
 export function GetQuestionData(token) {
-	const { data, error, isLoading } = useSWR(
+	const { data, mutate, error, isLoading } = useSWR(
 		[`${SERVER_LINK}/questions/find`, token],
 		([url, token]) => fetcher(url, token)
 	)
 	return {
 		data,
+		mutate,
 		error,
 		isLoading,
 	}
 }
-// export function GetQuestionDataWithId(token, id) {
-//     const { data, error, isLoading, mutate } = useSWR(
-//         [`${SERVER_LINK}/questions/find/${id}`, token],
-//         ([url, token]) => fetcher(url, token)
-//     )
-//     return {
-//         data,
-//         error,
-//         isLoading,
-//         // mutate,
-//     }
-// }
 export async function GetQuestionDataWithId(token, id) {
-	// const { data, error, isLoading, mutate } = useSWR(
-	//     [`${SERVER_LINK}/questions/find/${id}`, token],
-	//     ([url, token]) => fetcher(url, token)
-	// )
-	// return {
-	//     data,
-	//     error,
-	//     isLoading,
-	//     // mutate,
-	// }
 	return await axios.get(`${SERVER_LINK}/questions/find/${id}`, {
 		headers: {
 			Accept: 'application/json',

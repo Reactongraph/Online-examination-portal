@@ -159,7 +159,7 @@ const AddQuestion = ({ level_data: levelData, module_data: moduleData }) => {
 		data.question = question
 		data.marks = marks
 		data.question_time = timeLimitSelect
-		data.status = true
+
 		data.level_id = selectedLevelId
 		data.module_id = selectedModuleId
 		data.option_type = optionType
@@ -176,10 +176,9 @@ const AddQuestion = ({ level_data: levelData, module_data: moduleData }) => {
 			})
 		}
 
-		data = JSON.stringify(data)
-
 		if (editForm) {
 			let question_id = router.query.question_id
+			data = JSON.stringify(data)
 			EditQuestion(data, question_id, user?.token)
 				.then(() => {
 					router.push('/dashboard/questions')
@@ -188,6 +187,8 @@ const AddQuestion = ({ level_data: levelData, module_data: moduleData }) => {
 					toast.error('invalid requestssss')
 				})
 		} else {
+			data.status = true
+			data = JSON.stringify(data)
 			Addquestion(data, user?.token)
 				.then(() => {
 					router.push('/dashboard/questions')

@@ -11,6 +11,7 @@ const Organization = ({ organization_data, mutate }) => {
 					titleDescription='List of all organization'
 					buttonTitle='ADD ORAGANIZATION'
 					editForm={false}
+					mutate={mutate}
 				/>
 			</div>
 

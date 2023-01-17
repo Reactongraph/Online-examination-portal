@@ -15,6 +15,7 @@ const PageComponentTitle = ({
 	level_data,
 	organization_data,
 	userData,
+	mutate,
 }) => {
 	const [modal, setModal] = useState(false)
 
@@ -58,6 +59,7 @@ const PageComponentTitle = ({
 						<LevelModal
 							modal={modal}
 							setModal={setModal}
+							mutate={mutate}
 						/>
 					</>
 				) : title == 'MODULE' ? (
@@ -65,6 +67,7 @@ const PageComponentTitle = ({
 						<ModuleModal
 							modal={modal}
 							setModal={setModal}
+							mutate={mutate}
 						/>
 					</>
 				) : title == 'QUIZ' ? (
@@ -90,6 +93,7 @@ const PageComponentTitle = ({
 						<OrganizationModal
 							modal={modal}
 							setModal={setModal}
+							mutate={mutate}
 						/>
 					</>
 				)}

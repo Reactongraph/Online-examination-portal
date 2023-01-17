@@ -8,7 +8,7 @@ import LevelModulePopup from './PopUpModals/LevelModulePopUp'
 import { AddLevel } from '../../apis/levels'
 
 const LevelModal = (props) => {
-	const { modal, setModal } = props
+	const { modal, setModal, mutate } = props
 	const router = useRouter()
 	const [level, setLevel] = useState('')
 
@@ -30,6 +30,7 @@ const LevelModal = (props) => {
 					router.replace(router.asPath)
 					setLevel('')
 					setModal(!modal)
+					mutate()
 					toast.success('level inserted')
 				})
 				.catch(() => {

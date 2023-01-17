@@ -37,13 +37,6 @@ export async function GetModuleDataWithId(token, id) {
 		isLoading,
 		mutate,
 	}
-	// return await axios.get(`${SERVER_LINK}/module/${id}`, {
-	// 	headers: {
-	// 		Accept: 'application/json',
-	// 		'Content-Type': 'application/json;charset=UTF-8',
-	// 		Authorization: token,
-	// 	},
-	// })
 }
 export async function DeleteModule(id, token) {
 	return await axios.delete(`${SERVER_LINK}/module/${id}`, {

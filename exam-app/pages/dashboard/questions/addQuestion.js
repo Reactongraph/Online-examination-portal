@@ -1,13 +1,15 @@
 import * as React from 'react'
 import AddQuestion from '../../../components/questions/addQuestion'
-
 import Layout from '../../../components/layout/Layout'
-
-import axios from 'axios'
-import { SERVER_LINK } from '../../../helpers/config'
+import { GetModuleData } from '../../../apis/modules'
+import { useSelector } from 'react-redux'
+import { GetLevelData } from '../../../apis/levels'
 
 // You can't name a function as MODULE...
-export default function AddQuestions({ level_data, module_data }) {
+export default function AddQuestions() {
+	const user = useSelector((state) => state?.user)
+	const { data: level_data } = GetLevelData(user?.token)
+	const { data: module_data } = GetModuleData(user?.token)
 	return (
 		<>
 			<Layout title='Questions'>
@@ -18,29 +20,4 @@ export default function AddQuestions({ level_data, module_data }) {
 			</Layout>
 		</>
 	)
-}
-
-// function for ssr data
-
-export async function getServerSideProps(data) {
-	// Fetch data from external API
-	const levels = await axios.get(`${SERVER_LINK}/level/find`, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: data.req.cookies.access_token,
-		},
-	})
-	const modules = await axios.get(`${SERVER_LINK}/module/find`, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: data.req.cookies.access_token,
-		},
-	})
-
-	let level_data = levels.data
-	let module_data = modules.data
-	// Pass data to the page via props
-	return { props: { level_data, module_data } }
 }

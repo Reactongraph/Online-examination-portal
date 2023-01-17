@@ -33,6 +33,7 @@ const LevelTable = ({ level_data, mutate }) => {
 				.then(() => {
 					router.replace(router.asPath)
 					mutate()
+					toast.success('level deleted!')
 				})
 				.catch(() => {
 					toast.error('Invalid Request')
@@ -58,6 +59,7 @@ const LevelTable = ({ level_data, mutate }) => {
 		EditLevel(new_data, level.id, user?.token)
 			.then(() => {
 				router.replace(router.asPath)
+				mutate()
 				toast.success('level updated!')
 			})
 			.catch(() => {
@@ -76,6 +78,7 @@ const LevelTable = ({ level_data, mutate }) => {
 				.then(() => {
 					setModal(!modal)
 					router.replace(router.asPath)
+					mutate()
 					toast.success('level updated!')
 				})
 				.catch(() => {

@@ -47,6 +47,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 		DeleteQuiz(quiz_id, user?.token)
 			.then(() => {
 				router.replace(router.asPath)
+
 				toast.success('Quiz deleted!')
 			})
 			.catch(() => {
@@ -118,6 +119,7 @@ const QuizTable = ({ quiz_data, module_data, level_data }) => {
 		EditQuiz(data, quizId, user?.token)
 			.then(() => {
 				setModal(!modal)
+
 				router.replace(router.asPath)
 				toast.success('Quiz updated!')
 			})

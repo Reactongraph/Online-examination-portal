@@ -12,13 +12,14 @@ if (typeof window !== 'undefined') {
 	injectStyle()
 }
 
-const QuestionTable = ({ question_data }) => {
+const QuestionTable = ({ question_data, mutate }) => {
 	const router = useRouter()
 	const user = useSelector((state) => state?.user)
 	const handleRemoveClick = async (question_id) => {
 		DeleteQuestion(question_id, user?.token)
 			.then((result) => {
 				router.replace(router.asPath)
+				mutate()
 				toast.success(result.data)
 			})
 			.catch(() => {
@@ -26,14 +27,15 @@ const QuestionTable = ({ question_data }) => {
 			})
 	}
 
-	const handleBoxClick = async (question) => {
+	const handleBoxClick = async (question_id, question_status) => {
 		let new_status = {
-			status: !question.status,
+			status: !question_status,
 		}
 		new_status = JSON.stringify(new_status)
-		EditQuestion(new_status, question.id, user?.token)
+		EditQuestion(new_status, question_id, user?.token)
 			.then(() => {
 				router.replace(router.asPath)
+				mutate()
 				toast.success('status updated!')
 			})
 			.catch(() => {
@@ -45,7 +47,14 @@ const QuestionTable = ({ question_data }) => {
 		router.push(`/dashboard/questions/addQuestion?question_id=${question_id}`)
 	}
 
-	function createData(question, question_type, level, modules, question_id) {
+	function createData(
+		question,
+		question_type,
+		level,
+		modules,
+		question_id,
+		question_status
+	) {
 		question = question.question.slice(0, 15) + '...'
 		const action = (
 			<>
@@ -67,12 +76,12 @@ const QuestionTable = ({ question_data }) => {
 				<div className='flex'>
 					{/* <div className="form-check form-switch"> */}
 					<input
-						onClick={() => handleBoxClick(question)}
+						onClick={() => handleBoxClick(question_id, question_status)}
 						className='form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-gray-300 bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm'
 						type='checkbox'
 						role='switch'
 						id='flexSwitchCheckDefault'
-						defaultChecked={question.status}
+						defaultChecked={question_status}
 					/>
 				</div>
 			</>
