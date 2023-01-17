@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { CsvReader } from './CsvReader'
 import { ToastContainer } from 'react-toastify'
 import { useSelector } from 'react-redux'
+import { Div } from '../common/micro/div'
 
 const PageComponentTitle = ({
 	title,
@@ -33,10 +34,11 @@ const PageComponentTitle = ({
 
 	return (
 		<>
-			<div className='mr-6'>
+			{/* <div className='mr-6'>
 				<h1 className='text-4xl font-semibold mb-2'>{title}</h1>
 				<h2 className='text-gray-600 ml-0.5'>{titleDescription}</h2>
-			</div>
+			</div> */}
+			<Div heading={title} subHeading={titleDescription}/> 
 
 			<div className='flex  flex-wrap items-start justify-end -mb-3'>
 				<a

@@ -1,5 +1,4 @@
 import React from 'react'
-// import { mutate } from 'swr'
 import PageComponentTitle from '../common/PageComponentTitle'
 import LevelTable from './LevelTable'
 
@@ -22,8 +21,6 @@ const Level = ({ level_data, mutate }) => {
 						level_data={level_data}
 						mutate={mutate}
 					/>
-					{/* <ModuleTable module_data={module_data} 
-					mutate={mutate}/> */}
 				</div>
 			</section>
 		</main>
