@@ -8,6 +8,7 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import { Button } from '../shared/Button'
 
 const UserProfileModal = ({ modal, setModal, userData }) => {
 	const router = useRouter()
@@ -114,7 +115,6 @@ const UserProfileModal = ({ modal, setModal, userData }) => {
 									/>
 								</div>
 							</div>
-
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full px-3'>
 									<label
@@ -136,7 +136,6 @@ const UserProfileModal = ({ modal, setModal, userData }) => {
 									</p>
 								</div>
 							</div>
-
 							<div className='flex flex-wrap -mx-3 mb-2'>
 								<div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
 									<label
@@ -247,15 +246,9 @@ const UserProfileModal = ({ modal, setModal, userData }) => {
 									query )
 								</p>
 							</div>
-							<button
-								type='submit'
-								className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
-								{buttonText}
-							</button>
+							<Button key={'submit'}>{buttonText}</Button>
 						</form>
 					</div>
-
-					{/* */}
 				</div>
 			</PureModal>
 		</>
