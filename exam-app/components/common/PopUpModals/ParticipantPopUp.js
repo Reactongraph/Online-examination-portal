@@ -1,6 +1,8 @@
 import PureModal from 'react-pure-modal'
 import { useState } from 'react'
 import { Button } from '../micro/button'
+import { Label } from '../micro/label'
+import { TextInput } from '../micro/textinput'
 function ParticipantPopUp(props) {
 	const {
 		modal,
@@ -46,57 +48,21 @@ function ParticipantPopUp(props) {
 						onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 						<div className='flex flex-wrap -mx-3 mb-6'>
 							<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
-								<label
-									className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-									for='grid-first-name'>
-									Name
-								</label>
-								<input
-									className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
-									id='name'
-									type='text'
-									value={name}
-									onChange={(e) => setName(e.target.value)}
-									required='required'
-									placeholder='Jane'
-								/>
+								<Label key={'grid-first-name'}>Name</Label>
+								<TextInput onChange={(e) => setName(e.target.value)} className={'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'} id={'name'} type={'text'} placeholder={'Jane'}></TextInput>
 							</div>
 							<div className='w-full md:w-1/2 px-3'>
-								<label
-									className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-									for='grid-last-name'>
-									Email
-								</label>
-								<input
-									className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-									id='email'
-									type='email'
-									placeholder='example@gmail.com '
-									required='required'
-									value={email}
-									onChange={(e) => setEmail(e.target.value)}
-								/>
+								<Label key={'grid-first-name'}>Email</Label>
+								<TextInput onChange={(e) => setEmail(e.target.value)} id={'email'} type={'email'} placeholder={'example@gmail.com '}></TextInput>
 							</div>
 						</div>
 
 						<div className='flex flex-wrap -mx-3 mb-6'>
 							<div className='w-full px-3'>
-								<label
-									className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-									for='grid-password'>
-									Password
-								</label>
+								<Label key={'grid-password'}> Password</Label>
 
 								<div class='relative'>
-									<input
-										className='appearance-none block w-full p-4  bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										id='password'
-										type={!showPassword ? 'password' : 'text'}
-										placeholder='******************'
-										required='required'
-										value={password}
-										onChange={(e) => setPassword(e.target.value)}
-									/>
+									<TextInput onChange={(e) => setPassword(e.target.value)} id={'password'} type={!showPassword ? 'password' : 'text'} placeholder={'******************'} required={'required'} value={password}></TextInput>
 									<button
 										type='button'
 										onClick={() => setShowPassword(!showPassword)}
@@ -112,11 +78,7 @@ function ParticipantPopUp(props) {
 
 						<div className='flex flex-wrap -mx-3 mb-6'>
 							<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
-								<label
-									className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-									for='grid-first-name'>
-									Mobile
-								</label>
+								<Label key={'grid-mobile'}> Mobile</Label>
 								<input
 									className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
 									id='mobile'
@@ -128,11 +90,7 @@ function ParticipantPopUp(props) {
 								/>
 							</div>
 							<div className='w-full md:w-1/2 px-3'>
-								<label
-									htmlFor='default'
-									className='block mb-2 text-sm font-medium text-gray-900 '>
-									Organization Name
-								</label>
+								<Label key={'grid-organization'}> Organization Name</Label>
 								<select
 									id='default'
 									value={selectedorganizationId}
