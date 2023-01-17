@@ -4,6 +4,7 @@ import ParticipantModal from './ParticipantModal'
 import LevelModal from './LevelModal'
 import ModuleModal from './ModuleModal'
 import QuizModal from './QuizModal'
+import UserProfileModal from './UserProfileModal'
 
 const PageComponentTitle = ({
 	title,
@@ -12,6 +13,9 @@ const PageComponentTitle = ({
 	quiz_data,
 	module_data,
 	level_data,
+	organization_data,
+	userData,
+	mutate,
 }) => {
 	const [modal, setModal] = useState(false)
 
@@ -47,6 +51,7 @@ const PageComponentTitle = ({
 						<ParticipantModal
 							modal={modal}
 							setModal={setModal}
+							organization_data={organization_data}
 						/>
 					</>
 				) : title == 'LEVEL' ? (
@@ -54,6 +59,7 @@ const PageComponentTitle = ({
 						<LevelModal
 							modal={modal}
 							setModal={setModal}
+							mutate={mutate}
 						/>
 					</>
 				) : title == 'MODULE' ? (
@@ -61,6 +67,7 @@ const PageComponentTitle = ({
 						<ModuleModal
 							modal={modal}
 							setModal={setModal}
+							mutate={mutate}
 						/>
 					</>
 				) : title == 'QUIZ' ? (
@@ -73,11 +80,20 @@ const PageComponentTitle = ({
 							setModal={setModal}
 						/>
 					</>
+				) : title == 'USER PROFILE' ? (
+					<>
+						<UserProfileModal
+							modal={modal}
+							setModal={setModal}
+							userData={userData}
+						/>
+					</>
 				) : (
 					<>
 						<OrganizationModal
 							modal={modal}
 							setModal={setModal}
+							mutate={mutate}
 						/>
 					</>
 				)}

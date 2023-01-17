@@ -2,9 +2,16 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import { CsvReader } from './CsvReader'
 import { ToastContainer } from 'react-toastify'
+import { useSelector } from 'react-redux'
 
-const PageComponentTitle = ({ title, titleDescription, buttonTitle }) => {
+const PageComponentTitle = ({
+	title,
+	titleDescription,
+	buttonTitle,
+	mutate,
+}) => {
 	const router = useRouter()
+	const user = useSelector((state) => state?.user)
 
 	// const checkModal = (title) => {}
 	const handleAddClick = () => {
@@ -12,10 +19,11 @@ const PageComponentTitle = ({ title, titleDescription, buttonTitle }) => {
 	}
 
 	const handleCsv = (e) => {
-		const result = CsvReader(e.target.files[0])
+		const result = CsvReader(e.target.files[0], user, mutate)
 
 		if (result == 1) {
 			setTimeout(() => {
+				mutate()
 				router.replace(router.asPath)
 
 				e.target.value = null

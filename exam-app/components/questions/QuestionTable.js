@@ -1,26 +1,25 @@
+import Table from '../common/Table'
 import React from 'react'
-import axios from 'axios'
-import { SERVER_LINK } from '../../helpers/config'
 import { useRouter } from 'next/router'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { ToastContainer, toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
-import Table from '../common/Table'
+import { QuestionColumns } from './questionColumn'
+import { injectStyle } from 'react-toastify/dist/inject-style'
+import { DeleteQuestion, EditQuestion } from '../../apis/questions'
+// CALL IT ONCE IN YOUR APP
+if (typeof window !== 'undefined') {
+	injectStyle()
+}
 
-const QuestionTable = ({ question_data }) => {
+const QuestionTable = ({ question_data, mutate }) => {
 	const router = useRouter()
-	const login_token = useSelector((state) => state.user.token)
+	const user = useSelector((state) => state?.user)
 	const handleRemoveClick = async (question_id) => {
-		await axios
-			.delete(`${SERVER_LINK}/questions/${question_id}`, {
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: login_token,
-				},
-			})
+		DeleteQuestion(question_id, user?.token)
 			.then((result) => {
 				router.replace(router.asPath)
+				mutate()
 				toast.success(result.data)
 			})
 			.catch(() => {
@@ -33,16 +32,10 @@ const QuestionTable = ({ question_data }) => {
 			status: !question_status,
 		}
 		new_status = JSON.stringify(new_status)
-		await axios
-			.patch(`${SERVER_LINK}/questions/${question_id}`, new_status, {
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: login_token,
-				},
-			})
+		EditQuestion(new_status, question_id, user?.token)
 			.then(() => {
 				router.replace(router.asPath)
+				mutate()
 				toast.success('status updated!')
 			})
 			.catch(() => {
@@ -57,12 +50,12 @@ const QuestionTable = ({ question_data }) => {
 	function createData(
 		question,
 		question_type,
-		question_id,
-		question_status,
 		level,
-		modules
+		modules,
+		question_id,
+		question_status
 	) {
-		question = question.slice(0, 15) + '...'
+		question = question.question.slice(0, 15) + '...'
 		const action = (
 			<>
 				<button
@@ -93,87 +86,25 @@ const QuestionTable = ({ question_data }) => {
 				</div>
 			</>
 		)
-		return { question, question_type, status, action, level, modules }
+		return { question, question_type, status, level, modules, action }
 	}
 
-	const rowsDataArray = question_data.map((element) => {
-		let question = element.question
+	const rowsDataArray = question_data?.map((element) => {
+		// let question = element.question
 		let question_type = element.question_type
 		let level = element?.level?.level
 		let modules = element?.module?.module
 		let question_id = element.id
 		let question_status = element.status
 		return createData(
-			question,
+			element,
 			question_type,
-			question_id,
-			question_status,
 			level,
-			modules
+			modules,
+			question_id,
+			question_status
 		)
 	})
-
-	const columns = [
-		{
-			Header: 'Question',
-			accessor: 'question',
-			title: 'question',
-			dataIndex: 'question',
-			key: 'question',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-			rowClassName: 'bg-black-ripon',
-		},
-		{
-			Header: 'Question Type',
-			accessor: 'question_type',
-			title: 'question_type',
-			dataIndex: 'question_type',
-			key: 'question_type',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-			rowClassName: 'bg-black-ripon',
-		},
-		{
-			Header: 'Level',
-			accessor: 'level',
-			title: 'level',
-			dataIndex: 'level',
-			key: 'level',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-			rowClassName: 'bg-black-ripon',
-		},
-		{
-			Header: 'Module',
-			accessor: 'modules',
-			title: 'modules',
-			dataIndex: 'modules',
-			key: 'modules',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-			rowClassName: 'bg-black-ripon',
-		},
-
-		{
-			Header: 'Status',
-			accessor: 'status',
-			title: 'Status',
-			dataIndex: 'status',
-			key: 'status',
-			width: 400,
-			className: 'text-white bg-gray-800 p-2 border-r-2 border-b-2',
-		},
-		{
-			Header: 'Action',
-			accessor: 'action',
-			title: 'Action',
-			dataIndex: 'action',
-			key: 'operations',
-			width: 250,
-			className: 'text-white bg-gray-600 p-2 border-b-2',
-		},
-	]
 
 	// data by using which table data is creating using api call
 	const data = rowsDataArray
@@ -181,8 +112,8 @@ const QuestionTable = ({ question_data }) => {
 	return (
 		<>
 			<Table
-				columns={columns}
-				data={data}
+				columns={QuestionColumns}
+				data={data || []}
 				rowKey='id'
 				className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'
 			/>

@@ -46,7 +46,7 @@ export class AuthController {
       const data = { error: 'Invalid credentials' }
       response.status(HttpStatus.BAD_REQUEST).send(data)
     } else {
-      const token = await this.authService.create_token(users)
+      const token = await this.authService.create_token(users, login?.role)
       const jwt_decode: any = this.jwtService.decode(token.access_token)
       await this.prisma.login.create({
         data: {

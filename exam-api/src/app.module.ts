@@ -18,6 +18,9 @@ import { QuestionsService } from './questions/questions.service'
 import { MulterModule } from '@nestjs/platform-express'
 import { PrismaService } from './prisma.service'
 import { QuizModule } from './quiz/quiz.module'
+import { QuizController } from './quiz/quiz.controller'
+import { QuizService } from './quiz/quiz.service'
+import { AdminModule } from './admin/admin.module'
 
 @Module({
   imports: [
@@ -28,6 +31,7 @@ import { QuizModule } from './quiz/quiz.module'
     AuthModule,
     QuizModule,
     QuestionsModule,
+    AdminModule,
     MulterModule.register({
       dest: './images'
     })
@@ -40,7 +44,7 @@ export class AppModule implements NestModule {
     consumer.apply(Oraganization).forRoutes('organization')
     consumer.apply(Participants).forRoutes('participants')
     consumer.apply(Modules).forRoutes('module')
-    consumer.apply(Levels).forRoutes('level')
+    // consumer.apply(Levels).forRoutes('level')
     consumer.apply(Questions).forRoutes('questions')
     consumer.apply(Quiz).forRoutes('quiz')
   }

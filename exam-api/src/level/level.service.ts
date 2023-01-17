@@ -59,29 +59,20 @@ export class LevelService {
   async update (id: string, updateRestApiDto: level_dto) {
     try {
       const toLowerCaseLevel = updateRestApiDto?.level.toLowerCase()
-      const find = await this.prisma.level.findUnique({
+      const updateUser = await this.prisma.level.update({
         where: {
-          level: toLowerCaseLevel
+          id
+        },
+        data: {
+          level: toLowerCaseLevel,
+          status: updateRestApiDto?.status
         }
       })
 
-      if (find) {
-        return null
-      } else {
-        const updateUser = await this.prisma.level.update({
-          where: {
-            id
-          },
-          data: {
-            level: toLowerCaseLevel
-          }
-        })
-
-        if (!updateUser) {
-          return `user not found for this ${id}`
-        }
-        return `${id} `
+      if (!updateUser) {
+        return `user not found for this ${id}`
       }
+      return `${id} `
     } catch (err) {
       return { error: err }
     }

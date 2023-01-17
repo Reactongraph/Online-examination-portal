@@ -2,7 +2,7 @@ import React from 'react'
 import PageComponentTitle from '../common/PageComponentTitle'
 import ParticipantTable from './ParticipantTable'
 
-const Participant = ({ participant_data, mutate }) => {
+const Participant = ({ participant_data, mutate, organization_data }) => {
 	return (
 		<main className='p-6 sm:p-10 space-y-6'>
 			<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
@@ -11,6 +11,7 @@ const Participant = ({ participant_data, mutate }) => {
 					titleDescription='Add, update and delete'
 					buttonTitle='ADD PARTICIPANT'
 					editForm={false}
+					organization_data={organization_data}
 				/>
 			</div>
 
@@ -19,6 +20,7 @@ const Participant = ({ participant_data, mutate }) => {
 					<ParticipantTable
 						participant_data={participant_data}
 						mutate={mutate}
+						organization_data={organization_data}
 					/>
 				</div>
 			</section>
