@@ -1,13 +1,15 @@
 import DatePicker from 'react-datepicker'
+import { Label } from '../../micro/label'
 function QuizDatePicker(props) {
 	const { selectedDate, setSelectedDate, timeTitle } = props
 	return (
 		<>
-			<label
+			{/* <label
 				className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
 				for='grid-last-name'>
 				{timeTitle}
-			</label>
+			</label> */}
+			<Label key={'grid-last-name'}> {timeTitle}</Label>
 			<div class='flex items-center justify-center'>
 				<div
 					className='datepicker bg-gray-200relative form-floating mb-3 xl:w-96'

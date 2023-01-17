@@ -5,6 +5,7 @@ import LevelModal from './LevelModal'
 import ModuleModal from './ModuleModal'
 import QuizModal from './QuizModal'
 import UserProfileModal from './UserProfileModal'
+import { Div } from './micro/div'
 
 const PageComponentTitle = ({
 	title,
@@ -21,10 +22,11 @@ const PageComponentTitle = ({
 
 	return (
 		<>
-			<div className='mr-6'>
+			{/* <div className='mr-6'>
 				<h1 className='text-4xl font-semibold mb-2'>{title}</h1>
 				<h2 className='text-gray-600 ml-0.5'>{titleDescription}</h2>
-			</div>
+			</div> */}
+			<Div heading={title} subHeading={titleDescription}></Div>
 
 			<div className='flex  flex-wrap items-start justify-end -mb-3'>
 				<button

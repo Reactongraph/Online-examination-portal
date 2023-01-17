@@ -5,6 +5,8 @@ import QuizLevelSelect from './QuizLevelSelect'
 import QuizImage from './QuizImage'
 import Option from './QuizOption'
 import { Button } from '../../micro/button'
+import { Label } from '../../micro/label'
+import { TextArea } from '../../micro/textArea'
 function QuizPopUp(props) {
 	const {
 		name,
@@ -57,11 +59,7 @@ function QuizPopUp(props) {
 							onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
-									<label
-										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-first-name'>
-										Quiz Name
-									</label>
+									<Label key={'grid-quiz-name'}> Quiz Name</Label>
 									<input
 										className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
 										id='name'
@@ -110,11 +108,7 @@ function QuizPopUp(props) {
 									/>
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
-									<label
-										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-last-name'>
-										Choose Modules for Quiz
-									</label>
+									<Label key={'gird-module'}> Choose Modules for Quiz</Label>
 									<ReactSelect
 										options={moduleData}
 										className='bg-gray-50 w-50 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500'
@@ -127,25 +121,15 @@ function QuizPopUp(props) {
 										onChange={handleModuleTypeSelect}
 										allowSelectAll={true}
 										value={optionModuleSelected}
-										// value={selectedModules}
 									/>
 								</div>
 							</div>
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full px-3'>
-									<label
-										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-password'>
-										Description
-									</label>
-									<textarea
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										id='description'
-										type='text'
-										placeholder='A short description about quiz'
-										required='required'
-										value={description}
-										onChange={(e) => setDescription(e.target.value)}></textarea>
+									<Label key={'grid-description'}> Description</Label>
+									<TextArea id={'description'} type={'text'} placeholder={'A short description about quiz'}
+										required={'required'} value={description} onChange={(e) => setDescription(e.target.value)}
+									></TextArea>
 									<p className='text-gray-600 text-xs italic'>
 										Describe in Brief*
 									</p>

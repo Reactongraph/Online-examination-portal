@@ -1,12 +1,15 @@
+import { Label } from "../../common/micro/label"
+
 function TimeLimit(props) {
 	const { timeLimitSelect, handleTimeLimitSelect } = props
 	return (
 		<>
-			<label
+			{/* <label
 				htmlFor='default'
 				className='block mb-2 text-sm font-medium text-gray-900 '>
 				Time Limit
-			</label>
+			</label> */}
+			<Label key={'default'}> Time Limit</Label>
 			<select
 				id='default'
 				value={timeLimitSelect}

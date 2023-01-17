@@ -1,12 +1,15 @@
+import { Label } from "../../common/micro/label"
+
 function QuestionLevel(props) {
 	const { selectedLevelId, handleLevelTypeSelect, levelData } = props
 	return (
 		<>
-			<label
+			{/* <label
 				htmlFor='default'
 				className='block mb-2 text-sm font-medium text-gray-900 '>
 				Question Level
-			</label>
+			</label> */}
+			<Label key={'default'}> Question Level</Label>
 			<select
 				id='default'
 				value={selectedLevelId}

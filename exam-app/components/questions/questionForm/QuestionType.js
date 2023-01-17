@@ -1,12 +1,14 @@
+import { Label } from "../../common/micro/label"
 function QuestionType(props) {
 	const { questionType, handleQuestionTypeSelect } = props
 	return (
 		<>
-			<label
+			{/* <label
 				htmlFor='default'
 				className='block mb-2 text-sm font-medium text-gray-900 '>
 				Question Type
-			</label>
+			</label> */}
+			<Label key={'default'}> Question Type</Label>
 			<select
 				id='default'
 				required
