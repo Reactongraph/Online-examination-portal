@@ -1,5 +1,5 @@
 import PureModal from 'react-pure-modal'
-import { Button } from '../micro/button'
+import { ButtonComponent } from '../micro/buttonComponent'
 import { Label } from '../micro/label'
 function OrganizationPopUp(props) {
 	const {
@@ -83,7 +83,7 @@ function OrganizationPopUp(props) {
 						<div className='flex flex-wrap -mx-3 mb-6'>
 							<div className='w-full px-3'>
 								<Label key={'grid-password'}> Password</Label>
-								
+
 								<input
 									className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 									id='grid-password'
@@ -178,7 +178,7 @@ function OrganizationPopUp(props) {
 								/>
 							</div>
 						</div>
-						<Button key={'submit'}>{buttonText}</Button>
+						<ButtonComponent key={'submit'}>{buttonText}</ButtonComponent>
 					</form>
 				</div>
 			</div>

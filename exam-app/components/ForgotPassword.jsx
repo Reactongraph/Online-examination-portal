@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { SERVER_LINK } from '../helpers/config'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import { ButtonComponent } from './common/micro/buttonComponent'
 
 // validation schema
 const schema = object({
@@ -75,11 +76,13 @@ const ForgotPassword = () => {
 							</div>
 
 							<div className='flex  justify-between w-64 mb-5'>
-								<button
-									type='submit'
-									className='border-2 border-blue rounded-full px-12 py-2 inline-block font-semibold bg-blue-500 hover:bg-blue-700  mr-25 ml-20   '>
+								<ButtonComponent
+									key={'submit'}
+									className={
+										'border-2 border-blue rounded-full px-12 py-2 inline-block font-semibold bg-blue-500 hover:bg-blue-700  mr-25 ml-20   '
+									}>
 									Send Reset Link
-								</button>
+								</ButtonComponent>
 							</div>
 						</form>
 					</div>

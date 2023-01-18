@@ -4,7 +4,7 @@ import QuizDatePicker from './QuizDatePicker'
 import QuizLevelSelect from './QuizLevelSelect'
 import QuizImage from './QuizImage'
 import Option from './QuizOption'
-import { Button } from '../../micro/button'
+import { ButtonComponent } from '../../micro/buttonComponent'
 import { Label } from '../../micro/label'
 import { TextArea } from '../../micro/textArea'
 function QuizPopUp(props) {
@@ -96,11 +96,8 @@ function QuizPopUp(props) {
 
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
-									<label
-										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-last-name'>
-										Question Level
-									</label>
+									<Label key={'grid-question-level'}>Question Level</Label>
+
 									<QuizLevelSelect
 										selectedLevelId={selectedLevelId}
 										handleLevelTypeSelect={handleLevelTypeSelect}
@@ -127,15 +124,19 @@ function QuizPopUp(props) {
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full px-3'>
 									<Label key={'grid-description'}> Description</Label>
-									<TextArea id={'description'} type={'text'} placeholder={'A short description about quiz'}
-										required={'required'} value={description} onChange={(e) => setDescription(e.target.value)}
-									></TextArea>
+									<TextArea
+										id={'description'}
+										type={'text'}
+										placeholder={'A short description about quiz'}
+										required={'required'}
+										value={description}
+										onChange={(e) => setDescription(e.target.value)}></TextArea>
 									<p className='text-gray-600 text-xs italic'>
 										Describe in Brief*
 									</p>
 								</div>
 							</div>
-							<Button key={'submit'}> {buttonText}</Button>
+							<ButtonComponent key={'submit'}> {buttonText}</ButtonComponent>
 						</form>
 					</div>
 				</div>

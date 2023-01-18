@@ -1,6 +1,6 @@
 import PureModal from 'react-pure-modal'
 import { useState } from 'react'
-import { Button } from '../micro/button'
+import { ButtonComponent } from '../micro/buttonComponent'
 import { Label } from '../micro/label'
 import { TextInput } from '../micro/textinput'
 function ParticipantPopUp(props) {
@@ -49,11 +49,22 @@ function ParticipantPopUp(props) {
 						<div className='flex flex-wrap -mx-3 mb-6'>
 							<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 								<Label key={'grid-first-name'}>Name</Label>
-								<TextInput onChange={(e) => setName(e.target.value)} className={'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'} id={'name'} type={'text'} placeholder={'Jane'}></TextInput>
+								<TextInput
+									onChange={(e) => setName(e.target.value)}
+									className={
+										'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+									}
+									id={'name'}
+									type={'text'}
+									placeholder={'Jane'}></TextInput>
 							</div>
 							<div className='w-full md:w-1/2 px-3'>
 								<Label key={'grid-first-name'}>Email</Label>
-								<TextInput onChange={(e) => setEmail(e.target.value)} id={'email'} type={'email'} placeholder={'example@gmail.com '}></TextInput>
+								<TextInput
+									onChange={(e) => setEmail(e.target.value)}
+									id={'email'}
+									type={'email'}
+									placeholder={'example@gmail.com '}></TextInput>
 							</div>
 						</div>
 
@@ -62,7 +73,13 @@ function ParticipantPopUp(props) {
 								<Label key={'grid-password'}> Password</Label>
 
 								<div class='relative'>
-									<TextInput onChange={(e) => setPassword(e.target.value)} id={'password'} type={!showPassword ? 'password' : 'text'} placeholder={'******************'} required={'required'} value={password}></TextInput>
+									<TextInput
+										onChange={(e) => setPassword(e.target.value)}
+										id={'password'}
+										type={!showPassword ? 'password' : 'text'}
+										placeholder={'******************'}
+										required={'required'}
+										value={password}></TextInput>
 									<button
 										type='button'
 										onClick={() => setShowPassword(!showPassword)}
@@ -115,7 +132,7 @@ function ParticipantPopUp(props) {
 								</select>
 							</div>
 						</div>
-						<Button key={'submit'}>{buttonText}</Button>
+						<ButtonComponent key={'submit'}>{buttonText}</ButtonComponent>
 					</form>
 				</div>
 			</div>

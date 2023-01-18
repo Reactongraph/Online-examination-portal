@@ -1,6 +1,6 @@
 import PureModal from 'react-pure-modal'
 import { Label } from '../micro/label'
-import { Button } from '../micro/button'
+import { ButtonComponent } from '../micro/buttonComponent'
 function LevelModulePopup(props) {
 	const {
 		setModal,
@@ -49,7 +49,7 @@ function LevelModulePopup(props) {
 								</div>
 							</div>
 
-							<Button key={'submit'}>{buttonText}</Button>
+							<ButtonComponent key={'submit'}>{buttonText}</ButtonComponent>
 						</form>
 					</div>
 
