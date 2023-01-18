@@ -23,6 +23,7 @@ export class RestApiService {
           data: {
             email: createRestApiDto?.email,
             name: createRestApiDto?.name,
+            password: createRestApiDto?.password,
             quota: createRestApiDto?.quota,
             status: createRestApiDto?.status,
             mobile: createRestApiDto?.mobile,
