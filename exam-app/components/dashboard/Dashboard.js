@@ -1,13 +1,16 @@
 import React from 'react'
 import { withRouter } from 'next/router'
-import { Div } from '../common/micro/div'
+import { Banner } from '../common/micro/banner'
 
 const Dashboard = () => {
 	return (
 		<>
 			<main className='p-6 sm:p-10 space-y-6'>
 				<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
-					<Div heading={"Dashboard"} subHeading={"Online Examination Portal"}/>
+					<Banner
+						heading={'Dashboard'}
+						subHeading={'Online Examination Portal'}
+					/>
 				</div>
 				<section className='grid md:grid-cols-2 xl:grid-cols-4 gap-6'>
 					<div className='flex items-center p-8 bg-white shadow rounded-lg'>

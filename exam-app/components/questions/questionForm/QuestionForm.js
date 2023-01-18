@@ -1,4 +1,5 @@
 import CenterForm from './CenterForm'
+import { Banner } from '../../common/micro/banner'
 
 function QuestionForm(props) {
 	const {
@@ -24,12 +25,11 @@ function QuestionForm(props) {
 				onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 				<div className='flex-auto mx-7'>
 					<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
-						<div className='mr-6 my-4'>
-							<h1 className='text-4xl font-semibold mb-2'>
-								{pageTitle} Question
-							</h1>
-							<h2 className='text-gray-600 ml-0.5'>Easy to understand</h2>
-						</div>
+						<Banner
+							heading={`${pageTitle} Question`}
+							subHeading={'Easy to understand'}
+							additionalClassName={'my-4'}
+						/>
 					</div>
 
 					<CenterForm
