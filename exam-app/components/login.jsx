@@ -12,7 +12,6 @@ import { SERVER_LINK } from '../helpers/config'
 import { ToastContainer, toast } from 'react-toastify'
 import { Form } from './common/micro/form'
 import { Label } from './common/micro/label'
-import { Button } from './shared/Button'
 import { ButtonComponent } from './common/micro/buttonComponent'
 
 // validation schema
@@ -39,7 +38,6 @@ const Login = () => {
 	const checkWithDatabase = async (data) => {
 		data.role = optionValue
 		data = JSON.stringify(data)
-		console.log('url', SERVER_LINK)
 
 		await axios
 			.request({

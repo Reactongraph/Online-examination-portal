@@ -1,6 +1,8 @@
+import React from 'react'
 import PureModal from 'react-pure-modal'
 import { ButtonComponent } from '../micro/buttonComponent'
 import { Label } from '../micro/label'
+import { Form } from '../micro/form'
 function OrganizationPopUp(props) {
 	const {
 		name,

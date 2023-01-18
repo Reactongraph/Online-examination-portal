@@ -37,4 +37,3 @@ export function GetAdminDataWithId(token, id) {
 		mutate,
 	}
 }
-

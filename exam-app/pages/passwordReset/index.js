@@ -1,6 +1,7 @@
 import { MdLockOutline } from 'react-icons/md'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
+import { Form } from '../../components/common/micro/form'
 
 import { useRouter } from 'next/router'
 import { SERVER_LINK } from '../../helpers/config'
@@ -62,37 +63,36 @@ export default function PasswordReset() {
 						</h2>
 					</div>
 					<div className='flex flex-col items-center'></div>
-					<Form
-						onSubmit={handleSubmit((data) => changePassword(data))}>
-							<React.Fragment>
-						<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
-							{' '}
-							<MdLockOutline className='text-gray-400 m-2' />
-							<input
-								type='password'
-								{...register('password')}
-								name='password'
-								placeholder='Password'
-								className='bg-gray-100 outline-none text-sm'
-							/>
-						</div>
-						<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
-							<MdLockOutline className='text-gray-400 m-2' />
-							<input
-								type='password'
-								{...register('cpassword')}
-								name='cpassword'
-								placeholder='CPassword'
-								className='bg-gray-100 outline-none text-sm'
-							/>
-						</div>
-						<div className='flex  justify-between w-64 mb-5'>
-							<button
-								type='submit'
-								className='border-2 border-blue rounded-full px-12 py-2 inline-block font-semibold bg-blue-500  hover:text-white ml-20 md-15 mr-30 mt-10   '>
-								ChangePassword
-							</button>
-						</div>
+					<Form onSubmit={handleSubmit((data) => changePassword(data))}>
+						<React.Fragment>
+							<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
+								{' '}
+								<MdLockOutline className='text-gray-400 m-2' />
+								<input
+									type='password'
+									{...register('password')}
+									name='password'
+									placeholder='Password'
+									className='bg-gray-100 outline-none text-sm'
+								/>
+							</div>
+							<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
+								<MdLockOutline className='text-gray-400 m-2' />
+								<input
+									type='password'
+									{...register('cpassword')}
+									name='cpassword'
+									placeholder='CPassword'
+									className='bg-gray-100 outline-none text-sm'
+								/>
+							</div>
+							<div className='flex  justify-between w-64 mb-5'>
+								<button
+									type='submit'
+									className='border-2 border-blue rounded-full px-12 py-2 inline-block font-semibold bg-blue-500  hover:text-white ml-20 md-15 mr-30 mt-10   '>
+									ChangePassword
+								</button>
+							</div>
 						</React.Fragment>
 					</Form>
 				</div>

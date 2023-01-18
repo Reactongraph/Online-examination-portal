@@ -82,24 +82,40 @@ const UserProfile = ({ profile_data }) => {
 												className='shadow-lg w-full bg-white border-collapse'
 												border='5'>
 												<tbody>
-													<TableRow className='border px-8 py-4 bg-blue-100' label="Full Name:" name={profile_data?.name}>
-													</TableRow>
-													<TableRow className='border px-8 py-4' label="Email:" name={profile_data?.email}>
-													</TableRow>
+													<TableRow
+														className='border px-8 py-4 bg-blue-100'
+														label='Full Name:'
+														name={profile_data?.name}></TableRow>
+													<TableRow
+														className='border px-8 py-4'
+														label='Email:'
+														name={profile_data?.email}></TableRow>
 													{userRole == 'OrganizationUser' && (
 														<>
-															<TableRow className='border px-8 py-4 bg-blue-100' label="Mobile:" name={profile_data?.mobile}>
-															</TableRow>
-															<TableRow className='border px-8 py-4' label="Quota Allotted:" name={profile_data?.quota}>
-															</TableRow>
-															<TableRow className='border px-8 py-4 bg-blue-100' label="Address:" name={profile_data?.address}>
-															</TableRow>
-															<TableRow className='border px-8 py-4' label="City:" name={profile_data?.city}>
-															</TableRow>
-															<TableRow className='border px-8 py-4 bg-blue-100' label="State:" name={profile_data?.state}>
-															</TableRow>
-															<TableRow className='border px-8 py-4' label="PinCode:" name={profile_data?.pincode}>
-															</TableRow>
+															<TableRow
+																className='border px-8 py-4 bg-blue-100'
+																label='Mobile:'
+																name={profile_data?.mobile}></TableRow>
+															<TableRow
+																className='border px-8 py-4'
+																label='Quota Allotted:'
+																name={profile_data?.quota}></TableRow>
+															<TableRow
+																className='border px-8 py-4 bg-blue-100'
+																label='Address:'
+																name={profile_data?.address}></TableRow>
+															<TableRow
+																className='border px-8 py-4'
+																label='City:'
+																name={profile_data?.city}></TableRow>
+															<TableRow
+																className='border px-8 py-4 bg-blue-100'
+																label='State:'
+																name={profile_data?.state}></TableRow>
+															<TableRow
+																className='border px-8 py-4'
+																label='PinCode:'
+																name={profile_data?.pincode}></TableRow>
 														</>
 													)}
 												</tbody>

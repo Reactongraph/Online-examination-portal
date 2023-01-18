@@ -1,3 +1,4 @@
+import React from 'react'
 import PureModal from 'react-pure-modal'
 import { useState } from 'react'
 import { ButtonComponent } from '../micro/buttonComponent'
