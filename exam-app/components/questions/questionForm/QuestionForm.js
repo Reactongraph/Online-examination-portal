@@ -1,3 +1,5 @@
+import React from 'react'
+import { Form } from '../../common/micro/form'
 import CenterForm from './CenterForm'
 import { Banner } from '../../common/micro/banner'
 
@@ -20,9 +22,10 @@ function QuestionForm(props) {
 	} = props
 	return (
 		<>
-			<form
-				className='flex  sm:p-10 '
+			<Form
+				className={'flex  sm:p-10 '}
 				onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
+					<React.Fragment>
 				<div className='flex-auto mx-7'>
 					<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
 						<Banner
@@ -51,7 +54,8 @@ function QuestionForm(props) {
 				<div className='flex-wrap items-center px-8 bg-dark '>
 					{props.children}
 				</div>
-			</form>
+				</React.Fragment>
+			</Form>
 		</>
 	)
 }

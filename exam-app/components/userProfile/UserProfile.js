@@ -1,10 +1,11 @@
 import React from 'react'
 import PageComponentTitle from '../common/PageComponentTitle'
 import Image from 'next/image'
+import { TableRow } from '../common/micro/tableRow'
 
 const UserProfile = ({ profile_data }) => {
-	const userName = profile_data.name
-	const userRole = profile_data.role
+	const userName = profile_data?.name
+	const userRole = profile_data?.role
 	return (
 		<>
 			<main className='p-6 sm:p-10 space-y-6'>
@@ -38,7 +39,7 @@ const UserProfile = ({ profile_data }) => {
 									<div className='h-full'>
 										<h5 className='mb-1'>{userName}</h5>
 										<p className='mb-0 font-bold leading-9 text-size-lg'>
-											{profile_data.email}
+											{profile_data?.email}
 										</p>
 									</div>
 								</div>
@@ -81,96 +82,24 @@ const UserProfile = ({ profile_data }) => {
 												className='shadow-lg w-full bg-white border-collapse'
 												border='5'>
 												<tbody>
-													<tr>
-														<td className='border px-8 py-4 bg-blue-100'>
-															<strong className='text-slate-700'>
-																{' '}
-																Full Name:
-															</strong>
-														</td>
-														<td className='border px-8 py-4 bg-blue-100'>
-															{profile_data.name}
-														</td>
-													</tr>
-													<tr className='hover:bg-blue-50'>
-														<td className='border px-8 py-4 '>
-															<strong className='text-slate-700'>
-																{' '}
-																Email:
-															</strong>
-														</td>
-														<td className='border px-8 py-4'>
-															{profile_data.email}
-														</td>
-													</tr>
+													<TableRow className='border px-8 py-4 bg-blue-100' label="Full Name:" name={profile_data?.name}>
+													</TableRow>
+													<TableRow className='border px-8 py-4' label="Email:" name={profile_data?.email}>
+													</TableRow>
 													{userRole == 'OrganizationUser' && (
 														<>
-															<tr>
-																<td className='border px-8 py-4 bg-blue-100'>
-																	<strong className='text-slate-700'>
-																		{' '}
-																		Mobile:
-																	</strong>
-																</td>
-																<td className='border px-8 py-4 bg-blue-100'>
-																	{profile_data.mobile}
-																</td>
-															</tr>
-															<tr className='hover:bg-blue-50'>
-																<td className='border px-8 py-4'>
-																	<strong className='text-slate-700'>
-																		{' '}
-																		Quota Allotted:
-																	</strong>
-																</td>
-																<td className='border px-8 py-4'>
-																	{profile_data.quota}
-																</td>
-															</tr>
-															<tr>
-																<td className='border px-8 py-4 bg-blue-100'>
-																	<strong className='text-slate-700'>
-																		{' '}
-																		Address:
-																	</strong>
-																</td>
-																<td className='border px-8 py-4 bg-blue-100'>
-																	{profile_data.address}
-																</td>
-															</tr>
-															<tr className='hover:bg-blue-50'>
-																<td class='border px-8 py-4'>
-																	<strong className='text-slate-700'>
-																		{' '}
-																		City:
-																	</strong>
-																</td>
-																<td className='border px-8 py-4'>
-																	{profile_data.city}
-																</td>
-															</tr>
-															<tr>
-																<td className='border px-8 py-4 bg-blue-100'>
-																	<strong className='text-slate-700'>
-																		{' '}
-																		State:
-																	</strong>
-																</td>
-																<td className='border px-8 py-4 bg-blue-100'>
-																	{profile_data.state}
-																</td>
-															</tr>
-															<tr className='hover:bg-blue-50'>
-																<td className='border px-8 py-4'>
-																	<strong className='text-slate-700'>
-																		{' '}
-																		PinCode
-																	</strong>
-																</td>
-																<td className='border px-8 py-4'>
-																	{profile_data.pincode}
-																</td>
-															</tr>
+															<TableRow className='border px-8 py-4 bg-blue-100' label="Mobile:" name={profile_data?.mobile}>
+															</TableRow>
+															<TableRow className='border px-8 py-4' label="Quota Allotted:" name={profile_data?.quota}>
+															</TableRow>
+															<TableRow className='border px-8 py-4 bg-blue-100' label="Address:" name={profile_data?.address}>
+															</TableRow>
+															<TableRow className='border px-8 py-4' label="City:" name={profile_data?.city}>
+															</TableRow>
+															<TableRow className='border px-8 py-4 bg-blue-100' label="State:" name={profile_data?.state}>
+															</TableRow>
+															<TableRow className='border px-8 py-4' label="PinCode:" name={profile_data?.pincode}>
+															</TableRow>
 														</>
 													)}
 												</tbody>

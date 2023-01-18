@@ -22,7 +22,6 @@ export class AdminController {
     private readonly prisma: PrismaService
   ) {}
 
-
   @Get(':id')
   async findOne (@Param('id') id: string) {
     const find_one = await this.adminService.findOne(id)

@@ -21,7 +21,7 @@ export class AuthController {
     private readonly authService: AuthService,
     private readonly jwtService: JwtService,
     private readonly prisma: PrismaService
-  ) {}
+  ) { }
 
   // this controller is used to change password using rest link
   @Post('change-password')

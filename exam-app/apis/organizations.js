@@ -36,6 +36,7 @@ export async function GetOrganizationDataWithId(token, id) {
 		isLoading,
 		mutate,
 	}
+
 }
 export async function DeleteOrganization(organizationId, token) {
 	return await axios.delete(`${SERVER_LINK}/organization/${organizationId}`, {

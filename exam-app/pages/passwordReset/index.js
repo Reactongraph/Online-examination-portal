@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { SERVER_LINK } from '../../helpers/config'
 import jwt_decode from 'jwt-decode'
 import { ToastContainer, toast } from 'react-toastify'
+import React from 'react'
 
 export default function PasswordReset() {
 	const router = useRouter()
@@ -61,9 +62,9 @@ export default function PasswordReset() {
 						</h2>
 					</div>
 					<div className='flex flex-col items-center'></div>
-					<form
-						class='w-full max-w-lg'
+					<Form
 						onSubmit={handleSubmit((data) => changePassword(data))}>
+							<React.Fragment>
 						<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
 							{' '}
 							<MdLockOutline className='text-gray-400 m-2' />
@@ -92,7 +93,8 @@ export default function PasswordReset() {
 								ChangePassword
 							</button>
 						</div>
-					</form>
+						</React.Fragment>
+					</Form>
 				</div>
 				<div className='w-2/5 bg-blue-500 text-white rounded-tr-2xl rounded-br-2xl py-36 px-12'>
 					<p className='mb-2'>Fill up details To change your password.</p>
