@@ -1,15 +1,9 @@
-import { Label } from "../../common/micro/label"
+import { Label } from '../../common/micro/label'
 
 function QuestionModule(props) {
 	const { moduleData, handleModuleTypeSelect, selectedModuleId } = props
 	return (
 		<>
-			{' '}
-			{/* <label
-				htmlFor='default'
-				className='block mb-2 text-sm font-medium text-gray-900 '>
-				Question Module
-			</label> */}
 			<Label key={'default'}> Question Module</Label>
 			<select
 				id='default'

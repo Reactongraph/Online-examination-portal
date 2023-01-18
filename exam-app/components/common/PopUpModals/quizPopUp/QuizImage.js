@@ -1,15 +1,9 @@
-import { Label } from "../../micro/label"
+import { Label } from '../../micro/label'
 
 function QuizImage() {
 	return (
 		<>
 			<div className='w-full md:w-1/2 px-3'>
-				{/* <label
-					className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-					for='grid-last-name'>
-					Choose Quiz image
-				</label> */
-				}
 				<Label key={'grid-last-name'}> Choose Quiz Image</Label>
 
 				<div class='flex items-center justify-center'>

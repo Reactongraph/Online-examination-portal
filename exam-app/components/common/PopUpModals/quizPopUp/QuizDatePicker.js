@@ -4,11 +4,6 @@ function QuizDatePicker(props) {
 	const { selectedDate, setSelectedDate, timeTitle } = props
 	return (
 		<>
-			{/* <label
-				className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-				for='grid-last-name'>
-				{timeTitle}
-			</label> */}
 			<Label key={'grid-last-name'}> {timeTitle}</Label>
 			<div class='flex items-center justify-center'>
 				<div

@@ -1,15 +1,9 @@
-import { Label } from "../../common/micro/label"
+import { Label } from '../../common/micro/label'
 
 function OptionType(props) {
 	const { optionType, handleOptionTypeSelect } = props
 	return (
 		<>
-			{' '}
-			{/* <label
-				htmlFor='default'
-				className='block mb-2 text-sm font-medium text-gray-900 '>
-				Option Type
-			</label> */}
 			<Label key={'default'}> Option Type</Label>
 			<select
 				id='default'

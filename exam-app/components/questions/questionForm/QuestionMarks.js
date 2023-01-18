@@ -1,14 +1,9 @@
-import { Label } from "../../common/micro/label"
+import { Label } from '../../common/micro/label'
 
 function QuestionMarks(props) {
 	const { marks, setMarks } = props
 	return (
 		<>
-			{/* <label
-				htmlFor='default'
-				className='block mb-2 text-sm font-medium text-gray-900 '>
-				Marks
-			</label> */}
 			<Label key={'default'}> Marks</Label>
 			<input
 				type='number'
