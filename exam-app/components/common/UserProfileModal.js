@@ -9,6 +9,8 @@ import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { Button } from '../shared/Button'
+import { EditOrganization } from '../../apis/organizations'
+import { Form } from './micro/form'
 
 const UserProfileModal = ({ modal, setModal, userData }) => {
 	const router = useRouter()
@@ -26,8 +28,7 @@ const UserProfileModal = ({ modal, setModal, userData }) => {
 	const [password, setPassword] = useState(userData?.password)
 
 	const { handleSubmit } = useForm()
-
-	const login_token = useSelector((state) => state.user.token)
+	const user = useSelector((state) => state?.user)
 	// for sending the data to the backend
 	const checkWithDatabase = async (data) => {
 		data.status = true
@@ -44,14 +45,7 @@ const UserProfileModal = ({ modal, setModal, userData }) => {
 
 		// for new data registration
 
-		await axios
-			.patch(`${SERVER_LINK}/organization/${userData?.id}`, OrganizationData, {
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: login_token,
-				},
-			})
+		EditOrganization(OrganizationData, userData?.id, user?.token)
 			.then(() => {
 				setModal(!modal)
 				toast.success('Profile Updated Successfully!')
@@ -77,9 +71,10 @@ const UserProfileModal = ({ modal, setModal, userData }) => {
 					</div>
 
 					<div className='py-6 px-6 lg:px-8'>
-						<form
-							className='w-full max-w-lg'
+						<Form
+							// className='w-full max-w-lg'
 							onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
+								<React.Fragment>
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 									<label
@@ -247,7 +242,8 @@ const UserProfileModal = ({ modal, setModal, userData }) => {
 								</p>
 							</div>
 							<Button key={'submit'}>{buttonText}</Button>
-						</form>
+							</React.Fragment>
+						</Form>
 					</div>
 				</div>
 			</PureModal>

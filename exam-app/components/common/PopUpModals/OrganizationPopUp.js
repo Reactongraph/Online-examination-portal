@@ -50,9 +50,9 @@ function OrganizationPopUp(props) {
 				</div>
 
 				<div className='py-6 px-6 lg:px-8'>
-					<form
-						className='w-full max-w-lg'
+					<Form
 						onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
+							<React.Fragment>
 						<div className='flex flex-wrap -mx-3 mb-6'>
 							<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 								<Label key={'grid-first-name'}> Name</Label>
@@ -179,7 +179,8 @@ function OrganizationPopUp(props) {
 							</div>
 						</div>
 						<Button key={'submit'}>{buttonText}</Button>
-					</form>
+						</React.Fragment>
+					</Form>
 				</div>
 			</div>
 		</PureModal>

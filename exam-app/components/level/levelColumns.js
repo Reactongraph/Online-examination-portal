@@ -27,6 +27,5 @@ export const Levelcolumns = [
 		key: 'operations',
 		width: 250,
 		className: 'text-white bg-gray-600 p-2 border-b-2',
-		//
 	},
 ]

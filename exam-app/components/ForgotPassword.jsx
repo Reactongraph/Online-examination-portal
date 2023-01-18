@@ -5,6 +5,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { SERVER_LINK } from '../helpers/config'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import React from 'react'
+import { Form } from './common/micro/form'
 
 // validation schema
 const schema = object({
@@ -59,10 +61,11 @@ const ForgotPassword = () => {
 						</div>
 						{/* <p className="text-gray-1000 mr-20">use your login details</p> */}
 						<div className='flex flex-col items-center'></div>
-						<form
-							class='w-full max-w-lg'
+						<Form
 							onSubmit={handleSubmit((data) => SendPasswordReset(data))}>
-							<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
+
+								<React.Fragment>
+								<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
 								{' '}
 								<FaRegEnvelope className='text-gray-400 m-2' />
 								<input
@@ -81,7 +84,9 @@ const ForgotPassword = () => {
 									Send Reset Link
 								</button>
 							</div>
-						</form>
+								</React.Fragment>
+							
+						</Form>
 					</div>
 					<div className='w-2/5 bg-blue-500 text-white rounded-tr-2xl rounded-br-2xl py-36 px-12'>
 						<h2 className='text-3xl font-bold mb'>Hello!</h2>
