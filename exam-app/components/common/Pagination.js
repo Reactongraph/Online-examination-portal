@@ -5,6 +5,8 @@ import {
 	ChevronRightIcon,
 } from '@heroicons/react/solid'
 import { Button, PageButton } from '../shared/Button'
+import { Label } from './micro/label'
+import React from 'react'
 
 const Pagination = ({
 	previousPage,
@@ -37,23 +39,26 @@ const Pagination = ({
 						Page <span className='font-medium'>{state.pageIndex + 1}</span> of{' '}
 						<span className='font-medium'>{pageOptions.length}</span>
 					</span>
-					<label>
-						<span className='sr-only'>Items Per Page</span>
-						<select
-							className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50'
-							value={state.pageSize}
-							onChange={(e) => {
-								setPageSize(Number(e.target.value))
-							}}>
-							{[5, 10, 20].map((pageSize) => (
-								<option
-									key={pageSize}
-									value={pageSize}>
-									Show {pageSize}
-								</option>
-							))}
-						</select>
-					</label>
+
+					<Label key={'default'}>
+						<React.Fragment>
+							<span className='sr-only'>Items Per Page</span>
+							<select
+								className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50'
+								value={state.pageSize}
+								onChange={(e) => {
+									setPageSize(Number(e.target.value))
+								}}>
+								{[5, 10, 20].map((pageSize) => (
+									<option
+										key={pageSize}
+										value={pageSize}>
+										Show {pageSize}
+									</option>
+								))}
+							</select>
+						</React.Fragment>
+					</Label>
 				</div>
 				<div>
 					<nav

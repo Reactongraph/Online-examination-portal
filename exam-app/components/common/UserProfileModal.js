@@ -8,7 +8,8 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { Button } from '../shared/Button'
+import { ButtonComponent } from './micro/buttonComponent'
+import { Label } from './micro/label'
 
 const UserProfileModal = ({ modal, setModal, userData }) => {
 	const router = useRouter()
@@ -82,11 +83,8 @@ const UserProfileModal = ({ modal, setModal, userData }) => {
 							onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
-									<label
-										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-first-name'>
-										Name
-									</label>
+									<Label key={'grid-first-name'}> Name</Label>
+
 									<input
 										className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
 										id='grid-first-name'
@@ -98,11 +96,8 @@ const UserProfileModal = ({ modal, setModal, userData }) => {
 									/>
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
-									<label
-										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-last-name'>
-										Email
-									</label>
+									<Label key={'grid-last-name'}> Email</Label>
+
 									<input
 										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none'
 										id='grid-email'
@@ -117,11 +112,8 @@ const UserProfileModal = ({ modal, setModal, userData }) => {
 							</div>
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full px-3'>
-									<label
-										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-password'>
-										Password
-									</label>
+									<Label key={'grid-password'}> Password</Label>
+
 									<input
 										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 										id='grid-password'
@@ -138,11 +130,8 @@ const UserProfileModal = ({ modal, setModal, userData }) => {
 							</div>
 							<div className='flex flex-wrap -mx-3 mb-2'>
 								<div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
-									<label
-										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-city'>
-										City
-									</label>
+									<Label key={'grid-city'}> City</Label>
+
 									<input
 										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 										id='grid-city'
@@ -155,11 +144,8 @@ const UserProfileModal = ({ modal, setModal, userData }) => {
 								</div>
 
 								<div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
-									<label
-										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-city'>
-										State
-									</label>
+									<Label key={'grid-state'}> State</Label>
+
 									<input
 										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 										id='grid-state'
@@ -171,11 +157,8 @@ const UserProfileModal = ({ modal, setModal, userData }) => {
 									/>
 								</div>
 								<div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
-									<label
-										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-zip'>
-										Pin Code
-									</label>
+									<Label key={'grid-zip'}> Pin Code</Label>
+
 									<input
 										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 										id='grid-zip'
@@ -189,11 +172,8 @@ const UserProfileModal = ({ modal, setModal, userData }) => {
 							</div>
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full px-3'>
-									<label
-										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-password'>
-										Address
-									</label>
+									<Label key={'grid-address'}>Address</Label>
+
 									<input
 										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 										id='grid-address'
@@ -207,11 +187,8 @@ const UserProfileModal = ({ modal, setModal, userData }) => {
 							</div>
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
-									<label
-										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-first-name'>
-										Mobile
-									</label>
+									<Label key={'grid-mobile'}>Mobile</Label>
+
 									<input
 										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none'
 										id='grid-mobile'
@@ -224,11 +201,8 @@ const UserProfileModal = ({ modal, setModal, userData }) => {
 									/>
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
-									<label
-										className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										for='grid-last-name'>
-										Quota
-									</label>
+									<Label key={'grid-quota'}>Quota</Label>
+
 									<input
 										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none'
 										id='grid-quota'
@@ -246,7 +220,7 @@ const UserProfileModal = ({ modal, setModal, userData }) => {
 									query )
 								</p>
 							</div>
-							<Button key={'submit'}>{buttonText}</Button>
+							<ButtonComponent key={'submit'}>{buttonText}</ButtonComponent>
 						</form>
 					</div>
 				</div>

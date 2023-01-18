@@ -10,6 +10,9 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { SERVER_LINK } from '../helpers/config'
 import { ToastContainer, toast } from 'react-toastify'
+import { Label } from './common/micro/label'
+import { Button } from './shared/Button'
+import { ButtonComponent } from './common/micro/buttonComponent'
 
 // validation schema
 const schema = object({
@@ -125,18 +128,22 @@ const Login = () => {
 										className='text-xs mr-1 ml-20  md-20 text-gray-1000'>
 										Forget Password?
 									</a>
-									<button
-										type='submit'
-										className='border-2 border-blue rounded-full px-12 py-2 inline-block font-semibold bg-blue-500 hover:bg-blue-700  ml-20 md-15 mr-25 '>
+
+									<ButtonComponent
+										key={'submit'}
+										className={
+											'border-2 border-blue rounded-full px-12 py-2 inline-block font-semibold bg-blue-500 hover:bg-blue-700  ml-20 md-15 mr-25 '
+										}>
 										SignIn
-									</button>
+									</ButtonComponent>
 								</div>
 								<div className='flex items-center px-8 bg-dark '>
-									<label
-										htmlFor='default'
-										className='mr-2 text-sm font-medium text-gray-900 '>
+									<Label
+										key={'default'}
+										className={'mr-2 text-sm font-medium text-gray-900 '}>
 										Login As
-									</label>
+									</Label>
+
 									<select
 										id='default'
 										// value={timeLimitSelect}
