@@ -1,57 +1,33 @@
 import * as React from 'react'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 import { ToastContainer } from 'react-toastify'
-
 import Layout from '../../components/layout/Layout'
-import axios from 'axios'
-import { SERVER_LINK } from '../../helpers/config'
-import jwt_decode from 'jwt-decode'
 import UserProfileComponent from '../../components/userProfile/UserProfile'
+import { GetAdminDataWithId } from '../../apis/admin'
+import { useSelector } from 'react-redux'
+import { GetOrganizationDataWithId } from '../../apis/organizations'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
 }
 
-export default function UserProfile({ profile_data }) {
+export default function UserProfile() {
+	const user = useSelector((state) => state?.user)
+	const { data: profile_data, mutate } =
+		user?.role == 'SuperAdminUser'
+			? GetAdminDataWithId(user?.token, user?.Org_id)
+			: GetOrganizationDataWithId(user?.token, user?.Org_id)
+
 	return (
 		<>
 			<Layout title='Dashboard '>
-				<UserProfileComponent profile_data={profile_data} />
+				<UserProfileComponent
+					profile_data={profile_data}
+					mutate={mutate}
+				/>
 			</Layout>
 			<ToastContainer />
 		</>
 	)
-}
-export async function getServerSideProps(data) {
-	let decoded = jwt_decode(data.req.cookies.access_token)
-	let organization
-	let admin
-	let profile_data
-	if (decoded.role === 'OrganizationUser') {
-		organization = await axios.get(
-			`${SERVER_LINK}/organization/${decoded.id}`,
-			{
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					Authorization: data.req.cookies.access_token,
-				},
-			}
-		)
-		profile_data = organization.data
-	} else {
-		admin = await axios.get(`${SERVER_LINK}/admin/${decoded.id}`, {
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json;charset=UTF-8',
-				Authorization: data.req.cookies.access_token,
-			},
-		})
-		profile_data = admin.data
-	}
-
-	// Pass data to the page via props
-	profile_data.role = decoded.role
-	return { props: { profile_data } }
 }

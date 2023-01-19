@@ -6,7 +6,6 @@ import { ToastContainer, toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import LevelModulePopup from './PopUpModals/LevelModulePopUp'
 import { AddLevel } from '../../apis/levels'
-import { Label } from './micro/label'
 
 const LevelModal = (props) => {
 	const { modal, setModal, mutate } = props

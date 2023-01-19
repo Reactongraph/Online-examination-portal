@@ -1,19 +1,14 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import { SERVER_LINK } from '../../../helpers/config'
-import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import { ButtonComponent } from '../../common/micro/buttonComponent'
+import { UserLogout } from '../../../apis/auth'
 
 const LogOutButton = () => {
 	const router = useRouter()
 	const handleLogout = async () => {
 		try {
-			await axios.post(
-				`${SERVER_LINK}/auth/logout`,
-				{},
-				{ withCredentials: true }
-			)
+			UserLogout()
 			toast.success('Logout Successfully!')
 			setTimeout(() => {
 				router.push('/login')

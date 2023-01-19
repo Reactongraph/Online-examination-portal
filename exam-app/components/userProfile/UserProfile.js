@@ -2,10 +2,13 @@ import React from 'react'
 import PageComponentTitle from '../common/PageComponentTitle'
 import Image from 'next/image'
 import { TableRow } from '../common/micro/tableRow'
+import { useSelector } from 'react-redux'
 
-const UserProfile = ({ profile_data }) => {
+const UserProfile = ({ profile_data, mutate }) => {
+	const user = useSelector((state) => state?.user)
 	const userName = profile_data?.name
-	const userRole = profile_data?.role
+	const userRole = user?.role
+
 	return (
 		<>
 			<main className='p-6 sm:p-10 space-y-6'>
@@ -16,6 +19,7 @@ const UserProfile = ({ profile_data }) => {
 							titleDescription='Now ,You can Edit your profile 🤩'
 							buttonTitle='EDIT PROFILE'
 							userData={profile_data}
+							mutate={mutate}
 						/>
 					</div>
 				)}

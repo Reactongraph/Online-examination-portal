@@ -12,7 +12,7 @@ import { Label } from './micro/label'
 import { EditOrganization } from '../../apis/organizations'
 import { Form } from './micro/form'
 
-const UserProfileModal = ({ modal, setModal, userData }) => {
+const UserProfileModal = ({ modal, setModal, userData, mutate }) => {
 	const router = useRouter()
 	const [name, setName] = useState(userData?.name)
 	const [email, setEmail] = useState(userData?.email)
@@ -29,6 +29,7 @@ const UserProfileModal = ({ modal, setModal, userData }) => {
 
 	const { handleSubmit } = useForm()
 	const user = useSelector((state) => state?.user)
+
 	// for sending the data to the backend
 	const checkWithDatabase = async (data) => {
 		data.status = true
@@ -49,6 +50,7 @@ const UserProfileModal = ({ modal, setModal, userData }) => {
 			.then(() => {
 				setModal(!modal)
 				toast.success('Profile Updated Successfully!')
+				mutate()
 				router.replace(router.asPath)
 			})
 			.catch(() => {

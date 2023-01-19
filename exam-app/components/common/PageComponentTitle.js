@@ -92,6 +92,7 @@ const PageComponentTitle = ({
 							modal={modal}
 							setModal={setModal}
 							userData={userData}
+							mutate={mutate}
 						/>
 					</>
 				) : (
