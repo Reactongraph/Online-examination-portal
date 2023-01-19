@@ -6,7 +6,7 @@ import { GetQuestionData } from '../../../apis/questions'
 // You can't name a function as MODULE...
 export default function Questions() {
 	const user = useSelector((state) => state?.user)
-	const { data, mutate } = GetQuestionData(user.token)
+	const { data, mutate } = GetQuestionData(user?.token)
 
 	return (
 		<>
