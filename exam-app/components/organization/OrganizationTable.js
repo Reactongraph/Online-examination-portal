@@ -10,7 +10,7 @@ import { DeleteOrganization, EditOrganization } from '../../apis/organizations'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
 import { ButtonComponent } from '../common/micro/buttonComponent'
 
-const OrganizationTable = ({ organization_data, mutate }) => {
+const OrganizationTable = ({ data: organization_data, mutate }) => {
 	// const [editForm, setEditForm] = useState(false)
 	const [modal, setModal] = useState(false)
 	const [organizationId, setOrganizationId] = useState('')

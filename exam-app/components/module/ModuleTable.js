@@ -11,7 +11,7 @@ import { DeleteModule, EditModule } from '../../apis/modules'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
 import { ButtonComponent } from '../common/micro/buttonComponent'
 
-const ModuleTable = ({ module_data, mutate }) => {
+const ModuleTable = ({ data: module_data, mutate }) => {
 	const [modal, setModal] = useState(false)
 	const [moduleId, setModuleId] = useState('')
 

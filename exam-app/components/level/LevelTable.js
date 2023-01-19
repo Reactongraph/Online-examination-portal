@@ -17,7 +17,7 @@ if (typeof window !== 'undefined') {
 	injectStyle()
 }
 
-const LevelTable = ({ level_data, mutate }) => {
+const LevelTable = ({ data: level_data, mutate }) => {
 	const router = useRouter()
 
 	const [modal, setModal] = useState(false)

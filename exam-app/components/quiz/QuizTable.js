@@ -17,7 +17,7 @@ if (typeof window !== 'undefined') {
 	injectStyle()
 }
 
-const QuizTable = ({ quiz_data, module_data, level_data }) => {
+const QuizTable = ({ data: quiz_data, module_data, level_data }) => {
 	const router = useRouter()
 	const user = useSelector((state) => state?.user)
 	const [modal, setModal] = useState(false)

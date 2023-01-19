@@ -13,7 +13,11 @@ import {
 } from '../../apis/participants'
 import { ButtonComponent } from '../common/micro/buttonComponent'
 
-const ParticipantTable = ({ participant_data, mutate, organization_data }) => {
+const ParticipantTable = ({
+	data: participant_data,
+	mutate,
+	organization_data,
+}) => {
 	const [editForm, setEditForm] = useState(false)
 	const [modal, setModal] = useState(false)
 	const [participantId, setParticipantId] = useState('')
