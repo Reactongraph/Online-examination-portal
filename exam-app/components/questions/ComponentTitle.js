@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { Banner } from '../common/micro/banner'
 import { ButtonComponent } from '../common/micro/buttonComponent'
+import { TextInput } from '../common/micro/textinput'
 
 const PageComponentTitle = ({
 	title,
@@ -53,7 +54,7 @@ const PageComponentTitle = ({
 					</ButtonComponent>
 				</a>
 
-				<input
+				<TextInput
 					type='file'
 					accept='.csv'
 					placeholder='Add Questions (.csv) '

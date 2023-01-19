@@ -9,6 +9,7 @@ import { ButtonComponent } from '../../micro/buttonComponent'
 import { Label } from '../../micro/label'
 import { TextArea } from '../../micro/textArea'
 import React from 'react'
+import { TextInput } from '../../micro/textinput'
 function QuizPopUp(props) {
 	const {
 		name,
@@ -61,7 +62,7 @@ function QuizPopUp(props) {
 								<div className='flex flex-wrap -mx-3 mb-6'>
 									<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 										<Label key={'grid-quiz-name'}> Quiz Name</Label>
-										<input
+										<TextInput
 											className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
 											id='name'
 											type='text'

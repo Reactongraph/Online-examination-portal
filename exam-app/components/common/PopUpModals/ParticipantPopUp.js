@@ -52,21 +52,26 @@ function ParticipantPopUp(props) {
 								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 									<Label key={'grid-first-name'}>Name</Label>
 									<TextInput
+										type='text'
 										onChange={(e) => setName(e.target.value)}
 										className={
 											'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
 										}
-										id={'name'}
-										type={'text'}
-										placeholder={'Jane'}></TextInput>
+										placeholder='Jane'
+										required='required'
+										id='name'></TextInput>
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
 									<Label key={'grid-first-name'}>Email</Label>
 									<TextInput
 										onChange={(e) => setEmail(e.target.value)}
-										id={'email'}
-										type={'email'}
-										placeholder={'example@gmail.com '}></TextInput>
+										id='email'
+										type='email'
+										className={
+											'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+										}
+										placeholder='example@gmail.com '
+										required='required'></TextInput>
 								</div>
 							</div>
 
@@ -77,7 +82,10 @@ function ParticipantPopUp(props) {
 									<div class='relative'>
 										<TextInput
 											onChange={(e) => setPassword(e.target.value)}
-											id={'password'}
+											id='password'
+											className={
+												'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+											}
 											type={!showPassword ? 'password' : 'text'}
 											placeholder={'******************'}
 											required={'required'}
@@ -101,15 +109,16 @@ function ParticipantPopUp(props) {
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 									<Label key={'grid-mobile'}> Mobile</Label>
-									<input
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
-										id='mobile'
-										type='text'
-										placeholder='+91 '
-										required='required'
-										value={mobile}
+									<TextInput
 										onChange={(e) => setMobile(e.target.value)}
-									/>
+										id='mobile'
+										className={
+											'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+										}
+										type={'text'}
+										placeholder={'+91 '}
+										required={'required'}
+										value={mobile}></TextInput>
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
 									<Label key={'grid-organization'}> Organization Name</Label>

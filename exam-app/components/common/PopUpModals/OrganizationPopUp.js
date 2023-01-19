@@ -3,11 +3,11 @@ import PureModal from 'react-pure-modal'
 import { ButtonComponent } from '../micro/buttonComponent'
 import { Label } from '../micro/label'
 import { Form } from '../micro/form'
+import { TextInput } from '../micro/textinput'
 function OrganizationPopUp(props) {
 	const {
 		name,
 		setName,
-		email,
 		setEmail,
 		password,
 		setPassword,
@@ -15,7 +15,6 @@ function OrganizationPopUp(props) {
 		state,
 		setState,
 		setCity,
-		pincode,
 		setPincode,
 		mobile,
 		address,
@@ -57,43 +56,44 @@ function OrganizationPopUp(props) {
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 									<Label key={'grid-first-name'}> Name</Label>
-									<input
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
-										id='grid-first-name'
+									<TextInput
 										type='text'
-										value={name}
-										required='required'
 										onChange={(e) => setName(e.target.value)}
+										className={
+											'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+										}
+										value={name}
 										placeholder='Jane'
-									/>
+										required='required'
+										id='name'></TextInput>
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
 									<Label key={'grid-last-name'}> Email</Label>
-									<input
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+									<TextInput
+										onChange={(e) => setEmail(e.target.value)}
 										id='grid-email'
 										type='email'
+										className={
+											'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+										}
 										placeholder='example@gmail.com '
-										value={email}
-										required='required'
-										onChange={(e) => setEmail(e.target.value)}
-									/>
+										required='required'></TextInput>
 								</div>
 							</div>
 
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full px-3'>
 									<Label key={'grid-password'}> Password</Label>
-
-									<input
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										id='grid-password'
-										type='password'
-										placeholder='******************'
-										value={password}
-										required='required'
+									<TextInput
 										onChange={(e) => setPassword(e.target.value)}
-									/>
+										id='grid-password'
+										className={
+											'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+										}
+										type={'password'}
+										placeholder={'******************'}
+										required={'required'}
+										value={password}></TextInput>
 									<p className='text-gray-600 text-xs italic'>
 										Make it as long and as crazy as you'd like
 									</p>
@@ -103,80 +103,86 @@ function OrganizationPopUp(props) {
 							<div className='flex flex-wrap -mx-3 mb-2'>
 								<div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
 									<Label key={'grid-city'}> City</Label>
-									<input
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										id='grid-city'
-										type='text'
-										placeholder='Albuquerque'
-										value={city}
-										required='required'
+									<TextInput
 										onChange={(e) => setCity(e.target.value)}
-									/>
+										id='mobile'
+										className={
+											'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+										}
+										type={'text'}
+										placeholder={'Albuquerque '}
+										required={'required'}
+										value={city}></TextInput>
 								</div>
 
 								<div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
 									<Label key={'grid-state'}> State</Label>
-									<input
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										id='grid-state'
-										type='text'
-										placeholder='State'
-										value={state}
-										required='required'
+									<TextInput
 										onChange={(e) => setState(e.target.value)}
-									/>
+										id='state'
+										className={
+											'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+										}
+										type={'text'}
+										placeholder={'State '}
+										required={'required'}
+										value={state}></TextInput>
 								</div>
 								<div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
 									<Label key={'grid-zip'}> Pin Code</Label>
-									<input
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										id='grid-zip'
-										type='text'
-										placeholder='90210'
-										value={pincode}
-										required='required'
+									<TextInput
 										onChange={(e) => setPincode(e.target.value)}
-									/>
+										id='stgrid-zip'
+										className={
+											'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+										}
+										type={'text'}
+										placeholder={'90210 '}
+										required={'required'}
+										value={state}></TextInput>
 								</div>
 							</div>
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full px-3'>
 									<Label key={'grid-address'}> Address</Label>
-									<input
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										id='grid-address'
-										type='text'
-										placeholder='Your Office number... '
-										value={address}
-										required='required'
+									<TextInput
 										onChange={(e) => setAddress(e.target.value)}
-									/>
+										id='grid-address'
+										className={
+											'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+										}
+										type={'text'}
+										placeholder={'your office number '}
+										required={'required'}
+										value={address}></TextInput>
 								</div>
 							</div>
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 									<Label key={'grid-mobile'}> Mobile</Label>
-									<input
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
-										id='grid-mobile'
-										type='text'
-										placeholder='+91 '
-										value={mobile}
-										required='required'
+									<TextInput
 										onChange={(e) => setMobile(e.target.value)}
-									/>
+										id='mobile'
+										className={
+											'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+										}
+										type={'text'}
+										placeholder={'+91 '}
+										required={'required'}
+										value={mobile}></TextInput>
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
 									<Label key={'grid-quota'}> Quota</Label>
-									<input
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										id='grid-quota'
-										type='text'
-										placeholder='e.g. 1000'
-										value={quota}
-										required='required'
+									<TextInput
 										onChange={(e) => setQuota(e.target.value)}
-									/>
+										id='Quota'
+										className={
+											'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+										}
+										type={'text'}
+										placeholder={'e.g. 1000 '}
+										required={'required'}
+										value={quota}></TextInput>
 								</div>
 							</div>
 							<ButtonComponent key={'submit'}>{buttonText}</ButtonComponent>

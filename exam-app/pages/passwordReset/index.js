@@ -9,6 +9,7 @@ import jwt_decode from 'jwt-decode'
 import { ToastContainer, toast } from 'react-toastify'
 import React from 'react'
 import { ButtonComponent } from '../../components/common/micro/buttonComponent'
+import { TextInput } from '../../components/common/micro/textinput'
 
 export default function PasswordReset() {
 	const router = useRouter()
@@ -69,23 +70,21 @@ export default function PasswordReset() {
 							<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
 								{' '}
 								<MdLockOutline className='text-gray-400 m-2' />
-								<input
+								<TextInput
+									className={'bg-gray-100 text-black outline-none text-sm'}
 									type='password'
-									{...register('password')}
 									name='password'
-									placeholder='Password'
-									className='bg-gray-100 outline-none text-sm'
-								/>
+									register={register}
+									placeholder={'password'}></TextInput>
 							</div>
 							<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
 								<MdLockOutline className='text-gray-400 m-2' />
-								<input
-									type='password'
-									{...register('cpassword')}
+								<TextInput
+									className={'bg-gray-100 text-black outline-none text-sm'}
+									type='cpassword'
 									name='cpassword'
-									placeholder='CPassword'
-									className='bg-gray-100 outline-none text-sm'
-								/>
+									register={register}
+									placeholder={'Cpassword'}></TextInput>
 							</div>
 							<div className='flex  justify-between w-64 mb-5'>
 								<ButtonComponent

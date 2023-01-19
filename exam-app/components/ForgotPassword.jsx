@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 import React from 'react'
 import { Form } from './common/micro/form'
 import { ButtonComponent } from './common/micro/buttonComponent'
+import { TextInput } from './common/micro/textinput'
 
 // validation schema
 const schema = object({
@@ -67,13 +68,12 @@ const ForgotPassword = () => {
 								<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
 									{' '}
 									<FaRegEnvelope className='text-gray-400 m-2' />
-									<input
+									<TextInput
+										className={'bg-gray-100 text-black outline-none text-sm'}
 										type='email'
-										{...register('email')}
 										name='email'
-										placeholder='Email'
-										className='bg-gray-100 outline-none text-sm'
-									/>{' '}
+										register={register}
+										placeholder={'Email'}></TextInput>
 								</div>
 
 								<div className='flex  justify-between w-64 mb-5'>
