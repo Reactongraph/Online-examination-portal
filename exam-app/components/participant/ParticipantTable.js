@@ -11,6 +11,7 @@ import {
 	DeleteParticipant,
 	EditParticipant,
 } from '../../apis/participants'
+import { ButtonComponent } from '../common/micro/buttonComponent'
 
 const ParticipantTable = ({ participant_data, mutate, organization_data }) => {
 	const [editForm, setEditForm] = useState(false)
@@ -90,17 +91,21 @@ const ParticipantTable = ({ participant_data, mutate, organization_data }) => {
 	function createData(participant) {
 		const action = (
 			<>
-				<button
+				<ButtonComponent
 					onClick={() => handleEditClick(participant)}
-					className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full'>
+					className={
+						'bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'
+					}>
 					Edit
-				</button>
+				</ButtonComponent>
 				&nbsp;
-				<button
+				<ButtonComponent
 					onClick={() => handleRemoveClick(participant.id)}
-					className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'>
+					className={
+						'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'
+					}>
 					Delete
-				</button>
+				</ButtonComponent>
 			</>
 		)
 		return {

@@ -81,12 +81,15 @@ function ParticipantPopUp(props) {
 											placeholder={'******************'}
 											required={'required'}
 											value={password}></TextInput>
-										<button
-											type='button'
-											onClick={() => setShowPassword(!showPassword)}
-											class='text-white absolute right-2.5 bottom-2.5 bg-blue-400 hover:bg-blue-500   font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-300 dark:hover:bg-blue-400 '>
+
+										<ButtonComponent
+											type={'button'}
+											className={
+												'text-white absolute right-2.5 bottom-2.5 bg-blue-400 hover:bg-blue-500   font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-300 dark:hover:bg-blue-400 '
+											}
+											onClick={() => setShowPassword(!showPassword)}>
 											{!showPassword ? 'Show' : 'Hide'}
-										</button>
+										</ButtonComponent>
 									</div>
 									<p className='text-gray-600 text-xs italic'>
 										Make it as long and as crazy as you'd like

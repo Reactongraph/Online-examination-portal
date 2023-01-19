@@ -2,6 +2,7 @@ import { RiDeleteBinLine } from 'react-icons/ri'
 import Image from 'next/image'
 import { Label } from '../../common/micro/label'
 import React from 'react'
+import { ButtonComponent } from '../../common/micro/buttonComponent'
 function CenterForm(props) {
 	const {
 		selectedImage,
@@ -39,11 +40,14 @@ function CenterForm(props) {
 													src={URL.createObjectURL(selectedImage)}
 												/>
 												<br />
-												<button
+
+												<ButtonComponent
 													onClick={() => setSelectedImage(null)}
-													className='w-full px-4 py-2 text-white bg-blue-500 rounded shadow-xl'>
+													className={
+														'w-full px-4 py-2 text-white bg-blue-500 rounded shadow-xl'
+													}>
 													Remove
-												</button>
+												</ButtonComponent>
 											</div>
 										</>
 									) : (
@@ -142,28 +146,33 @@ function CenterForm(props) {
 										name='fav_language'
 										onClick={(event) => handleSelectedOption(index, event)}
 									/>
-									<button onClick={() => removeFields(index)}>
+
+									<ButtonComponent
+										className={'bg-gray-100'}
+										onClick={() => removeFields(index)}>
 										<RiDeleteBinLine />
-									</button>
+									</ButtonComponent>
 
 									<br />
 								</div>
 							)
 						})}
-						<button
+						<ButtonComponent
 							type='button'
 							onClick={addFields}
-							className='text-blue-400'>
+							className={'text-blue-400'}>
 							Add More...
-						</button>
+						</ButtonComponent>
 					</div>
 
 					<div className='flex justify-end'>
-						<button
-							type='submit'
-							className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'>
+						<ButtonComponent
+							key={'submit'}
+							className={
+								'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
+							}>
 							Submit
-						</button>
+						</ButtonComponent>
 					</div>
 				</div>
 				{/* </form> */}

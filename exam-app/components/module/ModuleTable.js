@@ -9,6 +9,7 @@ import { ModuleColumns } from './ moduleColumns'
 import { useSelector } from 'react-redux'
 import { DeleteModule, EditModule } from '../../apis/modules'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
+import { ButtonComponent } from '../common/micro/buttonComponent'
 
 const ModuleTable = ({ module_data, mutate }) => {
 	const [modal, setModal] = useState(false)
@@ -78,17 +79,21 @@ const ModuleTable = ({ module_data, mutate }) => {
 	function createData(modules) {
 		const action = (
 			<>
-				<button
+				<ButtonComponent
 					onClick={() => handleEditClick(modules)}
-					className='bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'>
+					className={
+						'bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'
+					}>
 					Edit
-				</button>
+				</ButtonComponent>
 				&nbsp;
-				<button
+				<ButtonComponent
 					onClick={() => handleRemoveClick(modules.id)}
-					className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'>
+					className={
+						'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'
+					}>
 					Delete
-				</button>
+				</ButtonComponent>
 			</>
 		)
 		const status = (

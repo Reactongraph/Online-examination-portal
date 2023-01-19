@@ -1,3 +1,4 @@
+import { ButtonComponent } from '../common/micro/buttonComponent'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
 function QuizCreateData(
 	quiz,
@@ -14,17 +15,21 @@ function QuizCreateData(
 ) {
 	const action = (
 		<>
-			<button
+			<ButtonComponent
 				onClick={() => handleEditClick(quiz_id, element)}
-				className='bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'>
+				className={
+					'bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'
+				}>
 				Edit
-			</button>
+			</ButtonComponent>
 			&nbsp;
-			<button
+			<ButtonComponent
 				onClick={() => handleRemoveClick(quiz_id)}
-				className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'>
+				className={
+					'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'
+				}>
 				Delete
-			</button>
+			</ButtonComponent>
 		</>
 	)
 	const status = (

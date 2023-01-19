@@ -8,6 +8,7 @@ import { OrganizationColumns } from './organizationColumn'
 import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
 import { DeleteOrganization, EditOrganization } from '../../apis/organizations'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
+import { ButtonComponent } from '../common/micro/buttonComponent'
 
 const OrganizationTable = ({ organization_data, mutate }) => {
 	// const [editForm, setEditForm] = useState(false)
@@ -101,17 +102,21 @@ const OrganizationTable = ({ organization_data, mutate }) => {
 	function createData(org) {
 		const action = (
 			<>
-				<button
+				<ButtonComponent
 					onClick={() => handleEditClick(org)}
-					className='bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'>
+					className={
+						'bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'
+					}>
 					Edit
-				</button>
+				</ButtonComponent>
 				&nbsp;
-				<button
+				<ButtonComponent
 					onClick={() => handleRemoveClick(org.id)}
-					className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'>
+					className={
+						'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'
+					}>
 					Delete
-				</button>
+				</ButtonComponent>
 			</>
 		)
 		const status = (
