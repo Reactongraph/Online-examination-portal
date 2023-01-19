@@ -3,6 +3,7 @@ import React from 'react'
 import { Label } from '../micro/label'
 import { ButtonComponent } from '../micro/buttonComponent'
 import { Form } from '../micro/form'
+import React from 'react'
 function LevelModulePopup(props) {
 	const {
 		setModal,

@@ -5,6 +5,7 @@ import { ButtonComponent } from '../micro/buttonComponent'
 import { Label } from '../micro/label'
 import { TextInput } from '../micro/textinput'
 import { Form } from '../micro/form'
+import Dropdown from '../micro/dropdown'
 function ParticipantPopUp(props) {
 	const {
 		modal,
@@ -112,28 +113,19 @@ function ParticipantPopUp(props) {
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
 									<Label key={'grid-organization'}> Organization Name</Label>
-									<select
+									<Dropdown
 										id='default'
 										value={selectedorganizationId}
+										required={true}
+										className={
+											'bg-gray-50 border w-40 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500'
+										}
+										label='Select Organization '
+										options={organization_data}
 										onChange={(e) => {
 											handleOrganizationIdTypeSelect(e)
 										}}
-										required
-										className='bg-gray-50 border w-40 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500'>
-										<option
-											value=''
-											hidden>
-											Select
-										</option>
-										{organization_data &&
-											organization_data?.map((response) => (
-												<option
-													key={response.id}
-													value={response.id}>
-													{response.name}
-												</option>
-											))}
-									</select>
+									/>
 								</div>
 							</div>
 							<ButtonComponent key={'submit'}>{buttonText}</ButtonComponent>

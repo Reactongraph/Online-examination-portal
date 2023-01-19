@@ -13,6 +13,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import { Form } from './common/micro/form'
 import { Label } from './common/micro/label'
 import { ButtonComponent } from './common/micro/buttonComponent'
+import Dropdown from './common/micro/dropdown'
 
 // validation schema
 const schema = object({
@@ -141,23 +142,19 @@ const Login = () => {
 											className={'mr-2 text-sm font-medium text-gray-900 '}>
 											Login As
 										</Label>
-
-										<select
+										<Dropdown
 											id='default'
-											// value={timeLimitSelect}
+											required={true}
+											label='Select Role'
+											options={[
+												{ value: 'SuperAdminUser', name: 'Super-admin User' },
+												{
+													value: 'OrganizationUser',
+													name: 'Organization User',
+												},
+											]}
 											onChange={handleSelect}
-											required
-											className='bg-gray-50 border  w-40 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500'>
-											<option
-												value=''
-												hidden>
-												Role
-											</option>
-											<option value='SuperAdminUser'>Super-admin User</option>
-											<option value='OrganizationUser'>
-												Organizations User
-											</option>
-										</select>
+										/>
 									</div>
 								</React.Fragment>
 							</Form>
