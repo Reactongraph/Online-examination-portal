@@ -15,6 +15,7 @@ import { Label } from './common/micro/label'
 import { ButtonComponent } from './common/micro/buttonComponent'
 import Dropdown from './common/micro/dropdown'
 import { TextInput } from './common/micro/textinput'
+import { LoginRoles } from './DropDownData/loginData'
 
 // validation schema
 const schema = object({
@@ -101,22 +102,38 @@ const Login = () => {
 									<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
 										{' '}
 										<FaRegEnvelope className='text-gray-400 m-2' />
-										<TextInput
+										{/* <TextInput
 											className={'bg-gray-100 text-black outline-none text-sm'}
 											type='email'
 											name='email'
 											register={register}
-											placeholder={'Email'}></TextInput>
+											placeholder={'Email'}></TextInput> */}
+										<input
+											type='email'
+											required
+											{...register('email')}
+											name='email'
+											placeholder='Email'
+											className='bg-gray-100 text-black outline-none text-sm'
+										/>
 									</div>
 									<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20'>
 										{' '}
 										<MdLockOutline className='text-gray-400 m-2' />
-										<TextInput
+										{/* <TextInput
 											className={'bg-gray-100 text-black outline-none text-sm'}
 											type='password'
 											name='password'
 											register={register}
-											placeholder={'Password'}></TextInput>
+											placeholder={'Password'}></TextInput> */}
+										<input
+											type='password'
+											required
+											{...register('password')}
+											name='password'
+											placeholder='Password'
+											className='bg-gray-100 text-black  outline-none text-sm'
+										/>
 									</div>
 									<div className='flex  justify-between w-64 mb-5'>
 										<a
@@ -134,22 +151,13 @@ const Login = () => {
 										</ButtonComponent>
 									</div>
 									<div className='flex items-center px-8 bg-dark '>
-										<Label
-											key={'default'}
-											className={'mr-2 text-sm font-medium text-gray-900 '}>
-											Login As
-										</Label>
 										<Dropdown
+											labelClassName={'mr-2 text-sm font-medium text-gray-900'}
+											labelText={'Login As '}
 											id='default'
 											required={true}
 											label='Select Role'
-											options={[
-												{ value: 'SuperAdminUser', name: 'Super-admin User' },
-												{
-													value: 'OrganizationUser',
-													name: 'Organization User',
-												},
-											]}
+											options={LoginRoles}
 											onChange={handleSelect}
 										/>
 									</div>

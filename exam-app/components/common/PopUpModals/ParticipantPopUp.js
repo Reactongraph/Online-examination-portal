@@ -84,7 +84,7 @@ function ParticipantPopUp(props) {
 											onChange={(e) => setPassword(e.target.value)}
 											id='password'
 											className={
-												'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+												'appearance-none block w-full p-4  bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 											}
 											type={!showPassword ? 'password' : 'text'}
 											placeholder={'******************'}
@@ -121,9 +121,9 @@ function ParticipantPopUp(props) {
 										value={mobile}></TextInput>
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
-									<Label key={'grid-organization'}> Organization Name</Label>
 									<Dropdown
 										id='default'
+										labelText={'Organization Name '}
 										value={selectedorganizationId}
 										required={true}
 										className={
