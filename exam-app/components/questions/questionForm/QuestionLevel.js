@@ -1,13 +1,14 @@
 import Dropdown from '../../common/micro/dropdown'
-import { Label } from '../../common/micro/label'
+
 
 function QuestionLevel(props) {
 	const { selectedLevelId, handleLevelTypeSelect, levelData } = props
 	return (
 		<>
-			<Label key={'default'}> Question Level</Label>
 			<Dropdown
 				id='default'
+				labelText={'Question Level '}
+				key={'grid-last-name'}
 				value={selectedLevelId}
 				required={true}
 				className={

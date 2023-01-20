@@ -1,13 +1,12 @@
 import Dropdown from '../../common/micro/dropdown'
-import { Label } from '../../common/micro/label'
 
 function QuestionModule(props) {
 	const { moduleData, handleModuleTypeSelect, selectedModuleId } = props
 	return (
 		<>
-			<Label key={'default'}> Question Module</Label>
 			<Dropdown
 				id='default'
+				labelText={'Question Module '}
 				value={selectedModuleId}
 				required={true}
 				className={

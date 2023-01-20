@@ -7,6 +7,9 @@ function QuizLevelSelect(props) {
 		<>
 			<Dropdown
 				id='default'
+				labelClassName={'mr-2 text-sm font-medium text-gray-900'}
+				labelText={'Question Level '}
+				key={'grid-last-name'}
 				value={selectedLevelId}
 				required={true}
 				className={

@@ -98,7 +98,7 @@ function QuizPopUp(props) {
 
 								<div className='flex flex-wrap -mx-3 mb-6'>
 									<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
-										<Label key={'grid-question-level'}>Question Level</Label>
+										{/* <Label key={'grid-question-level'}>Question Level</Label> */}
 
 										<QuizLevelSelect
 											selectedLevelId={selectedLevelId}
@@ -107,7 +107,15 @@ function QuizPopUp(props) {
 										/>
 									</div>
 									<div className='w-full md:w-1/2 px-3'>
-										<Label key={'gird-module'}> Choose Modules for Quiz</Label>
+										<Label
+											key={'gird-module'}
+											className={
+												'block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
+											}
+											>
+											{' '}
+											Choose Modules for Quiz
+										</Label>
 										<ReactSelect
 											options={moduleData}
 											className='bg-gray-50 w-50 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500'
