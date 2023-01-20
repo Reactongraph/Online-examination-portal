@@ -89,37 +89,37 @@ const UserProfile = ({ profile_data, mutate }) => {
 													<TableRow
 														className='border px-8 py-4 bg-blue-100'
 														label='Full Name:'
-														name={profile_data?.name}></TableRow>
+														name={profile_data?.name} />
 													<TableRow
 														className='border px-8 py-4'
 														label='Email:'
-														name={profile_data?.email}></TableRow>
+														name={profile_data?.email}/>
 													{userRole == 'OrganizationUser' && (
 														<>
 															<TableRow
 																className='border px-8 py-4 bg-blue-100'
 																label='Mobile:'
-																name={profile_data?.mobile}></TableRow>
+																name={profile_data?.mobile} />
 															<TableRow
 																className='border px-8 py-4'
 																label='Quota Allotted:'
-																name={profile_data?.quota}></TableRow>
+																name={profile_data?.quota} />
 															<TableRow
 																className='border px-8 py-4 bg-blue-100'
 																label='Address:'
-																name={profile_data?.address}></TableRow>
+																name={profile_data?.address} />
 															<TableRow
 																className='border px-8 py-4'
 																label='City:'
-																name={profile_data?.city}></TableRow>
+																name={profile_data?.city} />
 															<TableRow
 																className='border px-8 py-4 bg-blue-100'
 																label='State:'
-																name={profile_data?.state}></TableRow>
+																name={profile_data?.state} />
 															<TableRow
 																className='border px-8 py-4'
 																label='PinCode:'
-																name={profile_data?.pincode}></TableRow>
+																name={profile_data?.pincode} />
 														</>
 													)}
 												</tbody>

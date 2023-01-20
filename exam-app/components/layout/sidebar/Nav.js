@@ -4,7 +4,6 @@ import {
 } from '@heroicons/react/solid'
 import { CgOrganisation } from 'react-icons/cg'
 import { TiGroup } from 'react-icons/ti'
-// import { CgNotes } from 'react-icons/cg'
 import { BsSpeedometer } from 'react-icons/bs'
 import { FaSuitcase } from 'react-icons/fa'
 import { MdRateReview } from 'react-icons/md'
@@ -18,7 +17,6 @@ const Nav = ({ sidebarOutsideClick }) => {
 	const [sidebarStatus, setSidebarStatus] = useState(false)
 	const userRole = useSelector((state) => state.user.role)
 
-	// const [subMenuToggleStatus, setSubMenuToggleStatus] = useState(false)
 
 	const sidebarClose = () => {
 		setSidebarStatus(false)
