@@ -1,15 +1,13 @@
 import { MdLockOutline } from 'react-icons/md'
 import { useForm } from 'react-hook-form'
-import axios from 'axios'
 import { Form } from '../../components/common/micro/form'
-
 import { useRouter } from 'next/router'
-import { SERVER_LINK } from '../../helpers/config'
 import jwt_decode from 'jwt-decode'
 import { ToastContainer, toast } from 'react-toastify'
 import React from 'react'
 import { ButtonComponent } from '../../components/common/micro/buttonComponent'
-import { TextInput } from '../../components/common/micro/textinput'
+import { InputComponent } from '../../components/common/micro/inputComponent'
+import { ResetPassword } from '../../apis/auth'
 
 export default function PasswordReset() {
 	const router = useRouter()
@@ -28,17 +26,7 @@ export default function PasswordReset() {
 
 		apiData = JSON.stringify(apiData)
 
-		await axios
-			.request({
-				method: 'post',
-				url: `${SERVER_LINK}/auth/change-password`,
-				headers: {
-					'Content-Type': 'application/json',
-					xaccesstoken: token,
-				},
-				withCredentials: true,
-				data: apiData,
-			})
+		ResetPassword(apiData, token)
 			.then(() => {
 				toast.success('Password Changed successfully 🤩')
 				setTimeout(() => {
@@ -70,21 +58,23 @@ export default function PasswordReset() {
 							<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
 								{' '}
 								<MdLockOutline className='text-gray-400 m-2' />
-								<TextInput
+								<InputComponent
 									className={'bg-gray-100 text-black outline-none text-sm'}
 									type='password'
 									name='password'
 									register={register}
-									placeholder={'password'}></TextInput>
+									placeholder={'password'}
+								/>
 							</div>
 							<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
 								<MdLockOutline className='text-gray-400 m-2' />
-								<TextInput
+								<InputComponent
 									className={'bg-gray-100 text-black outline-none text-sm'}
 									type='cpassword'
 									name='cpassword'
 									register={register}
-									placeholder={'Cpassword'}></TextInput>
+									placeholder={'Cpassword'}
+								/>
 							</div>
 							<div className='flex  justify-between w-64 mb-5'>
 								<ButtonComponent

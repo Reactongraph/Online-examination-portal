@@ -1,20 +1,17 @@
 import { MdLockOutline } from 'react-icons/md'
-
 import { FaRegEnvelope } from 'react-icons/fa'
 import { object, string } from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import { SERVER_LINK } from '../helpers/config'
 import { ToastContainer, toast } from 'react-toastify'
 import { Form } from './common/micro/form'
 import { Label } from './common/micro/label'
 import { ButtonComponent } from './common/micro/buttonComponent'
 import Dropdown from './common/micro/dropdown'
-import { TextInput } from './common/micro/textinput'
+import { UserLogin } from '../apis/auth'
 
 // validation schema
 const schema = object({
@@ -41,18 +38,7 @@ const Login = () => {
 		data.role = optionValue
 		data = JSON.stringify(data)
 
-		await axios
-			.request({
-				method: 'post',
-				url: `${SERVER_LINK}/auth/login`,
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				withCredentials: true,
-				data,
-				optionValue,
-			})
-
+		UserLogin(data)
 			.then((response) => {
 				if (response.status === 201) {
 					const login_token = response.data.access_token
@@ -101,22 +87,26 @@ const Login = () => {
 									<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
 										{' '}
 										<FaRegEnvelope className='text-gray-400 m-2' />
-										<TextInput
-											className={'bg-gray-100 text-black outline-none text-sm'}
+										<input
 											type='email'
+											required
+											{...register('email')}
 											name='email'
-											register={register}
-											placeholder={'Email'}></TextInput>
+											placeholder='Email'
+											className='bg-gray-100 text-black outline-none text-sm'
+										/>{' '}
 									</div>
 									<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20'>
 										{' '}
 										<MdLockOutline className='text-gray-400 m-2' />
-										<TextInput
-											className={'bg-gray-100 text-black outline-none text-sm'}
+										<input
 											type='password'
+											required
+											{...register('password')}
 											name='password'
-											register={register}
-											placeholder={'Password'}></TextInput>
+											placeholder='Password'
+											className='bg-gray-100 text-black  outline-none text-sm'
+										/>{' '}
 									</div>
 									<div className='flex  justify-between w-64 mb-5'>
 										<a

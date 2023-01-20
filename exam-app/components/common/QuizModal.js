@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
-import { SERVER_LINK } from '../../helpers/config'
-import axios from 'axios'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
 import QuizPopUp from './PopUpModals/quizPopUp/QuizPopup'
+import { AddQuiz } from '../../apis/quizzes'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -65,16 +64,8 @@ const QuizModal = ({
 		let QuizData = JSON.stringify(data)
 
 		//for new data registration
-		await axios({
-			url: `${SERVER_LINK}/quiz/create`,
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json;charset=UTF-8',
-				Authorization: login_token,
-			},
-			data: QuizData,
-		})
+
+		AddQuiz(QuizData, login_token)
 			.then(() => {
 				router.replace(router.asPath)
 				setName('')
