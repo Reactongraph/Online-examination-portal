@@ -1,6 +1,7 @@
 import axios from 'axios'
 import useSWR from 'swr'
 import { SERVER_LINK } from '../helpers/config'
+import { customAxios } from './customAxios'
 
 const fetcher = (url, token) =>
 	axios
@@ -40,34 +41,21 @@ export function GetParticipantDataWithOrgId(token, id) {
 }
 
 export async function DeleteParticipant(participantId, token) {
-	return await axios.delete(`${SERVER_LINK}/participants/${participantId}`, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-	})
+	customAxios.defaults.headers.common.Authorization = token
+	return await customAxios.delete(
+		`${SERVER_LINK}/participants/${participantId}`
+	)
 }
 
 export async function AddParticipant(data, token) {
-	return await axios({
-		url: `${SERVER_LINK}/participants`,
-		method: 'POST',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-		data,
-	}).then((res) => res.data)
+	customAxios.defaults.headers.common.Authorization = token
+	return await customAxios.post(`${SERVER_LINK}/participants`, data)
 }
 
 export async function EditParticipant(data, participantId, token) {
-	await axios.patch(`${SERVER_LINK}/participants/${participantId}`, data, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-	})
+	customAxios.defaults.headers.common.Authorization = token
+	return await customAxios.patch(
+		`${SERVER_LINK}/participants/${participantId}`,
+		data
+	)
 }

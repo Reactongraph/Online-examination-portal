@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import { SERVER_LINK } from '../helpers/config'
+import { customAxios } from './customAxios'
 
 export async function UserLogout() {
 	return await axios.post(
@@ -33,6 +34,7 @@ export async function ResetPassword(data, token) {
 		withCredentials: true,
 		data: data,
 	})
+	
 }
 
 export async function GetRefreshToken(token) {

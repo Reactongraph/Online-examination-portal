@@ -106,6 +106,7 @@ export class AuthService {
         })
 
         const payload = { username: find_username.name, email: decode.email }
+        
 
         const new_token = await this.create_token(decode, decode.role)
         prisma.$connect()
@@ -130,7 +131,7 @@ export class AuthService {
         return {
           token: new_token,
           payload,
-          role: role.role,
+          role: role?.role,
           organization_id: decode.id
         }
       }

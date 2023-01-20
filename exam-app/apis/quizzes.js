@@ -1,6 +1,7 @@
 import axios from 'axios'
 import useSWR from 'swr'
 import { SERVER_LINK } from '../helpers/config'
+import { customAxios } from './customAxios'
 
 const fetcher = (url, token) =>
 	axios
@@ -36,33 +37,15 @@ export async function GetQuizDataWithId(token, id) {
 	})
 }
 export async function DeleteQuiz(id, token) {
-	return await axios.delete(`${SERVER_LINK}/quiz/${id}`, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-	})
+	customAxios.defaults.headers.common.Authorization = token
+	return await customAxios.delete(`${SERVER_LINK}/quiz/${id}`)
 }
 
 export async function AddQuiz(data, token) {
-	return await axios({
-		url: `${SERVER_LINK}/quiz/create`,
-		method: 'POST',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-		data,
-	})
+	customAxios.defaults.headers.common.Authorization = token
+	return await customAxios.post(`${SERVER_LINK}/quiz/create`, data)
 }
 export async function EditQuiz(data, id, token) {
-	await axios.patch(`${SERVER_LINK}/quiz/${id}`, data, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-	})
+	customAxios.defaults.headers.common.Authorization = token
+	return await customAxios.patch(`${SERVER_LINK}/quiz/${id}`, data)
 }

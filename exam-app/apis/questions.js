@@ -1,6 +1,7 @@
 import axios from 'axios'
 import useSWR from 'swr'
 import { SERVER_LINK } from '../helpers/config'
+import { customAxios } from './customAxios'
 
 const fetcher = (url, token) =>
 	axios
@@ -35,45 +36,20 @@ export async function GetQuestionDataWithId(token, id) {
 	})
 }
 export async function DeleteQuestion(id, token) {
-	return await axios.delete(`${SERVER_LINK}/questions/${id}`, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-	})
+	customAxios.defaults.headers.common.Authorization = token
+	return await customAxios.delete(`${SERVER_LINK}/questions/${id}`)
 }
 
 export async function Addquestion(data, token) {
-	return await axios({
-		url: `${SERVER_LINK}/questions/create`,
-		method: 'POST',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-		data,
-	})
+	customAxios.defaults.headers.common.Authorization = token
+	return await customAxios.post(`${SERVER_LINK}/questions/create`, data)
 }
 export async function UploadCsvQuestion(data, token) {
-	return await axios({
-		url: `${SERVER_LINK}/questions/uploads`,
-		method: 'POST',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-		data,
-	})
+	customAxios.defaults.headers.common.Authorization = token
+	return await customAxios.post(`${SERVER_LINK}/questions/uploads`, data)
+	
 }
 export async function EditQuestion(data, id, token) {
-	await axios.patch(`${SERVER_LINK}/questions/${id}`, data, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-	})
+	customAxios.defaults.headers.common.Authorization = token
+	return await customAxios.patch(`${SERVER_LINK}/questions/${id}`, data)
 }

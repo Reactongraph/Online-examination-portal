@@ -6,4 +6,3 @@ export const customAxios = axios.create({
         'Content-Type':'application/json;charset=UTF-8',
     }
 });
-// export default customAxios;

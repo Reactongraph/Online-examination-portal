@@ -1,6 +1,7 @@
 import axios from 'axios'
 import useSWR from 'swr'
 import { SERVER_LINK } from '../helpers/config'
+import { customAxios } from './customAxios'
 
 const fetcher = (url, token) =>
 	axios
@@ -39,33 +40,20 @@ export function GetOrganizationDataWithId(token, id) {
 	}
 }
 export async function DeleteOrganization(organizationId, token) {
-	return await axios.delete(`${SERVER_LINK}/organization/${organizationId}`, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-	})
+	customAxios.defaults.headers.common.Authorization = token
+	return await customAxios.delete(
+		`${SERVER_LINK}/organization/${organizationId}`
+	)
 }
 export async function AddOrganization(data, token) {
-	return await axios({
-		url: `${SERVER_LINK}/organization`,
-		method: 'POST',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-		data,
-	}).then((res) => res.data)
+	customAxios.defaults.headers.common.Authorization = token
+	return await customAxios.post(`${SERVER_LINK}/organization`, data)
 }
 
 export async function EditOrganization(data, organizationId, token) {
-	await axios.patch(`${SERVER_LINK}/organization/${organizationId}`, data, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-	})
+	customAxios.defaults.headers.common.Authorization = token
+	return await customAxios.patch(
+		`${SERVER_LINK}/organization/${organizationId}`,
+		data
+	)
 }

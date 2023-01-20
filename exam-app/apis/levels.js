@@ -1,6 +1,7 @@
 import axios from 'axios'
 import useSWR from 'swr'
 import { SERVER_LINK } from '../helpers/config'
+import { customAxios } from './customAxios'
 
 const fetcher = (url, token) =>
 	axios
@@ -38,34 +39,16 @@ export function GetLevelDataWithId(token, id) {
 	}
 }
 export async function DeleteLevel(id, token) {
-	return await axios.delete(`${SERVER_LINK}/level/${id}`, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-	})
+	customAxios.defaults.headers.common.Authorization = token
+	return await customAxios.delete(`${SERVER_LINK}/level/${id}`)
 }
 
 export async function AddLevel(data, token) {
-	return await axios({
-		url: `${SERVER_LINK}/level`,
-		method: 'POST',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-		data,
-	})
+	customAxios.defaults.headers.common.Authorization = token
+	return await customAxios.post(`${SERVER_LINK}/level`, data)
 }
 
 export async function EditLevel(data, id, token) {
-	await axios.patch(`${SERVER_LINK}/level/${id}`, data, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-	})
+	customAxios.defaults.headers.common.Authorization = token
+	return await customAxios.patch(`${SERVER_LINK}/level/${id}`, data)
 }
