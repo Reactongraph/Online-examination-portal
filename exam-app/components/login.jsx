@@ -1,15 +1,17 @@
 import { MdLockOutline } from 'react-icons/md'
-
 import { FaRegEnvelope } from 'react-icons/fa'
 import { object, string } from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import { SERVER_LINK } from '../helpers/config'
 import { ToastContainer, toast } from 'react-toastify'
+import { Form } from './common/micro/form'
+import { ButtonComponent } from './common/micro/buttonComponent'
+import Dropdown from './common/micro/dropdown'
+import { UserLogin } from '../apis/auth'
+import { LoginRoles } from './DropDownData/loginData'
 
 // validation schema
 const schema = object({
@@ -36,18 +38,7 @@ const Login = () => {
 		data.role = optionValue
 		data = JSON.stringify(data)
 
-		await axios
-			.request({
-				method: 'post',
-				url: `${SERVER_LINK}/auth/login`,
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				withCredentials: true,
-				data,
-				optionValue,
-			})
-
+		UserLogin(data)
 			.then((response) => {
 				if (response.status === 201) {
 					const login_token = response.data.access_token
@@ -65,7 +56,6 @@ const Login = () => {
 					})
 					router.push({
 						pathname: '/dashboard',
-						// query: { role : optionValue },
 					})
 				}
 			})
@@ -92,67 +82,60 @@ const Login = () => {
 							</div>
 							<p className='text-gray-1000 mr-20'>use your login details</p>
 							<div className='flex flex-col items-center'></div>
-							<form
-								className='w-full max-w-lg'
-								onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
-								<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
-									{' '}
-									<FaRegEnvelope className='text-gray-400 m-2' />
-									<input
-										type='email'
-										required
-										{...register('email')}
-										name='email'
-										placeholder='Email'
-										className='bg-gray-100 text-black outline-none text-sm'
-									/>{' '}
-								</div>
-								<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20'>
-									{' '}
-									<MdLockOutline className='text-gray-400 m-2' />
-									<input
-										type='password'
-										required
-										{...register('password')}
-										name='password'
-										placeholder='Password'
-										className='bg-gray-100 text-black  outline-none text-sm'
-									/>{' '}
-								</div>
-								<div className='flex  justify-between w-64 mb-5'>
-									<a
-										href='#'
-										className='text-xs mr-1 ml-20  md-20 text-gray-1000'>
-										Forget Password?
-									</a>
-									<button
-										type='submit'
-										className='border-2 border-blue rounded-full px-12 py-2 inline-block font-semibold bg-blue-500 hover:bg-blue-700  ml-20 md-15 mr-25 '>
-										SignIn
-									</button>
-								</div>
-								<div className='flex items-center px-8 bg-dark '>
-									<label
-										htmlFor='default'
-										className='mr-2 text-sm font-medium text-gray-900 '>
-										Login As
-									</label>
-									<select
-										id='default'
-										// value={timeLimitSelect}
-										onChange={handleSelect}
-										required
-										className='bg-gray-50 border  w-40 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500'>
-										<option
-											value=''
-											hidden>
-											Role
-										</option>
-										<option value='SuperAdminUser'>Super-admin User</option>
-										<option value='OrganizationUser'>Organizations User</option>
-									</select>
-								</div>
-							</form>
+							<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
+								<React.Fragment>
+									<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
+										{' '}
+										<FaRegEnvelope className='text-gray-400 m-2' />
+										<input
+											type='email'
+											required
+											{...register('email')}
+											name='email'
+											placeholder='Email'
+											className='bg-gray-100 text-black outline-none text-sm'
+										/>{' '}
+									</div>
+									<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20'>
+										{' '}
+										<MdLockOutline className='text-gray-400 m-2' />
+										<input
+											type='password'
+											required
+											{...register('password')}
+											name='password'
+											placeholder='Password'
+											className='bg-gray-100 text-black  outline-none text-sm'
+										/>{' '}
+									</div>
+									<div className='flex  justify-between w-64 mb-5'>
+										<a
+											href='#'
+											className='text-xs mr-1 ml-20  md-20 text-gray-1000'>
+											Forget Password?
+										</a>
+
+										<ButtonComponent
+											key={'submit'}
+											className={
+												'border-2 border-blue rounded-full px-12 py-2 inline-block font-semibold bg-blue-500 hover:bg-blue-700  ml-20 md-15 mr-25 '
+											}>
+											SignIn
+										</ButtonComponent>
+									</div>
+									<div className='flex items-center px-8 bg-dark '>
+										<Dropdown
+											labelClassName={'mr-2 text-sm font-medium text-gray-900'}
+											labelText={'Login As '}
+											id='default'
+											required={true}
+											label='Select Role'
+											options={LoginRoles}
+											onChange={handleSelect}
+										/>
+									</div>
+								</React.Fragment>
+							</Form>
 						</div>
 						<div className='w-2/5 bg-blue-500 text-white rounded-tr-2xl rounded-br-2xl py-36 px-12'>
 							<h2 className='text-3xl font-bold mb'>Hello!</h2>

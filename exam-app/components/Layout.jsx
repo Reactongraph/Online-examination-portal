@@ -1,9 +1,8 @@
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
-import { SERVER_LINK } from '../helpers/config'
-import axios from 'axios'
 import { useCookie } from 'next-cookie'
 import { useEffect } from 'react'
+import { GetRefreshToken } from '../apis/auth'
 
 // To check for the refresh token on every page
 export default function Layout({ children }) {
@@ -15,14 +14,7 @@ export default function Layout({ children }) {
 
 	const refreshToken = async () => {
 		try {
-			const response = await axios.get(`${SERVER_LINK}/auth/refresh_token`, {
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-					xaccesstoken: cookie,
-				},
-			})
-
+			const response = await GetRefreshToken(cookie)
 			const newToken = response.data.access_token
 			const payload = response.data.payload
 			const userRole = response.data.role

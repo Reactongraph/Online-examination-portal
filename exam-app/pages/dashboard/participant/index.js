@@ -6,6 +6,7 @@ import {
 	GetParticipantData,
 	GetParticipantDataWithOrgId,
 } from '../../../apis/participants'
+import { GetOrganizationData } from '../../../apis/organizations'
 
 export default function Participant() {
 	const user = useSelector((state) => state?.user)
@@ -13,12 +14,14 @@ export default function Participant() {
 		user?.role == 'SuperAdminUser'
 			? GetParticipantData(user.token)
 			: GetParticipantDataWithOrgId(user.token, user.Org_id)
+	const { data: organization_data } = GetOrganizationData(user.token)
 
 	return (
 		<>
 			<Layout title='Participant'>
 				<ParticipantComponent
 					participant_data={data}
+					organization_data={organization_data}
 					mutate={mutate}
 				/>
 			</Layout>

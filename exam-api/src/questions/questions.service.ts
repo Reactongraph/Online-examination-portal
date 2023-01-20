@@ -70,11 +70,6 @@ export class QuestionsService {
 
   async update (id: string, updateRestApiDto: QuestionDTO) {
     try {
-      const find = await this.prisma.questions.findUnique({ where: { id } })
-      if (find) {
-        return null
-      }
-
       const updatedOptions = await this.prisma.questions.update({
         where: {
           id

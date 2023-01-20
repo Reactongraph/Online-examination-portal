@@ -23,6 +23,7 @@ export class RestApiService {
           data: {
             email: createRestApiDto?.email,
             name: createRestApiDto?.name,
+            password: createRestApiDto?.password,
             quota: createRestApiDto?.quota,
             status: createRestApiDto?.status,
             mobile: createRestApiDto?.mobile,
@@ -101,13 +102,6 @@ export class RestApiService {
 
   async update (id: string, updateRestApiDto: organization_dto) {
     try {
-      const FIND_USER = await this.prisma.organization.findUnique({
-        where: { email: updateRestApiDto?.email }
-      })
-      if (FIND_USER) {
-        return null
-      }
-
       const updateUser = await this.prisma.organization.update({
         where: {
           id

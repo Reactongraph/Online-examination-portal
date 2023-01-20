@@ -1,11 +1,13 @@
 import { MdLockOutline } from 'react-icons/md'
 import { useForm } from 'react-hook-form'
-import axios from 'axios'
-
+import { Form } from '../../components/common/micro/form'
 import { useRouter } from 'next/router'
-import { SERVER_LINK } from '../../helpers/config'
 import jwt_decode from 'jwt-decode'
 import { ToastContainer, toast } from 'react-toastify'
+import React from 'react'
+import { ButtonComponent } from '../../components/common/micro/buttonComponent'
+import { InputComponent } from '../../components/common/micro/inputComponent'
+import { ResetPassword } from '../../apis/auth'
 
 export default function PasswordReset() {
 	const router = useRouter()
@@ -24,17 +26,7 @@ export default function PasswordReset() {
 
 		apiData = JSON.stringify(apiData)
 
-		await axios
-			.request({
-				method: 'post',
-				url: `${SERVER_LINK}/auth/change-password`,
-				headers: {
-					'Content-Type': 'application/json',
-					xaccesstoken: token,
-				},
-				withCredentials: true,
-				data: apiData,
-			})
+		ResetPassword(apiData, token)
 			.then(() => {
 				toast.success('Password Changed successfully 🤩')
 				setTimeout(() => {
@@ -61,38 +53,40 @@ export default function PasswordReset() {
 						</h2>
 					</div>
 					<div className='flex flex-col items-center'></div>
-					<form
-						class='w-full max-w-lg'
-						onSubmit={handleSubmit((data) => changePassword(data))}>
-						<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
-							{' '}
-							<MdLockOutline className='text-gray-400 m-2' />
-							<input
-								type='password'
-								{...register('password')}
-								name='password'
-								placeholder='Password'
-								className='bg-gray-100 outline-none text-sm'
-							/>
-						</div>
-						<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
-							<MdLockOutline className='text-gray-400 m-2' />
-							<input
-								type='password'
-								{...register('cpassword')}
-								name='cpassword'
-								placeholder='CPassword'
-								className='bg-gray-100 outline-none text-sm'
-							/>
-						</div>
-						<div className='flex  justify-between w-64 mb-5'>
-							<button
-								type='submit'
-								className='border-2 border-blue rounded-full px-12 py-2 inline-block font-semibold bg-blue-500  hover:text-white ml-20 md-15 mr-30 mt-10   '>
-								ChangePassword
-							</button>
-						</div>
-					</form>
+					<Form onSubmit={handleSubmit((data) => changePassword(data))}>
+						<React.Fragment>
+							<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
+								{' '}
+								<MdLockOutline className='text-gray-400 m-2' />
+								<InputComponent
+									className={'bg-gray-100 text-black outline-none text-sm'}
+									type='password'
+									name='password'
+									register={register}
+									placeholder={'password'}
+								/>
+							</div>
+							<div className='bg-gray-100 w-64 p-2 flex items-center mb-3 ml-20 mt-10'>
+								<MdLockOutline className='text-gray-400 m-2' />
+								<InputComponent
+									className={'bg-gray-100 text-black outline-none text-sm'}
+									type='cpassword'
+									name='cpassword'
+									register={register}
+									placeholder={'Cpassword'}
+								/>
+							</div>
+							<div className='flex  justify-between w-64 mb-5'>
+								<ButtonComponent
+									type={'submit'}
+									className={
+										'border-2 border-blue rounded-full px-12 py-2 inline-block font-semibold bg-blue-500  hover:text-white ml-20 md-15 mr-30 mt-10   '
+									}>
+									ChangePassword
+								</ButtonComponent>
+							</div>
+						</React.Fragment>
+					</Form>
 				</div>
 				<div className='w-2/5 bg-blue-500 text-white rounded-tr-2xl rounded-br-2xl py-36 px-12'>
 					<p className='mb-2'>Fill up details To change your password.</p>
