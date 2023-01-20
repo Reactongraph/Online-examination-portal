@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Label } from './label'
 
 export default function Dropdown(props) {
 	const [selectedRole, setSelectedRole] = useState('')
@@ -8,6 +9,8 @@ export default function Dropdown(props) {
 		if (props.onChange) props.onChange(event)
 	}
 	return (
+		<>
+		<Label className={props.labelClassName} key={props.key}> {props.labelText}</Label>
 		<select
 			id={props.id ? props.id : 'default'}
 			onChange={handleSelect}
@@ -32,5 +35,6 @@ export default function Dropdown(props) {
 				</option>
 			))}
 		</select>
+		</>
 	)
 }

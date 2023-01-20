@@ -12,6 +12,7 @@ import { Label } from './common/micro/label'
 import { ButtonComponent } from './common/micro/buttonComponent'
 import Dropdown from './common/micro/dropdown'
 import { UserLogin } from '../apis/auth'
+import { LoginRoles } from './DropDownData/loginData'
 
 // validation schema
 const schema = object({
@@ -124,22 +125,13 @@ const Login = () => {
 										</ButtonComponent>
 									</div>
 									<div className='flex items-center px-8 bg-dark '>
-										<Label
-											key={'default'}
-											className={'mr-2 text-sm font-medium text-gray-900 '}>
-											Login As
-										</Label>
 										<Dropdown
+											labelClassName={'mr-2 text-sm font-medium text-gray-900'}
+											labelText={'Login As '}
 											id='default'
 											required={true}
 											label='Select Role'
-											options={[
-												{ value: 'SuperAdminUser', name: 'Super-admin User' },
-												{
-													value: 'OrganizationUser',
-													name: 'Organization User',
-												},
-											]}
+											options={LoginRoles}
 											onChange={handleSelect}
 										/>
 									</div>

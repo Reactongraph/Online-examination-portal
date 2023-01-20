@@ -39,8 +39,6 @@ const AddQuestion = ({ level_data: levelData, module_data: moduleData }) => {
 		{ option: '', correct: '' },
 		{ option: '', correct: '' },
 	])
-	// const data = useCookie(props.cookie)
-	// let cookie = data.get('refresh_token') || ''
 
 	useEffect(() => {
 		let question_id = router.query.question_id

@@ -81,7 +81,7 @@ const QuizTable = ({ data: quiz_data, module_data, level_data }) => {
 
 	const handleEditClick = async (quiz_id, oneRowData) => {
 		setButtonText('Update')
-		// setEditForm(true)
+
 		setQuizId(quiz_id)
 		setModal(true)
 		let seletedModuleDataArray = []
