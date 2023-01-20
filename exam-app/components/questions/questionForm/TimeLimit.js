@@ -1,5 +1,4 @@
 import Dropdown from '../../common/micro/dropdown'
-import { Label } from '../../common/micro/label'
 import { TimeData } from '../../DropDownData/timeLimit'
 
 function TimeLimit(props) {

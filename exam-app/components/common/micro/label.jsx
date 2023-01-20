@@ -1,4 +1,4 @@
-export function Label({ key,children, className, ...rest }) {
+export function Label({ key, children, className, ...rest }) {
 	return (
 		<label
 			className={

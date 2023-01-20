@@ -17,7 +17,6 @@ const Nav = ({ sidebarOutsideClick }) => {
 	const [sidebarStatus, setSidebarStatus] = useState(false)
 	const userRole = useSelector((state) => state.user.role)
 
-
 	const sidebarClose = () => {
 		setSidebarStatus(false)
 	}

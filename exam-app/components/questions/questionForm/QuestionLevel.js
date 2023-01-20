@@ -1,6 +1,5 @@
 import Dropdown from '../../common/micro/dropdown'
 
-
 function QuestionLevel(props) {
 	const { selectedLevelId, handleLevelTypeSelect, levelData } = props
 	return (
