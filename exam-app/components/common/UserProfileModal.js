@@ -11,7 +11,7 @@ import { ButtonComponent } from './micro/buttonComponent'
 import { Label } from './micro/label'
 import { EditOrganization } from '../../apis/organizations'
 import { Form } from './micro/form'
-import { TextInput } from './micro/textinput'
+import { InputComponent } from './micro/inputComponent'
 
 const UserProfileModal = ({ modal, setModal, userData, mutate }) => {
 	const router = useRouter()
@@ -82,7 +82,7 @@ const UserProfileModal = ({ modal, setModal, userData, mutate }) => {
 									<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 										<Label key={'grid-first-name'}> Name</Label>
 
-										<TextInput
+										<InputComponent
 											className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
 											id='grid-first-name'
 											type='text'
@@ -95,7 +95,7 @@ const UserProfileModal = ({ modal, setModal, userData, mutate }) => {
 									<div className='w-full md:w-1/2 px-3'>
 										<Label key={'grid-last-name'}> Email</Label>
 
-										<TextInput
+										<InputComponent
 											className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none'
 											id='grid-email'
 											type='email'
@@ -111,7 +111,7 @@ const UserProfileModal = ({ modal, setModal, userData, mutate }) => {
 									<div className='w-full px-3'>
 										<Label key={'grid-password'}> Password</Label>
 
-										<TextInput
+										<InputComponent
 											className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 											id='grid-password'
 											type='password'
@@ -129,7 +129,7 @@ const UserProfileModal = ({ modal, setModal, userData, mutate }) => {
 									<div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
 										<Label key={'grid-city'}> City</Label>
 
-										<TextInput
+										<InputComponent
 											className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 											id='grid-city'
 											type='text'
@@ -143,7 +143,7 @@ const UserProfileModal = ({ modal, setModal, userData, mutate }) => {
 									<div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
 										<Label key={'grid-state'}> State</Label>
 
-										<TextInput
+										<InputComponent
 											className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 											id='grid-state'
 											type='text'
@@ -156,7 +156,7 @@ const UserProfileModal = ({ modal, setModal, userData, mutate }) => {
 									<div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
 										<Label key={'grid-zip'}> Pin Code</Label>
 
-										<TextInput
+										<InputComponent
 											className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 											id='grid-zip'
 											type='text'
@@ -171,7 +171,7 @@ const UserProfileModal = ({ modal, setModal, userData, mutate }) => {
 									<div className='w-full px-3'>
 										<Label key={'grid-address'}>Address</Label>
 
-										<TextInput
+										<InputComponent
 											className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 											id='grid-address'
 											type='text'
@@ -186,7 +186,7 @@ const UserProfileModal = ({ modal, setModal, userData, mutate }) => {
 									<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 										<Label key={'grid-mobile'}>Mobile</Label>
 
-										<TextInput
+										<InputComponent
 											className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none'
 											id='grid-mobile'
 											type='text'
@@ -200,7 +200,7 @@ const UserProfileModal = ({ modal, setModal, userData, mutate }) => {
 									<div className='w-full md:w-1/2 px-3'>
 										<Label key={'grid-quota'}>Quota</Label>
 
-										<TextInput
+										<InputComponent
 											className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none'
 											id='grid-quota'
 											type='text'

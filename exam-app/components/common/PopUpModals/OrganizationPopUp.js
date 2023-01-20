@@ -3,7 +3,7 @@ import PureModal from 'react-pure-modal'
 import { ButtonComponent } from '../micro/buttonComponent'
 import { Label } from '../micro/label'
 import { Form } from '../micro/form'
-import { TextInput } from '../micro/textinput'
+import { InputComponent } from '../micro/inputComponent'
 function OrganizationPopUp(props) {
 	const {
 		name,
@@ -15,6 +15,7 @@ function OrganizationPopUp(props) {
 		state,
 		setState,
 		setCity,
+		pincode,
 		setPincode,
 		mobile,
 		address,
@@ -56,7 +57,7 @@ function OrganizationPopUp(props) {
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 									<Label key={'grid-first-name'}> Name</Label>
-									<TextInput
+									<InputComponent
 										type='text'
 										onChange={(e) => setName(e.target.value)}
 										className={
@@ -65,11 +66,12 @@ function OrganizationPopUp(props) {
 										value={name}
 										placeholder='Jane'
 										required='required'
-										id='name'></TextInput>
+										id='name'
+									/>
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
 									<Label key={'grid-last-name'}> Email</Label>
-									<TextInput
+									<InputComponent
 										onChange={(e) => setEmail(e.target.value)}
 										id='grid-email'
 										type='email'
@@ -77,14 +79,15 @@ function OrganizationPopUp(props) {
 											'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
 										}
 										placeholder='example@gmail.com '
-										required='required'></TextInput>
+										required='required'
+									/>
 								</div>
 							</div>
 
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full px-3'>
 									<Label key={'grid-password'}> Password</Label>
-									<TextInput
+									<InputComponent
 										onChange={(e) => setPassword(e.target.value)}
 										id='grid-password'
 										className={
@@ -93,7 +96,8 @@ function OrganizationPopUp(props) {
 										type={'password'}
 										placeholder={'******************'}
 										required={'required'}
-										value={password}></TextInput>
+										value={password}
+									/>
 									<p className='text-gray-600 text-xs italic'>
 										Make it as long and as crazy as you'd like
 									</p>
@@ -103,7 +107,7 @@ function OrganizationPopUp(props) {
 							<div className='flex flex-wrap -mx-3 mb-2'>
 								<div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
 									<Label key={'grid-city'}> City</Label>
-									<TextInput
+									<InputComponent
 										onChange={(e) => setCity(e.target.value)}
 										id='mobile'
 										className={
@@ -112,12 +116,13 @@ function OrganizationPopUp(props) {
 										type={'text'}
 										placeholder={'Albuquerque '}
 										required={'required'}
-										value={city}></TextInput>
+										value={city}
+									/>
 								</div>
 
 								<div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
 									<Label key={'grid-state'}> State</Label>
-									<TextInput
+									<InputComponent
 										onChange={(e) => setState(e.target.value)}
 										id='state'
 										className={
@@ -126,11 +131,12 @@ function OrganizationPopUp(props) {
 										type={'text'}
 										placeholder={'State '}
 										required={'required'}
-										value={state}></TextInput>
+										value={state}
+									/>
 								</div>
 								<div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
 									<Label key={'grid-zip'}> Pin Code</Label>
-									<TextInput
+									<InputComponent
 										onChange={(e) => setPincode(e.target.value)}
 										id='stgrid-zip'
 										className={
@@ -139,13 +145,14 @@ function OrganizationPopUp(props) {
 										type={'text'}
 										placeholder={'90210 '}
 										required={'required'}
-										value={state}></TextInput>
+										value={pincode}
+									/>
 								</div>
 							</div>
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full px-3'>
 									<Label key={'grid-address'}> Address</Label>
-									<TextInput
+									<InputComponent
 										onChange={(e) => setAddress(e.target.value)}
 										id='grid-address'
 										className={
@@ -154,13 +161,14 @@ function OrganizationPopUp(props) {
 										type={'text'}
 										placeholder={'your office number '}
 										required={'required'}
-										value={address}></TextInput>
+										value={address}
+									/>
 								</div>
 							</div>
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 									<Label key={'grid-mobile'}> Mobile</Label>
-									<TextInput
+									<InputComponent
 										onChange={(e) => setMobile(e.target.value)}
 										id='mobile'
 										className={
@@ -169,11 +177,12 @@ function OrganizationPopUp(props) {
 										type={'text'}
 										placeholder={'+91 '}
 										required={'required'}
-										value={mobile}></TextInput>
+										value={mobile}
+									/>
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
 									<Label key={'grid-quota'}> Quota</Label>
-									<TextInput
+									<InputComponent
 										onChange={(e) => setQuota(e.target.value)}
 										id='Quota'
 										className={
@@ -182,7 +191,8 @@ function OrganizationPopUp(props) {
 										type={'text'}
 										placeholder={'e.g. 1000 '}
 										required={'required'}
-										value={quota}></TextInput>
+										value={quota}
+									/>
 								</div>
 							</div>
 							<ButtonComponent key={'submit'}>{buttonText}</ButtonComponent>

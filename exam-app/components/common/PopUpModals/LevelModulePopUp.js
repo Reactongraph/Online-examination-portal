@@ -3,8 +3,7 @@ import React from 'react'
 import { Label } from '../micro/label'
 import { ButtonComponent } from '../micro/buttonComponent'
 import { Form } from '../micro/form'
-import React from 'react'
-import { TextInput } from '../micro/textinput'
+import { InputComponent } from '../micro/inputComponent'
 function LevelModulePopup(props) {
 	const {
 		setModal,
@@ -39,7 +38,7 @@ function LevelModulePopup(props) {
 								<div class='flex flex-wrap -mx-3 mb-6'>
 									<div class='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 										<Label key={'grid-first-name'}>Enter {modalName}</Label>
-										<TextInput
+										<InputComponent
 											onChange={(e) => setStateName(e.target.value)}
 											id='grid-first-name'
 											className={
@@ -48,7 +47,8 @@ function LevelModulePopup(props) {
 											type={'text'}
 											placeholder={placeholderText}
 											required={'required'}
-											value={stateName}></TextInput>
+											value={stateName}
+										/>
 									</div>
 								</div>
 

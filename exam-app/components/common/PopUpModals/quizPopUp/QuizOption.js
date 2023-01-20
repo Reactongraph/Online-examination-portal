@@ -1,10 +1,10 @@
 import { components } from 'react-select'
-import { TextInput } from '../../micro/textinput'
+import { InputComponent } from '../../micro/inputComponent'
 const Option = (props) => {
 	return (
 		<div>
 			<components.Option {...props}>
-				<TextInput
+				<InputComponent
 					type='checkbox'
 					checked={props.isSelected}
 					onChange={() => null}

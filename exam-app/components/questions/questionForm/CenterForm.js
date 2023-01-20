@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Label } from '../../common/micro/label'
 import React from 'react'
 import { ButtonComponent } from '../../common/micro/buttonComponent'
-import { TextInput } from '../../common/micro/textinput'
+import { InputComponent } from '../../common/micro/inputComponent'
 function CenterForm(props) {
 	const {
 		selectedImage,
@@ -87,7 +87,7 @@ function CenterForm(props) {
 																Attach a file
 															</p>
 														</div>
-														<TextInput
+														<InputComponent
 															type='file'
 															accept='image/*'
 															className='opacity-0'
@@ -108,7 +108,7 @@ function CenterForm(props) {
 					<br />
 
 					<div className='mb-6'>
-						<TextInput
+						<InputComponent
 							type='text'
 							id='default-input'
 							value={question}
@@ -127,7 +127,7 @@ function CenterForm(props) {
 								<div
 									className='flex items-center'
 									key={index}>
-									<TextInput
+									<InputComponent
 										type='text'
 										id='default-input'
 										className='bg-gray-50 border my-3 text-left border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-3/4 p-2.5  dark:focus:ring-blue-500 dark:focus:border-blue-500'
@@ -137,7 +137,7 @@ function CenterForm(props) {
 										onChange={(event) => handleFormChange(index, event)}
 										placeholder={`Option ${String.fromCharCode(65 + index)}`}
 									/>
-									<TextInput
+									<InputComponent
 										type={optionType == 'Multiple' ? 'checkbox' : 'radio'}
 										className={'mx-5'}
 										onClick={(event) => handleSelectedOption(index, event)}
@@ -145,7 +145,8 @@ function CenterForm(props) {
 										required={requiredOptionField}
 										placeholder='Jane'
 										name='fav_language'
-										id={index}></TextInput>
+										id={index}
+									/>
 
 									<ButtonComponent
 										className={'bg-gray-100'}

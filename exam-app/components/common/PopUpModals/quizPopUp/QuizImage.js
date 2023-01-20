@@ -1,5 +1,5 @@
 import { Label } from '../../micro/label'
-import { TextInput } from '../../micro/textinput'
+import { InputComponent } from '../../micro/inputComponent'
 
 function QuizImage() {
 	return (
@@ -11,7 +11,7 @@ function QuizImage() {
 					<div
 						className='datepicker bg-gray-200relative form-floating mb-3 xl:w-96'
 						data-mdb-toggle-button='false'>
-						<TextInput
+						<InputComponent
 							className='block w-full text-sm appearance-none  bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
 							aria-describedby='file_input_help'
 							accept='image/*'

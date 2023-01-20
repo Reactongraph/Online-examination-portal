@@ -3,7 +3,7 @@ import PureModal from 'react-pure-modal'
 import { useState } from 'react'
 import { ButtonComponent } from '../micro/buttonComponent'
 import { Label } from '../micro/label'
-import { TextInput } from '../micro/textinput'
+import { InputComponent } from '../micro/inputComponent'
 import { Form } from '../micro/form'
 import Dropdown from '../micro/dropdown'
 function ParticipantPopUp(props) {
@@ -51,7 +51,7 @@ function ParticipantPopUp(props) {
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 									<Label key={'grid-first-name'}>Name</Label>
-									<TextInput
+									<InputComponent
 										type='text'
 										onChange={(e) => setName(e.target.value)}
 										className={
@@ -59,11 +59,12 @@ function ParticipantPopUp(props) {
 										}
 										placeholder='Jane'
 										required='required'
-										id='name'></TextInput>
+										id='name'
+									/>
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
 									<Label key={'grid-first-name'}>Email</Label>
-									<TextInput
+									<InputComponent
 										onChange={(e) => setEmail(e.target.value)}
 										id='email'
 										type='email'
@@ -71,7 +72,8 @@ function ParticipantPopUp(props) {
 											'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
 										}
 										placeholder='example@gmail.com '
-										required='required'></TextInput>
+										required='required'
+									/>
 								</div>
 							</div>
 
@@ -80,7 +82,7 @@ function ParticipantPopUp(props) {
 									<Label key={'grid-password'}> Password</Label>
 
 									<div class='relative'>
-										<TextInput
+										<InputComponent
 											onChange={(e) => setPassword(e.target.value)}
 											id='password'
 											className={
@@ -89,7 +91,8 @@ function ParticipantPopUp(props) {
 											type={!showPassword ? 'password' : 'text'}
 											placeholder={'******************'}
 											required={'required'}
-											value={password}></TextInput>
+											value={password}
+										/>
 
 										<ButtonComponent
 											type={'button'}
@@ -109,7 +112,7 @@ function ParticipantPopUp(props) {
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 									<Label key={'grid-mobile'}> Mobile</Label>
-									<TextInput
+									<InputComponent
 										onChange={(e) => setMobile(e.target.value)}
 										id='mobile'
 										className={
@@ -118,7 +121,8 @@ function ParticipantPopUp(props) {
 										type={'text'}
 										placeholder={'+91 '}
 										required={'required'}
-										value={mobile}></TextInput>
+										value={mobile}
+									/>
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
 									<Label key={'grid-organization'}> Organization Name</Label>

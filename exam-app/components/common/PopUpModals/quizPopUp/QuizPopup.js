@@ -9,7 +9,7 @@ import { ButtonComponent } from '../../micro/buttonComponent'
 import { Label } from '../../micro/label'
 import { TextArea } from '../../micro/textArea'
 import React from 'react'
-import { TextInput } from '../../micro/textinput'
+import { InputComponent } from '../../micro/inputComponent'
 function QuizPopUp(props) {
 	const {
 		name,
@@ -62,7 +62,7 @@ function QuizPopUp(props) {
 								<div className='flex flex-wrap -mx-3 mb-6'>
 									<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 										<Label key={'grid-quiz-name'}> Quiz Name</Label>
-										<TextInput
+										<InputComponent
 											className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
 											id='name'
 											type='text'
@@ -132,9 +132,8 @@ function QuizPopUp(props) {
 											placeholder={'A short description about quiz'}
 											required={'required'}
 											value={description}
-											onChange={(e) =>
-												setDescription(e.target.value)
-											}></TextArea>
+											onChange={(e) => setDescription(e.target.value)}
+										/>
 										<p className='text-gray-600 text-xs italic'>
 											Describe in Brief*
 										</p>
