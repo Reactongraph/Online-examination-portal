@@ -83,6 +83,8 @@ export class RestApiController {
   // this controller is used to delete Oraganization data
   @Delete(':id')
   async remove (@Param('id') id: string) {
+    console.log("api");
+    
     return await this.restApiService.remove(id)
   }
 }

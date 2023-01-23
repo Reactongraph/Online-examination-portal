@@ -37,7 +37,8 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 					mutate()
 					toast.success('organization deleted!')
 				})
-				.catch(() => {
+				.catch((err) => {
+					console.log("err",err)
 					toast.error('invalid request')
 				})
 		} catch (error) {

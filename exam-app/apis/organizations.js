@@ -1,7 +1,8 @@
 import axios from 'axios'
 import useSWR from 'swr'
 import { SERVER_LINK } from '../helpers/config'
-import { customAxios } from './customAxios'
+
+// import { customAxios } from './customAxios'
 
 const fetcher = (url, token) =>
 	axios
@@ -40,10 +41,16 @@ export function GetOrganizationDataWithId(token, id) {
 	}
 }
 export async function DeleteOrganization(organizationId, token) {
-	customAxios.defaults.headers.common.Authorization = token
-	return await customAxios.delete(
-		`${SERVER_LINK}/organization/${organizationId}`
-	)
+	return axiosInstance
+		.delete(`/organization/${organizationId}`)
+		.then((response) => {
+			// handle success
+			console.log(response.data)
+		})
+		.catch((error) => {
+			// handle error
+			console.log(error)
+		})
 }
 export async function AddOrganization(data, token) {
 	customAxios.defaults.headers.common.Authorization = token
