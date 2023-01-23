@@ -2,23 +2,20 @@ import axios from 'axios'
 import useSWR from 'swr'
 import { SERVER_LINK } from '../helpers/config'
 import Cookies from 'js-cookie'
+import customAxios from './customAxios'
 
 const token = Cookies.get('refresh_token')
-global.createAxiosInstance(token)
-const fetcher = (url, token) =>
-	axios
-		.get(url, {
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json;charset=UTF-8',
-				Authorization: token,
-			},
-		})
-		.then((res) => res.data)
-
+const fetcher = async (url, token) => {
+	try {
+		const response = await customAxios.get(url)
+		return response.data
+	} catch (error) {
+		return error.response.data
+	}
+}
 export function GetParticipantData(token) {
 	const { data, error, isLoading, mutate } = useSWR(
-		[`${SERVER_LINK}/participants/find`, token],
+		[`/participants/find`, token],
 		([url, token]) => fetcher(url, token)
 	)
 	return {
@@ -43,13 +40,14 @@ export function GetParticipantDataWithOrgId(token, id) {
 }
 
 export async function DeleteParticipant(participantId) {
-	return await global.axiosInstance.delete(`/participants/${participantId}`)
+	return await customAxios.delete(`/participants/${participantId}`)
 }
 
 export async function AddParticipant(data) {
-	return await global.axiosInstance.post(`/participants`,data)
+
+	return await customAxios.post(`/participants`,data)
 }
 
 export async function EditParticipant(data, participantId) {
-	return await global.axiosInstance.patch(`/participants/${participantId}`,data)
+	return await customAxios.patch(`/participants/${participantId}`,data)
 }

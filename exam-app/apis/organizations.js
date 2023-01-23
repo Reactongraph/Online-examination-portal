@@ -2,23 +2,22 @@ import axios from 'axios'
 import useSWR from 'swr'
 import { SERVER_LINK } from '../helpers/config'
 import Cookies from 'js-cookie'
+import customAxios from './customAxios'
 
 const token = Cookies.get('refresh_token')
-global.createAxiosInstance(token)
-const fetcher = (url, token) =>
-	axios
-		.get(url, {
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json;charset=UTF-8',
-				Authorization: token,
-			},
-		})
-		.then((res) => res.data)
+const fetcher = async (url, token) => {
+	try {
+		const response = await customAxios.get(url)
+		return response.data
+	} catch (error) {
+
+		return error.response.data
+	}
+}
 
 export function GetOrganizationData(token) {
 	const { data, error, isLoading, mutate } = useSWR(
-		[`${SERVER_LINK}/organization/find`, token],
+		[`/organization/find`, token],
 		([url, token]) => fetcher(url, token)
 	)
 	return {
@@ -42,15 +41,12 @@ export function GetOrganizationDataWithId(token, id) {
 	}
 }
 export async function DeleteOrganization(organizationId) {
-	return await global.axiosInstance.delete(`/organization/${organizationId}`)
+	return await customAxios.delete(`/organization/${organizationId}`)
 }
 export async function AddOrganization(data) {
-	return await global.axiosInstance.post(`/organization`, data)
+	return await customAxios.post(`/organization`, data)
 }
 
 export async function EditOrganization(data, organizationId) {
-	return await global.axiosInstance.patch(
-		`/organization/${organizationId}`,
-		data
-	)
+	return await customAxios.patch(`/organization/${organizationId}`, data)
 }

@@ -31,12 +31,10 @@ export class RestApiController {
   @Body() createRestApiDto: organization_dto,
     @Res({ passthrough: true }) response: Response
   ) {
+    
     const user = await this.restApiService.create(createRestApiDto)
 
     if (user.id == null) {
-      // return {
-      //   message: 'user already exist',
-      // };
 
       response.status(HttpStatus.BAD_REQUEST).json([])
     } else {
@@ -83,8 +81,6 @@ export class RestApiController {
   // this controller is used to delete Oraganization data
   @Delete(':id')
   async remove (@Param('id') id: string) {
-    console.log("api");
-    
     return await this.restApiService.remove(id)
   }
 }
