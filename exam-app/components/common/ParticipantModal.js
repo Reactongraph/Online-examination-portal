@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
@@ -8,10 +8,12 @@ import { toast } from 'react-toastify'
 import { AddParticipant } from '../../apis/participants'
 import { GetOrganizationData } from '../../apis/organizations'
 import ParticipantPopUp from './PopUpModals/ParticipantPopUp'
+import { PageComponentTitleContext } from '../context'
 
-const ParticipantModal = ({ modal, setModal }) => {
+const ParticipantModal = () => {
 	//For Image Preview
 	const router = useRouter()
+	const { modal, setModal } = useContext(PageComponentTitleContext)
 
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')

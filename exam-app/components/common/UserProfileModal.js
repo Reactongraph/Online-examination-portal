@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import PureModal from 'react-pure-modal'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
@@ -12,9 +12,12 @@ import { Label } from './micro/label'
 import { EditOrganization } from '../../apis/organizations'
 import { Form } from './micro/form'
 import { InputComponent } from './micro/inputComponent'
+import { PageComponentTitleContext } from '../context'
 
-const UserProfileModal = ({ modal, setModal, userData, mutate }) => {
+const UserProfileModal = ({ userData, mutate }) => {
 	const router = useRouter()
+	const { modal, setModal } = useContext(PageComponentTitleContext)
+
 	const [name, setName] = useState(userData?.name)
 	const [email, setEmail] = useState(userData?.email)
 	const [pincode, setPincode] = useState(userData?.pincode)

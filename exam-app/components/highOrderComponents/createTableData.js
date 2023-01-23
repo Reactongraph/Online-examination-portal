@@ -1,4 +1,4 @@
-import { InputComponent } from '../common/micro/textinput'
+import { InputComponent } from '../common/micro/inputComponent'
 
 const CreateTableData = (WrappedComponent) => {
 	function CreateTableData(props) {

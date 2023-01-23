@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -6,10 +6,12 @@ import { ToastContainer, toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import LevelModulePopup from './PopUpModals/LevelModulePopUp'
 import { AddModule } from '../../apis/modules'
+import { PageComponentTitleContext } from '../context'
 
-const ModuleModal = ({ modal, setModal, mutate }) => {
+const ModuleModal = ({ mutate }) => {
 	const router = useRouter()
 	const [modules, setModules] = useState('')
+	const { modal, setModal } = useContext(PageComponentTitleContext)
 
 	const buttonText = 'Add'
 	const { handleSubmit } = useForm()

@@ -6,15 +6,20 @@ import { toast } from 'react-toastify'
 import QuizPopUp from './PopUpModals/quizPopUp/QuizPopup'
 import { AddQuiz } from '../../apis/quizzes'
 import { QuizContext } from '../context'
+import { PageComponentTitleContext } from '../context'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
 import { useSelector } from 'react-redux'
 
-const QuizModal = ({ modal, setModal }) => {
+const QuizModal = () => {
 	//For Image Preview
-	const { level_data: levelData, module_data: moduleData } =
-		useContext(QuizContext)
+	const {
+		level_data: levelData,
+		module_data: moduleData,
+		mutate,
+	} = useContext(QuizContext)
+	const { modal, setModal } = useContext(PageComponentTitleContext)
 	const router = useRouter()
 
 	const buttonText = 'Add'
@@ -64,6 +69,7 @@ const QuizModal = ({ modal, setModal }) => {
 		AddQuiz(QuizData, login_token)
 			.then(() => {
 				router.replace(router.asPath)
+				mutate()
 				setName('')
 				setModal(!modal)
 				toast.success('Quiz created!')

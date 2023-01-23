@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 
@@ -7,8 +7,11 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
 import { AddOrganization } from '../../apis/organizations'
+import { PageComponentTitleContext } from '../context'
 
-const OrganizationModal = ({ modal, setModal, mutate }) => {
+const OrganizationModal = ({ mutate }) => {
+	const { modal, setModal } = useContext(PageComponentTitleContext)
+
 	const user = useSelector((state) => state?.user)
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')

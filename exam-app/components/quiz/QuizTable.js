@@ -19,7 +19,7 @@ if (typeof window !== 'undefined') {
 }
 
 const QuizTable = () => {
-	const { module_data, level_data } = useContext(QuizContext)
+	const { module_data, level_data, mutate } = useContext(QuizContext)
 	const { quiz_data } = useContext(QuizContext)
 	const router = useRouter()
 	const user = useSelector((state) => state?.user)
@@ -49,6 +49,7 @@ const QuizTable = () => {
 	const handleRemoveClick = (quiz_id) => {
 		DeleteQuiz(quiz_id, user?.token)
 			.then(() => {
+				mutate()
 				router.replace(router.asPath)
 
 				toast.success('Quiz deleted!')
@@ -75,6 +76,7 @@ const QuizTable = () => {
 		new_status = JSON.stringify(new_status)
 		EditQuiz(new_status, quiz_id, user?.token)
 			.then(() => {
+				mutate()
 				toast.success('Quiz updated Successfully!')
 			})
 			.catch(() => {
@@ -121,6 +123,7 @@ const QuizTable = () => {
 		data.module_id = selectedModules
 		EditQuiz(data, quizId, user?.token)
 			.then(() => {
+				mutate()
 				setModal(!modal)
 
 				router.replace(router.asPath)

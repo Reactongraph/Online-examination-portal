@@ -10,7 +10,7 @@ import { QuizContext } from '../../../components/context'
 // You can't name a function as MODULE...
 export default function Quizes() {
 	const user = useSelector((state) => state?.user)
-	const data = GetQuizData(user?.token)
+	const { data, mutate } = GetQuizData(user?.token)
 	const level_data = GetLevelData(user?.token)
 	let module_data = GetModuleData(user?.token)
 
@@ -30,6 +30,7 @@ export default function Quizes() {
 						quiz_data: data,
 						level_data: level_data,
 						module_data: updatedModuleData,
+						mutate: mutate,
 					}}>
 					<Quiz />
 				</QuizContext.Provider>
