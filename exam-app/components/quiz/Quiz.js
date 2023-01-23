@@ -2,7 +2,7 @@ import React from 'react'
 import QuizTable from './QuizTable'
 import { FrontPageComponent } from '../common/FrontPageComponent'
 
-const Quiz = ({ quiz_data, module_data, level_data, mutate }) => {
+const Quiz = ({ mutate }) => {
 	return (
 		<FrontPageComponent
 			title='QUIZ'
@@ -10,10 +10,7 @@ const Quiz = ({ quiz_data, module_data, level_data, mutate }) => {
 			buttonTitle='ADD NEW QUIZ'
 			editForm={false}
 			mutate={mutate}
-			data={quiz_data}
 			TableComponent={QuizTable}
-			level_data={level_data}
-			module_data={module_data}
 		/>
 	)
 }

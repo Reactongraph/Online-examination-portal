@@ -8,8 +8,9 @@ import { Form } from '../../micro/form'
 import { ButtonComponent } from '../../micro/buttonComponent'
 import { Label } from '../../micro/label'
 import { TextArea } from '../../micro/textArea'
-import React from 'react'
+import React, { useContext } from 'react'
 import { InputComponent } from '../../micro/inputComponent'
+import { QuizContext } from '../../../context'
 function QuizPopUp(props) {
 	const {
 		name,
@@ -32,10 +33,10 @@ function QuizPopUp(props) {
 		handleModuleTypeSelect,
 		description,
 		setDescription,
-		moduleData,
-		levelData,
 	} = props
 
+	const { level_data: levelData, module_data: moduleData } =
+		useContext(QuizContext)
 	return (
 		<>
 			<PureModal

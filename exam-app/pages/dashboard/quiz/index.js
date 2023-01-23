@@ -5,6 +5,7 @@ import { GetQuizData } from '../../../apis/quizzes'
 import { GetLevelData } from '../../../apis/levels'
 import { useSelector } from 'react-redux'
 import { GetModuleData } from '../../../apis/modules'
+import { QuizContext } from '../../../components/context'
 
 // You can't name a function as MODULE...
 export default function Quizes() {
@@ -24,11 +25,14 @@ export default function Quizes() {
 	return (
 		<>
 			<Layout title='Quiz'>
-				<Quiz
-					quiz_data={data}
-					level_data={level_data}
-					module_data={updatedModuleData}
-				/>
+				<QuizContext.Provider
+					value={{
+						quiz_data: data,
+						level_data: level_data,
+						module_data: updatedModuleData,
+					}}>
+					<Quiz />
+				</QuizContext.Provider>
 			</Layout>
 		</>
 	)

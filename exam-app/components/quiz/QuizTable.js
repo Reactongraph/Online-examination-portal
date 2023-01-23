@@ -1,6 +1,6 @@
 import moment from 'moment'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useSelector } from 'react-redux'
@@ -11,13 +11,16 @@ import QuizPopUp from '../common/PopUpModals/quizPopUp/QuizPopup'
 import Table from '../common/Table'
 import QuizDataArray from './QuizDataArray'
 import { QuizColumns } from './quizColumn'
+import { QuizContext } from '../context'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
 }
 
-const QuizTable = ({ data: quiz_data, module_data, level_data }) => {
+const QuizTable = () => {
+	const { module_data, level_data } = useContext(QuizContext)
+	const { quiz_data } = useContext(QuizContext)
 	const router = useRouter()
 	const user = useSelector((state) => state?.user)
 	const [modal, setModal] = useState(false)

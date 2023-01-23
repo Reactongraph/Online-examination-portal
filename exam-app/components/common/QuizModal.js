@@ -1,24 +1,20 @@
-import React, { useState, createContext } from 'react'
+import React, { useState, createContext, useContext } from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
 import QuizPopUp from './PopUpModals/quizPopUp/QuizPopup'
 import { AddQuiz } from '../../apis/quizzes'
+import { QuizContext } from '../context'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
 import { useSelector } from 'react-redux'
 
-const QuizModal = ({
-	modal,
-	setModal,
-
-	module_data: moduleData,
-	level_data: levelData,
-}) => {
+const QuizModal = ({ modal, setModal }) => {
 	//For Image Preview
-
+	const { level_data: levelData, module_data: moduleData } =
+		useContext(QuizContext)
 	const router = useRouter()
 
 	const buttonText = 'Add'

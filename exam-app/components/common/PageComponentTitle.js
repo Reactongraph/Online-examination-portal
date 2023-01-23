@@ -12,9 +12,6 @@ const PageComponentTitle = ({
 	title,
 	titleDescription,
 	buttonTitle,
-	quiz_data,
-	module_data,
-	level_data,
 	organization_data,
 	userData,
 	mutate,
@@ -79,9 +76,6 @@ const PageComponentTitle = ({
 				) : title == 'QUIZ' ? (
 					<>
 						<QuizModal
-							quiz_data={quiz_data}
-							level_data={level_data}
-							module_data={module_data}
 							modal={modal}
 							setModal={setModal}
 						/>
