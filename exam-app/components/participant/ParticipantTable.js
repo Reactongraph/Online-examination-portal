@@ -33,7 +33,7 @@ const ParticipantTable = ({
 
 	const handleRemoveClick = async (participantId) => {
 		try {
-			DeleteParticipant(participantId, user?.token)
+			DeleteParticipant(participantId)
 			mutate()
 			toast.success('participant deleted!')
 		} catch (error) {
@@ -68,7 +68,7 @@ const ParticipantTable = ({
 		let participantData = JSON.stringify(data)
 		// for taking the patch api data
 		if (editForm) {
-			EditParticipant(participantData, participantId, user?.token)
+			EditParticipant(participantData, participantId)
 				.then(() => {
 					setModal(!modal)
 					mutate()
@@ -80,7 +80,7 @@ const ParticipantTable = ({
 		}
 		// for new data registration
 		else {
-			AddParticipant(data, user?.token)
+			AddParticipant(data)
 				.then(async () => {
 					setModal(!modal)
 					mutate()

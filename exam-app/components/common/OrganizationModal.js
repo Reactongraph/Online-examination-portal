@@ -41,13 +41,13 @@ const OrganizationModal = ({ modal, setModal, mutate }) => {
 
 		// for new data registration
 
-		AddOrganization(OrganizationData, user?.token)
+		AddOrganization(OrganizationData)
 			.then(async () => {
 				setModal(!modal)
 				mutate()
 				toast.success('organization added!')
 			})
-			.catch(() => {
+			.catch((err) => {
 				toast.error('invalid request')
 			})
 	}

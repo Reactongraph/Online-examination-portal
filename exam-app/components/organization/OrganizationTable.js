@@ -32,13 +32,12 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 	const user = useSelector((state) => state?.user)
 	const handleRemoveClick = (org_id) => {
 		try {
-			DeleteOrganization(org_id, user?.token)
+			DeleteOrganization(org_id)
 				.then(() => {
 					mutate()
 					toast.success('organization deleted!')
 				})
 				.catch((err) => {
-					console.log("err",err)
 					toast.error('invalid request')
 				})
 		} catch (error) {
@@ -51,7 +50,7 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 			status: !org.status,
 		}
 		new_status = JSON.stringify(new_status)
-		EditOrganization(new_status, org.id, user?.token)
+		EditOrganization(new_status, org.id)
 			.then(() => {
 				mutate()
 				toast.success('organization updated!')
@@ -89,13 +88,13 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 
 		// for taking the patch api data
 
-		EditOrganization(OrganizationData, organizationId, user?.token)
+		EditOrganization(OrganizationData, organizationId)
 			.then(() => {
 				setModal(!modal)
 				mutate()
 				toast.success('organization updated!')
 			})
-			.catch(() => {
+			.catch((err) => {
 				toast.error('invalid request')
 			})
 	}

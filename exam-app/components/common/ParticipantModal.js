@@ -43,7 +43,7 @@ const ParticipantModal = ({ modal, setModal }) => {
 
 		// for new data registration
 
-		AddParticipant(participantData, login_token)
+		AddParticipant(participantData)
 			.then(() => {
 				router.replace(router.asPath)
 				setName('')
@@ -53,7 +53,7 @@ const ParticipantModal = ({ modal, setModal }) => {
 				setModal(!modal)
 				toast.success('participant created!')
 			})
-			.catch(() => {
+			.catch((err) => {
 				toast.error('Invalid Request')
 			})
 	}

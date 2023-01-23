@@ -1,9 +1,10 @@
 import axios from 'axios'
 import useSWR from 'swr'
 import { SERVER_LINK } from '../helpers/config'
+import Cookies from 'js-cookie'
 
-// import { customAxios } from './customAxios'
-
+const token = Cookies.get('refresh_token')
+global.createAxiosInstance(token)
 const fetcher = (url, token) =>
 	axios
 		.get(url, {
@@ -40,27 +41,16 @@ export function GetOrganizationDataWithId(token, id) {
 		mutate,
 	}
 }
-export async function DeleteOrganization(organizationId, token) {
-	return axiosInstance
-		.delete(`/organization/${organizationId}`)
-		.then((response) => {
-			// handle success
-			console.log(response.data)
-		})
-		.catch((error) => {
-			// handle error
-			console.log(error)
-		})
+export async function DeleteOrganization(organizationId) {
+	return await global.axiosInstance.delete(`/organization/${organizationId}`)
 }
-export async function AddOrganization(data, token) {
-	customAxios.defaults.headers.common.Authorization = token
-	return await customAxios.post(`${SERVER_LINK}/organization`, data)
+export async function AddOrganization(data) {
+	return await global.axiosInstance.post(`/organization`, data)
 }
 
-export async function EditOrganization(data, organizationId, token) {
-	customAxios.defaults.headers.common.Authorization = token
-	return await customAxios.patch(
-		`${SERVER_LINK}/organization/${organizationId}`,
+export async function EditOrganization(data, organizationId) {
+	return await global.axiosInstance.patch(
+		`/organization/${organizationId}`,
 		data
 	)
 }
