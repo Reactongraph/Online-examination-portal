@@ -25,7 +25,7 @@ const LevelModal = (props) => {
 
 		// for taking the patch api data
 		if (data.level !== null && data.level != '') {
-			AddLevel(LevelData, user?.token)
+			AddLevel(LevelData)
 				.then(() => {
 					router.replace(router.asPath)
 					setLevel('')
@@ -33,7 +33,7 @@ const LevelModal = (props) => {
 					mutate()
 					toast.success('level inserted')
 				})
-				.catch(() => {
+				.catch((err) => {
 					toast.error('Invalid Request')
 				})
 		}

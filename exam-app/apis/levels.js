@@ -1,22 +1,24 @@
-import axios from 'axios'
 import useSWR from 'swr'
 import { SERVER_LINK } from '../helpers/config'
-import { customAxios } from './customAxios'
+import Cookies from 'js-cookie'
+import customAxios from './customAxios'
 
-const fetcher = (url, token) =>
-	axios
-		.get(url, {
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json;charset=UTF-8',
-				Authorization: token,
-			},
-		})
-		.then((res) => res.data)
+const token = Cookies.get('refresh_token')
+
+const fetcher = async (url, token) =>
+	{
+	try {
+		const response = await customAxios.get(url)
+		return response.data
+	} catch (error) {
+
+		return error.response.data
+	}
+}
 
 export function GetLevelData(token) {
 	const { data, mutate, error, isLoading } = useSWR(
-		[`${SERVER_LINK}/level/find`, token],
+		[`/level/find`, token],
 		([url, token]) => fetcher(url, token)
 	)
 	return {
@@ -38,17 +40,14 @@ export function GetLevelDataWithId(token, id) {
 		mutate,
 	}
 }
-export async function DeleteLevel(id, token) {
-	customAxios.defaults.headers.common.Authorization = token
-	return await customAxios.delete(`${SERVER_LINK}/level/${id}`)
+export async function DeleteLevel(id) {
+	return await customAxios.delete(`/level/${id}`)
 }
 
-export async function AddLevel(data, token) {
-	customAxios.defaults.headers.common.Authorization = token
-	return await customAxios.post(`${SERVER_LINK}/level`, data)
+export async function AddLevel(data) {
+	return await customAxios.post(`/level`, data)
 }
 
 export async function EditLevel(data, id, token) {
-	customAxios.defaults.headers.common.Authorization = token
-	return await customAxios.patch(`${SERVER_LINK}/level/${id}`, data)
+	return await customAxios.patch(`/level/${id}`,data)
 }

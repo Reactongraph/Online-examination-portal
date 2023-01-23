@@ -31,7 +31,7 @@ const LevelTable = ({ data: level_data, mutate }) => {
 	const handleRemoveClick = async (level_id) => {
 		var shouldDelete = confirm('Do you really want to delete ?')
 		if (shouldDelete) {
-			DeleteLevel(level_id, user?.token)
+			DeleteLevel(level_id)
 				.then(() => {
 					router.replace(router.asPath)
 					mutate()
@@ -58,7 +58,7 @@ const LevelTable = ({ data: level_data, mutate }) => {
 		}
 		new_data = JSON.stringify(new_data)
 
-		EditLevel(new_data, level.id, user?.token)
+		EditLevel(new_data, level.id)
 			.then(() => {
 				router.replace(router.asPath)
 				mutate()
@@ -76,7 +76,7 @@ const LevelTable = ({ data: level_data, mutate }) => {
 		// for taking the patch api data
 
 		if (data.level != null && data.level != '') {
-			EditLevel(LevelData, levelId, user?.token)
+			EditLevel(LevelData, levelId)
 				.then(() => {
 					setModal(!modal)
 					router.replace(router.asPath)
