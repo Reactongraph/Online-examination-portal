@@ -1,22 +1,18 @@
-import axios from 'axios'
 import useSWR from 'swr'
-import { SERVER_LINK } from '../helpers/config'
-import customAxios  from './customAxios'
+import ApiCaller from './ApiCaller'
 
-const fetcher = async (url, token) =>
-{
+const fetcher = async (url) => {
 	try {
-		const response = await customAxios.get(url)
+		const response = await ApiCaller.get(url)
 		return response.data
 	} catch (error) {
 		return error.response.data
 	}
 }
 
-export function GetQuizData(token) {
-	const { data, error, isLoading, mutate } = useSWR(
-		[`/quiz/find`, token],
-		([url, token]) => fetcher(url, token)
+export function GetQuizData() {
+	const { data, error, isLoading, mutate } = useSWR([`/quiz/find`], ([url]) =>
+		fetcher(url)
 	)
 	return {
 		data,
@@ -26,16 +22,16 @@ export function GetQuizData(token) {
 	}
 }
 
-export async function GetQuizDataWithId(token, id) {
-	return await customAxios.get(`/quiz/find/${id}`)
+export async function GetQuizDataWithId(id) {
+	return await ApiCaller.get(`/quiz/find/${id}`)
 }
-export async function DeleteQuiz(id, token) {
-	return await customAxios.delete(`/quiz/${id}`)
+export async function DeleteQuiz(id) {
+	return await ApiCaller.delete(`/quiz/${id}`)
 }
 
-export async function AddQuiz(data, token) {
-	return await customAxios.post(`/quiz/create`, data)
+export async function AddQuiz(data) {
+	return await ApiCaller.post(`/quiz/create`, data)
 }
-export async function EditQuiz(data, id, token) {
-	return await customAxios.patch(`/quiz/${id}`, data)
+export async function EditQuiz(data, id) {
+	return await ApiCaller.patch(`/quiz/${id}`, data)
 }

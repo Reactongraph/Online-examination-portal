@@ -1,22 +1,18 @@
-import axios from 'axios'
 import useSWR from 'swr'
-import { SERVER_LINK } from '../helpers/config'
-import Cookies from 'js-cookie'
-import customAxios from './customAxios'
+import ApiCaller from './ApiCaller'
 
-const token = Cookies.get('refresh_token')
-const fetcher = async (url, token) => {
+const fetcher = async (url) => {
 	try {
-		const response = await customAxios.get(url)
+		const response = await ApiCaller.get(url)
 		return response.data
 	} catch (error) {
 		return error.response.data
 	}
 }
-export function GetParticipantData(token) {
+export function GetParticipantData() {
 	const { data, error, isLoading, mutate } = useSWR(
-		[`/participants/find`, token],
-		([url, token]) => fetcher(url, token)
+		[`/participants/find`],
+		([url]) => fetcher(url)
 	)
 	return {
 		data,
@@ -26,10 +22,10 @@ export function GetParticipantData(token) {
 	}
 }
 
-export function GetParticipantDataWithOrgId(token, id) {
+export function GetParticipantDataWithOrgId(id) {
 	const { data, error, isLoading, mutate } = useSWR(
-		[`/participants/findbyorganization/${id}`, token],
-		([url, token]) => fetcher(url, token)
+		[`/participants/findbyorganization/${id}`],
+		([url]) => fetcher(url)
 	)
 	return {
 		data,
@@ -40,14 +36,13 @@ export function GetParticipantDataWithOrgId(token, id) {
 }
 
 export async function DeleteParticipant(participantId) {
-	return await customAxios.delete(`/participants/${participantId}`)
+	return await ApiCaller.delete(`/participants/${participantId}`)
 }
 
 export async function AddParticipant(data) {
-
-	return await customAxios.post(`/participants`,data)
+	return await ApiCaller.post(`/participants`, data)
 }
 
 export async function EditParticipant(data, participantId) {
-	return await customAxios.patch(`/participants/${participantId}`,data)
+	return await ApiCaller.patch(`/participants/${participantId}`, data)
 }

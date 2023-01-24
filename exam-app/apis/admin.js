@@ -1,9 +1,7 @@
-import axios from 'axios'
 import useSWR from 'swr'
-import { SERVER_LINK } from '../helpers/config'
-import customAxios from './customAxios'
+import customAxios from './ApiCaller'
 
-const fetcher = async (url, token) => {
+const fetcher = async (url) => {
 	try {
 		const response = await customAxios.get(url)
 		return response.data
@@ -12,10 +10,9 @@ const fetcher = async (url, token) => {
 	}
 }
 
-export function GetAdminData(token) {
-	const { data, mutate, error, isLoading } = useSWR(
-		[`/admin/`, token],
-		([url, token]) => fetcher(url, token)
+export function GetAdminData() {
+	const { data, mutate, error, isLoading } = useSWR([`/admin/`], ([url]) =>
+		fetcher(url)
 	)
 	return {
 		data,
@@ -24,10 +21,9 @@ export function GetAdminData(token) {
 		isLoading,
 	}
 }
-export function GetAdminDataWithId(token, id) {
-	const { data, error, isLoading, mutate } = useSWR(
-		[`/admin/${id}`, token],
-		([url, token]) => fetcher(url, token)
+export function GetAdminDataWithId(id) {
+	const { data, error, isLoading, mutate } = useSWR([`/admin/${id}`], ([url]) =>
+		fetcher(url)
 	)
 	return {
 		data,

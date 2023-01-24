@@ -1,25 +1,18 @@
 import useSWR from 'swr'
-import { SERVER_LINK } from '../helpers/config'
-import Cookies from 'js-cookie'
-import customAxios from './customAxios'
+import ApiCaller from './ApiCaller'
 
-const token = Cookies.get('refresh_token')
-
-const fetcher = async (url, token) =>
-	{
+const fetcher = async (url) => {
 	try {
-		const response = await customAxios.get(url)
+		const response = await ApiCaller.get(url)
 		return response.data
 	} catch (error) {
-
 		return error.response.data
 	}
 }
 
-export function GetLevelData(token) {
-	const { data, mutate, error, isLoading } = useSWR(
-		[`/level/find`, token],
-		([url, token]) => fetcher(url, token)
+export function GetLevelData() {
+	const { data, mutate, error, isLoading } = useSWR([`/level/find`], ([url]) =>
+		fetcher(url)
 	)
 	return {
 		data,
@@ -28,10 +21,9 @@ export function GetLevelData(token) {
 		isLoading,
 	}
 }
-export function GetLevelDataWithId(token, id) {
-	const { data, error, isLoading, mutate } = useSWR(
-		[`/level/${id}`, token],
-		([url, token]) => fetcher(url, token)
+export function GetLevelDataWithId(id) {
+	const { data, error, isLoading, mutate } = useSWR([`/level/${id}`], ([url]) =>
+		fetcher(url)
 	)
 	return {
 		data,
@@ -41,13 +33,13 @@ export function GetLevelDataWithId(token, id) {
 	}
 }
 export async function DeleteLevel(id) {
-	return await customAxios.delete(`/level/${id}`)
+	return await ApiCaller.delete(`/level/${id}`)
 }
 
 export async function AddLevel(data) {
-	return await customAxios.post(`/level`, data)
+	return await ApiCaller.post(`/level`, data)
 }
 
-export async function EditLevel(data, id, token) {
-	return await customAxios.patch(`/level/${id}`,data)
+export async function EditLevel(data, id) {
+	return await ApiCaller.patch(`/level/${id}`, data)
 }

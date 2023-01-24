@@ -1,26 +1,18 @@
-import axios from 'axios'
 import useSWR from 'swr'
-import { SERVER_LINK } from '../helpers/config'
-import  customAxios  from './customAxios'
-import Cookies from 'js-cookie'
+import ApiCaller from './ApiCaller'
 
-const token = Cookies.get('refresh_token')
-
-
-const fetcher = async (url, token) =>
-{
+const fetcher = async (url) => {
 	try {
-		const response = await customAxios.get(url)
+		const response = await ApiCaller.get(url)
 		return response.data
 	} catch (error) {
 		return error.response.data
 	}
 }
 
-export function GetModuleData(token) {
-	const { data, error, isLoading, mutate } = useSWR(
-		[`/module/find`, token],
-		([url, token]) => fetcher(url, token)
+export function GetModuleData() {
+	const { data, error, isLoading, mutate } = useSWR([`/module/find`], ([url]) =>
+		fetcher(url)
 	)
 	return {
 		data,
@@ -29,10 +21,10 @@ export function GetModuleData(token) {
 		mutate,
 	}
 }
-export async function GetModuleDataWithId(token, id) {
+export async function GetModuleDataWithId(id) {
 	const { data, error, isLoading, mutate } = useSWR(
-		[`/module/${id}`, token],
-		([url, token]) => fetcher(url, token)
+		[`/module/${id}`],
+		([url]) => fetcher(url)
 	)
 
 	return {
@@ -43,13 +35,13 @@ export async function GetModuleDataWithId(token, id) {
 	}
 }
 export async function DeleteModule(id) {
-	return await customAxios.delete(`/module/${id}`)
+	return await ApiCaller.delete(`/module/${id}`)
 }
 
 export async function AddModule(data) {
-	return await customAxios.post(`/module`,data)
+	return await ApiCaller.post(`/module`, data)
 }
 
 export async function EditModule(data, id) {
-	return await customAxios.patch(`/module/${id}`,data)
+	return await ApiCaller.patch(`/module/${id}`, data)
 }
