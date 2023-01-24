@@ -7,6 +7,7 @@ import QuizModal from './QuizModal'
 import UserProfileModal from './UserProfileModal'
 import { Banner } from './micro/banner'
 import { ButtonComponent } from './micro/buttonComponent'
+import AddOrganizations from '../../pages/dashboard/organization/new'
 
 const PageComponentTitle = ({
 	title,

@@ -8,10 +8,11 @@ export class RestApiService {
 	constructor(private readonly prisma: PrismaService) {}
 	async create(createRestApiDto: organization_dto) {
 		try {
+			
 			const EMAIL_CHECK = await this.prisma.organization.findUnique({
 				where: { email: createRestApiDto?.email },
 			})
-
+			
 			if (EMAIL_CHECK != null) {
 				return {
 					message: 'user already exist',
@@ -19,6 +20,7 @@ export class RestApiService {
 					email: null,
 				}
 			} else {
+				
 				const user = await this.prisma.organization.create({
 					data: {
 						email: createRestApiDto?.email,
@@ -33,9 +35,11 @@ export class RestApiService {
 						pincode: createRestApiDto.pincode,
 					},
 				})
+				
 				return user
 			}
 		} catch (err) {
+			
 			return {
 				error: err,
 			}
