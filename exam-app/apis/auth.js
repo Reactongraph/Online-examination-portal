@@ -28,7 +28,7 @@ export async function ResetPassword(data, token) {
 		url: `${SERVER_LINK}/auth/change-password`,
 		headers: {
 			'Content-Type': 'application/json',
-			xaccesstoken: token,
+			Authorization: token,
 		},
 		withCredentials: true,
 		data: data,
@@ -40,7 +40,7 @@ export async function GetRefreshToken(token) {
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json;charset=UTF-8',
-			xaccesstoken: token,
+			Authorization: token,
 		},
 	})
 }

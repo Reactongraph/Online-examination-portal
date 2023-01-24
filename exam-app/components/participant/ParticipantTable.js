@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Table from '../common/Table'
 import { useForm } from 'react-hook-form'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
-import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { ParticipantColumns } from './participantColumn'
 import ParticipantPopUp from '../common/PopUpModals/ParticipantPopUp'
@@ -29,11 +28,10 @@ const ParticipantTable = ({
 	const [organizationId, setOrganizationId] = useState('')
 	const [selectedorganizationId, setSelectedOrganizationId] = useState('')
 	const { handleSubmit } = useForm()
-	const user = useSelector((state) => state?.user)
 
 	const handleRemoveClick = async (participantId) => {
 		try {
-			DeleteParticipant(participantId, user?.token)
+			DeleteParticipant(participantId)
 			mutate()
 			toast.success('participant deleted!')
 		} catch (error) {
@@ -68,7 +66,7 @@ const ParticipantTable = ({
 		let participantData = JSON.stringify(data)
 		// for taking the patch api data
 		if (editForm) {
-			EditParticipant(participantData, participantId, user?.token)
+			EditParticipant(participantData, participantId)
 				.then(() => {
 					setModal(!modal)
 					mutate()
@@ -80,7 +78,7 @@ const ParticipantTable = ({
 		}
 		// for new data registration
 		else {
-			AddParticipant(data, user?.token)
+			AddParticipant(data)
 				.then(async () => {
 					setModal(!modal)
 					mutate()

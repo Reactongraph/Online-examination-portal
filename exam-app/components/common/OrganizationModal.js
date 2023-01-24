@@ -3,13 +3,11 @@ import React, { useState } from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 
-import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
 import { AddOrganization } from '../../apis/organizations'
 
 const OrganizationModal = ({ modal, setModal, mutate }) => {
-	const user = useSelector((state) => state?.user)
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
 	const [pincode, setPincode] = useState('')
@@ -41,7 +39,7 @@ const OrganizationModal = ({ modal, setModal, mutate }) => {
 
 		// for new data registration
 
-		AddOrganization(OrganizationData, user?.token)
+		AddOrganization(OrganizationData)
 			.then(async () => {
 				setModal(!modal)
 				mutate()

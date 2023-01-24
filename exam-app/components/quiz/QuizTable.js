@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
-import { useSelector } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 import { DeleteQuiz, EditQuiz } from '../../apis/quizzes'
@@ -19,7 +18,6 @@ if (typeof window !== 'undefined') {
 
 const QuizTable = ({ data: quiz_data, module_data, level_data }) => {
 	const router = useRouter()
-	const user = useSelector((state) => state?.user)
 	const [modal, setModal] = useState(false)
 	const [quizId, setQuizId] = useState('')
 
@@ -44,7 +42,7 @@ const QuizTable = ({ data: quiz_data, module_data, level_data }) => {
 	}
 
 	const handleRemoveClick = (quiz_id) => {
-		DeleteQuiz(quiz_id, user?.token)
+		DeleteQuiz(quiz_id)
 			.then(() => {
 				router.replace(router.asPath)
 
@@ -70,7 +68,7 @@ const QuizTable = ({ data: quiz_data, module_data, level_data }) => {
 			status: !quiz_status,
 		}
 		new_status = JSON.stringify(new_status)
-		EditQuiz(new_status, quiz_id, user?.token)
+		EditQuiz(new_status, quiz_id)
 			.then(() => {
 				toast.success('Quiz updated Successfully!')
 			})
@@ -116,7 +114,7 @@ const QuizTable = ({ data: quiz_data, module_data, level_data }) => {
 		data.level_id = selectedLevelId
 		data.description = description
 		data.module_id = selectedModules
-		EditQuiz(data, quizId, user?.token)
+		EditQuiz(data, quizId)
 			.then(() => {
 				setModal(!modal)
 

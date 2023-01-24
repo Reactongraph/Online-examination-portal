@@ -16,8 +16,8 @@ export default function UserProfile() {
 	const user = useSelector((state) => state?.user)
 	const { data: profile_data, mutate } =
 		user?.role == 'SuperAdminUser'
-			? GetAdminDataWithId(user?.token, user?.Org_id)
-			: GetOrganizationDataWithId(user?.token, user?.Org_id)
+			? GetAdminDataWithId(user?.Org_id)
+			: GetOrganizationDataWithId(user?.Org_id)
 
 	return (
 		<>

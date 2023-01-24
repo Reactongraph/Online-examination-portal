@@ -1,22 +1,18 @@
-import axios from 'axios'
 import useSWR from 'swr'
-import { SERVER_LINK } from '../helpers/config'
+import ApiCaller from './ApiCaller'
 
-const fetcher = (url, token) =>
-	axios
-		.get(url, {
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json;charset=UTF-8',
-				Authorization: token,
-			},
-		})
-		.then((res) => res.data)
+const fetcher = async (url) => {
+	try {
+		const response = await ApiCaller.get(url)
+		return response.data
+	} catch (error) {
+		return error.response.data
+	}
+}
 
-export function GetModuleData(token) {
-	const { data, error, isLoading, mutate } = useSWR(
-		[`${SERVER_LINK}/module/find`, token],
-		([url, token]) => fetcher(url, token)
+export function GetModuleData() {
+	const { data, error, isLoading, mutate } = useSWR([`/module/find`], ([url]) =>
+		fetcher(url)
 	)
 	return {
 		data,
@@ -25,10 +21,10 @@ export function GetModuleData(token) {
 		mutate,
 	}
 }
-export async function GetModuleDataWithId(token, id) {
+export async function GetModuleDataWithId(id) {
 	const { data, error, isLoading, mutate } = useSWR(
-		[`${SERVER_LINK}/module/${id}`, token],
-		([url, token]) => fetcher(url, token)
+		[`/module/${id}`],
+		([url]) => fetcher(url)
 	)
 
 	return {
@@ -38,35 +34,14 @@ export async function GetModuleDataWithId(token, id) {
 		mutate,
 	}
 }
-export async function DeleteModule(id, token) {
-	return await axios.delete(`${SERVER_LINK}/module/${id}`, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-	})
+export async function DeleteModule(id) {
+	return await ApiCaller.delete(`/module/${id}`)
 }
 
-export async function AddModule(data, token) {
-	return await axios({
-		url: `${SERVER_LINK}/module`,
-		method: 'POST',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-		data,
-	})
+export async function AddModule(data) {
+	return await ApiCaller.post(`/module`, data)
 }
 
-export async function EditModule(data, id, token) {
-	await axios.patch(`${SERVER_LINK}/module/${id}`, data, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-	})
+export async function EditModule(data, id) {
+	return await ApiCaller.patch(`/module/${id}`, data)
 }

@@ -2,7 +2,6 @@ import Table from '../common/Table'
 import React, { useState } from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
-import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { OrganizationColumns } from './organizationColumn'
 import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
@@ -29,10 +28,9 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 	const [password, setPassword] = useState('')
 
 	const { handleSubmit } = useForm()
-	const user = useSelector((state) => state?.user)
 	const handleRemoveClick = (org_id) => {
 		try {
-			DeleteOrganization(org_id, user?.token)
+			DeleteOrganization(org_id)
 				.then(() => {
 					mutate()
 					toast.success('organization deleted!')
@@ -50,7 +48,7 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 			status: !org.status,
 		}
 		new_status = JSON.stringify(new_status)
-		EditOrganization(new_status, org.id, user?.token)
+		EditOrganization(new_status, org.id)
 			.then(() => {
 				mutate()
 				toast.success('organization updated!')
@@ -88,7 +86,7 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 
 		// for taking the patch api data
 
-		EditOrganization(OrganizationData, organizationId, user?.token)
+		EditOrganization(OrganizationData, organizationId)
 			.then(() => {
 				setModal(!modal)
 				mutate()
