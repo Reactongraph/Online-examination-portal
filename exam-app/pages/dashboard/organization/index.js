@@ -12,8 +12,8 @@ export default function Organization() {
 	const user = useSelector((state) => state?.user)
 	const { data, mutate } =
 		user?.role == 'SuperAdminUser'
-			? GetOrganizationData(user.token)
-			: GetOrganizationDataWithId(user.token, user.Org_id)
+			? GetOrganizationData()
+			: GetOrganizationDataWithId(user.Org_id)
 
 	return (
 		<>
