@@ -6,14 +6,11 @@ import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { AddParticipant } from '../../apis/participants'
-import { GetOrganizationData } from '../../apis/organizations'
 import ParticipantPopUp from './PopUpModals/ParticipantPopUp'
-import { PageComponentTitleContext } from '../context'
 
-const ParticipantModal = () => {
+const ParticipantModal = ({ modal, setModal }) => {
 	//For Image Preview
 	const router = useRouter()
-	const { modal, setModal } = useContext(PageComponentTitleContext)
 
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
@@ -79,7 +76,6 @@ const ParticipantModal = () => {
 				checkWithDatabase={checkWithDatabase}
 				buttonText={buttonText}
 				handleOrganizationIdTypeSelect={handleOrganizationIdTypeSelect}
-				organization_data={GetOrganizationData(login_token).data}
 			/>
 		</>
 	)

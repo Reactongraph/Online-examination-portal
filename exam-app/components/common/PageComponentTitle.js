@@ -7,13 +7,11 @@ import QuizModal from './QuizModal'
 import UserProfileModal from './UserProfileModal'
 import { Banner } from './micro/banner'
 import { ButtonComponent } from './micro/buttonComponent'
-import { PageComponentTitleContext } from '../context'
 
 const PageComponentTitle = ({
 	title,
 	titleDescription,
 	buttonTitle,
-	organization_data,
 	userData,
 	mutate,
 }) => {
@@ -50,36 +48,51 @@ const PageComponentTitle = ({
 					</React.Fragment>
 				</ButtonComponent>
 
-				<PageComponentTitleContext.Provider value={{ modal, setModal }}>
-					{title == 'PARTICIPANT' ? (
-						<>
-							<ParticipantModal organization_data={organization_data} />
-						</>
-					) : title == 'LEVEL' ? (
-						<>
-							<LevelModal mutate={mutate} />
-						</>
-					) : title == 'MODULE' ? (
-						<>
-							<ModuleModal mutate={mutate} />
-						</>
-					) : title == 'QUIZ' ? (
-						<>
-							<QuizModal />
-						</>
-					) : title == 'USER PROFILE' ? (
-						<>
-							<UserProfileModal
-								userData={userData}
-								mutate={mutate}
-							/>
-						</>
-					) : (
-						<>
-							<OrganizationModal mutate={mutate} />
-						</>
-					)}
-				</PageComponentTitleContext.Provider>
+				{title == 'PARTICIPANT' ? (
+					<>
+						<ParticipantModal
+							modal={modal}
+							setModal={setModal}
+						/>
+					</>
+				) : title == 'LEVEL' ? (
+					<>
+						<LevelModal
+							modal={modal}
+							setModal={setModal}
+						/>
+					</>
+				) : title == 'MODULE' ? (
+					<>
+						<ModuleModal
+							modal={modal}
+							setModal={setModal}
+						/>
+					</>
+				) : title == 'QUIZ' ? (
+					<>
+						<QuizModal
+							modal={modal}
+							setModal={setModal}
+						/>
+					</>
+				) : title == 'USER PROFILE' ? (
+					<>
+						<UserProfileModal
+							modal={modal}
+							setModal={setModal}
+							userData={userData}
+							mutate={mutate}
+						/>
+					</>
+				) : (
+					<>
+						<OrganizationModal
+							modal={modal}
+							setModal={setModal}
+						/>
+					</>
+				)}
 			</div>
 		</>
 	)

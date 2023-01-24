@@ -12,11 +12,9 @@ import { Label } from './micro/label'
 import { EditOrganization } from '../../apis/organizations'
 import { Form } from './micro/form'
 import { InputComponent } from './micro/inputComponent'
-import { PageComponentTitleContext } from '../context'
 
-const UserProfileModal = ({ userData, mutate }) => {
+const UserProfileModal = ({ userData, mutate, modal, setModal }) => {
 	const router = useRouter()
-	const { modal, setModal } = useContext(PageComponentTitleContext)
 
 	const [name, setName] = useState(userData?.name)
 	const [email, setEmail] = useState(userData?.email)
