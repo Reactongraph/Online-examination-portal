@@ -6,7 +6,6 @@ import { ToastContainer, toast } from 'react-toastify'
 import LevelModulePopup from '../common/PopUpModals/LevelModulePopUp'
 import { ModuleColumns } from './ moduleColumns'
 
-import { useSelector } from 'react-redux'
 import { DeleteModule, EditModule } from '../../apis/modules'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
 import { ButtonComponent } from '../common/micro/buttonComponent'
@@ -19,11 +18,10 @@ const ModuleTable = ({ data: module_data, mutate }) => {
 	const [modules, setModules] = useState('')
 
 	const { handleSubmit } = useForm()
-	const user = useSelector((state) => state?.user)
 
 	const handleRemoveClick = (module_id) => {
 		try {
-			DeleteModule(module_id, user?.token)
+			DeleteModule(module_id)
 			mutate()
 			toast.success('Module deleted!')
 		} catch (error) {
@@ -38,7 +36,7 @@ const ModuleTable = ({ data: module_data, mutate }) => {
 			status: !oldStatus,
 		}
 		new_data = JSON.stringify(new_data)
-		EditModule(new_data, modules.id, user?.token)
+		EditModule(new_data, modules.id)
 			.then(() => {
 				// setModal(!modal)
 				mutate()
@@ -62,7 +60,7 @@ const ModuleTable = ({ data: module_data, mutate }) => {
 
 		// for taking the patch api data
 		if (data.module != null && data.module != '') {
-			EditModule(moduleData, moduleId, user?.token)
+			EditModule(moduleData, moduleId)
 				.then(() => {
 					setModal(!modal)
 					mutate()

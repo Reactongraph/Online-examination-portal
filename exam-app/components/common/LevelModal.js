@@ -3,7 +3,6 @@ import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify'
-import { useSelector } from 'react-redux'
 import LevelModulePopup from './PopUpModals/LevelModulePopUp'
 import { AddLevel } from '../../apis/levels'
 
@@ -14,7 +13,6 @@ const LevelModal = (props) => {
 
 	const buttonText = 'Add'
 	const { handleSubmit } = useForm()
-	const user = useSelector((state) => state?.user)
 
 	// for sending the data to the backend
 	const checkWithDatabase = async (data) => {
@@ -33,7 +31,7 @@ const LevelModal = (props) => {
 					mutate()
 					toast.success('level inserted')
 				})
-				.catch((err) => {
+				.catch(() => {
 					toast.error('Invalid Request')
 				})
 		}

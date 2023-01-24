@@ -2,7 +2,6 @@ import Table from '../common/Table'
 import React, { useState } from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
-import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { OrganizationColumns } from './organizationColumn'
 import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
@@ -29,7 +28,6 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 	const [password, setPassword] = useState('')
 
 	const { handleSubmit } = useForm()
-	const user = useSelector((state) => state?.user)
 	const handleRemoveClick = (org_id) => {
 		try {
 			DeleteOrganization(org_id)
@@ -37,8 +35,7 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 					mutate()
 					toast.success('organization deleted!')
 				})
-				.catch((err) => {
-
+				.catch(() => {
 					toast.error('invalid request')
 				})
 		} catch (error) {
@@ -95,7 +92,7 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 				mutate()
 				toast.success('organization updated!')
 			})
-			.catch((err) => {
+			.catch(() => {
 				toast.error('invalid request')
 			})
 	}

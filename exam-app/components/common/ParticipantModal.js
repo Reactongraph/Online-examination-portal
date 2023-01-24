@@ -25,7 +25,6 @@ const ParticipantModal = ({ modal, setModal }) => {
 
 	const { handleSubmit } = useForm()
 	const Org = useSelector((state) => state?.user)
-	const login_token = useSelector((state) => state.user.token)
 
 	const handleOrganizationIdTypeSelect = (event) => {
 		let organizationId = event.target.value
@@ -53,7 +52,7 @@ const ParticipantModal = ({ modal, setModal }) => {
 				setModal(!modal)
 				toast.success('participant created!')
 			})
-			.catch((err) => {
+			.catch(() => {
 				toast.error('Invalid Request')
 			})
 	}
@@ -77,7 +76,7 @@ const ParticipantModal = ({ modal, setModal }) => {
 				checkWithDatabase={checkWithDatabase}
 				buttonText={buttonText}
 				handleOrganizationIdTypeSelect={handleOrganizationIdTypeSelect}
-				organization_data={GetOrganizationData(login_token).data}
+				organization_data={GetOrganizationData().data}
 			/>
 		</>
 	)

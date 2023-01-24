@@ -3,7 +3,6 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { ToastContainer, toast } from 'react-toastify'
-import { useSelector } from 'react-redux'
 import { QuestionColumns } from './questionColumn'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 import { DeleteQuestion, EditQuestion } from '../../apis/questions'
@@ -16,9 +15,8 @@ if (typeof window !== 'undefined') {
 
 const QuestionTable = ({ question_data, mutate }) => {
 	const router = useRouter()
-	const user = useSelector((state) => state?.user)
 	const handleRemoveClick = async (question_id) => {
-		DeleteQuestion(question_id, user?.token)
+		DeleteQuestion(question_id)
 			.then((result) => {
 				router.replace(router.asPath)
 				mutate()
@@ -34,7 +32,7 @@ const QuestionTable = ({ question_data, mutate }) => {
 			status: !question_status,
 		}
 		new_status = JSON.stringify(new_status)
-		EditQuestion(new_status, question_id, user?.token)
+		EditQuestion(new_status, question_id)
 			.then(() => {
 				router.replace(router.asPath)
 				mutate()
