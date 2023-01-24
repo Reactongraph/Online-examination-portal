@@ -28,7 +28,7 @@ export function GetParticipantData(token) {
 
 export function GetParticipantDataWithOrgId(token, id) {
 	const { data, error, isLoading, mutate } = useSWR(
-		[`${SERVER_LINK}/participants/findbyorganization/${id}`, token],
+		[`/participants/findbyorganization/${id}`, token],
 		([url, token]) => fetcher(url, token)
 	)
 	return {

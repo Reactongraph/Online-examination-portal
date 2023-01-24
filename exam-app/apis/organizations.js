@@ -29,7 +29,7 @@ export function GetOrganizationData(token) {
 }
 export function GetOrganizationDataWithId(token, id) {
 	const { data, error, isLoading, mutate } = useSWR(
-		[`${SERVER_LINK}/organization/${id}`, token],
+		[`/organization/${id}`, token],
 		([url, token]) => fetcher(url, token)
 	)
 

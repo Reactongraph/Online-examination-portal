@@ -30,7 +30,7 @@ export function GetLevelData(token) {
 }
 export function GetLevelDataWithId(token, id) {
 	const { data, error, isLoading, mutate } = useSWR(
-		[`${SERVER_LINK}/level/${id}`, token],
+		[`/level/${id}`, token],
 		([url, token]) => fetcher(url, token)
 	)
 	return {

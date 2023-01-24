@@ -31,7 +31,7 @@ export function GetModuleData(token) {
 }
 export async function GetModuleDataWithId(token, id) {
 	const { data, error, isLoading, mutate } = useSWR(
-		[`${SERVER_LINK}/module/${id}`, token],
+		[`/module/${id}`, token],
 		([url, token]) => fetcher(url, token)
 	)
 
