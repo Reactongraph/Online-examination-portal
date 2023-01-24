@@ -6,12 +6,12 @@ import { ToastContainer, toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import LevelModulePopup from './PopUpModals/LevelModulePopUp'
 import { AddModule } from '../../apis/modules'
-import { PageComponentTitleContext } from '../context'
+import { ModuleContext } from '../context'
 
-const ModuleModal = ({ mutate }) => {
+const ModuleModal = ({ modal, setModal }) => {
+	const { mutate } = useContext(ModuleContext)
 	const router = useRouter()
 	const [modules, setModules] = useState('')
-	const { modal, setModal } = useContext(PageComponentTitleContext)
 
 	const buttonText = 'Add'
 	const { handleSubmit } = useForm()

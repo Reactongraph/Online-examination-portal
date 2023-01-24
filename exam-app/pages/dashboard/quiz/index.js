@@ -24,17 +24,17 @@ export default function Quizes() {
 
 	return (
 		<>
-			<Layout title='Quiz'>
-				<QuizContext.Provider
-					value={{
-						quiz_data: data,
-						level_data: level_data,
-						module_data: updatedModuleData,
-						mutate: mutate,
-					}}>
+			<QuizContext.Provider
+				value={{
+					quiz_data: data,
+					level_data: level_data,
+					module_data: updatedModuleData,
+					mutate: mutate,
+				}}>
+				<Layout title='Quiz'>
 					<Quiz />
-				</QuizContext.Provider>
-			</Layout>
+				</Layout>
+			</QuizContext.Provider>
 		</>
 	)
 }

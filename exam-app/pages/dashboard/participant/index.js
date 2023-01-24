@@ -7,6 +7,7 @@ import {
 	GetParticipantDataWithOrgId,
 } from '../../../apis/participants'
 import { GetOrganizationData } from '../../../apis/organizations'
+import { ParticipantContext } from '../../../components/context'
 
 export default function Participant() {
 	const user = useSelector((state) => state?.user)
@@ -18,13 +19,16 @@ export default function Participant() {
 
 	return (
 		<>
-			<Layout title='Participant'>
-				<ParticipantComponent
-					participant_data={data}
-					organization_data={organization_data}
-					mutate={mutate}
-				/>
-			</Layout>
+			<ParticipantContext.Provider
+				value={{
+					participant_data: data,
+					organization_data: organization_data,
+					mutate: mutate,
+				}}>
+				<Layout title='Participant'>
+					<ParticipantComponent />
+				</Layout>
+			</ParticipantContext.Provider>
 		</>
 	)
 }

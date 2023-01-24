@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Table from '../common/Table'
 import { useForm } from 'react-hook-form'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
@@ -12,12 +12,10 @@ import {
 	EditParticipant,
 } from '../../apis/participants'
 import { ButtonComponent } from '../common/micro/buttonComponent'
+import { ParticipantContext } from '../context'
 
-const ParticipantTable = ({
-	data: participant_data,
-	mutate,
-	organization_data,
-}) => {
+const ParticipantTable = () => {
+	const { participant_data, mutate } = useContext(ParticipantContext)
 	const [editForm, setEditForm] = useState(false)
 	const [modal, setModal] = useState(false)
 	const [participantId, setParticipantId] = useState('')
@@ -152,7 +150,6 @@ const ParticipantTable = ({
 				checkWithDatabase={checkWithDatabase}
 				buttonText={buttonText}
 				handleOrganizationIdTypeSelect={handleOrganizationIdTypeSelect}
-				organization_data={organization_data}
 			/>
 		</>
 	)

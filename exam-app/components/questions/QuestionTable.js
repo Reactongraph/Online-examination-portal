@@ -1,5 +1,5 @@
 import Table from '../common/Table'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useRouter } from 'next/router'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { ToastContainer, toast } from 'react-toastify'
@@ -9,12 +9,14 @@ import { injectStyle } from 'react-toastify/dist/inject-style'
 import { DeleteQuestion, EditQuestion } from '../../apis/questions'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
 import { ButtonComponent } from '../common/micro/buttonComponent'
+import { QuestionContext } from '../context'
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
 }
 
-const QuestionTable = ({ question_data, mutate }) => {
+const QuestionTable = () => {
+	const { question_data, mutate } = useContext(QuestionContext)
 	const router = useRouter()
 	const user = useSelector((state) => state?.user)
 	const handleRemoveClick = async (question_id) => {

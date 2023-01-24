@@ -6,11 +6,10 @@ import { ToastContainer, toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import LevelModulePopup from './PopUpModals/LevelModulePopUp'
 import { AddLevel } from '../../apis/levels'
-import { PageComponentTitleContext } from '../context'
+import { LevelContext } from '../context'
 
-const LevelModal = (props) => {
-	const { mutate } = props
-	const { modal, setModal } = useContext(PageComponentTitleContext)
+const LevelModal = ({ modal, setModal }) => {
+	const { mutate } = useContext(LevelContext)
 	const router = useRouter()
 	const [level, setLevel] = useState('')
 

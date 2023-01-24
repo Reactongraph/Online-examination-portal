@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Layout from '../../../components/layout/Layout'
 import { useSelector } from 'react-redux'
+import { OrganizationContext } from '../../../components/context'
 
 import {
 	GetOrganizationData,
@@ -17,12 +18,12 @@ export default function Organization() {
 
 	return (
 		<>
-			<Layout title='Organization'>
-				<OrganizationComponent
-					organization_data={data}
-					mutate={mutate}
-				/>
-			</Layout>
+			<OrganizationContext.Provider
+				value={{ organization_data: data, mutate: mutate }}>
+				<Layout title='Organization'>
+					<OrganizationComponent />
+				</Layout>
+			</OrganizationContext.Provider>
 		</>
 	)
 }

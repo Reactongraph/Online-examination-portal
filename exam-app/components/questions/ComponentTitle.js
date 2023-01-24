@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useRouter } from 'next/router'
 import { CsvReader } from './CsvReader'
 import { ToastContainer } from 'react-toastify'
@@ -6,13 +6,10 @@ import { useSelector } from 'react-redux'
 import { Banner } from '../common/micro/banner'
 import { ButtonComponent } from '../common/micro/buttonComponent'
 import { InputComponent } from '../common/micro/inputComponent'
+import { ParticipantContext } from '../context'
 
-const PageComponentTitle = ({
-	title,
-	titleDescription,
-	buttonTitle,
-	mutate,
-}) => {
+const PageComponentTitle = ({ title, titleDescription, buttonTitle }) => {
+	const { mutate } = useContext(ParticipantContext)
 	const router = useRouter()
 	const user = useSelector((state) => state?.user)
 

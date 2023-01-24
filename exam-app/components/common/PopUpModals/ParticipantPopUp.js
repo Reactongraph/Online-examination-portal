@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PureModal from 'react-pure-modal'
 import { useState } from 'react'
 import { ButtonComponent } from '../micro/buttonComponent'
@@ -6,6 +6,7 @@ import { Label } from '../micro/label'
 import { InputComponent } from '../micro/inputComponent'
 import { Form } from '../micro/form'
 import Dropdown from '../micro/dropdown'
+import { ParticipantContext } from '../../context'
 function ParticipantPopUp(props) {
 	const {
 		modal,
@@ -24,9 +25,9 @@ function ParticipantPopUp(props) {
 		handleSubmit,
 		handleOrganizationIdTypeSelect,
 		buttonText,
-		organization_data,
 	} = props
 	const [showPassword, setShowPassword] = useState(false)
+	const { organization_data } = useContext(ParticipantContext)
 	return (
 		<PureModal
 			isOpen={modal}

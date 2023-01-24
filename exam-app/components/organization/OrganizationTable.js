@@ -1,5 +1,5 @@
 import Table from '../common/Table'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
@@ -9,9 +9,11 @@ import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
 import { DeleteOrganization, EditOrganization } from '../../apis/organizations'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
 import { ButtonComponent } from '../common/micro/buttonComponent'
+import { OrganizationContext } from '../context'
 
-const OrganizationTable = ({ data: organization_data, mutate }) => {
+const OrganizationTable = () => {
 	// const [editForm, setEditForm] = useState(false)
+	const { organization_data, mutate } = useContext(OrganizationContext)
 	const [modal, setModal] = useState(false)
 	const [organizationId, setOrganizationId] = useState('')
 

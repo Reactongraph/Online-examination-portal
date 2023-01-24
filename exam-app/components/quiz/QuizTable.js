@@ -19,8 +19,8 @@ if (typeof window !== 'undefined') {
 }
 
 const QuizTable = () => {
-	const { module_data, level_data, mutate } = useContext(QuizContext)
-	const { quiz_data } = useContext(QuizContext)
+	const { module_data, level_data, mutate, quiz_data } = useContext(QuizContext)
+
 	const router = useRouter()
 	const user = useSelector((state) => state?.user)
 	const [modal, setModal] = useState(false)

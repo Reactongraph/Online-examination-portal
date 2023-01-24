@@ -1,5 +1,5 @@
 import Table from '../common/Table'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { ToastContainer, toast } from 'react-toastify'
@@ -10,8 +10,10 @@ import { useSelector } from 'react-redux'
 import { DeleteModule, EditModule } from '../../apis/modules'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
 import { ButtonComponent } from '../common/micro/buttonComponent'
+import { ModuleContext } from '../context'
 
-const ModuleTable = ({ data: module_data, mutate }) => {
+const ModuleTable = () => {
+	const { module_data, mutate } = useContext(ModuleContext)
 	const [modal, setModal] = useState(false)
 	const [moduleId, setModuleId] = useState('')
 

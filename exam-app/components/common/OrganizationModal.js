@@ -7,12 +7,12 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
 import { AddOrganization } from '../../apis/organizations'
-import { PageComponentTitleContext } from '../context'
+import { OrganizationContext } from '../context'
 
-const OrganizationModal = ({ mutate }) => {
-	const { modal, setModal } = useContext(PageComponentTitleContext)
-
+const OrganizationModal = ({ modal, setModal }) => {
 	const user = useSelector((state) => state?.user)
+	const { mutate } = useContext(OrganizationContext)
+
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
 	const [pincode, setPincode] = useState('')

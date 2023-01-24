@@ -1,5 +1,5 @@
 import PureModal from 'react-pure-modal'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Label } from '../micro/label'
 import { ButtonComponent } from '../micro/buttonComponent'
 import { Form } from '../micro/form'
@@ -16,6 +16,7 @@ function LevelModulePopup(props) {
 		modalName,
 		placeholderText,
 	} = props
+
 	return (
 		<>
 			<PureModal

@@ -1,5 +1,5 @@
 import Table from '../common/Table'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useRouter } from 'next/router'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
@@ -11,13 +11,15 @@ import { injectStyle } from 'react-toastify/dist/inject-style'
 import { DeleteLevel, EditLevel } from '../../apis/levels'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
 import { ButtonComponent } from '../common/micro/buttonComponent'
+import { LevelContext } from '../context'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
 }
 
-const LevelTable = ({ data: level_data, mutate }) => {
+const LevelTable = () => {
+	const { level_data, mutate } = useContext(LevelContext)
 	const router = useRouter()
 
 	const [modal, setModal] = useState(false)
