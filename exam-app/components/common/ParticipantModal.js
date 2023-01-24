@@ -24,7 +24,6 @@ const ParticipantModal = ({ modal, setModal }) => {
 
 	const { handleSubmit } = useForm()
 	const Org = useSelector((state) => state?.user)
-	const login_token = useSelector((state) => state.user.token)
 
 	const handleOrganizationIdTypeSelect = (event) => {
 		let organizationId = event.target.value
@@ -42,7 +41,7 @@ const ParticipantModal = ({ modal, setModal }) => {
 
 		// for new data registration
 
-		AddParticipant(participantData, login_token)
+		AddParticipant(participantData)
 			.then(() => {
 				router.replace(router.asPath)
 				setName('')

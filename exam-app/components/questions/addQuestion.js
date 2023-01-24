@@ -15,10 +15,8 @@ import {
 	EditQuestion,
 	GetQuestionDataWithId,
 } from '../../apis/questions'
-import { useSelector } from 'react-redux'
 
 const AddQuestion = ({ level_data: levelData, module_data: moduleData }) => {
-	const user = useSelector((state) => state?.user)
 	const router = useRouter()
 	const [selectedImage, setSelectedImage] = useState(null)
 	const [pageTitle, setPageTitle] = useState('Add')
@@ -44,7 +42,7 @@ const AddQuestion = ({ level_data: levelData, module_data: moduleData }) => {
 		let question_id = router.query.question_id
 
 		async function getQuestionData() {
-			const results = await GetQuestionDataWithId(user?.token, question_id)
+			const results = await GetQuestionDataWithId(question_id)
 			const questionData = results.data
 			setPageTitle('Edit')
 			setEditForm(true)
@@ -177,7 +175,7 @@ const AddQuestion = ({ level_data: levelData, module_data: moduleData }) => {
 		if (editForm) {
 			let question_id = router.query.question_id
 			data = JSON.stringify(data)
-			EditQuestion(data, question_id, user?.token)
+			EditQuestion(data, question_id)
 				.then(() => {
 					router.push('/dashboard/questions')
 				})
@@ -187,7 +185,7 @@ const AddQuestion = ({ level_data: levelData, module_data: moduleData }) => {
 		} else {
 			data.status = true
 			data = JSON.stringify(data)
-			Addquestion(data, user?.token)
+			Addquestion(data)
 				.then(() => {
 					router.push('/dashboard/questions')
 				})

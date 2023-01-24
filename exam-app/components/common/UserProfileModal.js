@@ -5,7 +5,6 @@ import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 
 import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { ButtonComponent } from './micro/buttonComponent'
 import { Label } from './micro/label'
@@ -30,7 +29,6 @@ const UserProfileModal = ({ userData, mutate, modal, setModal }) => {
 	const [password, setPassword] = useState(userData?.password)
 
 	const { handleSubmit } = useForm()
-	const user = useSelector((state) => state?.user)
 
 	// for sending the data to the backend
 	const checkWithDatabase = async (data) => {
@@ -48,7 +46,7 @@ const UserProfileModal = ({ userData, mutate, modal, setModal }) => {
 
 		// for new data registration
 
-		EditOrganization(OrganizationData, userData?.id, user?.token)
+		EditOrganization(OrganizationData, userData?.id)
 			.then(() => {
 				setModal(!modal)
 				toast.success('Profile Updated Successfully!')

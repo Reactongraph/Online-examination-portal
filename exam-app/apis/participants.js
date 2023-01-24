@@ -1,22 +1,18 @@
-import axios from 'axios'
 import useSWR from 'swr'
-import { SERVER_LINK } from '../helpers/config'
+import ApiCaller from './ApiCaller'
 
-const fetcher = (url, token) =>
-	axios
-		.get(url, {
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json;charset=UTF-8',
-				Authorization: token,
-			},
-		})
-		.then((res) => res.data)
-
-export function GetParticipantData(token) {
+const fetcher = async (url) => {
+	try {
+		const response = await ApiCaller.get(url)
+		return response.data
+	} catch (error) {
+		return error.response.data
+	}
+}
+export function GetParticipantData() {
 	const { data, error, isLoading, mutate } = useSWR(
-		[`${SERVER_LINK}/participants/find`, token],
-		([url, token]) => fetcher(url, token)
+		[`/participants/find`],
+		([url]) => fetcher(url)
 	)
 	return {
 		data,
@@ -26,10 +22,10 @@ export function GetParticipantData(token) {
 	}
 }
 
-export function GetParticipantDataWithOrgId(token, id) {
+export function GetParticipantDataWithOrgId(id) {
 	const { data, error, isLoading, mutate } = useSWR(
-		[`${SERVER_LINK}/participants/findbyorganization/${id}`, token],
-		([url, token]) => fetcher(url, token)
+		[`/participants/findbyorganization/${id}`],
+		([url]) => fetcher(url)
 	)
 	return {
 		data,
@@ -39,35 +35,14 @@ export function GetParticipantDataWithOrgId(token, id) {
 	}
 }
 
-export async function DeleteParticipant(participantId, token) {
-	return await axios.delete(`${SERVER_LINK}/participants/${participantId}`, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-	})
+export async function DeleteParticipant(participantId) {
+	return await ApiCaller.delete(`/participants/${participantId}`)
 }
 
-export async function AddParticipant(data, token) {
-	return await axios({
-		url: `${SERVER_LINK}/participants`,
-		method: 'POST',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-		data,
-	}).then((res) => res.data)
+export async function AddParticipant(data) {
+	return await ApiCaller.post(`/participants`, data)
 }
 
-export async function EditParticipant(data, participantId, token) {
-	await axios.patch(`${SERVER_LINK}/participants/${participantId}`, data, {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json;charset=UTF-8',
-			Authorization: token,
-		},
-	})
+export async function EditParticipant(data, participantId) {
+	return await ApiCaller.patch(`/participants/${participantId}`, data)
 }

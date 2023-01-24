@@ -3,7 +3,6 @@ import React, { useContext, useState } from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 
-import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
 import { AddOrganization } from '../../apis/organizations'
@@ -44,7 +43,7 @@ const OrganizationModal = ({ modal, setModal }) => {
 
 		// for new data registration
 
-		AddOrganization(OrganizationData, user?.token)
+		AddOrganization(OrganizationData)
 			.then(async () => {
 				setModal(!modal)
 				mutate()

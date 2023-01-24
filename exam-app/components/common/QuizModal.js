@@ -9,8 +9,6 @@ import { QuizContext } from '../context'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
-import { useSelector } from 'react-redux'
-
 const QuizModal = ({ modal, setModal }) => {
 	//For Image Preview
 	const {
@@ -33,7 +31,6 @@ const QuizModal = ({ modal, setModal }) => {
 	const [selectedLevelId, setSelectedLevelId] = useState('')
 	const [selectedModules, setSelectedModules] = useState([])
 
-	const login_token = useSelector((state) => state.user.token)
 	// for sending the data to the backend
 
 	const handleLevelTypeSelect = (event) => {
@@ -64,7 +61,7 @@ const QuizModal = ({ modal, setModal }) => {
 
 		//for new data registration
 
-		AddQuiz(QuizData, login_token)
+		AddQuiz(QuizData)
 			.then(() => {
 				router.replace(router.asPath)
 				mutate()

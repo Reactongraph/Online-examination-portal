@@ -7,8 +7,7 @@ import { ModuleContext } from '../../../components/context'
 
 // You can't name a function as MODULE...
 export default function Modules() {
-	const user = useSelector((state) => state?.user)
-	const { data, mutate } = GetModuleData(user.token)
+	const { data, mutate } = GetModuleData()
 	return (
 		<>
 			<ModuleContext.Provider value={{ module_data: data, mutate: mutate }}>

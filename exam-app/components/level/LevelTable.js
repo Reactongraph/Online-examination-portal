@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { ToastContainer, toast } from 'react-toastify'
-import { useSelector } from 'react-redux'
 import LevelModulePopup from '../common/PopUpModals/LevelModulePopUp'
 import { Levelcolumns } from './levelColumns'
 import { injectStyle } from 'react-toastify/dist/inject-style'
@@ -29,11 +28,10 @@ const LevelTable = () => {
 	const [level, setLevel] = useState('')
 
 	const { handleSubmit } = useForm()
-	const user = useSelector((state) => state?.user)
 	const handleRemoveClick = async (level_id) => {
 		var shouldDelete = confirm('Do you really want to delete ?')
 		if (shouldDelete) {
-			DeleteLevel(level_id, user?.token)
+			DeleteLevel(level_id)
 				.then(() => {
 					router.replace(router.asPath)
 					mutate()
@@ -60,7 +58,7 @@ const LevelTable = () => {
 		}
 		new_data = JSON.stringify(new_data)
 
-		EditLevel(new_data, level.id, user?.token)
+		EditLevel(new_data, level.id)
 			.then(() => {
 				router.replace(router.asPath)
 				mutate()
@@ -78,7 +76,7 @@ const LevelTable = () => {
 		// for taking the patch api data
 
 		if (data.level != null && data.level != '') {
-			EditLevel(LevelData, levelId, user?.token)
+			EditLevel(LevelData, levelId)
 				.then(() => {
 					setModal(!modal)
 					router.replace(router.asPath)

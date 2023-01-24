@@ -59,7 +59,7 @@ const CsvReader = (cdata, user, mutate) => {
 
 		// call the bulk api for bulk insert
 
-		UploadCsvQuestion(newCSVDataArray, user?.token)
+		UploadCsvQuestion(newCSVDataArray)
 			.then(() => {
 				mutate()
 				toast.success('CSV uploaded successfully!')

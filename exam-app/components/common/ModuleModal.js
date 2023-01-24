@@ -3,7 +3,6 @@ import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify'
-import { useSelector } from 'react-redux'
 import LevelModulePopup from './PopUpModals/LevelModulePopUp'
 import { AddModule } from '../../apis/modules'
 import { ModuleContext } from '../context'
@@ -15,7 +14,6 @@ const ModuleModal = ({ modal, setModal }) => {
 
 	const buttonText = 'Add'
 	const { handleSubmit } = useForm()
-	const user = useSelector((state) => state?.user)
 
 	// for sending the data to the backend
 	const checkWithDatabase = async (data) => {
@@ -26,7 +24,7 @@ const ModuleModal = ({ modal, setModal }) => {
 
 		// for taking the patch api data
 		if (data.module !== null && data.module != '') {
-			AddModule(LevelData, user?.token)
+			AddModule(LevelData)
 				.then(() => {
 					router.replace(router.asPath)
 					setModules('')
