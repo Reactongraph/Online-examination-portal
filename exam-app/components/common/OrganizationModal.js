@@ -9,7 +9,6 @@ import { AddOrganization } from '../../apis/organizations'
 import { OrganizationContext } from '../context'
 
 const OrganizationModal = ({ modal, setModal }) => {
-	const user = useSelector((state) => state?.user)
 	const { mutate } = useContext(OrganizationContext)
 
 	const [name, setName] = useState('')

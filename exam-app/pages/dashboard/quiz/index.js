@@ -8,7 +8,7 @@ import { QuizContext } from '../../../components/context'
 
 // You can't name a function as MODULE...
 export default function Quizes() {
-	const data = GetQuizData()
+	const { data, mutate } = GetQuizData()
 	const level_data = GetLevelData()
 	let module_data = GetModuleData()
 
