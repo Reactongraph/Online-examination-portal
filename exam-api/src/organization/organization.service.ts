@@ -5,42 +5,46 @@ const nodemailer = require('nodemailer')
 
 @Injectable()
 export class RestApiService {
-  constructor (private readonly prisma: PrismaService) {}
-  async create (createRestApiDto: organization_dto) {
-    try {
-      const EMAIL_CHECK = await this.prisma.organization.findUnique({
-        where: { email: createRestApiDto?.email }
-      })
-
-      if (EMAIL_CHECK != null) {
-        return {
-          message: 'user already exist',
-          id: null,
-          email: null
-        }
-      } else {
-        const user = await this.prisma.organization.create({
-          data: {
-            email: createRestApiDto?.email,
-            name: createRestApiDto?.name,
-            password: createRestApiDto?.password,
-            quota: createRestApiDto?.quota,
-            status: createRestApiDto?.status,
-            mobile: createRestApiDto?.mobile,
-            address: createRestApiDto?.address,
-            city: createRestApiDto?.city,
-            state: createRestApiDto?.state,
-            pincode: createRestApiDto.pincode
-          }
-        })
-        return user
-      }
-    } catch (err) {
-      return {
-        error: err
-      }
-    }
-  }
+	constructor(private readonly prisma: PrismaService) {}
+	async create(createRestApiDto: organization_dto) {
+		try {
+			
+			const EMAIL_CHECK = await this.prisma.organization.findUnique({
+				where: { email: createRestApiDto?.email },
+			})
+			
+			if (EMAIL_CHECK != null) {
+				return {
+					message: 'user already exist',
+					id: null,
+					email: null,
+				}
+			} else {
+				
+				const user = await this.prisma.organization.create({
+					data: {
+						email: createRestApiDto?.email,
+						name: createRestApiDto?.name,
+						password: createRestApiDto?.password,
+						quota: createRestApiDto?.quota,
+						status: createRestApiDto?.status,
+						mobile: createRestApiDto?.mobile,
+						address: createRestApiDto?.address,
+						city: createRestApiDto?.city,
+						state: createRestApiDto?.state,
+						pincode: createRestApiDto.pincode,
+					},
+				})
+				
+				return user
+			}
+		} catch (err) {
+			
+			return {
+				error: err,
+			}
+		}
+	}
 
   async reset_link (token: string, id: string, email: string) {
     try {
