@@ -1,8 +1,7 @@
-import { SERVER_LINK } from '../../helpers/config'
-import axios from 'axios'
 import { toast } from 'react-toastify'
+import { UploadCsvQuestion } from '../../apis/questions'
 
-const CsvReader = (cdata) => {
+const CsvReader = (cdata, user, mutate) => {
 	let csvFile = cdata
 	const reader = new FileReader()
 
@@ -59,17 +58,10 @@ const CsvReader = (cdata) => {
 		newCSVDataArray = JSON.stringify(newCSVDataArray)
 
 		// call the bulk api for bulk insert
-		await axios({
-			url: `${SERVER_LINK}/questions/uploads`,
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json;charset=UTF-8',
-				// Authorization: cookie,
-			},
-			data: newCSVDataArray,
-		})
+
+		UploadCsvQuestion(newCSVDataArray)
 			.then(() => {
+				mutate()
 				toast.success('CSV uploaded successfully!')
 			})
 			.catch(() => {

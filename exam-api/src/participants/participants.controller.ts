@@ -17,10 +17,13 @@ import { Response } from 'express'
 @ApiTags('Patricipants')
 @Controller('participants')
 export class ParticipantsController {
-  constructor (private readonly participant: ParticipantsService) { }
+  constructor (private readonly participant: ParticipantsService) {}
   // this controller is used to create participant data
   @Post()
-  async create (@Body() createparticipants: participants_dto, @Res({ passthrough: true }) response: Response) {
+  async create (
+  @Body() createparticipants: participants_dto,
+    @Res({ passthrough: true }) response: Response
+  ) {
     const PATRICPANT_CREATE = await this.participant.create(createparticipants)
     if (PATRICPANT_CREATE.email == null) {
       // if (PATRICPANT_CREATE === null) {
@@ -39,6 +42,13 @@ export class ParticipantsController {
   async findAll () {
     const PARTICIPANT_READ = await this.participant.findAll()
     return PARTICIPANT_READ
+  }
+
+  @Get('findbyorganization/:id')
+  async findParticipantByOrganizationId (@Param('id') id: string) {
+    const find = await this.participant.findParticipantId(id)
+
+    return find
   }
 
   // this controller is used to find  participant data by id
@@ -60,7 +70,7 @@ export class ParticipantsController {
       updateparticipants
     )
     if (UPDATE_PARTICIPANTS === null) {
-      response.status(HttpStatus.BAD_REQUEST).json([])
+      response.status(HttpStatus.BAD_REQUEST).json([UPDATE_PARTICIPANTS])
     }
     return UPDATE_PARTICIPANTS
   }
@@ -68,6 +78,8 @@ export class ParticipantsController {
   // this controller is used to delete  participant data
   @Delete(':id')
   async remove (@Param('id') id: string) {
+
+    
     const DELETE_PARTICIPANTS = await this.participant.remove(id)
     return DELETE_PARTICIPANTS
   }

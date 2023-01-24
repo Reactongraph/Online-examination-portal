@@ -3,7 +3,7 @@ import { PrismaService } from 'src/prisma.service'
 import { module_dto } from './module.entity'
 @Injectable()
 export class ModuleService {
-  constructor (private readonly prisma: PrismaService) { }
+  constructor (private readonly prisma: PrismaService) {}
   async create (params: module_dto) {
     try {
       const toLowerCaseModule = params?.module.toLowerCase()
@@ -60,26 +60,20 @@ export class ModuleService {
   async update (id: string, updateRestApiDto: module_dto) {
     try {
       const toLowerCaseModule = updateRestApiDto?.module.toLowerCase()
-      const CHECK_ID = await this.prisma.module.findUnique({
+      const UPDATE_USER = await this.prisma.module.update({
         where: {
-          module: toLowerCaseModule
+          id
+        },
+        data: {
+          module: toLowerCaseModule,
+          status: updateRestApiDto?.status
         }
       })
-
-      if (CHECK_ID) {
-        return null
-      } else {
-        const UPDATE_USER = await this.prisma.module.update({
-          where: {
-            id
-          },
-          data: updateRestApiDto
-        })
-        if (!UPDATE_USER) {
-          return `user not found for this ${id}`
-        }
-        return `module updated ${id} `
+      if (!UPDATE_USER) {
+        return `user not found for this ${id}`
       }
+      return `module updated ${id} `
+      // }
     } catch (err) {
       return { error: err }
     }

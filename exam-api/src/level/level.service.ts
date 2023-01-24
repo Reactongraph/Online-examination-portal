@@ -3,7 +3,7 @@ import { level_dto } from './level.entity'
 import { PrismaService } from 'src/prisma.service'
 @Injectable()
 export class LevelService {
-  constructor (private readonly prisma: PrismaService) { }
+  constructor (private readonly prisma: PrismaService) {}
   async create (params: level_dto) {
     try {
       const status = params?.status
@@ -59,29 +59,20 @@ export class LevelService {
   async update (id: string, updateRestApiDto: level_dto) {
     try {
       const toLowerCaseLevel = updateRestApiDto?.level.toLowerCase()
-      const find = await this.prisma.level.findUnique({
+      const updateUser = await this.prisma.level.update({
         where: {
-          level: toLowerCaseLevel
+          id
+        },
+        data: {
+          level: toLowerCaseLevel,
+          status: updateRestApiDto?.status
         }
       })
 
-      if (find) {
-        return null
-      } else {
-        const updateUser = await this.prisma.level.update({
-          where: {
-            id
-          },
-          data: {
-            level: toLowerCaseLevel
-          }
-        })
-
-        if (!updateUser) {
-          return `user not found for this ${id}`
-        }
-        return `${id} `
+      if (!updateUser) {
+        return `user not found for this ${id}`
       }
+      return `${id} `
     } catch (err) {
       return { error: err }
     }

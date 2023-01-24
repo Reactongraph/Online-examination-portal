@@ -21,7 +21,7 @@ import { HttpStatus } from '@nestjs/common/enums'
 @ApiTags('Questions')
 @Controller('questions')
 export class QuestionsController {
-  constructor (private readonly questionservice: QuestionsService) { }
+  constructor (private readonly questionservice: QuestionsService) {}
   @Post('uploads')
   @UseInterceptors(FileInterceptor('File'))
   async uploadFile (
@@ -37,7 +37,10 @@ export class QuestionsController {
   }
 
   @Post('create')
-  async create_question (@Body() createquestion: QuestionDTO, @Res({ passthrough: true }) response: Response) {
+  async create_question (
+  @Body() createquestion: QuestionDTO,
+    @Res({ passthrough: true }) response: Response
+  ) {
     const data = this.questionservice.create(createquestion)
     if (data === null) {
       response.status(HttpStatus.BAD_REQUEST).json([])
@@ -58,7 +61,11 @@ export class QuestionsController {
   }
 
   @Patch(':id')
-  async update (@Param('id') id: string, @Body() updatequestion: QuestionDTO, @Res({ passthrough: true }) response: Response) {
+  async update (
+  @Param('id') id: string,
+    @Body() updatequestion: QuestionDTO,
+    @Res({ passthrough: true }) response: Response
+  ) {
     const UPDATE_QUESTIONS = await this.questionservice.update(
       id,
       updatequestion

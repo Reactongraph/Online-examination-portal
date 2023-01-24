@@ -17,4 +17,7 @@ export class auth_dto {
 
   @ApiProperty()
     token: string
+
+  @ApiProperty()
+    role: string
 }

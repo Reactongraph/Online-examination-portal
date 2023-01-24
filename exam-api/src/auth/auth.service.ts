@@ -10,7 +10,7 @@ export class AuthService {
   constructor (
     private readonly jwtService: JwtService,
     private readonly prisma: PrismaService
-  ) { }
+  ) {}
 
   async changepass (Headers: auth_dto, body: auth_dto) {
     const token_check = await this.prisma.reset_token.findMany({
@@ -42,32 +42,55 @@ export class AuthService {
   }
 
   async login (login: auth_dto) {
-    const user = await this.prisma.user_auth.findUnique({
-      where: { email: login?.email }
-    })
-
-    if (!user) {
-      return 'invalid username'
-    }
-    if (login?.email === user.email && login?.password === user.password) {
-      const payload = {
-        id: user.id,
-        username: user.name,
-        email: user.email
+    try {
+      if (login.role === 'OrganizationUser') {
+        const user = await this.prisma.organization.findUnique({
+          where: { email: login.email }
+        })
+        if (!user) {
+          return 'invalid username'
+        }
+        if (login?.email === user.email && login?.password === user.password) {
+          const payload = {
+            id: user.id,
+            username: user.name,
+            email: user.email
+          }
+          return payload
+        } else {
+          return 'invalid credentials'
+        }
       }
-      return payload
-    } else {
-      return 'invalid credentials'
+
+      const user = await this.prisma.user_auth.findUnique({
+        where: { email: login?.email }
+      })
+
+      if (!user) {
+        return 'invalid username'
+      }
+      if (login?.email === user.email && login?.password === user.password) {
+        const payload = {
+          id: user.id,
+          username: user.name,
+          email: user.email
+        }
+        return payload
+      } else {
+        return 'invalid credentials'
+      }
+    } catch (err) {
+      return { error: err, id: null }
     }
   }
 
-  async create_token (userdata: any) {
+  async create_token (userdata: any, role: string) {
     const access_token = await this.jwtService.signAsync(
-      { id: userdata.id, username: userdata.name, email: userdata.email },
+      { id: userdata.id, username: userdata.name, email: userdata.email, role },
       { secret: jwtConstants.access_tokensecret }
     )
     const refresh_token = await this.jwtService.signAsync(
-      { id: userdata.id, username: userdata.name, email: userdata.email },
+      { id: userdata.id, username: userdata.name, email: userdata.email, role },
       { secret: jwtConstants.refresh_tokensecret }
     )
     return { access_token, refresh_token }
@@ -77,12 +100,15 @@ export class AuthService {
     try {
       if (tokenn) {
         const decode: any = this.jwtService.decode(tokenn)
+
         const find_username = await this.prisma.user_auth.findUnique({
           where: { email: decode.email }
         })
-        const payload = { username: find_username.name, email: decode.email }
 
-        const new_token = await this.create_token(decode)
+        const payload = { username: find_username.name, email: decode.email }
+        
+
+        const new_token = await this.create_token(decode, decode.role)
         prisma.$connect()
         await this.prisma.login.findUnique({
           where: {
@@ -98,10 +124,19 @@ export class AuthService {
             token_id: decode.id
           }
         })
-        return { token: new_token, payload }
-      }
-    } catch (error) {
+        const role = await this.prisma.login.findUnique({
+          where: { refresh_token: tokenn }
+        })
 
+        return {
+          token: new_token,
+          payload,
+          role: role?.role,
+          organization_id: decode.id
+        }
+      }
+    } catch (err) {
+      return { error: err }
     }
   }
 }

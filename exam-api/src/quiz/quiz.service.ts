@@ -4,8 +4,8 @@ import { PrismaService } from 'src/prisma.service'
 
 @Injectable()
 export class QuizService {
-  constructor(private readonly prisma: PrismaService) { }
-  async create(createQuizDto: QuizDTO) {
+  constructor (private readonly prisma: PrismaService) {}
+  async create (createQuizDto: QuizDTO) {
     // date comes in string and in db status column data type is boolean so we convert string to boolean
     try {
       const toLowerCaseQuizName = createQuizDto?.quiz_name.toLowerCase()
@@ -28,8 +28,8 @@ export class QuizService {
           buffer_time: createQuizDto.buffer_time,
           description: createQuizDto.description,
           status: myBool,
-          module_id: createQuizDto.module_id,
-          level_id: createQuizDto.level_id
+          module_id: createQuizDto?.module_id,
+          level_id: createQuizDto?.level_id
         }
       })
 
@@ -39,13 +39,13 @@ export class QuizService {
     }
   }
 
-  async findAll() {
+  async findAll () {
     try {
       const leveldata = await this.prisma.quiz.findMany({
         include: { level: true }
       })
 
-      const quiz = await this.prisma.quiz.aggregateRaw({
+      const quiz: any = await this.prisma.quiz.aggregateRaw({
         pipeline: [
           {
             $lookup: {
@@ -59,15 +59,13 @@ export class QuizService {
       })
 
       for (const [index] of leveldata.entries()) {
-        quiz[index]['level'] = leveldata[index].level
+        quiz[index].level = leveldata[index].level
       }
       return { quiz }
-    } catch (error) {
-
-    }
+    } catch (error) {}
   }
 
-  async findOne(id: string) {
+  async findOne (id: string) {
     try {
       const quiz = await this.prisma.quiz.findMany({
         where: {
@@ -85,16 +83,8 @@ export class QuizService {
     }
   }
 
-  async update(id: string, updateRestApiDto: QuizDTO) {
+  async update (id: string, updateRestApiDto: QuizDTO) {
     try {
-      const quiz_find = await this.prisma.quiz.findUnique({
-        where: {
-          quiz_name: updateRestApiDto?.quiz_name
-        }
-      })
-      if (quiz_find) {
-        return null
-      }
       const updateQuiz = await this.prisma.quiz.update({
         where: {
           id
@@ -110,7 +100,7 @@ export class QuizService {
     }
   }
 
-  async remove(id: string) {
+  async remove (id: string) {
     try {
       const deleteQuiz = await this.prisma.quiz.delete({
         where: {

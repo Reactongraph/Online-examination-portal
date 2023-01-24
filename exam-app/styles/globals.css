@@ -23,7 +23,7 @@ a {
 		color-scheme: dark;
 	}
 	body {
-		color: white;
-		background: white;
+		color: #000;
+		background: #fff;
 	}
 }
