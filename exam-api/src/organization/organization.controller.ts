@@ -31,11 +31,9 @@ export class RestApiController {
   @Body() createRestApiDto: organization_dto,
     @Res({ passthrough: true }) response: Response
   ) {
-    
     const user = await this.restApiService.create(createRestApiDto)
 
     if (user.id == null) {
-
       response.status(HttpStatus.BAD_REQUEST).json([])
     } else {
       const jwt = await this.jwtService.signAsync({ id: user.id })

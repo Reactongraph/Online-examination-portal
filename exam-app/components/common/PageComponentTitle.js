@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import OrganizationModal from './OrganizationModal'
-import ParticipantModal from './ParticipantModal'
 import LevelModal from './LevelModal'
 import ModuleModal from './ModuleModal'
 import QuizModal from './QuizModal'
 import UserProfileModal from './UserProfileModal'
 import { Banner } from './micro/banner'
 import { ButtonComponent } from './micro/buttonComponent'
+import { useRouter } from 'next/router'
 
 const PageComponentTitle = ({
 	title,
@@ -15,12 +15,14 @@ const PageComponentTitle = ({
 	quiz_data,
 	module_data,
 	level_data,
-	organization_data,
 	userData,
 	mutate,
 }) => {
+	const router = useRouter()
 	const [modal, setModal] = useState(false)
-
+	const handleAddClick = () => {
+		router.push(`${router.asPath}/new`)
+	}
 	return (
 		<>
 			<Banner
@@ -33,7 +35,7 @@ const PageComponentTitle = ({
 					className={
 						'inline-flex px-5 py-3 text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 rounded-md ml-6 mb-3'
 					}
-					onClick={() => setModal(true)}>
+					onClick={() => handleAddClick()}>
 					<React.Fragment>
 						<svg
 							aria-hidden='true'
@@ -53,13 +55,7 @@ const PageComponentTitle = ({
 				</ButtonComponent>
 
 				{title == 'PARTICIPANT' ? (
-					<>
-						<ParticipantModal
-							modal={modal}
-							setModal={setModal}
-							organization_data={organization_data}
-						/>
-					</>
+					<></>
 				) : title == 'LEVEL' ? (
 					<>
 						<LevelModal

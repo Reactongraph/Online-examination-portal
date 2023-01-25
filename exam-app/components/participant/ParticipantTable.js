@@ -11,7 +11,7 @@ import {
 	EditParticipant,
 } from '../../apis/participants'
 import { ButtonComponent } from '../common/micro/buttonComponent'
-
+import { useRouter } from 'next/router'
 const ParticipantTable = ({
 	data: participant_data,
 	mutate,
@@ -28,7 +28,7 @@ const ParticipantTable = ({
 	const [organizationId, setOrganizationId] = useState('')
 	const [selectedorganizationId, setSelectedOrganizationId] = useState('')
 	const { handleSubmit } = useForm()
-
+	const router = useRouter()
 	const handleRemoveClick = async (participantId) => {
 		try {
 			DeleteParticipant(participantId)
@@ -54,6 +54,7 @@ const ParticipantTable = ({
 		setMobile(participant.mobile)
 		setOrganizationId(participant.Organization_id)
 		setPassword(participant.password)
+		router.push(`${router.asPath}/edit/${participant.id}`)
 	}
 
 	// for sending the data to the backend

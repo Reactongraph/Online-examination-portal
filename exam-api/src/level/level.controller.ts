@@ -23,7 +23,6 @@ export class LevelController {
   @Body() level: level_dto,
     @Res({ passthrough: true }) response: Response
   ) {
-    
     const level_create = await this.Levels.create(level)
     if (level_create === null) {
       response.status(HttpStatus.BAD_REQUEST).json([])
