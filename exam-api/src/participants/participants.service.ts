@@ -81,8 +81,9 @@ export class ParticipantsService {
   async findParticipantId (id: string) {
     try {
       const find_data = await this.prisma.participants.findMany({
-        where: { Organization_id: id }
+        where: { id }
       })
+
       return find_data
     } catch (err) {
       return { error: err }
@@ -108,17 +109,13 @@ export class ParticipantsService {
 
   async update (id: string, updateRestApiDto: participants_dto) {
     try {
-      // const FIND_USER = await this.prisma.participants.findUnique({ where: { email: updateRestApiDto?.email } })
-
-      // if (FIND_USER) {
-      //   return null
-      // }
       const updateUser = await this.prisma.participants.update({
         where: {
           id
         },
         data: updateRestApiDto
       })
+
       if (!updateUser) {
         return `user not found for this ${id}`
       }

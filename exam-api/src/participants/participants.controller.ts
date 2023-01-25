@@ -25,6 +25,7 @@ export class ParticipantsController {
     @Res({ passthrough: true }) response: Response
   ) {
     const PATRICPANT_CREATE = await this.participant.create(createparticipants)
+
     if (PATRICPANT_CREATE.email == null) {
       // if (PATRICPANT_CREATE === null) {
       response.status(HttpStatus.BAD_REQUEST).json([])
@@ -78,8 +79,6 @@ export class ParticipantsController {
   // this controller is used to delete  participant data
   @Delete(':id')
   async remove (@Param('id') id: string) {
-
-    
     const DELETE_PARTICIPANTS = await this.participant.remove(id)
     return DELETE_PARTICIPANTS
   }
