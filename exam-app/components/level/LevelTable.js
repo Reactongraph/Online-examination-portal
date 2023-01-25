@@ -142,7 +142,7 @@ const LevelTable = ({ data: level_data, mutate }) => {
 				className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'
 			/>
 
-			<LevelModulePopup
+			{/* <LevelModulePopup
 				setStateName={setLevel}
 				stateName={level}
 				checkWithDatabase={checkWithDatabase}
@@ -152,7 +152,7 @@ const LevelTable = ({ data: level_data, mutate }) => {
 				modalName={'LEVEL'}
 				buttonText={buttonText}
 				placeholderText={'eg. Easy , Moderate , etc ...'}
-			/>
+			/> */}
 			<ToastContainer />
 		</>
 	)
