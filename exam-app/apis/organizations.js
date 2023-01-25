@@ -22,18 +22,8 @@ export function GetOrganizationData() {
 		mutate,
 	}
 }
-export function GetOrganizationDataWithId(id) {
-	const { data, error, isLoading, mutate } = useSWR(
-		[`/organization/${id}`],
-		([url]) => fetcher(url)
-	)
-
-	return {
-		data,
-		error,
-		isLoading,
-		mutate,
-	}
+export async function GetOrganizationDataWithId(id) {
+	return await ApiCaller.get(`/organization/${id}`)
 }
 export async function DeleteOrganization(organizationId) {
 	return await ApiCaller.delete(`/organization/${organizationId}`)

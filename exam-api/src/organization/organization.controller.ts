@@ -58,7 +58,8 @@ export class RestApiController {
   // this controller is used to read by id Oraganization data
   @Get(':id')
   async findOne (@Param('id') id: string) {
-    return await this.restApiService.findOne(id)
+    const data = await this.restApiService.findOne(id)
+    return data
   }
 
   // this controller is used to update Oraganization data

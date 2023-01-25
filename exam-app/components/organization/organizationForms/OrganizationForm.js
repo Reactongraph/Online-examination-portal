@@ -8,7 +8,6 @@ function OrganizationForm(props) {
 	const {
 		handleSubmit,
 		checkWithDatabase,
-		pageTitle,
 		name,
 		password,
 		city,
@@ -18,6 +17,7 @@ function OrganizationForm(props) {
 		mobile,
 		quota,
 		buttonText,
+		email,
 		setEmail,
 		setAddress,
 		setCity,
@@ -28,13 +28,12 @@ function OrganizationForm(props) {
 		setPincode,
 		setQuota,
 	} = props
-
 	return (
 		<>
 			<div className='flex-row space-y-3 relative p-12 '>
 				<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
 					<Banner
-						heading={`${pageTitle} Organization`}
+						heading={`${buttonText} Organization`}
 						subHeading={'Easy to understand'}
 						additionalClassName={'my-4 ml-3'}
 					/>
@@ -67,6 +66,7 @@ function OrganizationForm(props) {
 										className={
 											'appearance-none block w-full bg-white-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
 										}
+										value={email}
 										placeholder='example@gmail.com '
 										required='required'
 									/>
