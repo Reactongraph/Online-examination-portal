@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
 import QuizPopUp from '../common/PopUpModals/quizPopUp/QuizPopup'
-import { AddQuiz } from '../../apis/quizzes'
+import { AddQuiz, EditQuiz, GetQuizDataWithId } from '../../apis/quizzes'
 
 import 'react-datepicker/dist/react-datepicker.css'
+import moment from 'moment'
 
 const AddQuizComponent = ({
 	modal,
@@ -19,7 +20,7 @@ const AddQuizComponent = ({
 
 	const router = useRouter()
 
-	const buttonText = 'Add'
+	const [buttonText, setButtonText] = useState('Add')
 	const [name, setName] = useState('')
 
 	const [description, setDescription] = useState('')
@@ -28,11 +29,57 @@ const AddQuizComponent = ({
 	const [selectedStartDate, setSelectedStartDate] = useState(null)
 	const [selectedEndDate, setSelectedEndDate] = useState(null)
 	const [selectedBufferDate, setSelectedBufferDate] = useState(null)
-
+	const [optionModuleSelected, setOptionModuleSelected] = useState()
+	const [editForm, setEditForm] = useState(false)
 	const [selectedLevelId, setSelectedLevelId] = useState('')
 	const [selectedModules, setSelectedModules] = useState([])
 
 	// for sending the data to the backend
+
+	//TODO: for checking it as the edit request
+
+	useEffect(() => {
+		let quiz_id = router.query.id
+
+		async function getQuizData() {
+			const results = await GetQuizDataWithId(quiz_id)
+			const quizData = results.data[0]
+
+			setButtonText('Update')
+
+			let seletedModuleDataArray = []
+			let seletedModuleDataArrayByID = []
+
+			// // first find the user with the id
+
+			let singleQuizData = quizData
+			setEditForm(true)
+			setName(singleQuizData.quiz_name)
+			setSelectedLevelId(singleQuizData.level_id)
+			setDescription(singleQuizData.description)
+			let bufferDate = moment(singleQuizData.buffer_time).toDate()
+			let startDate = moment(singleQuizData.start_date).toDate()
+			let endDate = moment(singleQuizData.end_date).toDate()
+
+			moduleData?.map((oneModule) => {
+				singleQuizData.module_id.map((oneID) => {
+					if (oneID == oneModule.id) {
+						seletedModuleDataArray.push(oneModule)
+						seletedModuleDataArrayByID.push(oneModule.id)
+					}
+				})
+			})
+			setSelectedModules(seletedModuleDataArrayByID)
+			setOptionModuleSelected(seletedModuleDataArray)
+			setSelectedBufferDate(bufferDate)
+			setSelectedEndDate(endDate)
+			setSelectedStartDate(startDate)
+		}
+
+		if (quiz_id) {
+			getQuizData()
+		}
+	}, [router.query?.id])
 
 	const handleLevelTypeSelect = (event) => {
 		let levelId = event.target.value
@@ -44,12 +91,11 @@ const AddQuizComponent = ({
 		event.map((oneModule) => {
 			moduleSelectedArray.push(`${oneModule.id}`)
 		})
-
+		setOptionModuleSelected(event)
 		setSelectedModules(moduleSelectedArray)
 	}
 
 	const checkWithDatabase = async (data) => {
-		data.status = true
 		data.quiz_name = name
 		data.start_date = selectedStartDate
 		data.end_date = selectedEndDate
@@ -58,20 +104,30 @@ const AddQuizComponent = ({
 		data.description = description
 		data.module_id = selectedModules
 
-		let QuizData = JSON.stringify(data)
-
 		//for new data registration
 
-		AddQuiz(QuizData)
-			.then(() => {
-				router.replace(`/dashboard/quiz`)
-				setName('')
-				setModal(!modal)
-				toast.success('Quiz created!')
-			})
-			.catch(() => {
-				toast.error('Invalid Request')
-			})
+		if (editForm) {
+			let QuizData = JSON.stringify(data)
+			EditQuiz(QuizData, router.query?.id)
+				.then(() => {
+					router.replace(`/dashboard/quiz`)
+					toast.success('Quiz updated!')
+				})
+				.catch(() => {
+					toast.error('invalid request')
+				})
+		} else {
+			data.status = true
+			let QuizData = JSON.stringify(data)
+			AddQuiz(QuizData)
+				.then(() => {
+					router.replace(`/dashboard/quiz`)
+					toast.success('Quiz created!')
+				})
+				.catch(() => {
+					toast.error('Invalid Request')
+				})
+		}
 	}
 
 	return (
@@ -84,6 +140,7 @@ const AddQuizComponent = ({
 				setName={setName}
 				modal={modal}
 				setModal={setModal}
+				optionModuleSelected={optionModuleSelected}
 				selectedLevelId={selectedLevelId}
 				setSelectedLevelId={setSelectedLevelId}
 				selectedModules={selectedModules}
