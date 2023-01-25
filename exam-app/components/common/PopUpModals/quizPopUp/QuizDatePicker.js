@@ -7,7 +7,7 @@ function QuizDatePicker(props) {
 			<Label key={'grid-last-name'}> {timeTitle}</Label>
 			<div class='flex items-center justify-center'>
 				<div
-					className='datepicker bg-gray-200relative form-floating mb-3 xl:w-96'
+					className='datepicker bg-gray-200relative form-floating mb-3 w-full '
 					data-mdb-toggle-button='false'>
 					<DatePicker
 						className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'

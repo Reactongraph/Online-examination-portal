@@ -143,32 +143,6 @@ const QuizTable = ({ data: quiz_data, module_data, level_data }) => {
 				className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'
 			/>
 
-			<QuizPopUp
-				handleSubmit={handleSubmit}
-				checkWithDatabase={checkWithDatabase}
-				buttonText={buttonText}
-				name={name}
-				setName={setName}
-				modal={modal}
-				setModal={setModal}
-				selectedLevelId={selectedLevelId}
-				setSelectedLevelId={setSelectedLevelId}
-				optionModuleSelected={optionModuleSelected}
-				// selectedModules={optionModuleSelected}
-				// setSelectedModules={setOptionModuleSelected}
-				selectedStartDate={selectedStartDate}
-				setSelectedStartDate={setSelectedStartDate}
-				selectedBufferDate={selectedBufferDate}
-				setSelectedBufferDate={setSelectedBufferDate}
-				selectedEndDate={selectedEndDate}
-				setSelectedEndDate={setSelectedEndDate}
-				handleLevelTypeSelect={handleLevelTypeSelect}
-				handleModuleTypeSelect={handleModuleTypeSelect}
-				description={description}
-				setDescription={setDescription}
-				moduleData={moduleData}
-				levelData={levelData}
-			/>
 			<ToastContainer />
 		</>
 	)
