@@ -10,7 +10,7 @@ export default function AddQuestions() {
 	const { data: module_data } = GetModuleData()
 	return (
 		<>
-			<Layout title='Questions'>
+			<Layout title='add Questions'>
 				<AddQuestion
 					level_data={level_data}
 					module_data={module_data}
