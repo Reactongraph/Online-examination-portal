@@ -78,8 +78,6 @@ export class ParticipantsController {
   // this controller is used to delete  participant data
   @Delete(':id')
   async remove (@Param('id') id: string) {
-
-    
     const DELETE_PARTICIPANTS = await this.participant.remove(id)
     return DELETE_PARTICIPANTS
   }

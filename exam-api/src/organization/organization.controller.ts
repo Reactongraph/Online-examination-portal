@@ -31,11 +31,9 @@ export class RestApiController {
   @Body() createRestApiDto: organization_dto,
     @Res({ passthrough: true }) response: Response
   ) {
-    
     const user = await this.restApiService.create(createRestApiDto)
 
     if (user.id == null) {
-
       response.status(HttpStatus.BAD_REQUEST).json([])
     } else {
       const jwt = await this.jwtService.signAsync({ id: user.id })
@@ -60,7 +58,8 @@ export class RestApiController {
   // this controller is used to read by id Oraganization data
   @Get(':id')
   async findOne (@Param('id') id: string) {
-    return await this.restApiService.findOne(id)
+    const data = await this.restApiService.findOne(id)
+    return data
   }
 
   // this controller is used to update Oraganization data

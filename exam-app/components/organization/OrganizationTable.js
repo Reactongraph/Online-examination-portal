@@ -8,9 +8,9 @@ import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
 import { DeleteOrganization, EditOrganization } from '../../apis/organizations'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
 import { ButtonComponent } from '../common/micro/buttonComponent'
+import { useRouter } from 'next/router'
 
 const OrganizationTable = ({ data: organization_data, mutate }) => {
-	// const [editForm, setEditForm] = useState(false)
 	const [modal, setModal] = useState(false)
 	const [organizationId, setOrganizationId] = useState('')
 
@@ -26,6 +26,7 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 	const [quota, setQuota] = useState('')
 
 	const [password, setPassword] = useState('')
+	const router = useRouter()
 
 	const { handleSubmit } = useForm()
 	const handleRemoveClick = (org_id) => {
@@ -60,7 +61,6 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 	const handleEditClick = async (org) => {
 		setButtonText('Update')
 		setOrganizationId(org.id)
-		setModal(true)
 		setName(org.name)
 		setEmail(org.email)
 		setMobile(org.mobile)
@@ -70,6 +70,7 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 		setCity(org.city)
 		setPincode(org.pincode)
 		setQuota(org.quota)
+		router.push(`${router.asPath}/edit/${org.id}`)
 	}
 
 	const checkWithDatabase = async (data) => {
