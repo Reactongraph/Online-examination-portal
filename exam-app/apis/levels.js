@@ -21,16 +21,8 @@ export function GetLevelData() {
 		isLoading,
 	}
 }
-export function GetLevelDataWithId(id) {
-	const { data, error, isLoading, mutate } = useSWR([`/level/${id}`], ([url]) =>
-		fetcher(url)
-	)
-	return {
-		data,
-		error,
-		isLoading,
-		mutate,
-	}
+export async function GetLevelDataWithId(id) {
+	return await ApiCaller.get(`/level/${id}`)
 }
 export async function DeleteLevel(id) {
 	return await ApiCaller.delete(`/level/${id}`)

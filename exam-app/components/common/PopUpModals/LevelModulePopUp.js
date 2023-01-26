@@ -1,4 +1,3 @@
-import PureModal from 'react-pure-modal'
 import React from 'react'
 import { Label } from '../micro/label'
 import { ButtonComponent } from '../micro/buttonComponent'
@@ -7,8 +6,6 @@ import { InputComponent } from '../micro/inputComponent'
 import { Banner } from '../micro/banner'
 function LevelModulePopup(props) {
 	const {
-		setModal,
-		modal,
 		checkWithDatabase,
 		handleSubmit,
 		buttonText,
@@ -22,7 +19,7 @@ function LevelModulePopup(props) {
 			<div className='flex-row space-y-3 relative p-10'>
 				<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
 					<Banner
-						heading={'Add New Level'}
+						heading={`${buttonText} Level`}
 						subHeading={'Easy to understand'}
 						additionalClassName={'my-4 ml-3'}
 					/>
