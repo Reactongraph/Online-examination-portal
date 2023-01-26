@@ -1,20 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useRouter } from 'next/router'
 import { Banner } from './micro/banner'
 import { ButtonComponent } from './micro/buttonComponent'
 
-const PageComponentTitle = ({
-	title,
-	titleDescription,
-	buttonTitle,
-	quiz_data,
-	module_data,
-	level_data,
-	organization_data,
-	userData,
-	mutate,
-}) => {
-	const [modal, setModal] = useState(false)
+const PageComponentTitle = ({ title, titleDescription, buttonTitle }) => {
 	const router = useRouter()
 	const handleAddClick = () => {
 		router.push(`${router.asPath}/new`)

@@ -1,10 +1,8 @@
 import Table from '../common/Table'
-import React, { useState } from 'react'
+import React from 'react'
 import { useRouter } from 'next/router'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
-import { useForm } from 'react-hook-form'
 import { ToastContainer, toast } from 'react-toastify'
-import LevelModulePopup from '../common/PopUpModals/LevelModulePopUp'
 import { Levelcolumns } from './levelColumns'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 import { DeleteLevel, EditLevel } from '../../apis/levels'
@@ -19,13 +17,6 @@ if (typeof window !== 'undefined') {
 const LevelTable = ({ data: level_data, mutate }) => {
 	const router = useRouter()
 
-	const [modal, setModal] = useState(false)
-	const [levelId, setLevelId] = useState('')
-
-	const [buttonText, setButtonText] = useState('Add')
-	const [level, setLevel] = useState('')
-
-	const { handleSubmit } = useForm()
 	const handleRemoveClick = async (level_id) => {
 		var shouldDelete = confirm('Do you really want to delete ?')
 		if (shouldDelete) {
@@ -42,10 +33,7 @@ const LevelTable = ({ data: level_data, mutate }) => {
 	}
 
 	const handleEditClick = async (level) => {
-		setButtonText('Update')
-		setLevelId(level.id)
-		setModal(true)
-		setLevel(level.level)
+		router.push(`${router.asPath}/edit/${level.id}`)
 	}
 
 	const handleBoxClick = async (level) => {
@@ -65,28 +53,6 @@ const LevelTable = ({ data: level_data, mutate }) => {
 			.catch(() => {
 				toast.error('Invalid Request')
 			})
-	}
-	const checkWithDatabase = async (data) => {
-		data.level = level
-
-		let LevelData = JSON.stringify(data)
-
-		// for taking the patch api data
-
-		if (data.level != null && data.level != '') {
-			EditLevel(LevelData, levelId)
-				.then(() => {
-					setModal(!modal)
-					router.replace(router.asPath)
-					mutate()
-					toast.success('level updated!')
-				})
-				.catch(() => {
-					toast.error('Invalid Request')
-				})
-		} else {
-			toast.error("Field Can't be empty ")
-		}
 	}
 
 	function createData(level) {
@@ -131,28 +97,16 @@ const LevelTable = ({ data: level_data, mutate }) => {
 	})
 
 	// data by using which table data is creating using api call
-	const data = rowsDataArray
 
 	return (
 		<>
 			<Table
 				columns={Levelcolumns}
-				data={data || []}
+				data={rowsDataArray || []}
 				rowKey='id'
 				className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'
 			/>
 
-			{/* <LevelModulePopup
-				setStateName={setLevel}
-				stateName={level}
-				checkWithDatabase={checkWithDatabase}
-				handleSubmit={handleSubmit}
-				setModal={setModal}
-				modal={modal}
-				modalName={'LEVEL'}
-				buttonText={buttonText}
-				placeholderText={'eg. Easy , Moderate , etc ...'}
-			/> */}
 			<ToastContainer />
 		</>
 	)
