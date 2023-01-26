@@ -6,7 +6,6 @@ import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
 
 const AddLevelComponent = () => {
-	// const [modal, setModal] = useState(false)
 	const router = useRouter()
 	const [editForm, setEditForm] = useState(false)
 
