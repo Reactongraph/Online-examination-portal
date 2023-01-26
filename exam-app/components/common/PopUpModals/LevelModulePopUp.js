@@ -19,7 +19,7 @@ function LevelModulePopup(props) {
 			<div className='flex-row space-y-3 relative p-10'>
 				<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
 					<Banner
-						heading={`${buttonText} Level`}
+						heading={`${buttonText} ${modalName}`}
 						subHeading={'Easy to understand'}
 						additionalClassName={'my-4 ml-3'}
 					/>
