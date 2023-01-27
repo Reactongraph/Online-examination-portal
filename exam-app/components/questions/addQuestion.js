@@ -39,7 +39,7 @@ const AddQuestion = ({ level_data: levelData, module_data: moduleData }) => {
 	])
 
 	useEffect(() => {
-		let question_id = router.query.question_id
+		let question_id = router.query?.id
 
 		async function getQuestionData() {
 			const results = await GetQuestionDataWithId(question_id)
@@ -71,7 +71,8 @@ const AddQuestion = ({ level_data: levelData, module_data: moduleData }) => {
 		if (router.query.question_id) {
 			getQuestionData()
 		}
-	}, [router.query?.question_id])
+	}, [router.query?.id])
+
 	const { handleSubmit } = useForm()
 
 	useEffect(() => {
