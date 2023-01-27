@@ -44,7 +44,7 @@ const QuestionTable = ({ question_data, mutate }) => {
 	}
 
 	const handleEditClick = async (question_id) => {
-		router.push(`/dashboard/questions/addQuestion?question_id=${question_id}`)
+		router.push(`${router.asPath}/edit/${question_id}`)
 	}
 
 	function createData(

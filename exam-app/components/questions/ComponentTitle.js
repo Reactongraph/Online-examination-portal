@@ -18,7 +18,7 @@ const PageComponentTitle = ({
 
 	// const checkModal = (title) => {}
 	const handleAddClick = () => {
-		router.push('/dashboard/questions/addQuestion')
+		router.push('/dashboard/questions/new')
 	}
 
 	const handleCsv = (e) => {
