@@ -5,7 +5,7 @@ export default function EditPage() {
 	return (
 		<>
 			<Layout>
-				<CreateParticipant />
+				<CreateParticipant isViewOnly={false} />
 			</Layout>
 		</>
 	)

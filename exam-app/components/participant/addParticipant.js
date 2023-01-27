@@ -11,7 +11,7 @@ import {
 } from '../../apis/participants'
 import ParticipantPopUp from '../common/PopUpModals/ParticipantPopUp'
 
-const CreateParticipant = () => {
+const CreateParticipant = ({ isViewOnly }) => {
 	const router = useRouter()
 
 	const [name, setName] = useState('')
@@ -44,7 +44,7 @@ const CreateParticipant = () => {
 				setMobile(element?.mobile)
 				return element
 			})
-			setButtonText('Edit')
+			isViewOnly ? setButtonText('View') : setButtonText('Edit')
 			setEditForm(true)
 		}
 		if (router.query.id) {
@@ -106,6 +106,7 @@ const CreateParticipant = () => {
 				buttonText={buttonText}
 				handleOrganizationIdTypeSelect={handleOrganizationIdTypeSelect}
 				organization_data={organization_data}
+				isViewOnly={isViewOnly}
 			/>
 		</>
 	)

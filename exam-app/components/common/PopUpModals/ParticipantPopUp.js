@@ -1,5 +1,4 @@
 import React from 'react'
-import PureModal from 'react-pure-modal'
 import { useState } from 'react'
 import { ButtonComponent } from '../micro/buttonComponent'
 import { Label } from '../micro/label'
@@ -23,6 +22,7 @@ function ParticipantPopUp(props) {
 		handleOrganizationIdTypeSelect,
 		buttonText,
 		organization_data,
+		isViewOnly,
 	} = props
 	const [showPassword, setShowPassword] = useState(false)
 	return (
@@ -51,6 +51,7 @@ function ParticipantPopUp(props) {
 										placeholder='Jane'
 										required='required'
 										value={name}
+										disabled={isViewOnly}
 										id='name'
 									/>
 								</div>
@@ -66,10 +67,10 @@ function ParticipantPopUp(props) {
 										placeholder='example@gmail.com '
 										required='required'
 										value={email}
+										disabled={isViewOnly}
 									/>
 								</div>
 							</div>
-
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full px-3'>
 									<Label key={'grid-password'}> Password</Label>
@@ -85,6 +86,7 @@ function ParticipantPopUp(props) {
 											placeholder={'******************'}
 											required={'required'}
 											value={password}
+											disabled={isViewOnly}
 										/>
 
 										<ButtonComponent
@@ -101,7 +103,6 @@ function ParticipantPopUp(props) {
 									</p>
 								</div>
 							</div>
-
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 									<Label key={'grid-mobile'}> Mobile</Label>
@@ -115,6 +116,7 @@ function ParticipantPopUp(props) {
 										placeholder={'+91 '}
 										required={'required'}
 										value={mobile}
+										disabled={isViewOnly}
 									/>
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
@@ -128,13 +130,16 @@ function ParticipantPopUp(props) {
 										}
 										label='Select Organization '
 										options={organization_data}
+										disabled={isViewOnly}
 										onChange={(e) => {
 											handleOrganizationIdTypeSelect(e)
 										}}
 									/>
 								</div>
 							</div>
-							<ButtonComponent key={'submit'}>{buttonText}</ButtonComponent>
+							{isViewOnly == false && (
+								<ButtonComponent key={'submit'}>{buttonText}</ButtonComponent>
+							)}
 						</React.Fragment>
 					</Form>
 				</div>
