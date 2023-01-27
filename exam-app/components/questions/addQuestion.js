@@ -68,8 +68,9 @@ const AddQuestion = ({ level_data: levelData, module_data: moduleData }) => {
 			setEditForm(true)
 		}
 
-		if (router.query.question_id) {
+		if (router.query?.id) {
 			getQuestionData()
+			// console.log()
 		}
 	}, [router.query?.id])
 
@@ -174,7 +175,7 @@ const AddQuestion = ({ level_data: levelData, module_data: moduleData }) => {
 		}
 
 		if (editForm) {
-			let question_id = router.query.question_id
+			let question_id = router.query?.id
 			data = JSON.stringify(data)
 			EditQuestion(data, question_id)
 				.then(() => {
