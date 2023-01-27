@@ -1,25 +1,26 @@
-import React, { useState } from 'react'
-import OrganizationModal from './OrganizationModal'
-import ParticipantModal from './ParticipantModal'
-import LevelModal from './LevelModal'
-import ModuleModal from './ModuleModal'
-import QuizModal from './QuizModal'
-import UserProfileModal from './UserProfileModal'
+import React from 'react'
+
+// import UserProfileModal from './UserProfileModal'
 import { Banner } from './micro/banner'
 import { ButtonComponent } from './micro/buttonComponent'
+import { useRouter } from 'next/router'
 
 const PageComponentTitle = ({
 	title,
 	titleDescription,
 	buttonTitle,
-	quiz_data,
-	module_data,
-	level_data,
-	organization_data,
+
 	userData,
 	mutate,
 }) => {
-	const [modal, setModal] = useState(false)
+	const router = useRouter()
+	const handleAddClick = () => {
+		if (router.asPath == '/userProfile') {
+			router.push(`${router.asPath}/edit/${userData.id}`)
+		} else {
+			router.push(`${router.asPath}/new`)
+		}
+	}
 
 	return (
 		<>
@@ -33,7 +34,7 @@ const PageComponentTitle = ({
 					className={
 						'inline-flex px-5 py-3 text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 rounded-md ml-6 mb-3'
 					}
-					onClick={() => setModal(true)}>
+					onClick={() => handleAddClick()}>
 					<React.Fragment>
 						<svg
 							aria-hidden='true'
@@ -51,59 +52,6 @@ const PageComponentTitle = ({
 						{buttonTitle}
 					</React.Fragment>
 				</ButtonComponent>
-
-				{title == 'PARTICIPANT' ? (
-					<>
-						<ParticipantModal
-							modal={modal}
-							setModal={setModal}
-							organization_data={organization_data}
-						/>
-					</>
-				) : title == 'LEVEL' ? (
-					<>
-						<LevelModal
-							modal={modal}
-							setModal={setModal}
-							mutate={mutate}
-						/>
-					</>
-				) : title == 'MODULE' ? (
-					<>
-						<ModuleModal
-							modal={modal}
-							setModal={setModal}
-							mutate={mutate}
-						/>
-					</>
-				) : title == 'QUIZ' ? (
-					<>
-						<QuizModal
-							quiz_data={quiz_data}
-							level_data={level_data}
-							module_data={module_data}
-							modal={modal}
-							setModal={setModal}
-						/>
-					</>
-				) : title == 'USER PROFILE' ? (
-					<>
-						<UserProfileModal
-							modal={modal}
-							setModal={setModal}
-							userData={userData}
-							mutate={mutate}
-						/>
-					</>
-				) : (
-					<>
-						<OrganizationModal
-							modal={modal}
-							setModal={setModal}
-							mutate={mutate}
-						/>
-					</>
-				)}
 			</div>
 		</>
 	)

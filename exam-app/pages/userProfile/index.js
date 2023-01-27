@@ -21,7 +21,7 @@ export default function UserProfile() {
 
 	return (
 		<>
-			<Layout title='Dashboard '>
+			<Layout title='User Profile '>
 				<UserProfileComponent
 					profile_data={profile_data}
 					mutate={mutate}
