@@ -6,19 +6,17 @@ import { Label } from '../micro/label'
 import { InputComponent } from '../micro/inputComponent'
 import { Form } from '../micro/form'
 import Dropdown from '../micro/dropdown'
+import { Banner } from '../micro/banner'
 function ParticipantPopUp(props) {
 	const {
-		modal,
-		setModal,
 		setName,
-		// name,
+		name,
 		password,
 		setPassword,
 		setMobile,
 		mobile,
-		// email,
+		email,
 		setEmail,
-		setSelectedOrganizationId,
 		selectedorganizationId,
 		checkWithDatabase,
 		handleSubmit,
@@ -28,27 +26,20 @@ function ParticipantPopUp(props) {
 	} = props
 	const [showPassword, setShowPassword] = useState(false)
 	return (
-		<PureModal
-			isOpen={modal}
-			width='800px'
-			onClose={() => {
-				setName('')
-				setEmail('')
-				setMobile('')
-				setPassword('')
-				setSelectedOrganizationId('')
-				setModal(false)
-				return true
-			}}>
-			<div className='flex-row space-y-3 relative'>
-				<div className='bg-blue-600 p-2 font-bold text-lg text-center text-white -mt-4 -mx-4 mb-5 pb-4'>
-					<p>{buttonText} Participant</p>
+		<>
+			<div className='flex-row space-y-3 relative px-12 bg-gray-100'>
+				<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
+					<Banner
+						heading={`${buttonText} Participant`}
+						subHeading={'Easy to understand'}
+						additionalClassName={'my-4 ml-3'}
+					/>
 				</div>
 
-				<div className='py-6 px-6 lg:px-8'>
+				<div className=' m-auto py-6 px-6 lg:px-8 bg-white max-w-lg rounded-lg'>
 					<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 						<React.Fragment>
-							<div className='flex flex-wrap -mx-3 mb-6'>
+							<div className='flex flex-wrap -mx-3 mb-6 '>
 								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 									<Label key={'grid-first-name'}>Name</Label>
 									<InputComponent
@@ -59,6 +50,7 @@ function ParticipantPopUp(props) {
 										}
 										placeholder='Jane'
 										required='required'
+										value={name}
 										id='name'
 									/>
 								</div>
@@ -73,6 +65,7 @@ function ParticipantPopUp(props) {
 										}
 										placeholder='example@gmail.com '
 										required='required'
+										value={email}
 									/>
 								</div>
 							</div>
@@ -131,7 +124,7 @@ function ParticipantPopUp(props) {
 										value={selectedorganizationId}
 										required={true}
 										className={
-											'bg-gray-50 border w-40 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500'
+											'bg-gray-50 border w-full border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500'
 										}
 										label='Select Organization '
 										options={organization_data}
@@ -146,7 +139,7 @@ function ParticipantPopUp(props) {
 					</Form>
 				</div>
 			</div>
-		</PureModal>
+		</>
 	)
 }
 
