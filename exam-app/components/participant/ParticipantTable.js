@@ -6,6 +6,8 @@ import { ParticipantColumns } from './participantColumn'
 import { DeleteParticipant } from '../../apis/participants'
 import { ButtonComponent } from '../common/micro/buttonComponent'
 import { useRouter } from 'next/router'
+import { EyeIcon, ArchiveIcon } from '@heroicons/react/solid'
+import { BsPencilSquare } from 'react-icons/bs'
 const ParticipantTable = ({ data: participant_data, mutate }) => {
 	const router = useRouter()
 	const handleRemoveClick = async (participantId) => {
@@ -21,6 +23,9 @@ const ParticipantTable = ({ data: participant_data, mutate }) => {
 	const handleEditClick = async (participant) => {
 		router.push(`${router.asPath}/edit/${participant.id}`)
 	}
+	const handleViewClick = async (participant) => {
+		router.push(`${router.asPath}/${participant.id}`)
+	}
 
 	// for sending the data to the backend
 
@@ -28,19 +33,21 @@ const ParticipantTable = ({ data: participant_data, mutate }) => {
 		const action = (
 			<>
 				<ButtonComponent
+					className={`text-blue-500 hover:text-blue-700`}
+					onClick={() => handleViewClick(participant)}>
+					<EyeIcon className='h-6 h-6 ' />
+				</ButtonComponent>
+				<ButtonComponent
 					onClick={() => handleEditClick(participant)}
-					className={
-						'bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'
-					}>
-					Edit
+					className={'text-green-500 hover:text-green-700 ml-2'}>
+					<BsPencilSquare className='h-6 w-5 ' />
 				</ButtonComponent>
 				&nbsp;
 				<ButtonComponent
 					onClick={() => handleRemoveClick(participant.id)}
-					className={
-						'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'
-					}>
-					Delete
+					className={'text-red-500 hover:text-red-700  m-1'}>
+					{/* <ArchiveBoxXMarkIcon class='h-6 h-6'/> */}
+					<ArchiveIcon className='h-6 h-6'></ArchiveIcon>
 				</ButtonComponent>
 			</>
 		)
