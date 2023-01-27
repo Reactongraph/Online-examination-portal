@@ -1,33 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Table from '../common/Table'
-import { useForm } from 'react-hook-form'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { toast } from 'react-toastify'
 import { ParticipantColumns } from './participantColumn'
-import ParticipantPopUp from '../common/PopUpModals/ParticipantPopUp'
-import {
-	AddParticipant,
-	DeleteParticipant,
-	EditParticipant,
-} from '../../apis/participants'
+import { DeleteParticipant } from '../../apis/participants'
 import { ButtonComponent } from '../common/micro/buttonComponent'
 import { useRouter } from 'next/router'
-const ParticipantTable = ({
-	data: participant_data,
-	mutate,
-	organization_data,
-}) => {
-	const [editForm, setEditForm] = useState(false)
-	const [modal, setModal] = useState(false)
-	const [participantId, setParticipantId] = useState('')
-	const [name, setName] = useState('')
-	const [email, setEmail] = useState('')
-	const [mobile, setMobile] = useState('')
-	const [buttonText, setButtonText] = useState('Add')
-	const [password, setPassword] = useState('')
-	const [organizationId, setOrganizationId] = useState('')
-	const [selectedorganizationId, setSelectedOrganizationId] = useState('')
-	const { handleSubmit } = useForm()
+const ParticipantTable = ({ data: participant_data, mutate }) => {
 	const router = useRouter()
 	const handleRemoveClick = async (participantId) => {
 		try {
@@ -38,58 +17,12 @@ const ParticipantTable = ({
 			toast.error('invalid request')
 		}
 	}
-	const handleOrganizationIdTypeSelect = (event) => {
-		let organizationId = event.target.value
-
-		setSelectedOrganizationId(organizationId)
-	}
 
 	const handleEditClick = async (participant) => {
-		setModal(true)
-		setButtonText('Update')
-		setEditForm(true)
-		setParticipantId(participant.id)
-		setName(participant.name)
-		setEmail(participant.email)
-		setMobile(participant.mobile)
-		setOrganizationId(participant.Organization_id)
-		setPassword(participant.password)
 		router.push(`${router.asPath}/edit/${participant.id}`)
 	}
 
 	// for sending the data to the backend
-	const checkWithDatabase = async (data) => {
-		data.name = name
-		data.email = email
-		data.mobile = mobile
-		data.Organization_id = organizationId
-		data.password = password
-		let participantData = JSON.stringify(data)
-		// for taking the patch api data
-		if (editForm) {
-			EditParticipant(participantData, participantId)
-				.then(() => {
-					setModal(!modal)
-					mutate()
-					toast.success('participant updated!')
-				})
-				.catch(() => {
-					toast.error('invalid request')
-				})
-		}
-		// for new data registration
-		else {
-			AddParticipant(data)
-				.then(async () => {
-					setModal(!modal)
-					mutate()
-					toast.success('participant added!')
-				})
-				.catch(() => {
-					toast.error('invalid request')
-				})
-		}
-	}
 
 	function createData(participant) {
 		const action = (
@@ -123,8 +56,6 @@ const ParticipantTable = ({
 		return createData(element)
 	})
 
-	// const data = rowsDataArray
-
 	return (
 		<>
 			<Table
@@ -132,26 +63,6 @@ const ParticipantTable = ({
 				data={rowsDataArray || []}
 				rowKey='id'
 				className='bg-white p-4 w-full text-center rc-table-custom font-semibold '
-			/>
-
-			<ParticipantPopUp
-				name={name}
-				setName={setName}
-				mobile={mobile}
-				setMobile={setMobile}
-				email={email}
-				setEmail={setEmail}
-				password={password}
-				setPassword={setPassword}
-				modal={modal}
-				setModal={setModal}
-				selectedorganizationId={selectedorganizationId}
-				setSelectedOrganizationId={setSelectedOrganizationId}
-				handleSubmit={handleSubmit}
-				checkWithDatabase={checkWithDatabase}
-				buttonText={buttonText}
-				handleOrganizationIdTypeSelect={handleOrganizationIdTypeSelect}
-				organization_data={organization_data}
 			/>
 		</>
 	)
