@@ -1,26 +1,10 @@
-import React, { useState } from 'react'
-import ParticipantModal from './ParticipantModal'
-import LevelModal from './LevelModal'
-import ModuleModal from './ModuleModal'
-import QuizModal from './QuizModal'
-import UserProfileModal from './UserProfileModal'
+import React from 'react'
 import { Banner } from './micro/banner'
 import { ButtonComponent } from './micro/buttonComponent'
 import { useRouter } from 'next/router'
 
-const PageComponentTitle = ({
-	title,
-	titleDescription,
-	buttonTitle,
-	quiz_data,
-	module_data,
-	level_data,
-	organization_data,
-	userData,
-	mutate,
-}) => {
+const PageComponentTitle = ({ title, titleDescription, buttonTitle }) => {
 	const router = useRouter()
-	const [modal, setModal] = useState(false)
 	const handleAddClick = () => {
 		router.push(`${router.asPath}/new`)
 	}
@@ -55,53 +39,6 @@ const PageComponentTitle = ({
 						{buttonTitle}
 					</React.Fragment>
 				</ButtonComponent>
-
-				{title == 'PARTICIPANT' ? (
-					<>
-						<ParticipantModal
-							modal={modal}
-							setModal={setModal}
-							organization_data={organization_data}
-						/>
-					</>
-				) : title == 'LEVEL' ? (
-					<>
-						<LevelModal
-							modal={modal}
-							setModal={setModal}
-							mutate={mutate}
-						/>
-					</>
-				) : title == 'MODULE' ? (
-					<>
-						<ModuleModal
-							modal={modal}
-							setModal={setModal}
-							mutate={mutate}
-						/>
-					</>
-				) : title == 'QUIZ' ? (
-					<>
-						<QuizModal
-							quiz_data={quiz_data}
-							level_data={level_data}
-							module_data={module_data}
-							modal={modal}
-							setModal={setModal}
-						/>
-					</>
-				) : title == 'USER PROFILE' ? (
-					<>
-						<UserProfileModal
-							modal={modal}
-							setModal={setModal}
-							userData={userData}
-							mutate={mutate}
-						/>
-					</>
-				) : (
-					<></>
-				)}
 			</div>
 		</>
 	)

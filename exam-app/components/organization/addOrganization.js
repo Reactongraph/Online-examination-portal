@@ -6,8 +6,8 @@ import {
 	EditOrganization,
 	GetOrganizationDataWithId,
 } from '../../apis/organizations'
-import OrganizationForm from './organizationForms/OrganizationForm'
 import { useRouter } from 'next/router'
+import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
 
 const CreateOrganization = () => {
 	const [name, setName] = useState('')
@@ -89,28 +89,28 @@ const CreateOrganization = () => {
 	return (
 		<>
 			<main>
-				<OrganizationForm
-					handleSubmit={handleSubmit}
-					checkWithDatabase={checkWithDatabase}
+				<OrganizationPopUp
 					name={name}
-					password={password}
-					city={city}
-					state={state}
-					pincode={pincode}
-					address={address}
-					mobile={mobile}
-					quota={quota}
-					buttonText={buttonText}
+					setName={setName}
 					email={email}
 					setEmail={setEmail}
-					setAddress={setAddress}
-					setCity={setCity}
-					setMobile={setMobile}
-					setName={setName}
+					password={password}
 					setPassword={setPassword}
+					city={city}
+					setCity={setCity}
+					state={state}
 					setState={setState}
+					pincode={pincode}
 					setPincode={setPincode}
-					setQuota={setQuota}></OrganizationForm>
+					mobile={mobile}
+					address={address}
+					setAddress={setAddress}
+					setMobile={setMobile}
+					quota={quota}
+					buttonText={buttonText}
+					handleSubmit={handleSubmit}
+					checkWithDatabase={checkWithDatabase}
+					setQuota={setQuota}></OrganizationPopUp>
 			</main>
 		</>
 	)

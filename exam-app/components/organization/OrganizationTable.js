@@ -1,34 +1,16 @@
 import Table from '../common/Table'
-import React, { useState } from 'react'
+import React from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
-import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { OrganizationColumns } from './organizationColumn'
-import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
 import { DeleteOrganization, EditOrganization } from '../../apis/organizations'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
 import { ButtonComponent } from '../common/micro/buttonComponent'
 import { useRouter } from 'next/router'
 
 const OrganizationTable = ({ data: organization_data, mutate }) => {
-	const [modal, setModal] = useState(false)
-	const [organizationId, setOrganizationId] = useState('')
-
-	const [buttonText, setButtonText] = useState('Add')
-
-	const [name, setName] = useState('')
-	const [email, setEmail] = useState('')
-	const [pincode, setPincode] = useState('')
-	const [address, setAddress] = useState('')
-	const [city, setCity] = useState('')
-	const [state, setState] = useState('')
-	const [mobile, setMobile] = useState('')
-	const [quota, setQuota] = useState('')
-
-	const [password, setPassword] = useState('')
 	const router = useRouter()
 
-	const { handleSubmit } = useForm()
 	const handleRemoveClick = (org_id) => {
 		try {
 			DeleteOrganization(org_id)
@@ -59,43 +41,7 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 			})
 	}
 	const handleEditClick = async (org) => {
-		setButtonText('Update')
-		setOrganizationId(org.id)
-		setName(org.name)
-		setEmail(org.email)
-		setMobile(org.mobile)
-		setState(org.state)
-		setPassword(org.password)
-		setAddress(org.address)
-		setCity(org.city)
-		setPincode(org.pincode)
-		setQuota(org.quota)
 		router.push(`${router.asPath}/edit/${org.id}`)
-	}
-
-	const checkWithDatabase = async (data) => {
-		data.name = name
-		data.email = email
-		data.mobile = mobile
-		data.password = password
-		data.city = city
-		data.state = state
-		data.pincode = pincode
-		data.address = address
-		data.quota = quota
-		let OrganizationData = JSON.stringify(data)
-
-		// for taking the patch api data
-
-		EditOrganization(OrganizationData, organizationId)
-			.then(() => {
-				setModal(!modal)
-				mutate()
-				toast.success('organization updated!')
-			})
-			.catch(() => {
-				toast.error('invalid request')
-			})
 	}
 
 	function createData(org) {
@@ -149,31 +95,6 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 				data={data || []}
 				rowKey='id'
 				className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'
-			/>
-			<OrganizationPopUp
-				modal={modal}
-				setModal={setModal}
-				name={name}
-				setName={setName}
-				email={email}
-				setEmail={setEmail}
-				password={password}
-				setPassword={setPassword}
-				city={city}
-				setCity={setCity}
-				state={state}
-				setState={setState}
-				pincode={pincode}
-				setPincode={setPincode}
-				mobile={mobile}
-				address={address}
-				setAddress={setAddress}
-				setMobile={setMobile}
-				quota={quota}
-				buttonText={buttonText}
-				handleSubmit={handleSubmit}
-				checkWithDatabase={checkWithDatabase}
-				setQuota={setQuota}
 			/>
 		</>
 	)
