@@ -9,7 +9,7 @@ import {
 import { useRouter } from 'next/router'
 import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
 
-const CreateOrganization = () => {
+const CreateOrganization = ({ isViewOnly }) => {
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
 	const [pincode, setPincode] = useState('')
@@ -23,14 +23,13 @@ const CreateOrganization = () => {
 	const [editform, setEditForm] = useState(false)
 	const { handleSubmit } = useForm()
 	const router = useRouter()
-
 	useEffect(() => {
 		let organization_id = router.query.id
 
 		async function getOrganizationData() {
 			const results = await GetOrganizationDataWithId(organization_id)
 			const organizationData = results.data
-			setButtonText('Edit')
+			// setButtonText('Edit')
 			setEditForm(true)
 			setName(organizationData?.name)
 			setEmail(organizationData?.email)
@@ -41,6 +40,7 @@ const CreateOrganization = () => {
 			setCity(organizationData?.city)
 			setPincode(organizationData?.pincode)
 			setQuota(organizationData?.quota)
+			isViewOnly ? setButtonText('View') : setButtonText('Edit')
 		}
 
 		if (router.query.id) {
@@ -110,7 +110,8 @@ const CreateOrganization = () => {
 					buttonText={buttonText}
 					handleSubmit={handleSubmit}
 					checkWithDatabase={checkWithDatabase}
-					setQuota={setQuota}></OrganizationPopUp>
+					setQuota={setQuota}
+					isViewOnly={isViewOnly}></OrganizationPopUp>
 			</main>
 		</>
 	)
