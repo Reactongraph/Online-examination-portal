@@ -6,7 +6,7 @@ export default function EditPage() {
 	return (
 		<>
 			<Layout title='Organization '>
-				<CreateOrganization />
+				<CreateOrganization isViewOnly={false} />
 			</Layout>
 		</>
 	)

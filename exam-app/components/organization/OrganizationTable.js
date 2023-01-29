@@ -7,6 +7,8 @@ import { DeleteOrganization, EditOrganization } from '../../apis/organizations'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
 import { ButtonComponent } from '../common/micro/buttonComponent'
 import { useRouter } from 'next/router'
+import { EyeIcon, ArchiveIcon } from '@heroicons/react/solid'
+import { BsPencilSquare } from 'react-icons/bs'
 
 const OrganizationTable = ({ data: organization_data, mutate }) => {
 	const router = useRouter()
@@ -43,24 +45,28 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 	const handleEditClick = async (org) => {
 		router.push(`${router.asPath}/edit/${org.id}`)
 	}
+	const handleViewClick = async (org) => {
+		router.push(`${router.asPath}/${org.id}`)
+	}
 
 	function createData(org) {
 		const action = (
 			<>
 				<ButtonComponent
+					className={`text-blue-500 hover:text-blue-700`}
+					onClick={() => handleViewClick(org)}>
+					<EyeIcon className='h-6 h-6 ' />
+				</ButtonComponent>
+				<ButtonComponent
 					onClick={() => handleEditClick(org)}
-					className={
-						'bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'
-					}>
-					Edit
+					className={'text-green-500 hover:text-green-700 ml-2'}>
+					<BsPencilSquare className='h-6 w-5 ' />
 				</ButtonComponent>
 				&nbsp;
 				<ButtonComponent
 					onClick={() => handleRemoveClick(org.id)}
-					className={
-						'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'
-					}>
-					Delete
+					className={'text-red-500 hover:text-red-700  m-1'}>
+					<ArchiveIcon className='h-6 h-6'></ArchiveIcon>
 				</ButtonComponent>
 			</>
 		)

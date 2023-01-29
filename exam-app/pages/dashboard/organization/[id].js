@@ -1,13 +1,11 @@
-// routing for create organization
 import * as React from 'react'
 import Layout from '../../../components/layout/Layout'
 import CreateOrganization from '../../../components/organization/addOrganization'
-
-export default function AddOrganizations() {
+export default function ViewOrganizationPage() {
 	return (
 		<>
-			<Layout title='Organizations'>
-				<CreateOrganization isViewOnly={false} />
+			<Layout>
+				<CreateOrganization isViewOnly={true} />
 			</Layout>
 		</>
 	)

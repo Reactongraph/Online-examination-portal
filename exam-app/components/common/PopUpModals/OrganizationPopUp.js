@@ -27,6 +27,7 @@ function OrganizationPopUp(props) {
 		buttonText,
 		handleSubmit,
 		checkWithDatabase,
+		isViewOnly,
 	} = props
 	return (
 		<>
@@ -54,6 +55,7 @@ function OrganizationPopUp(props) {
 										value={name}
 										placeholder='Jane'
 										required='required'
+										disabled={isViewOnly}
 										id='name'
 									/>
 								</div>
@@ -68,6 +70,7 @@ function OrganizationPopUp(props) {
 										}
 										value={email}
 										placeholder='example@gmail.com '
+										disabled={isViewOnly}
 										required='required'
 									/>
 								</div>
@@ -85,6 +88,7 @@ function OrganizationPopUp(props) {
 										type={'password'}
 										placeholder={'******************'}
 										required={'required'}
+										disabled={isViewOnly}
 										value={password}
 									/>
 									<p className='text-gray-600 text-xs italic'>
@@ -105,6 +109,7 @@ function OrganizationPopUp(props) {
 										type={'text'}
 										placeholder={'Albuquerque '}
 										required={'required'}
+										disabled={isViewOnly}
 										value={city}
 									/>
 								</div>
@@ -120,6 +125,7 @@ function OrganizationPopUp(props) {
 										type={'text'}
 										placeholder={'State '}
 										required={'required'}
+										disabled={isViewOnly}
 										value={state}
 									/>
 								</div>
@@ -134,6 +140,7 @@ function OrganizationPopUp(props) {
 										type={'text'}
 										placeholder={'90210 '}
 										required={'required'}
+										disabled={isViewOnly}
 										value={pincode}
 									/>
 								</div>
@@ -150,6 +157,7 @@ function OrganizationPopUp(props) {
 										type={'text'}
 										placeholder={'your office number '}
 										required={'required'}
+										disabled={isViewOnly}
 										value={address}
 									/>
 								</div>
@@ -166,6 +174,7 @@ function OrganizationPopUp(props) {
 										type={'text'}
 										placeholder={'+91 '}
 										required={'required'}
+										disabled={isViewOnly}
 										value={mobile}
 									/>
 								</div>
@@ -180,18 +189,28 @@ function OrganizationPopUp(props) {
 										type={'text'}
 										placeholder={'e.g. 1000 '}
 										required={'required'}
+										disabled={isViewOnly}
 										value={quota}
 									/>
 								</div>
 							</div>
 							<div className='flex justify-end'>
-								<ButtonComponent
+								{isViewOnly == false && (
+									<ButtonComponent
+										key={'submit'}
+										className={
+											'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
+										}>
+										{buttonText}
+									</ButtonComponent>
+								)}
+								{/* <ButtonComponent
 									key={'submit'}
 									className={
 										'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
 									}>
 									{buttonText}
-								</ButtonComponent>
+								</ButtonComponent> */}
 							</div>
 						</React.Fragment>
 					</Form>
