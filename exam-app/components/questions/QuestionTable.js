@@ -8,7 +8,9 @@ import { injectStyle } from 'react-toastify/dist/inject-style'
 import { DeleteQuestion, EditQuestion } from '../../apis/questions'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
 import { ButtonComponent } from '../common/micro/buttonComponent'
-import Link from 'next/link'
+import { BsPencilSquare } from 'react-icons/bs'
+import { MdDelete } from 'react-icons/md'
+import { AiFillEye } from 'react-icons/ai'
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
@@ -55,19 +57,21 @@ const QuestionTable = ({ question_data, mutate }) => {
 		question = question.question.slice(0, 15) + '...'
 		const action = (
 			<>
-				<Link href={`/questions/addQuestion?question_id=${question_id}`}>
-					<ButtonComponent
-						className={
-							'bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'
-						}>
-						Edit
-					</ButtonComponent>
-				</Link>
+				<ButtonComponent
+					className={`text-blue-500 hover:text-blue-700`}
+					onClick={() => handleViewClick(question_id)}>
+					<AiFillEye className='h-6 w-7' />
+				</ButtonComponent>
+				<ButtonComponent
+					className={'text-green-500 hover:text-green-700 ml-2'}
+					onClick={() => handleEditClick(question_id)}>
+					<BsPencilSquare className='h-6 w-5 ' />
+				</ButtonComponent>
 				&nbsp;
 				<ButtonComponent
 					onClick={() => handleRemoveClick(question_id)}
 					className={'text-red-500 hover:text-red-700  m-1'}>
-					<ArchiveIcon className='h-6'></ArchiveIcon>
+					<MdDelete className='h-6 w-5' />
 				</ButtonComponent>
 			</>
 		)
