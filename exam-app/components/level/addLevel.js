@@ -5,7 +5,7 @@ import { AddLevel, EditLevel, GetLevelDataWithId } from '../../apis/levels'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
 
-const AddLevelComponent = () => {
+const AddLevelComponent = ({ isViewOnly }) => {
 	const router = useRouter()
 	const [editForm, setEditForm] = useState(false)
 
@@ -21,9 +21,9 @@ const AddLevelComponent = () => {
 		async function getLevelData() {
 			const results = await GetLevelDataWithId(level_id)
 			const levelData = results.data
-			setButtonText('Update')
 			setEditForm(true)
 			setLevel(levelData?.level)
+			isViewOnly ? setButtonText('View') : setButtonText('Edit')
 		}
 
 		if (level_id) {
@@ -73,6 +73,7 @@ const AddLevelComponent = () => {
 				modalName={'LEVEL'}
 				buttonText={buttonText}
 				placeholderText={'eg. Easy , Moderate , etc ...'}
+				isViewOnly={isViewOnly}
 			/>
 		</>
 	)

@@ -13,6 +13,7 @@ function LevelModulePopup(props) {
 		setStateName,
 		modalName,
 		placeholderText,
+		isViewOnly,
 	} = props
 	return (
 		<>
@@ -40,11 +41,13 @@ function LevelModulePopup(props) {
 										placeholder={placeholderText}
 										required={'required'}
 										value={stateName}
+										disabled={isViewOnly}
 									/>
 								</div>
 							</div>
-
-							<ButtonComponent key={'submit'}>{buttonText}</ButtonComponent>
+							{isViewOnly == false && (
+								<ButtonComponent key={'submit'}>{buttonText}</ButtonComponent>
+							)}
 						</React.Fragment>
 					</Form>
 				</div>

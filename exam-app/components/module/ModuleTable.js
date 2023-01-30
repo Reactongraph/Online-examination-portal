@@ -8,6 +8,8 @@ import { useRouter } from 'next/router'
 import { DeleteModule, EditModule } from '../../apis/modules'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
 import { ButtonComponent } from '../common/micro/buttonComponent'
+import { EyeIcon, ArchiveIcon } from '@heroicons/react/solid'
+import { BsPencilSquare } from 'react-icons/bs'
 
 const ModuleTable = ({ data: module_data, mutate }) => {
 	const router = useRouter()
@@ -43,24 +45,28 @@ const ModuleTable = ({ data: module_data, mutate }) => {
 	const handleEditClick = async (module) => {
 		router.push(`${router.asPath}/edit/${module.id}`)
 	}
+	const handleViewClick = async (module) => {
+		router.push(`${router.asPath}/${module.id}`)
+	}
 
 	function createData(modules) {
 		const action = (
 			<>
 				<ButtonComponent
+					className={`text-blue-500 hover:text-blue-700`}
+					onClick={() => handleViewClick(modules)}>
+					<EyeIcon className='h-6 h-6 ' />
+				</ButtonComponent>
+				<ButtonComponent
 					onClick={() => handleEditClick(modules)}
-					className={
-						'bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'
-					}>
-					Edit
+					className={'text-green-500 hover:text-green-700 ml-2'}>
+					<BsPencilSquare className='h-6 w-5 ' />
 				</ButtonComponent>
 				&nbsp;
 				<ButtonComponent
 					onClick={() => handleRemoveClick(modules.id)}
-					className={
-						'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'
-					}>
-					Delete
+					className={'text-red-500 hover:text-red-700  m-1'}>
+					<ArchiveIcon className='h-6 h-6'></ArchiveIcon>
 				</ButtonComponent>
 			</>
 		)
