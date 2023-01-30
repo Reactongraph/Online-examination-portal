@@ -66,10 +66,8 @@ const QuestionTable = ({ question_data, mutate }) => {
 				&nbsp;
 				<ButtonComponent
 					onClick={() => handleRemoveClick(question_id)}
-					className={
-						'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'
-					}>
-					Delete
+					className={'text-red-500 hover:text-red-700  m-1'}>
+					<ArchiveIcon className='h-6'></ArchiveIcon>
 				</ButtonComponent>
 			</>
 		)
