@@ -106,7 +106,7 @@ const CreateParticipant = ({ isViewOnly }) => {
 				buttonText={buttonText}
 				handleOrganizationIdTypeSelect={handleOrganizationIdTypeSelect}
 				organization_data={organization_data}
-				isViewOnly={isViewOnly}
+				isViewOnly={isViewOnly || false}
 			/>
 		</>
 	)
