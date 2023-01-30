@@ -44,13 +44,16 @@ const QuizTable = ({ data: quiz_data }) => {
 	const handleEditClick = async (quiz_id) => {
 		router.push(`${router.asPath}/edit/${quiz_id}`)
 	}
-
+	const handleViewClick = async (quiz_id) => {
+		router.push(`${router.asPath}/${quiz_id}`)
+	}
 	// data by using which table data is creating using api call
 	const data = QuizDataArray(
 		quiz_data,
 		handleEditClick,
 		handleBoxClick,
-		handleRemoveClick
+		handleRemoveClick,
+		handleViewClick
 	)
 
 	return (

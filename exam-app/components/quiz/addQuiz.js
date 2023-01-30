@@ -10,11 +10,9 @@ import 'react-datepicker/dist/react-datepicker.css'
 import moment from 'moment'
 
 const AddQuizComponent = ({
-	modal,
-	setModal,
-
 	module_data: moduleData,
 	level_data: levelData,
+	isViewOnly,
 }) => {
 	//For Image Preview
 
@@ -45,7 +43,7 @@ const AddQuizComponent = ({
 			const results = await GetQuizDataWithId(quiz_id)
 			const quizData = results.data[0]
 
-			setButtonText('Update')
+			isViewOnly ? setButtonText('View') : setButtonText('Update')
 
 			let seletedModuleDataArray = []
 			let seletedModuleDataArrayByID = []
@@ -137,9 +135,8 @@ const AddQuizComponent = ({
 				checkWithDatabase={checkWithDatabase}
 				buttonText={buttonText}
 				name={name}
+				isViewOnly={isViewOnly || false}
 				setName={setName}
-				modal={modal}
-				setModal={setModal}
 				optionModuleSelected={optionModuleSelected}
 				selectedLevelId={selectedLevelId}
 				setSelectedLevelId={setSelectedLevelId}

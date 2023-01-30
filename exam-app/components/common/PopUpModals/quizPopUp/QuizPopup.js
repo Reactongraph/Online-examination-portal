@@ -14,9 +14,8 @@ function QuizPopUp(props) {
 	const {
 		name,
 		setName,
-		modal,
-		setModal,
 		selectedLevelId,
+		isViewOnly,
 		setSelectedLevelId,
 		selectedModules,
 		handleSubmit,
@@ -59,6 +58,7 @@ function QuizPopUp(props) {
 										id='name'
 										type='text'
 										value={name}
+										disabled={isViewOnly}
 										onChange={(e) => setName(e.target.value)}
 										required='required'
 										placeholder='Jane'
@@ -70,6 +70,7 @@ function QuizPopUp(props) {
 										timeTitle='Start Time'
 										selectedDate={selectedStartDate}
 										setSelectedDate={setSelectedStartDate}
+										isViewOnly={isViewOnly}
 									/>
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
@@ -77,6 +78,7 @@ function QuizPopUp(props) {
 										timeTitle='End Time'
 										selectedDate={selectedEndDate}
 										setSelectedDate={setSelectedEndDate}
+										isViewOnly={isViewOnly}
 									/>
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
@@ -84,6 +86,7 @@ function QuizPopUp(props) {
 										timeTitle='Buffer Time (Access Time for Quiz)'
 										selectedDate={selectedBufferDate}
 										setSelectedDate={setSelectedBufferDate}
+										isViewOnly={isViewOnly}
 									/>
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
@@ -93,6 +96,7 @@ function QuizPopUp(props) {
 										selectedLevelId={selectedLevelId}
 										handleLevelTypeSelect={handleLevelTypeSelect}
 										levelData={levelData}
+										isViewOnly={isViewOnly}
 									/>
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
@@ -113,6 +117,7 @@ function QuizPopUp(props) {
 										components={{
 											Option,
 										}}
+										isDisabled={isViewOnly}
 										onChange={handleModuleTypeSelect}
 										allowSelectAll={true}
 										value={optionModuleSelected}
@@ -136,6 +141,7 @@ function QuizPopUp(props) {
 									<TextArea
 										id={'description'}
 										type={'text'}
+										disabled={isViewOnly}
 										placeholder={'A short description about quiz'}
 										required={'required'}
 										value={description}
@@ -143,15 +149,18 @@ function QuizPopUp(props) {
 									/>
 								</div>
 							</div>
-							<div className='flex justify-end'>
-								<ButtonComponent
-									key={'submit'}
-									className={
-										'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
-									}>
-									{buttonText} QUIZ
-								</ButtonComponent>
-							</div>
+
+							{!isViewOnly && (
+								<div className='flex justify-end'>
+									<ButtonComponent
+										key={'submit'}
+										className={
+											'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
+										}>
+										{buttonText} QUIZ
+									</ButtonComponent>
+								</div>
+							)}
 						</React.Fragment>
 					</Form>
 				</div>

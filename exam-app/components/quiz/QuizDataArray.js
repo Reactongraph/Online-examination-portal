@@ -4,7 +4,8 @@ function QuizDataArray(
 	quiz_data,
 	handleEditClick,
 	handleBoxClick,
-	handleRemoveClick
+	handleRemoveClick,
+	handleViewClick
 ) {
 	const rowsDataArray = quiz_data.data?.quiz.map((element) => {
 		let quiz = element.quiz_name
@@ -35,7 +36,8 @@ function QuizDataArray(
 			start_date,
 			handleEditClick,
 			handleRemoveClick,
-			handleBoxClick
+			handleBoxClick,
+			handleViewClick
 		)
 	})
 	return rowsDataArray

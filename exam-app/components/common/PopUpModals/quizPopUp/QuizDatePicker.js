@@ -1,7 +1,7 @@
 import DatePicker from 'react-datepicker'
 import { Label } from '../../micro/label'
 function QuizDatePicker(props) {
-	const { selectedDate, setSelectedDate, timeTitle } = props
+	const { selectedDate, setSelectedDate, timeTitle, isViewOnly } = props
 	return (
 		<>
 			<Label key={'grid-last-name'}> {timeTitle}</Label>
@@ -15,6 +15,7 @@ function QuizDatePicker(props) {
 						onChange={(date) => setSelectedDate(date)}
 						placeholderText={'MMMM d, yyyy h:mm aa '}
 						showTimeSelect
+						disabled={isViewOnly}
 						popperClassName='react-datepicker-right'
 						showYearDropdown // year show and scrolldown alos
 						scrollableYearDropdown
