@@ -8,8 +8,9 @@ import { useRouter } from 'next/router'
 import { DeleteModule, EditModule } from '../../apis/modules'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
 import { ButtonComponent } from '../common/micro/buttonComponent'
-import { EyeIcon, ArchiveIcon } from '@heroicons/react/solid'
 import { BsPencilSquare } from 'react-icons/bs'
+import { MdDelete } from 'react-icons/md'
+import { AiFillEye } from 'react-icons/ai'
 
 const ModuleTable = ({ data: module_data, mutate }) => {
 	const router = useRouter()
@@ -55,7 +56,7 @@ const ModuleTable = ({ data: module_data, mutate }) => {
 				<ButtonComponent
 					className={`text-blue-500 hover:text-blue-700`}
 					onClick={() => handleViewClick(modules)}>
-					<EyeIcon className='h-6 h-6 ' />
+					<AiFillEye className='h-6 w-6 ' />
 				</ButtonComponent>
 				<ButtonComponent
 					onClick={() => handleEditClick(modules)}
@@ -66,7 +67,7 @@ const ModuleTable = ({ data: module_data, mutate }) => {
 				<ButtonComponent
 					onClick={() => handleRemoveClick(modules.id)}
 					className={'text-red-500 hover:text-red-700  m-1'}>
-					<ArchiveIcon className='h-6 h-6'></ArchiveIcon>
+					<MdDelete className='h-6 w-7'></MdDelete>
 				</ButtonComponent>
 			</>
 		)

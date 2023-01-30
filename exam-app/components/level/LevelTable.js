@@ -8,8 +8,9 @@ import { injectStyle } from 'react-toastify/dist/inject-style'
 import { DeleteLevel, EditLevel } from '../../apis/levels'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
 import { ButtonComponent } from '../common/micro/buttonComponent'
-import { EyeIcon, ArchiveIcon } from '@heroicons/react/solid'
 import { BsPencilSquare } from 'react-icons/bs'
+import { MdDelete } from 'react-icons/md'
+import { AiFillEye } from 'react-icons/ai'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
@@ -65,7 +66,7 @@ const LevelTable = ({ data: level_data, mutate }) => {
 				<ButtonComponent
 					className={`text-blue-500 hover:text-blue-700`}
 					onClick={() => handleViewClick(level)}>
-					<EyeIcon className='h-6 h-6 ' />
+					<AiFillEye className='h-6 w-7 ' />
 				</ButtonComponent>
 				<ButtonComponent
 					onClick={() => handleEditClick(level)}
@@ -76,7 +77,7 @@ const LevelTable = ({ data: level_data, mutate }) => {
 				<ButtonComponent
 					onClick={() => handleRemoveClick(level.id)}
 					className={'text-red-500 hover:text-red-700  m-1'}>
-					<ArchiveIcon className='h-6 h-6'></ArchiveIcon>
+					<MdDelete className='h-6 w-7'></MdDelete>
 				</ButtonComponent>
 			</>
 		)
