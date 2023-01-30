@@ -108,7 +108,7 @@ const AddQuizComponent = ({
 			let QuizData = JSON.stringify(data)
 			EditQuiz(QuizData, router.query?.id)
 				.then(() => {
-					router.replace(`/dashboard/quiz`)
+					router.replace(`/quiz`)
 					toast.success('Quiz updated!')
 				})
 				.catch(() => {
@@ -119,7 +119,7 @@ const AddQuizComponent = ({
 			let QuizData = JSON.stringify(data)
 			AddQuiz(QuizData)
 				.then(() => {
-					router.replace(`/dashboard/quiz`)
+					router.replace(`/quiz`)
 					toast.success('Quiz created!')
 				})
 				.catch(() => {

@@ -1,9 +1,8 @@
-import { GetLevelData } from '../../apis/levels'
-import { GetModuleData } from '../../apis/modules'
-import Layout from '../../components/layout/Layout'
-import AddQuizComponent from '../../components/quiz/addQuiz'
-
-export default function AddQuiz() {
+import { GetModuleData } from '../../../apis/modules'
+import { GetLevelData } from '../../../apis/levels'
+import Layout from '../../../components/layout/Layout'
+import AddQuizComponent from '../../../components/quiz/addQuiz'
+export default function EditQuiz() {
 	const { data: level_data } = GetLevelData()
 	let { data: module_data } = GetModuleData()
 

@@ -3,7 +3,7 @@ import { GetModuleData } from '../../apis/modules'
 import Layout from '../../components/layout/Layout'
 import AddQuizComponent from '../../components/quiz/addQuiz'
 
-export default function AddQuiz() {
+export default function ViewQuiz() {
 	const { data: level_data } = GetLevelData()
 	let { data: module_data } = GetModuleData()
 
@@ -17,10 +17,11 @@ export default function AddQuiz() {
 
 	return (
 		<>
-			<Layout title='Quiz'>
+			<Layout title='View Quiz'>
 				<AddQuizComponent
 					level_data={level_data}
 					module_data={updatedModuleData}
+					isViewOnly={true}
 				/>
 			</Layout>
 		</>
