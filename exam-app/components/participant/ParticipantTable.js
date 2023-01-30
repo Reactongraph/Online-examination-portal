@@ -6,8 +6,9 @@ import { ParticipantColumns } from './participantColumn'
 import { DeleteParticipant } from '../../apis/participants'
 import { ButtonComponent } from '../common/micro/buttonComponent'
 import { useRouter } from 'next/router'
-import { EyeIcon, ArchiveIcon } from '@heroicons/react/solid'
 import { BsPencilSquare } from 'react-icons/bs'
+import { MdDelete } from 'react-icons/md'
+import { AiFillEye } from 'react-icons/ai'
 const ParticipantTable = ({ data: participant_data, mutate }) => {
 	const router = useRouter()
 	const handleRemoveClick = async (participantId) => {
@@ -35,19 +36,18 @@ const ParticipantTable = ({ data: participant_data, mutate }) => {
 				<ButtonComponent
 					className={`text-blue-500 hover:text-blue-700`}
 					onClick={() => handleViewClick(participant)}>
-					<EyeIcon className='h-6 h-6 ' />
+					<AiFillEye className='h-6 w-7 ' />
 				</ButtonComponent>
 				<ButtonComponent
 					onClick={() => handleEditClick(participant)}
 					className={'text-green-500 hover:text-green-700 ml-2'}>
-					<BsPencilSquare className='h-6 w-5 ' />
+					<BsPencilSquare className='h-6 w-7 ' />
 				</ButtonComponent>
 				&nbsp;
 				<ButtonComponent
 					onClick={() => handleRemoveClick(participant.id)}
 					className={'text-red-500 hover:text-red-700  m-1'}>
-					{/* <ArchiveBoxXMarkIcon class='h-6 h-6'/> */}
-					<ArchiveIcon className='h-6 h-6'></ArchiveIcon>
+					<MdDelete className='h-6 w-7'></MdDelete>
 				</ButtonComponent>
 			</>
 		)
