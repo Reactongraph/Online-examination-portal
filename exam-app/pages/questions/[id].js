@@ -1,7 +1,7 @@
-import { GetLevelData } from '../../../apis/levels'
-import { GetModuleData } from '../../../apis/modules'
-import Layout from '../../../components/layout/Layout'
-import AddQuestion from '../../../components/questions/addQuestion'
+import { GetLevelData } from '../../apis/levels'
+import { GetModuleData } from '../../apis/modules'
+import Layout from '../../components/layout/Layout'
+import AddQuestion from '../../components/questions/addQuestion'
 
 export default function ViewQuestions() {
 	const { data: level_data } = GetLevelData()
