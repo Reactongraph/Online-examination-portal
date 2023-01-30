@@ -64,7 +64,7 @@ const CreateOrganization = ({ isViewOnly }) => {
 			EditOrganization(OrganizationData, router.query.id)
 				.then(async () => {
 					toast.success('organization updated')
-					router.replace(`/dashboard/organization`)
+					router.replace(`/organization`)
 				})
 				.catch(() => {
 					toast.error('invalid request')
@@ -79,7 +79,7 @@ const CreateOrganization = ({ isViewOnly }) => {
 			AddOrganization(OrganizationData)
 				.then(async () => {
 					toast.success('organization added!')
-					router.replace(`/dashboard/organization`)
+					router.replace(`/organization`)
 				})
 				.catch(() => {
 					toast.error('invalid request')
