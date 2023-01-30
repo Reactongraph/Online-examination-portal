@@ -8,6 +8,8 @@ import { injectStyle } from 'react-toastify/dist/inject-style'
 import { DeleteLevel, EditLevel } from '../../apis/levels'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
 import { ButtonComponent } from '../common/micro/buttonComponent'
+import { EyeIcon, ArchiveIcon } from '@heroicons/react/solid'
+import { BsPencilSquare } from 'react-icons/bs'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
@@ -35,7 +37,9 @@ const LevelTable = ({ data: level_data, mutate }) => {
 	const handleEditClick = async (level) => {
 		router.push(`${router.asPath}/edit/${level.id}`)
 	}
-
+	const handleViewClick = async (level) => {
+		router.push(`${router.asPath}/${level.id}`)
+	}
 	const handleBoxClick = async (level) => {
 		let oldStatus = level.status
 		let new_data = {
@@ -58,7 +62,7 @@ const LevelTable = ({ data: level_data, mutate }) => {
 	function createData(level) {
 		const action = (
 			<>
-				<ButtonComponent
+				{/* <ButtonComponent
 					onClick={() => handleEditClick(level)}
 					className={
 						'bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'
@@ -72,6 +76,22 @@ const LevelTable = ({ data: level_data, mutate }) => {
 						'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'
 					}>
 					Delete
+				</ButtonComponent> */}
+				<ButtonComponent
+					className={`text-blue-500 hover:text-blue-700`}
+					onClick={() => handleViewClick(level)}>
+					<EyeIcon className='h-6 h-6 ' />
+				</ButtonComponent>
+				<ButtonComponent
+					onClick={() => handleEditClick(level)}
+					className={'text-green-500 hover:text-green-700 ml-2'}>
+					<BsPencilSquare className='h-6 w-5 ' />
+				</ButtonComponent>
+				&nbsp;
+				<ButtonComponent
+					onClick={() => handleRemoveClick(level.id)}
+					className={'text-red-500 hover:text-red-700  m-1'}>
+					<ArchiveIcon className='h-6 h-6'></ArchiveIcon>
 				</ButtonComponent>
 			</>
 		)

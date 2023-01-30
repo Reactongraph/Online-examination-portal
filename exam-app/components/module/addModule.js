@@ -5,7 +5,7 @@ import { AddModule, EditModule, GetModuleDataWithId } from '../../apis/modules'
 import LevelModulePopup from '../common/PopUpModals/LevelModulePopUp'
 import { ToastContainer, toast } from 'react-toastify'
 
-const AddModuleComponent = () => {
+const AddModuleComponent = ({ isViewOnly }) => {
 	const router = useRouter()
 	const [modules, setModules] = useState('')
 	const [buttonText, setButtonText] = useState('Add')
@@ -18,9 +18,10 @@ const AddModuleComponent = () => {
 		async function getModuleData() {
 			const results = await GetModuleDataWithId(module_id)
 			const moduleData = results.data
-			setButtonText('Update')
+			// setButtonText('Update')
 			setEditForm(true)
 			setModules(moduleData?.module)
+			isViewOnly ? setButtonText('View') : setButtonText('Edit')
 		}
 
 		if (module_id) {
@@ -68,6 +69,7 @@ const AddModuleComponent = () => {
 				modalName={'MODULE'}
 				buttonText={buttonText}
 				placeholderText={'eg. C++ , JAVA ,  etc...'}
+				isViewOnly={isViewOnly}
 			/>
 
 			<ToastContainer />
