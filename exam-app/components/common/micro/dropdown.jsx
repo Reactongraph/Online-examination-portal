@@ -20,6 +20,7 @@ export default function Dropdown(props) {
 				id={props.id ? props.id : 'default'}
 				onChange={handleSelect}
 				required={props.required}
+				disabled={props.disabled}
 				value={props.value}
 				className={
 					props.className

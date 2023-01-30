@@ -8,6 +8,8 @@ import { injectStyle } from 'react-toastify/dist/inject-style'
 import { DeleteQuestion, EditQuestion } from '../../apis/questions'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
 import { ButtonComponent } from '../common/micro/buttonComponent'
+import { EyeIcon, ArchiveIcon } from '@heroicons/react/solid'
+import { BsPencilSquare } from 'react-icons/bs'
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
@@ -46,6 +48,9 @@ const QuestionTable = ({ question_data, mutate }) => {
 	const handleEditClick = async (question_id) => {
 		router.push(`${router.asPath}/edit/${question_id}`)
 	}
+	const handleViewClick = async (question_id) => {
+		router.push(`${router.asPath}/${question_id}`)
+	}
 
 	function createData(
 		question,
@@ -59,19 +64,20 @@ const QuestionTable = ({ question_data, mutate }) => {
 		const action = (
 			<>
 				<ButtonComponent
-					onClick={() => handleEditClick(question_id)}
-					className={
-						'bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'
-					}>
-					Edit
+					className={`text-blue-500 hover:text-blue-700`}
+					onClick={() => handleViewClick(question_id)}>
+					<EyeIcon className='h-6 ' />
+				</ButtonComponent>
+				<ButtonComponent
+					className={'text-green-500 hover:text-green-700 ml-2'}
+					onClick={() => handleEditClick(question_id)}>
+					<BsPencilSquare className='h-6 w-5 ' />
 				</ButtonComponent>
 				&nbsp;
 				<ButtonComponent
 					onClick={() => handleRemoveClick(question_id)}
-					className={
-						'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'
-					}>
-					Delete
+					className={'text-red-500 hover:text-red-700  m-1'}>
+					<ArchiveIcon className='h-6'></ArchiveIcon>
 				</ButtonComponent>
 			</>
 		)

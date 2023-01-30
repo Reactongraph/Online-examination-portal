@@ -16,7 +16,11 @@ import {
 	GetQuestionDataWithId,
 } from '../../apis/questions'
 
-const AddQuestion = ({ level_data: levelData, module_data: moduleData }) => {
+const AddQuestion = ({
+	level_data: levelData,
+	module_data: moduleData,
+	isViewOnly,
+}) => {
 	const router = useRouter()
 	const [selectedImage, setSelectedImage] = useState(null)
 	const [pageTitle, setPageTitle] = useState('Add')
@@ -44,7 +48,7 @@ const AddQuestion = ({ level_data: levelData, module_data: moduleData }) => {
 		async function getQuestionData() {
 			const results = await GetQuestionDataWithId(question_id)
 			const questionData = results.data
-			setPageTitle('Edit')
+			isViewOnly ? setPageTitle('View') : setPageTitle('Edit')
 			setEditForm(true)
 			setQuestion(questionData.question)
 			setInputFields(questionData.options)
@@ -217,33 +221,40 @@ const AddQuestion = ({ level_data: levelData, module_data: moduleData }) => {
 					handleFormChange={handleFormChange}
 					addFields={addFields}
 					optionType={optionType}
-					requiredOptionField={requiredOptionField}>
+					requiredOptionField={requiredOptionField}
+					isViewOnly={isViewOnly || false}>
 					<React.Fragment>
 						<QuestionType
 							questionType={questionType}
 							handleQuestionTypeSelect={handleQuestionTypeSelect}
+							isViewOnly={isViewOnly}
 						/>
 						<TimeLimit
 							timeLimitSelect={timeLimitSelect}
 							handleTimeLimitSelect={handleTimeLimitSelect}
+							isViewOnly={isViewOnly}
 						/>
 						<OptionType
 							optionType={optionType}
 							handleOptionTypeSelect={handleOptionTypeSelect}
+							isViewOnly={isViewOnly}
 						/>
 						<QuestionLevel
 							selectedLevelId={selectedLevelId}
 							handleLevelTypeSelect={handleLevelTypeSelect}
 							levelData={levelData}
+							isViewOnly={isViewOnly}
 						/>
 						<QuestionModule
 							moduleData={moduleData}
 							handleModuleTypeSelect={handleModuleTypeSelect}
 							selectedModuleId={selectedModuleId}
+							isViewOnly={isViewOnly}
 						/>
 						<QuestionMarks
 							marks={marks}
 							setMarks={setMarks}
+							isViewOnly={isViewOnly}
 						/>
 					</React.Fragment>
 				</QuestionForm>
