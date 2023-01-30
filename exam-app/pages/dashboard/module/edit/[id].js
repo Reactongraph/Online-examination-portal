@@ -7,7 +7,7 @@ export default function EditModules() {
 	return (
 		<>
 			<Layout title='Edit Module'>
-				<AddModuleComponent isViewOnly={false} />
+				<AddModuleComponent />
 			</Layout>
 		</>
 	)

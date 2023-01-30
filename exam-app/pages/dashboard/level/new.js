@@ -6,7 +6,7 @@ export default function AddLevels() {
 	return (
 		<>
 			<Layout title='Add New level'>
-				<AddLevelComponent isViewOnly={false} />
+				<AddLevelComponent />
 			</Layout>
 		</>
 	)

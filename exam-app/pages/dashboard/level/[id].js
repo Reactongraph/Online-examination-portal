@@ -5,8 +5,8 @@ import Layout from '../../../components/layout/Layout'
 export default function ViewLevelPage() {
 	return (
 		<>
-			<Layout title='Add New level'>
-				<AddLevelComponent isViewOnly={true} />
+			<Layout title='View level'>
+				<AddLevelComponent  />
 			</Layout>
 		</>
 	)

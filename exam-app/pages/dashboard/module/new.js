@@ -6,7 +6,7 @@ export default function AddModules() {
 	return (
 		<>
 			<Layout title='Add New Module'>
-				<AddModuleComponent isViewOnly={false} />
+				<AddModuleComponent />
 			</Layout>
 		</>
 	)
