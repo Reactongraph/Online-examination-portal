@@ -11,6 +11,7 @@ import { ButtonComponent } from '../common/micro/buttonComponent'
 import { BsPencilSquare } from 'react-icons/bs'
 import { MdDelete } from 'react-icons/md'
 import { AiFillEye } from 'react-icons/ai'
+import Link from 'next/link'
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
@@ -57,16 +58,14 @@ const QuestionTable = ({ question_data, mutate }) => {
 		question = question.question.slice(0, 15) + '...'
 		const action = (
 			<>
-				<ButtonComponent
-					className={`text-blue-500 hover:text-blue-700`}
-					onClick={() => handleViewClick(question_id)}>
-					<AiFillEye className='h-6 w-7' />
-				</ButtonComponent>
-				<ButtonComponent
-					className={'text-green-500 hover:text-green-700 ml-2'}
-					onClick={() => handleEditClick(question_id)}>
-					<BsPencilSquare className='h-6 w-5 ' />
-				</ButtonComponent>
+				<Link href={`/questions/addQuestion?question_id=${question_id}`}>
+					<ButtonComponent
+						className={
+							'bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'
+						}>
+						Edit
+					</ButtonComponent>
+				</Link>
 				&nbsp;
 				<ButtonComponent
 					onClick={() => handleRemoveClick(question_id)}
