@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { ButtonComponent } from '../../common/micro/buttonComponent'
+import Link from 'next/link'
 
 const UserMenu = () => {
 	const [userMenuStatus, setUserMenuStatus] = useState(false)
@@ -15,9 +16,6 @@ const UserMenu = () => {
 
 	const userMenuhandle = () => {
 		setUserMenuStatus(!userMenuStatus)
-	}
-	const handleclick = () => {
-		router.push('/userProfile')
 	}
 
 	useEffect(() => {
@@ -53,11 +51,11 @@ const UserMenu = () => {
 
 				{userMenuStatus && (
 					<div className='absolute right-0 sm:-bottom-16 bg-slate-500 px-2 py-1 space-x-2 text-yellow-50 w-full -bottom-28'>
-						<a
-							className='block hover:bg-gray-50 hover:text-black'
-							onClick={handleclick}>
+						<Link
+							href={'/userProfile'}
+							className='block hover:bg-gray-50 hover:text-black'>
 							user Profile
-						</a>
+						</Link>
 						<a className='block hover:bg-gray-50 hover:text-black'>
 							user setting
 						</a>

@@ -177,17 +177,17 @@ const AddQuestion = ({ level_data: levelData, module_data: moduleData }) => {
 			data = JSON.stringify(data)
 			EditQuestion(data, question_id)
 				.then(() => {
-					router.push('/dashboard/questions')
+					router.push('/questions')
 				})
 				.catch(() => {
-					toast.error('invalid requestssss')
+					toast.error('invalid requests')
 				})
 		} else {
 			data.status = true
 			data = JSON.stringify(data)
 			Addquestion(data)
 				.then(() => {
-					router.push('/dashboard/questions')
+					router.push('/questions')
 				})
 				.catch(() => {
 					toast.error('invalid request')

@@ -8,6 +8,7 @@ import { injectStyle } from 'react-toastify/dist/inject-style'
 import { DeleteQuestion, EditQuestion } from '../../apis/questions'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
 import { ButtonComponent } from '../common/micro/buttonComponent'
+import Link from 'next/link'
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
@@ -43,10 +44,6 @@ const QuestionTable = ({ question_data, mutate }) => {
 			})
 	}
 
-	const handleEditClick = async (question_id) => {
-		router.push(`/dashboard/questions/addQuestion?question_id=${question_id}`)
-	}
-
 	function createData(
 		question,
 		question_type,
@@ -58,13 +55,14 @@ const QuestionTable = ({ question_data, mutate }) => {
 		question = question.question.slice(0, 15) + '...'
 		const action = (
 			<>
-				<ButtonComponent
-					onClick={() => handleEditClick(question_id)}
-					className={
-						'bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'
-					}>
-					Edit
-				</ButtonComponent>
+				<Link href={`/questions/addQuestion?question_id=${question_id}`}>
+					<ButtonComponent
+						className={
+							'bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'
+						}>
+						Edit
+					</ButtonComponent>
+				</Link>
 				&nbsp;
 				<ButtonComponent
 					onClick={() => handleRemoveClick(question_id)}
