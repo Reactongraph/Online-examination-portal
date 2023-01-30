@@ -62,21 +62,6 @@ const LevelTable = ({ data: level_data, mutate }) => {
 	function createData(level) {
 		const action = (
 			<>
-				{/* <ButtonComponent
-					onClick={() => handleEditClick(level)}
-					className={
-						'bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'
-					}>
-					Edit
-				</ButtonComponent>
-				&nbsp;
-				<ButtonComponent
-					onClick={() => handleRemoveClick(level.id)}
-					className={
-						'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'
-					}>
-					Delete
-				</ButtonComponent> */}
 				<ButtonComponent
 					className={`text-blue-500 hover:text-blue-700`}
 					onClick={() => handleViewClick(level)}>
