@@ -31,11 +31,13 @@ const PageComponentTitle = ({
 			/>
 
 			<div className='flex  flex-wrap items-start justify-end -mb-3'>
-				<Link href={`/${router.asPath}/new`}>
+				{/* <Link href={`/${router.asPath}/new`}> */}
 					<ButtonComponent
 						className={
 							'inline-flex px-5 py-3 text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 rounded-md ml-6 mb-3'
-						}>
+						}
+						onClick ={handleAddClick}
+						>
 						<React.Fragment>
 							<svg
 								aria-hidden='true'
@@ -53,7 +55,7 @@ const PageComponentTitle = ({
 							{buttonTitle}
 						</React.Fragment>
 					</ButtonComponent>
-				</Link>
+				{/* </Link> */}
 			</div>
 		</>
 	)
