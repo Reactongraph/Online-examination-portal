@@ -5,8 +5,8 @@ import CreateOrganization from '../../../../components/organization/addOrganizat
 export default function EditPage() {
 	return (
 		<>
-			<Layout title='Organization '>
-				<CreateOrganization isViewOnly={false} />
+			<Layout title='Edit Organization '>
+				<CreateOrganization />
 			</Layout>
 		</>
 	)

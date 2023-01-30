@@ -111,7 +111,7 @@ const CreateOrganization = ({ isViewOnly }) => {
 					handleSubmit={handleSubmit}
 					checkWithDatabase={checkWithDatabase}
 					setQuota={setQuota}
-					isViewOnly={isViewOnly}></OrganizationPopUp>
+					isViewOnly={isViewOnly || false}></OrganizationPopUp>
 			</main>
 		</>
 	)
