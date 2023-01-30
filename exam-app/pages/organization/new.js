@@ -6,8 +6,8 @@ import CreateOrganization from '../../../components/organization/addOrganization
 export default function AddOrganizations() {
 	return (
 		<>
-			<Layout title='Organizations'>
-				<CreateOrganization isViewOnly={false} />
+			<Layout title='Add Organizations'>
+				<CreateOrganization  />
 			</Layout>
 		</>
 	)

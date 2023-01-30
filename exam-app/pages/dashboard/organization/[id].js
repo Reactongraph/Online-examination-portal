@@ -4,7 +4,7 @@ import CreateOrganization from '../../../components/organization/addOrganization
 export default function ViewOrganizationPage() {
 	return (
 		<>
-			<Layout>
+			<Layout title='View Organization'>
 				<CreateOrganization isViewOnly={true} />
 			</Layout>
 		</>
