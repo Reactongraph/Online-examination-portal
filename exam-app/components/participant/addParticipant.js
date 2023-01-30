@@ -64,7 +64,7 @@ const CreateParticipant = ({ isViewOnly }) => {
 			EditParticipant(participantData, router.query.id)
 				.then(async () => {
 					toast.success('participant  updated')
-					router.replace(`/dashboard/participant`)
+					router.replace(`/participant`)
 				})
 				.catch(() => {
 					toast.error('invalid request')
