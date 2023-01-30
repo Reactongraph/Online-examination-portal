@@ -1,6 +1,6 @@
-import AddModuleComponent from '../../../components/module/addModule'
+import AddModuleComponent from '../../components/module/addModule'
 import * as React from 'react'
-import Layout from '../../../components/layout/Layout'
+import Layout from '../../components/layout/Layout'
 
 export default function ViewModulePage() {
 	return (

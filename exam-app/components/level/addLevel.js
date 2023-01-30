@@ -41,7 +41,7 @@ const AddLevelComponent = ({ isViewOnly }) => {
 
 			EditLevel(LevelData, router.query?.id)
 				.then(() => {
-					router.replace('/dashboard/level')
+					router.replace('/level')
 					toast.success('level updated!')
 				})
 				.catch(() => {
@@ -55,7 +55,7 @@ const AddLevelComponent = ({ isViewOnly }) => {
 			AddLevel(LevelData)
 				.then(() => {
 					toast.success('level inserted')
-					router.replace('/dashboard/level')
+					router.replace('/level')
 				})
 				.catch(() => {
 					toast.error('Invalid Request')

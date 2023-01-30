@@ -38,7 +38,7 @@ const AddModuleComponent = ({ isViewOnly }) => {
 			let moduleData = JSON.stringify(data)
 			EditModule(moduleData, router.query?.id)
 				.then(() => {
-					router.replace('/dashboard/module')
+					router.replace('/module')
 					toast.success('updated!')
 				})
 				.catch(() => {
@@ -50,7 +50,7 @@ const AddModuleComponent = ({ isViewOnly }) => {
 			let moduleData = JSON.stringify(data)
 			AddModule(moduleData)
 				.then(() => {
-					router.replace('/dashboard/module')
+					router.replace('/module')
 					toast.success('module created!')
 				})
 				.catch(() => {

@@ -3,7 +3,6 @@ import React from 'react'
 // import UserProfileModal from './UserProfileModal'
 import { Banner } from './micro/banner'
 import { ButtonComponent } from './micro/buttonComponent'
-import { useRouter } from 'next/router'
 
 const PageComponentTitle = ({
 	title,
