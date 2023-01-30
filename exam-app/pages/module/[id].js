@@ -5,7 +5,7 @@ import Layout from '../../../components/layout/Layout'
 export default function ViewModulePage() {
 	return (
 		<>
-			<Layout title='Add New Module'>
+			<Layout title='View Module'>
 				<AddModuleComponent isViewOnly={true} />
 			</Layout>
 		</>

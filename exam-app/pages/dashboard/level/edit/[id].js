@@ -6,8 +6,8 @@ import AddLevelComponent from '../../../../components/level/addLevel'
 export default function EditLevels() {
 	return (
 		<>
-			<Layout title='Add New level'>
-				<AddLevelComponent isViewOnly={false} />
+			<Layout title='Edit level'>
+				<AddLevelComponent />
 			</Layout>
 		</>
 	)

@@ -73,7 +73,7 @@ const AddLevelComponent = ({ isViewOnly }) => {
 				modalName={'LEVEL'}
 				buttonText={buttonText}
 				placeholderText={'eg. Easy , Moderate , etc ...'}
-				isViewOnly={isViewOnly}
+				isViewOnly={isViewOnly || false}
 			/>
 		</>
 	)
