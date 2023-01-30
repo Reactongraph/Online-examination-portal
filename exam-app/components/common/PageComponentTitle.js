@@ -4,6 +4,7 @@ import React from 'react'
 import { Banner } from './micro/banner'
 import { useRouter } from 'next/router'
 import { ButtonComponent } from './micro/buttonComponent'
+import Link from 'next/link'
 
 const PageComponentTitle = ({
 	title,
