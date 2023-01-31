@@ -1,33 +1,19 @@
 import Table from '../common/Table'
-import React, { useState } from 'react'
+import React from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
-import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { OrganizationColumns } from './organizationColumn'
-import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
 import { DeleteOrganization, EditOrganization } from '../../apis/organizations'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
 import { ButtonComponent } from '../common/micro/buttonComponent'
+import { useRouter } from 'next/router'
+import { BsPencilSquare } from 'react-icons/bs'
+import { MdDelete } from 'react-icons/md'
+import { AiFillEye } from 'react-icons/ai'
 
 const OrganizationTable = ({ data: organization_data, mutate }) => {
-	// const [editForm, setEditForm] = useState(false)
-	const [modal, setModal] = useState(false)
-	const [organizationId, setOrganizationId] = useState('')
+	const router = useRouter()
 
-	const [buttonText, setButtonText] = useState('Add')
-
-	const [name, setName] = useState('')
-	const [email, setEmail] = useState('')
-	const [pincode, setPincode] = useState('')
-	const [address, setAddress] = useState('')
-	const [city, setCity] = useState('')
-	const [state, setState] = useState('')
-	const [mobile, setMobile] = useState('')
-	const [quota, setQuota] = useState('')
-
-	const [password, setPassword] = useState('')
-
-	const { handleSubmit } = useForm()
 	const handleRemoveClick = (org_id) => {
 		try {
 			DeleteOrganization(org_id)
@@ -58,62 +44,30 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 			})
 	}
 	const handleEditClick = async (org) => {
-		setButtonText('Update')
-		setOrganizationId(org.id)
-		setModal(true)
-		setName(org.name)
-		setEmail(org.email)
-		setMobile(org.mobile)
-		setState(org.state)
-		setPassword(org.password)
-		setAddress(org.address)
-		setCity(org.city)
-		setPincode(org.pincode)
-		setQuota(org.quota)
+		router.push(`${router.asPath}/edit/${org.id}`)
 	}
-
-	const checkWithDatabase = async (data) => {
-		data.name = name
-		data.email = email
-		data.mobile = mobile
-		data.password = password
-		data.city = city
-		data.state = state
-		data.pincode = pincode
-		data.address = address
-		data.quota = quota
-		let OrganizationData = JSON.stringify(data)
-
-		// for taking the patch api data
-
-		EditOrganization(OrganizationData, organizationId)
-			.then(() => {
-				setModal(!modal)
-				mutate()
-				toast.success('organization updated!')
-			})
-			.catch(() => {
-				toast.error('invalid request')
-			})
+	const handleViewClick = async (org) => {
+		router.push(`${router.asPath}/${org.id}`)
 	}
 
 	function createData(org) {
 		const action = (
 			<>
 				<ButtonComponent
+					className={`text-blue-500 hover:text-blue-700`}
+					onClick={() => handleViewClick(org)}>
+					<AiFillEye className='h-6 w-7 ' />
+				</ButtonComponent>
+				<ButtonComponent
 					onClick={() => handleEditClick(org)}
-					className={
-						'bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'
-					}>
-					Edit
+					className={'text-green-500 hover:text-green-700 ml-2'}>
+					<BsPencilSquare className='h-6 w-7 ' />
 				</ButtonComponent>
 				&nbsp;
 				<ButtonComponent
 					onClick={() => handleRemoveClick(org.id)}
-					className={
-						'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'
-					}>
-					Delete
+					className={'text-red-500 hover:text-red-700  m-1'}>
+					<MdDelete className='h-6 w-7'></MdDelete>
 				</ButtonComponent>
 			</>
 		)
@@ -148,31 +102,6 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 				data={data || []}
 				rowKey='id'
 				className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'
-			/>
-			<OrganizationPopUp
-				modal={modal}
-				setModal={setModal}
-				name={name}
-				setName={setName}
-				email={email}
-				setEmail={setEmail}
-				password={password}
-				setPassword={setPassword}
-				city={city}
-				setCity={setCity}
-				state={state}
-				setState={setState}
-				pincode={pincode}
-				setPincode={setPincode}
-				mobile={mobile}
-				address={address}
-				setAddress={setAddress}
-				setMobile={setMobile}
-				quota={quota}
-				buttonText={buttonText}
-				handleSubmit={handleSubmit}
-				checkWithDatabase={checkWithDatabase}
-				setQuota={setQuota}
 			/>
 		</>
 	)

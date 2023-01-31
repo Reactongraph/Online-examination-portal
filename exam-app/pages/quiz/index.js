@@ -1,9 +1,9 @@
 import * as React from 'react'
-import Quiz from '../../../components/quiz/Quiz'
-import Layout from '../../../components/layout/Layout'
-import { GetQuizData } from '../../../apis/quizzes'
-import { GetLevelData } from '../../../apis/levels'
-import { GetModuleData } from '../../../apis/modules'
+import Quiz from '../../components/quiz/Quiz'
+import Layout from '../../components/layout/Layout'
+import { GetQuizData } from '../../apis/quizzes'
+import { GetLevelData } from '../../apis/levels'
+import { GetModuleData } from '../../apis/modules'
 
 // You can't name a function as MODULE...
 export default function Quizes() {

@@ -60,8 +60,8 @@ const Login = () => {
 				}
 			})
 			.catch((err) => {
-				const { data } = err.response
-				toast.error(data.error)
+				// const { data } = err.response
+				toast.error(err.message)
 			})
 	}
 

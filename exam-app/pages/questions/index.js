@@ -1,6 +1,7 @@
-import Question from '../../../components/questions/Question'
-import Layout from '../../../components/layout/Layout'
-import { GetQuestionData } from '../../../apis/questions'
+// import Question from '../../../components/questions/Question'es
+import Question from '../../components/questions/Question'
+import Layout from '../../components/layout/Layout'
+import { GetQuestionData } from '../../apis/questions'
 
 // You can't name a function as MODULE...
 export default function Questions() {

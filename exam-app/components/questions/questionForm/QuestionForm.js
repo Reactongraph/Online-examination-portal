@@ -19,6 +19,7 @@ function QuestionForm(props) {
 		addFields,
 		optionType,
 		requiredOptionField,
+		isViewOnly,
 	} = props
 	return (
 		<>
@@ -47,6 +48,7 @@ function QuestionForm(props) {
 							addFields={addFields}
 							optionType={optionType}
 							requiredOptionField={requiredOptionField}
+							isViewOnly={isViewOnly}
 						/>
 					</div>
 

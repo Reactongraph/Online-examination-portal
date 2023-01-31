@@ -4,7 +4,7 @@ import { LevelController } from './level.controller'
 import { PrismaService } from 'src/prisma.service'
 
 @Module({
-  controllers: [LevelController],
-  providers: [LevelService, PrismaService]
+	controllers: [LevelController],
+	providers: [LevelService, PrismaService],
 })
 export class LevelModule {}

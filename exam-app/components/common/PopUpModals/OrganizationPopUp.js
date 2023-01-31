@@ -1,13 +1,14 @@
 import React from 'react'
-import PureModal from 'react-pure-modal'
 import { ButtonComponent } from '../micro/buttonComponent'
 import { Label } from '../micro/label'
 import { Form } from '../micro/form'
 import { InputComponent } from '../micro/inputComponent'
+import { Banner } from '../micro/banner'
 function OrganizationPopUp(props) {
 	const {
 		name,
 		setName,
+		email,
 		setEmail,
 		password,
 		setPassword,
@@ -23,35 +24,23 @@ function OrganizationPopUp(props) {
 		setMobile,
 		quota,
 		setQuota,
-		modal,
-		setModal,
 		buttonText,
 		handleSubmit,
 		checkWithDatabase,
+		isViewOnly,
 	} = props
 	return (
-		<PureModal
-			isOpen={modal}
-			width='800px'
-			onClose={() => {
-				setName('')
-				setEmail('')
-				setPassword('')
-				setCity('')
-				setState('')
-				setPincode('')
-				setAddress('')
-				setMobile('')
-				setQuota('')
-				setModal(false)
-				return true
-			}}>
-			<div className='flex-row space-y-3 relative'>
-				<div className='bg-blue-600 p-2 font-bold text-lg text-center text-white -mt-4 -mx-4 mb-5 pb-4'>
-					<p>{buttonText} Organization</p>
+		<>
+			<div className='flex-row space-y-3 relative p-12 '>
+				<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
+					<Banner
+						heading={`${buttonText} Organization`}
+						subHeading={'Easy to understand'}
+						additionalClassName={'my-4 ml-3'}
+					/>
 				</div>
 
-				<div className='py-6 px-6 lg:px-8'>
+				<div className='flex-auto  items-center p-8 bg-white shadow rounded-lg '>
 					<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 						<React.Fragment>
 							<div className='flex flex-wrap -mx-3 mb-6'>
@@ -61,11 +50,12 @@ function OrganizationPopUp(props) {
 										type='text'
 										onChange={(e) => setName(e.target.value)}
 										className={
-											'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+											'appearance-none block w-full bg-white-200 text-white-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
 										}
 										value={name}
 										placeholder='Jane'
 										required='required'
+										disabled={isViewOnly}
 										id='name'
 									/>
 								</div>
@@ -76,9 +66,11 @@ function OrganizationPopUp(props) {
 										id='grid-email'
 										type='email'
 										className={
-											'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+											'appearance-none block w-full bg-white-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
 										}
+										value={email}
 										placeholder='example@gmail.com '
+										disabled={isViewOnly}
 										required='required'
 									/>
 								</div>
@@ -91,11 +83,12 @@ function OrganizationPopUp(props) {
 										onChange={(e) => setPassword(e.target.value)}
 										id='grid-password'
 										className={
-											'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+											'appearance-none block w-full bg-white-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
 										}
 										type={'password'}
 										placeholder={'******************'}
 										required={'required'}
+										disabled={isViewOnly}
 										value={password}
 									/>
 									<p className='text-gray-600 text-xs italic'>
@@ -111,11 +104,12 @@ function OrganizationPopUp(props) {
 										onChange={(e) => setCity(e.target.value)}
 										id='mobile'
 										className={
-											'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+											'appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 										}
 										type={'text'}
 										placeholder={'Albuquerque '}
 										required={'required'}
+										disabled={isViewOnly}
 										value={city}
 									/>
 								</div>
@@ -126,11 +120,12 @@ function OrganizationPopUp(props) {
 										onChange={(e) => setState(e.target.value)}
 										id='state'
 										className={
-											'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+											'appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 										}
 										type={'text'}
 										placeholder={'State '}
 										required={'required'}
+										disabled={isViewOnly}
 										value={state}
 									/>
 								</div>
@@ -140,11 +135,12 @@ function OrganizationPopUp(props) {
 										onChange={(e) => setPincode(e.target.value)}
 										id='stgrid-zip'
 										className={
-											'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+											'appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 										}
 										type={'text'}
 										placeholder={'90210 '}
 										required={'required'}
+										disabled={isViewOnly}
 										value={pincode}
 									/>
 								</div>
@@ -156,11 +152,12 @@ function OrganizationPopUp(props) {
 										onChange={(e) => setAddress(e.target.value)}
 										id='grid-address'
 										className={
-											'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+											'appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 										}
 										type={'text'}
 										placeholder={'your office number '}
 										required={'required'}
+										disabled={isViewOnly}
 										value={address}
 									/>
 								</div>
@@ -172,11 +169,12 @@ function OrganizationPopUp(props) {
 										onChange={(e) => setMobile(e.target.value)}
 										id='mobile'
 										className={
-											'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+											'appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 										}
 										type={'text'}
 										placeholder={'+91 '}
 										required={'required'}
+										disabled={isViewOnly}
 										value={mobile}
 									/>
 								</div>
@@ -186,21 +184,39 @@ function OrganizationPopUp(props) {
 										onChange={(e) => setQuota(e.target.value)}
 										id='Quota'
 										className={
-											'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+											'appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 										}
 										type={'text'}
 										placeholder={'e.g. 1000 '}
 										required={'required'}
+										disabled={isViewOnly}
 										value={quota}
 									/>
 								</div>
 							</div>
-							<ButtonComponent key={'submit'}>{buttonText}</ButtonComponent>
+							<div className='flex justify-end'>
+								{isViewOnly == false && (
+									<ButtonComponent
+										key={'submit'}
+										className={
+											'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
+										}>
+										{buttonText}
+									</ButtonComponent>
+								)}
+								{/* <ButtonComponent
+									key={'submit'}
+									className={
+										'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
+									}>
+									{buttonText}
+								</ButtonComponent> */}
+							</div>
 						</React.Fragment>
 					</Form>
 				</div>
 			</div>
-		</PureModal>
+		</>
 	)
 }
 

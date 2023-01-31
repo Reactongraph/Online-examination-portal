@@ -22,17 +22,8 @@ export function GetParticipantData() {
 	}
 }
 
-export function GetParticipantDataWithOrgId(id) {
-	const { data, error, isLoading, mutate } = useSWR(
-		[`/participants/findbyorganization/${id}`],
-		([url]) => fetcher(url)
-	)
-	return {
-		data,
-		error,
-		isLoading,
-		mutate,
-	}
+export async function GetParticipantDataWithOrgId(id) {
+	return await ApiCaller.get(`/participants/findbyorganization/${id}`)
 }
 
 export async function DeleteParticipant(participantId) {

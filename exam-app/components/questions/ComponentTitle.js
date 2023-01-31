@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import { Banner } from '../common/micro/banner'
 import { ButtonComponent } from '../common/micro/buttonComponent'
 import { InputComponent } from '../common/micro/inputComponent'
+import Link from 'next/link'
 
 const PageComponentTitle = ({
 	title,
@@ -15,11 +16,6 @@ const PageComponentTitle = ({
 }) => {
 	const router = useRouter()
 	const user = useSelector((state) => state?.user)
-
-	// const checkModal = (title) => {}
-	const handleAddClick = () => {
-		router.push('/dashboard/questions/addQuestion')
-	}
 
 	const handleCsv = (e) => {
 		const result = CsvReader(e.target.files[0], user, mutate)
@@ -63,29 +59,29 @@ const PageComponentTitle = ({
 					}}
 					className='px-6 py-2 mx-2 bg-blue-400 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-500 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out'
 				/>
-
-				<ButtonComponent
-					className={
-						'inline-flex px-5 py-3 text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 rounded-md ml-6 mb-3'
-					}
-					onClick={handleAddClick}>
-					<React.Fragment>
-						<svg
-							aria-hidden='true'
-							fill='none'
-							viewBox='0 0 24 24'
-							stroke='currentColor'
-							className='flex-shrink-0 h-6 w-6 text-white -ml-1 mr-2'>
-							<path
-								strokeLinecap='round'
-								strokeLinejoin='round'
-								strokeWidth={2}
-								d='M12 6v6m0 0v6m0-6h6m-6 0H6'
-							/>
-						</svg>
-						{buttonTitle}
-					</React.Fragment>
-				</ButtonComponent>
+				<Link href={'/questions/new'}>
+					<ButtonComponent
+						className={
+							'inline-flex px-5 py-3 text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 rounded-md ml-6 mb-3'
+						}>
+						<React.Fragment>
+							<svg
+								aria-hidden='true'
+								fill='none'
+								viewBox='0 0 24 24'
+								stroke='currentColor'
+								className='flex-shrink-0 h-6 w-6 text-white -ml-1 mr-2'>
+								<path
+									strokeLinecap='round'
+									strokeLinejoin='round'
+									strokeWidth={2}
+									d='M12 6v6m0 0v6m0-6h6m-6 0H6'
+								/>
+							</svg>
+							{buttonTitle}
+						</React.Fragment>
+					</ButtonComponent>
+				</Link>
 				<ToastContainer />
 			</div>
 		</>

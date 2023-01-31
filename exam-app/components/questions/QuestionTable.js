@@ -8,6 +8,10 @@ import { injectStyle } from 'react-toastify/dist/inject-style'
 import { DeleteQuestion, EditQuestion } from '../../apis/questions'
 import { CheckboxInput } from '../common/micro/checkBoxInput'
 import { ButtonComponent } from '../common/micro/buttonComponent'
+import { BsPencilSquare } from 'react-icons/bs'
+import { MdDelete } from 'react-icons/md'
+import { AiFillEye } from 'react-icons/ai'
+import Link from 'next/link'
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
@@ -43,10 +47,6 @@ const QuestionTable = ({ question_data, mutate }) => {
 			})
 	}
 
-	const handleEditClick = async (question_id) => {
-		router.push(`/dashboard/questions/addQuestion?question_id=${question_id}`)
-	}
-
 	function createData(
 		question,
 		question_type,
@@ -58,20 +58,27 @@ const QuestionTable = ({ question_data, mutate }) => {
 		question = question.question.slice(0, 15) + '...'
 		const action = (
 			<>
-				<ButtonComponent
-					onClick={() => handleEditClick(question_id)}
-					className={
-						'bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded-full'
-					}>
-					Edit
-				</ButtonComponent>
+				<Link href={`/questions/${question_id}`}>
+					<ButtonComponent
+						className={'text-blue-500 hover:text-blue-700 ml-2'}
+						// onClick={() => handleEditClick(question_id)}
+					>
+						<AiFillEye className='h-6 w-5 ' />
+					</ButtonComponent>
+				</Link>
+				<Link href={`/questions/edit/${question_id}`}>
+					<ButtonComponent
+						className={'text-green-500 hover:text-green-700 ml-2'}
+						// onClick={() => handleEditClick(question_id)}
+					>
+						<BsPencilSquare className='h-6 w-5 ' />
+					</ButtonComponent>
+				</Link>
 				&nbsp;
 				<ButtonComponent
 					onClick={() => handleRemoveClick(question_id)}
-					className={
-						'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'
-					}>
-					Delete
+					className={'text-red-500 hover:text-red-700  m-1'}>
+					<MdDelete className='h-6 w-5' />
 				</ButtonComponent>
 			</>
 		)

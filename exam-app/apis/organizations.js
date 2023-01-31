@@ -22,6 +22,7 @@ export function GetOrganizationData() {
 		mutate,
 	}
 }
+
 export function GetOrganizationDataWithId(id) {
 	const { data, error, isLoading, mutate } = useSWR(
 		[`/organization/${id}`],
@@ -35,6 +36,7 @@ export function GetOrganizationDataWithId(id) {
 		mutate,
 	}
 }
+
 export async function DeleteOrganization(organizationId) {
 	return await ApiCaller.delete(`/organization/${organizationId}`)
 }

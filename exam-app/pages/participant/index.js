@@ -1,12 +1,12 @@
 import * as React from 'react'
-import Layout from '../../../components/layout/Layout'
-import ParticipantComponent from '../../../components/participant/Participant'
+import Layout from '../../components/layout/Layout'
+import ParticipantComponent from '../../components/participant/Participant'
 import { useSelector } from 'react-redux'
 import {
 	GetParticipantData,
 	GetParticipantDataWithOrgId,
-} from '../../../apis/participants'
-import { GetOrganizationData } from '../../../apis/organizations'
+} from '../../apis/participants'
+import { GetOrganizationData } from '../../apis/organizations'
 
 export default function Participant() {
 	const user = useSelector((state) => state?.user)

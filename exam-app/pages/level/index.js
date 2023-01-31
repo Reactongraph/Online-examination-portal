@@ -1,8 +1,8 @@
 import * as React from 'react'
 
-import Level from '../../../components/level/Level'
-import Layout from '../../../components/layout/Layout'
-import { GetLevelData } from '../../../apis/levels'
+import Level from '../../components/level/Level'
+import Layout from '../../components/layout/Layout'
+import { GetLevelData } from '../../apis/levels'
 
 export default function Levels() {
 	const { data, mutate } = GetLevelData()

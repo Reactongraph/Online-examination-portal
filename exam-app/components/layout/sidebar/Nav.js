@@ -52,7 +52,7 @@ const Nav = ({ sidebarOutsideClick }) => {
 
 				{userRole == 'SuperAdminUser' && (
 					<NavItem
-						hrefLink='/dashboard/organization'
+						hrefLink='/organization'
 						sidebarStatus={sidebarStatus}
 						menuTitle='Organization'
 						subMenu={false}
@@ -62,7 +62,7 @@ const Nav = ({ sidebarOutsideClick }) => {
 				)}
 
 				<NavItem
-					hrefLink='/dashboard/participant'
+					hrefLink='/participant'
 					sidebarStatus={sidebarStatus}
 					menuTitle='Participant'
 					subMenu={false}
@@ -72,7 +72,7 @@ const Nav = ({ sidebarOutsideClick }) => {
 
 				{userRole == 'SuperAdminUser' && (
 					<NavItem
-						hrefLink='/dashboard/level'
+						hrefLink='/level'
 						sidebarStatus={sidebarStatus}
 						menuTitle='Level'
 						subMenu={false}
@@ -83,7 +83,7 @@ const Nav = ({ sidebarOutsideClick }) => {
 
 				{userRole == 'SuperAdminUser' && (
 					<NavItem
-						hrefLink='/dashboard/module'
+						hrefLink='/module'
 						sidebarStatus={sidebarStatus}
 						menuTitle='Module'
 						subMenu={false}
@@ -94,7 +94,7 @@ const Nav = ({ sidebarOutsideClick }) => {
 
 				{userRole == 'SuperAdminUser' && (
 					<NavItem
-						hrefLink='/dashboard/questions'
+						hrefLink='/questions'
 						sidebarStatus={sidebarStatus}
 						menuTitle='Questions'
 						subMenu={false}
@@ -104,7 +104,7 @@ const Nav = ({ sidebarOutsideClick }) => {
 				)}
 
 				<NavItem
-					hrefLink='/dashboard/quiz'
+					hrefLink='/quiz'
 					sidebarStatus={sidebarStatus}
 					menuTitle='Quiz'
 					subMenu={false}

@@ -17,6 +17,7 @@ function CenterForm(props) {
 		optionType,
 		requiredOptionField,
 		removeFields,
+		isViewOnly,
 	} = props
 	return (
 		<>
@@ -112,6 +113,7 @@ function CenterForm(props) {
 							type='text'
 							id='default-input'
 							value={question}
+							disabled={isViewOnly}
 							required
 							onChange={(e) => setQuestion(e.target.value)}
 							placeholder='Type your question'
@@ -133,6 +135,7 @@ function CenterForm(props) {
 										className='bg-gray-50 border my-3 text-left border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-3/4 p-2.5  dark:focus:ring-blue-500 dark:focus:border-blue-500'
 										name='option'
 										required
+										disabled={isViewOnly}
 										value={input.option}
 										onChange={(event) => handleFormChange(index, event)}
 										placeholder={`Option ${String.fromCharCode(65 + index)}`}
@@ -141,6 +144,7 @@ function CenterForm(props) {
 										type={optionType == 'Multiple' ? 'checkbox' : 'radio'}
 										className={'mx-5'}
 										onClick={(event) => handleSelectedOption(index, event)}
+										disabled={isViewOnly}
 										checked={input.correct}
 										required={requiredOptionField}
 										placeholder='Jane'
@@ -148,33 +152,39 @@ function CenterForm(props) {
 										id={index}
 									/>
 
-									<ButtonComponent
-										className={'bg-gray-100'}
-										onClick={() => removeFields(index)}>
-										<RiDeleteBinLine />
-									</ButtonComponent>
+									{!isViewOnly && (
+										<ButtonComponent
+											className={'bg-gray-100'}
+											onClick={() => removeFields(index)}>
+											<RiDeleteBinLine />
+										</ButtonComponent>
+									)}
 
 									<br />
 								</div>
 							)
 						})}
-						<ButtonComponent
-							type='button'
-							onClick={addFields}
-							className={'text-blue-400'}>
-							Add More...
-						</ButtonComponent>
+						{!isViewOnly && (
+							<ButtonComponent
+								type='button'
+								onClick={addFields}
+								className={'text-blue-400'}>
+								Add More...
+							</ButtonComponent>
+						)}
 					</div>
 
-					<div className='flex justify-end'>
-						<ButtonComponent
-							key={'submit'}
-							className={
-								'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
-							}>
-							Submit
-						</ButtonComponent>
-					</div>
+					{!isViewOnly && (
+						<div className='flex justify-end'>
+							<ButtonComponent
+								key={'submit'}
+								className={
+									'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
+								}>
+								Submit
+							</ButtonComponent>
+						</div>
+					)}
 				</div>
 				{/* </form> */}
 			</section>
