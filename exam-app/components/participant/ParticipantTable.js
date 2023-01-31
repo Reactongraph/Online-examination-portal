@@ -38,19 +38,19 @@ const ParticipantTable = () => {
 		const action = (
 			<>
 				<ButtonComponent
-					className={`btn-view`}
+					className={`icon-view`}
 					onClick={() => handleViewClick(participant)}>
 					<AiFillEye className='h-6 w-7 ' />
 				</ButtonComponent>
 				<ButtonComponent
 					onClick={() => handleEditClick(participant)}
-					className={'btn-edit'}>
+					className={'icon-edit'}>
 					<BsPencilSquare className='h-6 w-7 ' />
 				</ButtonComponent>
 				&nbsp;
 				<ButtonComponent
 					onClick={() => handleRemoveClick(participant.id)}
-					className={'btn-delete'}>
+					className={'icon-delete'}>
 					<MdDelete className='h-6 w-7'></MdDelete>
 				</ButtonComponent>
 			</>

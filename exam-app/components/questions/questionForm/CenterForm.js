@@ -178,7 +178,9 @@ function CenterForm(props) {
 						<div className='flex justify-end'>
 							<ButtonComponent
 								key={'submit'}
-								className={'btn-secondary'}>
+								className={
+									'btn-secondary'
+								}>
 								Submit
 							</ButtonComponent>
 						</div>
