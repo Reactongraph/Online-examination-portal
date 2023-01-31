@@ -64,19 +64,19 @@ const LevelTable = ({ data: level_data, mutate }) => {
 		const action = (
 			<>
 				<ButtonComponent
-					className={`text-blue-500 hover:text-blue-700`}
+					className={`icon-view`}
 					onClick={() => handleViewClick(level)}>
 					<AiFillEye className='h-6 w-7 ' />
 				</ButtonComponent>
 				<ButtonComponent
 					onClick={() => handleEditClick(level)}
-					className={'text-green-500 hover:text-green-700 ml-2'}>
+					className={'icon-edit'}>
 					<BsPencilSquare className='h-6 w-5 ' />
 				</ButtonComponent>
 				&nbsp;
 				<ButtonComponent
 					onClick={() => handleRemoveClick(level.id)}
-					className={'text-red-500 hover:text-red-700  m-1'}>
+					className={'icon-delete'}>
 					<MdDelete className='h-6 w-7'></MdDelete>
 				</ButtonComponent>
 			</>
@@ -110,7 +110,7 @@ const LevelTable = ({ data: level_data, mutate }) => {
 				columns={Levelcolumns}
 				data={rowsDataArray || []}
 				rowKey='id'
-				className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'
+				className='table-primary'
 			/>
 
 			<ToastContainer />

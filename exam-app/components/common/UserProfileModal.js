@@ -58,7 +58,7 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 	return (
 		<>
 			<div className='flex-row space-y-3 relative p-12 '>
-				<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
+				<div className='multi-column-spacing'>
 					<Banner
 						heading={`${buttonText} Profile`}
 						subHeading={'Easy to understand'}
@@ -116,9 +116,7 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 										/>
 										<ButtonComponent
 											type={'button'}
-											className={
-												'text-white absolute right-2.5 bottom-2.5 bg-blue-400 hover:bg-blue-500   font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-300 dark:hover:bg-blue-400 '
-											}
+											className={'btn-password '}
 											onClick={() => setShowPassword(!showPassword)}>
 											{!showPassword ? 'Show' : 'Hide'}
 										</ButtonComponent>
@@ -224,9 +222,7 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 							<div className='flex justify-end'>
 								<ButtonComponent
 									key={'submit'}
-									className={
-										'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
-									}>
+									className={'btn-secondary'}>
 									{buttonText} Profile
 								</ButtonComponent>
 							</div>

@@ -12,7 +12,7 @@ export const FrontPageComponent = ({
 }) => {
 	return (
 		<main className='p-6 sm:p-10 space-y-6'>
-			<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
+			<div className='multi-column-spacing'>
 				<PageComponentTitle
 					title={title}
 					titleDescription={titleDescription}

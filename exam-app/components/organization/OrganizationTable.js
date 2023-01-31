@@ -54,19 +54,19 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 		const action = (
 			<>
 				<ButtonComponent
-					className={`text-blue-500 hover:text-blue-700`}
+					className={`icon-view`}
 					onClick={() => handleViewClick(org)}>
 					<AiFillEye className='h-6 w-7 ' />
 				</ButtonComponent>
 				<ButtonComponent
 					onClick={() => handleEditClick(org)}
-					className={'text-green-500 hover:text-green-700 ml-2'}>
+					className={'icon-edit'}>
 					<BsPencilSquare className='h-6 w-7 ' />
 				</ButtonComponent>
 				&nbsp;
 				<ButtonComponent
 					onClick={() => handleRemoveClick(org.id)}
-					className={'text-red-500 hover:text-red-700  m-1'}>
+					className={'icon-delete'}>
 					<MdDelete className='h-6 w-7'></MdDelete>
 				</ButtonComponent>
 			</>
@@ -101,7 +101,7 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 				columns={OrganizationColumns}
 				data={data || []}
 				rowKey='id'
-				className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'
+				className='table-primary'
 			/>
 		</>
 	)

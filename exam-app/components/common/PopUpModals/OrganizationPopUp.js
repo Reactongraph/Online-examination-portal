@@ -32,7 +32,7 @@ function OrganizationPopUp(props) {
 	return (
 		<>
 			<div className='flex-row space-y-3 relative p-12 '>
-				<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
+				<div className='multi-column-spacing'>
 					<Banner
 						heading={`${buttonText} Organization`}
 						subHeading={'Easy to understand'}
@@ -199,18 +199,11 @@ function OrganizationPopUp(props) {
 									<ButtonComponent
 										key={'submit'}
 										className={
-											'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
+											'btn-secondary'
 										}>
 										{buttonText}
 									</ButtonComponent>
 								)}
-								{/* <ButtonComponent
-									key={'submit'}
-									className={
-										'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
-									}>
-									{buttonText}
-								</ButtonComponent> */}
 							</div>
 						</React.Fragment>
 					</Form>

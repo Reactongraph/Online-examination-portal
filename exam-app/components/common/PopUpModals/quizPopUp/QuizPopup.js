@@ -37,7 +37,7 @@ function QuizPopUp(props) {
 	return (
 		<>
 			<div className='flex-row space-y-3 relative p-10'>
-				<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
+				<div className='multi-column-spacing'>
 					<Banner
 						heading={`${buttonText} Quiz`}
 						subHeading={'Easy to understand'}
@@ -153,7 +153,7 @@ function QuizPopUp(props) {
 									<ButtonComponent
 										key={'submit'}
 										className={
-											'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
+											'btn-secondary'
 										}>
 										{buttonText} QUIZ
 									</ButtonComponent>

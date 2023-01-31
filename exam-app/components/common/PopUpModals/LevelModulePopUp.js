@@ -18,7 +18,7 @@ function LevelModulePopup(props) {
 	return (
 		<>
 			<div className='flex-row space-y-3 relative p-10'>
-				<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
+				<div className='multi-column-spacing'>
 					<Banner
 						heading={`${buttonText} ${modalName}`}
 						subHeading={'Easy to understand'}
@@ -46,7 +46,11 @@ function LevelModulePopup(props) {
 								</div>
 							</div>
 							{isViewOnly == false && (
-								<ButtonComponent key={'submit'}>{buttonText}</ButtonComponent>
+								<ButtonComponent
+									className={'btn-secondary'}
+									key={'submit'}>
+									{buttonText}
+								</ButtonComponent>
 							)}
 						</React.Fragment>
 					</Form>
