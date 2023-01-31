@@ -62,7 +62,7 @@ const PageComponentTitle = ({
 				<Link href={'/questions/new'}>
 					<ButtonComponent
 						className={
-							'inline-flex px-5 py-3 text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 rounded-md ml-6 mb-3'
+							'btn-primary'
 						}>
 						<React.Fragment>
 							<svg

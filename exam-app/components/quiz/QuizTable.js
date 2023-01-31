@@ -62,7 +62,7 @@ const QuizTable = ({ data: quiz_data }) => {
 				columns={QuizColumns}
 				data={data || []}
 				rowKey='id'
-				className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'
+				className='table-primary'
 			/>
 
 			<ToastContainer />

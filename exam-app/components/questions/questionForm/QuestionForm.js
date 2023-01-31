@@ -28,7 +28,7 @@ function QuestionForm(props) {
 				onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 				<React.Fragment>
 					<div className='flex-auto mx-7'>
-						<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
+						<div className='multi-column-spacing'>
 							<Banner
 								heading={`${pageTitle} Question`}
 								subHeading={'Easy to understand'}
