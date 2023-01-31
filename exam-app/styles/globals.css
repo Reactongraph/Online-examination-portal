@@ -17,160 +17,26 @@
 	.btn-password {
 		@apply text-white absolute right-2.5 bottom-2.5 bg-blue-400 hover:bg-blue-500   font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-300 dark:hover:bg-blue-400;
 	}
-	.btn-view {
+	.icon-view {
 		@apply text-blue-500 hover:text-blue-700;
 	}
-	.btn-edit {
+	.icon-edit {
 		@apply text-green-500 hover:text-green-700 ml-2;
 	}
-	.btn-delete {
+	.icon-delete {
 		@apply text-red-500 hover:text-red-700  m-1;
 	}
 	.form-check-input {
 		@apply appearance-none w-9 rounded-full float-left h-5 align-top bg-red-600 bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm;
 	}
-	.checkbox {
+	.btn-checkbox {
 		@apply form-check-input;
 	}
 	.multi-column-spacing {
+
 		@apply flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between;
 	}
-	.main-content {
-		@apply p-6 sm:p-10 space-y-6;
-	}
-	.grid-section {
-		@apply grid md:grid-cols-1 xl:grid-cols-1 gap-6;
-	}
-	.table-section {
-		@apply flex-grow items-center p-8 bg-white shadow rounded-lg;
-	}
-	.disabled-style {
-		@apply disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none;
-	}
-	.form-field {
-		@apply w-full md:w-1/2 px-3;
-	}
-	.flex-container {
-		@apply flex-row space-y-3 relative p-12;
-	}
-	.card-container {
-		@apply flex-auto  items-center p-8 bg-white shadow rounded-lg;
-	}
-	.flex-grid-wrap {
-		@apply flex flex-wrap -mx-3 mb-6;
-	}
-	.input-field {
-		@apply appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white;
-	}
-	.form-input {
-		@apply input-field border-gray-200  focus:border-gray-500;
-	}
-	.text-input-style {
-		@apply bg-gray-50 border  w-40 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500;
-	}
-	.input-style {
-		@apply bg-gray-50 border w-full border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500;
-	}
-	.banner-header {
-		@apply my-4 ml-3;
-	}
-	.grid-with-two-col {
-		@apply grid md:grid-cols-2 xl:grid-cols-4 gap-6;
-	}
-	.flex-card-container {
-		@apply flex items-center p-8 bg-white shadow rounded-lg;
-	}
-	.blue-circle-badge {
-		@apply inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-blue-600 bg-blue-100 rounded-full mr-6;
-	}
-	.border-blue {
-		border-color: rgb(120, 120, 184);
-	}
-	.btn-tertiary {
-		@apply border-2 border-blue rounded-full px-12 py-2 inline-block font-semibold bg-blue-500 hover:bg-blue-700;
-	}
-	.btn-outline {
-		@apply relative p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100 focus:text-gray-600 rounded-full;
-	}
-	.menu-btn {
-		@apply inline-flex items-center p-2 hover:bg-gray-100 focus:bg-gray-100 rounded-lg relative;
-	}
-	.setting-btn {
-		@apply p-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg;
-	}
-	.csv-button {
-		@apply inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out;
-	}
-	.input-field-base {
-		@apply rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50;
-	}
-	.bg-white {
-		background-color: white;
-	}
-	.org-input {
-		@apply input-style bg-white border-gray-200 focus:border-gray-500;
-	}
-	.participant-input {
-		@apply input-field p-4;
-	}
-	.quiz-input {
-		@apply text-sm input-field;
-	}
-	.tab-status {
-		@apply form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm;
-	}
-	.text-field-question {
-		@apply bg-gray-50 border text-center border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
-	}
-	.w-50 {
-		width: 50;
-	}
-	.quiz-module-data {
-		@apply w-50 mb-6 text-field-question dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500;
-	}
-	.table-row {
-		@apply border px-8 py-4 bg-blue-100;
-	}
-	.shadow-blur {
-		filter: blur(10px);
-	}
-	.profile-card-style {
-		@apply relative flex flex-col flex-auto min-w-0 shadow-lg p-4 overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white/80 bg-clip-border mb-4;
-	}
-	.text-size-base {
-		font-size: 1rem;
-	}
-	.ease-soft-in-out {
-		transition: all 0.2s ease-in-out;
-	}
-	.h-18 {
-		height: 18.5px;
-	}
-	.w-18 {
-		width: 18.5px;
-	}
-	.profile-img {
-		@apply text-size-base ease-soft-in-out shadow  h-18 w-18 relative inline-flex items-center justify-center rounded-xl 
-		 text-white transition-all duration-200;
-	}
-	.edit-profile {
-		@apply invisible absolute h-2 w-2 bg-inherit before:visible before:absolute before:h-2 before:w-2 before:rotate-45 before:bg-inherit before:content-[''];
-	}
-	.btn-action {
-		@apply relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50;
-	}
-	.page-btn {
-		@apply btn-action px-2 py-2 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50;
-	}
-	.user-profile {
-		@apply absolute right-0 sm:-bottom-16 bg-slate-500 px-2 py-1 space-x-2 text-yellow-50 w-full -bottom-28 z-50;
-	}
-	.shadow-soft-xl {
-		box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
-	}
-	.user-info {
-		@apply relative ml-2 flex flex-col h-full min-w-0 break-words shadow-lg  bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border;
-	}
+
 }
 html,
 body {

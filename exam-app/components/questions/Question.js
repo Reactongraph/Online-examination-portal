@@ -10,6 +10,7 @@ const Question = () => {
 					title='QUESTION'
 					titleDescription='List of all question'
 					buttonTitle='ADD NEW QUESTION'
+					mutate={mutate}
 				/>
 			</div>
 
