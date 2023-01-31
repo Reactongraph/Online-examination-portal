@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useContext } from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { ToastContainer, toast } from 'react-toastify'
 import { injectStyle } from 'react-toastify/dist/inject-style'
@@ -7,13 +7,15 @@ import { DeleteQuiz, EditQuiz } from '../../apis/quizzes'
 import Table from '../common/Table'
 import QuizDataArray from './QuizDataArray'
 import { QuizColumns } from './quizColumn'
+import { QuizContext } from '../context'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
 }
 
-const QuizTable = ({ data: quiz_data }) => {
+const QuizTable = () => {
+	const { quiz_data } = useContext(QuizContext)
 	const router = useRouter()
 	const handleRemoveClick = (quiz_id) => {
 		DeleteQuiz(quiz_id)

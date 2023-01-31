@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -8,13 +8,15 @@ import { AddQuiz, EditQuiz, GetQuizDataWithId } from '../../apis/quizzes'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import moment from 'moment'
+import { QuizContext } from '../context'
 
-const AddQuizComponent = ({
-	module_data: moduleData,
-	level_data: levelData,
-	isViewOnly,
-}) => {
+const AddQuizComponent = ({ isViewOnly }) => {
 	//For Image Preview
+	const {
+		module_data: moduleData,
+		level_data: levelData,
+		quiz_data,
+	} = useContext(QuizContext)
 
 	const router = useRouter()
 
