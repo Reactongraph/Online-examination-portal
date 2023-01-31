@@ -56,10 +56,7 @@ const PageComponentTitle = ({ title, titleDescription, buttonTitle }) => {
 					className='csv-button'
 				/>
 				<Link href={'/questions/new'}>
-					<ButtonComponent
-						className={
-							'btn-primary'
-						}>
+					<ButtonComponent className={'btn-primary'}>
 						<React.Fragment>
 							<svg
 								aria-hidden='true'
