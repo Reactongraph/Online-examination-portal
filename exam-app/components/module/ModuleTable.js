@@ -54,18 +54,19 @@ const ModuleTable = ({ data: module_data, mutate }) => {
 		const action = (
 			<>
 				<ButtonComponent
-					className='btn-view'
+					className={`btn-view`}
 					onClick={() => handleViewClick(modules)}>
 					<AiFillEye className='h-6 w-6 ' />
 				</ButtonComponent>
 				<ButtonComponent
 					onClick={() => handleEditClick(modules)}
-					className='btn-edit'>
+					className={'btn-edit'}>
 					<BsPencilSquare className='h-6 w-5 ' />
 				</ButtonComponent>
 				&nbsp;
 				<ButtonComponent
 					onClick={() => handleRemoveClick(modules.id)}
+					className={'btn-delete'}>
 					className={'btn-delete'}>
 					<MdDelete className='h-6 w-7'></MdDelete>
 				</ButtonComponent>
