@@ -33,7 +33,7 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 		let new_status = {
 			status: !org.status,
 		}
-		new_status = gJSON.stringify(new_status)
+		new_status = JSON.stringify(new_status)
 		EditOrganization(new_status, org.id)
 			.then(() => {
 				mutate()
