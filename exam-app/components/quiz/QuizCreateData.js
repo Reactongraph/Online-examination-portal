@@ -20,19 +20,19 @@ function QuizCreateData(
 	const action = (
 		<>
 			<ButtonComponent
-				className={`icon-view`}
+				className={`btn-view`}
 				onClick={() => handleViewClick(quiz_id)}>
 				<AiFillEye className='h-6 w-7' />
 			</ButtonComponent>
 			<ButtonComponent
 				onClick={() => handleEditClick(quiz_id, element)}
-				className={'icon-edit'}>
+				className={'btn-edit'}>
 				<BsPencilSquare className='h-6 w-7 ' />
 			</ButtonComponent>
 			&nbsp;
 			<ButtonComponent
 				onClick={() => handleRemoveClick(quiz_id)}
-				className={'icon-delete'}>
+				className={'btn-delete'}>
 				<MdDelete className='h-6 w-7'></MdDelete>
 			</ButtonComponent>
 		</>

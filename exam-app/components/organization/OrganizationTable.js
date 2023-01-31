@@ -57,18 +57,19 @@ const OrganizationTable = () => {
 			<>
 				<ButtonComponent
 					className={`btn-view`}
+					className={`btn-view`}
 					onClick={() => handleViewClick(org)}>
 					<AiFillEye className='h-6 w-7 ' />
 				</ButtonComponent>
 				<ButtonComponent
 					onClick={() => handleEditClick(org)}
 					className={'btn-edit'}>
+					className={'btn-edit'}>
 					<BsPencilSquare className='h-6 w-7 ' />
 				</ButtonComponent>
 				&nbsp;
 				<ButtonComponent
 					onClick={() => handleRemoveClick(org.id)}
-					className={'btn-delete'}>
 					className={'btn-delete'}>
 					<MdDelete className='h-6 w-7'></MdDelete>
 				</ButtonComponent>

@@ -61,20 +61,19 @@ const QuestionTable = () => {
 		const action = (
 			<>
 				<Link href={`/questions/${question_id}`}>
-					<ButtonComponent className={'icon-view'}>
+					<ButtonComponent className={'btn-view'}>
 						<AiFillEye className='h-6 w-5 ' />
 					</ButtonComponent>
 				</Link>
 				<Link href={`/questions/edit/${question_id}`}>
-					<ButtonComponent
-						className={'icon-edit'}>
+					<ButtonComponent className={'btn-edit'}>
 						<BsPencilSquare className='h-6 w-5 ' />
 					</ButtonComponent>
 				</Link>
 				&nbsp;
 				<ButtonComponent
 					onClick={() => handleRemoveClick(question_id)}
-					className={'icon-delete'}>
+					className={'btn-delete'}>
 					<MdDelete className='h-6 w-5' />
 				</ButtonComponent>
 			</>
