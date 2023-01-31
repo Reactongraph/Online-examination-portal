@@ -64,19 +64,19 @@ const LevelTable = ({ data: level_data, mutate }) => {
 		const action = (
 			<>
 				<ButtonComponent
-					className='btn-view'
+					className={`btn-view`}
 					onClick={() => handleViewClick(level)}>
 					<AiFillEye className='h-6 w-7 ' />
 				</ButtonComponent>
 				<ButtonComponent
 					onClick={() => handleEditClick(level)}
-					className='btn-edit'>
+					className={'btn-edit'}>
 					<BsPencilSquare className='h-6 w-5 ' />
 				</ButtonComponent>
 				&nbsp;
 				<ButtonComponent
 					onClick={() => handleRemoveClick(level.id)}
-					className='btn-delete'>
+					className={'btn-delete'}>
 					<MdDelete className='h-6 w-7'></MdDelete>
 				</ButtonComponent>
 			</>

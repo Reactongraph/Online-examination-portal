@@ -180,7 +180,7 @@ function OrganizationPopUp(props) {
 								{isViewOnly == false && (
 									<ButtonComponent
 										key={'submit'}
-										className='btn-secondary'>
+										className={'btn-secondary'}>
 										{buttonText}
 									</ButtonComponent>
 								)}
