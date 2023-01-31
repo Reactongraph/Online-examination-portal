@@ -3,8 +3,8 @@ import { QuizService } from './quiz.service'
 import { PrismaService } from 'src/prisma.service'
 import { QuizController } from './quiz.controller'
 @Module({
-  providers: [QuizService, PrismaService],
-  controllers: [QuizController],
-  exports: [QuizService]
+	providers: [QuizService, PrismaService],
+	controllers: [QuizController],
+	exports: [QuizService],
 })
 export class QuizModule {}
