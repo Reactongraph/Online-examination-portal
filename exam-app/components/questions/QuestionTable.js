@@ -58,21 +58,19 @@ const QuestionTable = ({ question_data, mutate }) => {
 		question = question.question.slice(0, 15) + '...'
 		const action = (
 			<>
-
-			<Link href={`/questions/${question_id}`}> 
-			
-				<ButtonComponent
-					className={'text-blue-500 hover:text-blue-700 ml-2'}
-					// onClick={() => handleEditClick(question_id)}
+				<Link href={`/questions/${question_id}`}>
+					<ButtonComponent
+						className={'text-blue-500 hover:text-blue-700 ml-2'}
+						// onClick={() => handleEditClick(question_id)}
 					>
-					<AiFillEye className='h-6 w-5 ' />
-				</ButtonComponent>
-			</Link>
+						<AiFillEye className='h-6 w-5 ' />
+					</ButtonComponent>
+				</Link>
 				<Link href={`/questions/edit/${question_id}`}>
 					<ButtonComponent
 						className={'text-green-500 hover:text-green-700 ml-2'}
 						// onClick={() => handleEditClick(question_id)}
-						>
+					>
 						<BsPencilSquare className='h-6 w-5 ' />
 					</ButtonComponent>
 				</Link>

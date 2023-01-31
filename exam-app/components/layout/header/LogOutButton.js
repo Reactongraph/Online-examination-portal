@@ -1,12 +1,10 @@
 import React from 'react'
-import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify'
 import { ButtonComponent } from '../../common/micro/buttonComponent'
 import { UserLogout } from '../../../apis/auth'
 import Link from 'next/link'
 
 const LogOutButton = () => {
-	const router = useRouter()
 	const handleLogout = async () => {
 		try {
 			UserLogout()

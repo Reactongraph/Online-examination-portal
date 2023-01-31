@@ -14,8 +14,7 @@ if (typeof window !== 'undefined') {
 
 export default function UserProfile() {
 	const user = useSelector((state) => state?.user)
-
-	const  data =
+	const { data: profile_data, mutate } =
 		user?.role == 'SuperAdminUser'
 			? GetAdminDataWithId(user?.Org_id)
 			: GetOrganizationDataWithId(user?.Org_id)
@@ -24,8 +23,8 @@ export default function UserProfile() {
 		<>
 			<Layout title='User Profile '>
 				<UserProfileComponent
-					profile_data={data}
-					// mutate={mutate}
+					profile_data={profile_data}
+					mutate={mutate}
 				/>
 			</Layout>
 			<ToastContainer />

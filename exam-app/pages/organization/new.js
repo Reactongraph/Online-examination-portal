@@ -7,7 +7,7 @@ export default function AddOrganizations() {
 	return (
 		<>
 			<Layout title='Add Organizations'>
-				<CreateOrganization  />
+				<CreateOrganization />
 			</Layout>
 		</>
 	)

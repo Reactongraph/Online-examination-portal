@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
-import {
-	AddOrganization,
-	EditOrganization,
-	GetOrganizationDataWithId,
-} from '../../apis/organizations'
+import { AddOrganization, EditOrganization } from '../../apis/organizations'
 import { useRouter } from 'next/router'
 import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
 
-const CreateOrganization = ({ isViewOnly }) => {
+const CreateOrganization = ({
+	isViewOnly,
+	organization_data: organizationData,
+}) => {
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
 	const [pincode, setPincode] = useState('')
@@ -23,13 +22,9 @@ const CreateOrganization = ({ isViewOnly }) => {
 	const [editform, setEditForm] = useState(false)
 	const { handleSubmit } = useForm()
 	const router = useRouter()
-	useEffect(() => {
-		let organization_id = router.query.id
 
+	useEffect(() => {
 		async function getOrganizationData() {
-			const results = await GetOrganizationDataWithId(organization_id)
-			const organizationData = results.data
-			// setButtonText('Edit')
 			setEditForm(true)
 			setName(organizationData?.name)
 			setEmail(organizationData?.email)
@@ -42,7 +37,6 @@ const CreateOrganization = ({ isViewOnly }) => {
 			setQuota(organizationData?.quota)
 			isViewOnly ? setButtonText('View') : setButtonText('Edit')
 		}
-
 		if (router.query.id) {
 			getOrganizationData()
 		}

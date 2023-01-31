@@ -8,7 +8,6 @@ const UserProfile = ({ profile_data, mutate }) => {
 	const user = useSelector((state) => state?.user)
 	const userName = profile_data?.name
 	const userRole = user?.role
-	console.log(profile_data);
 
 	return (
 		<>

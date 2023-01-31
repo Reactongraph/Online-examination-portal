@@ -22,7 +22,6 @@ export default function Dropdown(props) {
 				required={props.required}
 				disabled={props.disabled}
 				value={props.value}
-				disabled={props.disabled}
 				className={
 					props.className
 						? props.className

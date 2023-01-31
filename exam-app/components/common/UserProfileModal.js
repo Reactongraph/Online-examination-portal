@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { useState } from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
@@ -12,7 +11,7 @@ import { Form } from './micro/form'
 import { InputComponent } from './micro/inputComponent'
 import { Banner } from './micro/banner'
 
-const UserProfileModal = ({ profile_data: userData, disabled, mutate }) => {
+const UserProfileModal = ({ profile_data: userData, mutate }) => {
 	const router = useRouter()
 	const [name, setName] = useState(userData?.name)
 	const [email, setEmail] = useState(userData?.email)

@@ -16,8 +16,6 @@ function QuizPopUp(props) {
 		setName,
 		selectedLevelId,
 		isViewOnly,
-		setSelectedLevelId,
-		selectedModules,
 		handleSubmit,
 		buttonText,
 		checkWithDatabase,
