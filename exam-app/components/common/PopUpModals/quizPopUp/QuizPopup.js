@@ -152,9 +152,7 @@ function QuizPopUp(props) {
 								<div className='flex justify-end'>
 									<ButtonComponent
 										key={'submit'}
-										className={
-											'btn-secondary'
-										}>
+										className={'btn-secondary'}>
 										{buttonText} QUIZ
 									</ButtonComponent>
 								</div>

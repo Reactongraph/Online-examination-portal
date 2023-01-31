@@ -11,7 +11,7 @@ const UserProfile = ({ profile_data, mutate }) => {
 
 	return (
 		<>
-			<main className='p-6 sm:p-10 space-y-6'>
+			<main className='main-content'>
 				{userRole == 'OrganizationUser' && (
 					<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
 						<PageComponentTitle
@@ -24,7 +24,7 @@ const UserProfile = ({ profile_data, mutate }) => {
 					</div>
 				)}
 
-				<section className='grid md:grid-cols-1 xl:grid-cols-1 gap-6'>
+				<section className='grid-section'>
 					<div className='w-full px-6 py-6 mx-auto flex loopple-min-height-78vh text-slate-500'>
 						<div className='relative flex flex-col flex-auto min-w-0 shadow-lg p-4 overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white/80 bg-clip-border mb-4'>
 							<div className=' -mx-3'>

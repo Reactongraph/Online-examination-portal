@@ -11,7 +11,7 @@ export const FrontPageComponent = ({
 	...OtherData
 }) => {
 	return (
-		<main className='p-6 sm:p-10 space-y-6'>
+		<main className='main-content'>
 			<div className='multi-column-spacing'>
 				<PageComponentTitle
 					title={title}
@@ -23,8 +23,8 @@ export const FrontPageComponent = ({
 				/>
 			</div>
 
-			<section className='grid md:grid-cols-1 xl:grid-cols-1 gap-6'>
-				<div className='flex-grow items-center p-8 bg-white shadow rounded-lg'>
+			<section className='grid-section'>
+				<div className='table-section'>
 					<TableComponent
 						data={data}
 						mutate={mutate}

@@ -60,10 +60,7 @@ const PageComponentTitle = ({
 					className='px-6 py-2 mx-2 bg-blue-400 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-500 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out'
 				/>
 				<Link href={'/questions/new'}>
-					<ButtonComponent
-						className={
-							'btn-primary'
-						}>
+					<ButtonComponent className={'btn-primary'}>
 						<React.Fragment>
 							<svg
 								aria-hidden='true'

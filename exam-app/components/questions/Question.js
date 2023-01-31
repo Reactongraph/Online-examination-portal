@@ -4,7 +4,7 @@ import QuestionTable from './QuestionTable'
 
 const Question = ({ question_data, mutate }) => {
 	return (
-		<main className='p-6 sm:p-10 space-y-6'>
+		<main className='main-content'>
 			<div className='multi-column-spacing'>
 				<ComponentTitle
 					title='QUESTION'
@@ -14,8 +14,8 @@ const Question = ({ question_data, mutate }) => {
 				/>
 			</div>
 
-			<section className='grid md:grid-cols-1 xl:grid-cols-1 gap-6'>
-				<div className='flex-grow items-center p-8 bg-white shadow rounded-lg'>
+			<section className='grid-section'>
+				<div className='table-section'>
 					<QuestionTable
 						question_data={question_data}
 						mutate={mutate}

@@ -5,7 +5,7 @@ import { Banner } from '../common/micro/banner'
 const Dashboard = () => {
 	return (
 		<>
-			<main className='p-6 sm:p-10 space-y-6'>
+			<main className='main-content'>
 				<div className='multi-column-spacing'>
 					<Banner
 						heading={'Dashboard'}
