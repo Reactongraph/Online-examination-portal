@@ -1,20 +1,8 @@
-import { GetLevelData } from '../../apis/levels'
-import { GetModuleData } from '../../apis/modules'
-import Layout from '../../components/layout/Layout'
+import { QuestionHoc } from '../../components/highOrderComponents/QuestionHoc'
 import AddQuestion from '../../components/questions/addQuestion'
 
+const ViewQuestionWithContext = QuestionHoc(AddQuestion)
+
 export default function ViewQuestions() {
-	const { data: level_data } = GetLevelData()
-	const { data: module_data } = GetModuleData()
-	return (
-		<>
-			<Layout title='View Questions'>
-				<AddQuestion
-					level_data={level_data}
-					module_data={module_data}
-					isViewOnly={true}
-				/>
-			</Layout>
-		</>
-	)
+	return <ViewQuestionWithContext isViewOnly={true} />
 }
