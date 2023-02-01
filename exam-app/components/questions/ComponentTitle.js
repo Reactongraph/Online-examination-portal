@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useRouter } from 'next/router'
 import { CsvReader } from './CsvReader'
 import { ToastContainer } from 'react-toastify'
@@ -7,14 +7,12 @@ import { Banner } from '../common/micro/banner'
 import { ButtonComponent } from '../common/micro/buttonComponent'
 import { InputComponent } from '../common/micro/inputComponent'
 import Link from 'next/link'
+import { QuestionContext } from '../context'
 
-const PageComponentTitle = ({
-	title,
-	titleDescription,
-	buttonTitle,
-	mutate,
-}) => {
+const PageComponentTitle = ({ title, titleDescription, buttonTitle }) => {
 	const router = useRouter()
+
+	const { mutate } = useContext(QuestionContext)
 	const user = useSelector((state) => state?.user)
 
 	const handleCsv = (e) => {
