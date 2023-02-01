@@ -1,13 +1,9 @@
 import * as React from 'react'
-import Layout from '../../../components/layout/Layout'
 import CreateOrganization from '../../../components/organization/addOrganization'
+import { OrganizationHoc } from '../../../components/highOrderComponents/OrganizationHoc'
+
+const EditOrganizationWithContext = OrganizationHoc(CreateOrganization)
 
 export default function EditPage() {
-	return (
-		<>
-			<Layout title='Edit Organization '>
-				<CreateOrganization />
-			</Layout>
-		</>
-	)
+	return <EditOrganizationWithContext />
 }

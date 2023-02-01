@@ -1,14 +1,9 @@
 // routing for create organization
 import * as React from 'react'
-import Layout from '../../components/layout/Layout'
 import CreateOrganization from '../../components/organization/addOrganization'
+import { OrganizationHoc } from '../../components/highOrderComponents/OrganizationHoc'
 
+const AddOrganizationWithContext = OrganizationHoc(CreateOrganization)
 export default function AddOrganizations() {
-	return (
-		<>
-			<Layout title='Add Organizations'>
-				<CreateOrganization />
-			</Layout>
-		</>
-	)
+	return <AddOrganizationWithContext />
 }
