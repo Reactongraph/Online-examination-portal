@@ -5,7 +5,7 @@ import { QuizContext } from '../context'
 import Layout from '../layout/Layout'
 
 export const QuizHoc = (Component) => {
-	return (props) => {
+	return function QuizHoc(props) {
 		const data = GetQuizData()
 
 		const { data: level_data } = GetLevelData()

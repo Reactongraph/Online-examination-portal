@@ -12,11 +12,8 @@ import { QuizContext } from '../context'
 
 const AddQuizComponent = ({ isViewOnly }) => {
 	//For Image Preview
-	const {
-		module_data: moduleData,
-		level_data: levelData,
-		quiz_data,
-	} = useContext(QuizContext)
+	const { module_data: moduleData, level_data: levelData } =
+		useContext(QuizContext)
 
 	const router = useRouter()
 
