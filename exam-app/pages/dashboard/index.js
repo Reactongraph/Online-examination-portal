@@ -2,12 +2,15 @@ import * as React from 'react'
 import { ToastContainer } from 'react-toastify'
 import DashboardComponent from '../../components/dashboard/Dashboard'
 import Layout from '../../components/layout/Layout'
+import PrivateRoute from '../../components/private_routes'
 
 export default function Dashboard() {
 	return (
 		<>
 			<Layout title='Dashboard '>
-				<DashboardComponent />
+				<PrivateRoute component={DashboardComponent}>
+					<DashboardComponent />
+				</PrivateRoute>
 			</Layout>
 			<ToastContainer />
 		</>
