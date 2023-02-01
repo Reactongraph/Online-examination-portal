@@ -5,6 +5,7 @@ import Layout from '../../components/layout/Layout'
 import PrivateRoute from '../../components/private_routes'
 
 export default function Dashboard() {
+	console.log('loading', loading)
 	return (
 		<>
 			<Layout title='Dashboard '>
