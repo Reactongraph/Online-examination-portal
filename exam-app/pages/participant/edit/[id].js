@@ -1,12 +1,8 @@
 import * as React from 'react'
-import Layout from '../../../components/layout/Layout'
 import CreateParticipant from '../../../components/participant/addParticipant'
+import { ParticipantHoc } from '../../../components/highOrderComponents/ParticipantHoc'
+
+const EditParticipantWithContext = ParticipantHoc(CreateParticipant)
 export default function EditParticipantPage() {
-	return (
-		<>
-			<Layout title='Edit Participant'>
-				<CreateParticipant />
-			</Layout>
-		</>
-	)
+	return <EditParticipantWithContext />
 }
