@@ -2,7 +2,7 @@ import React from 'react'
 import ComponentTitle from './ComponentTitle'
 import QuestionTable from './QuestionTable'
 
-const Question = ({ question_data, mutate }) => {
+const Question = () => {
 	return (
 		<main className='main-content'>
 			<div className='multi-column-spacing'>
@@ -10,16 +10,12 @@ const Question = ({ question_data, mutate }) => {
 					title='QUESTION'
 					titleDescription='List of all question'
 					buttonTitle='ADD NEW QUESTION'
-					mutate={mutate}
 				/>
 			</div>
 
-			<section className='grid-section'>
-				<div className='table-section'>
-					<QuestionTable
-						question_data={question_data}
-						mutate={mutate}
-					/>
+			<section className='grid md:grid-cols-1 xl:grid-cols-1 gap-6'>
+				<div className='flex-grow items-center p-8 bg-white shadow rounded-lg'>
+					<QuestionTable />
 				</div>
 			</section>
 		</main>
