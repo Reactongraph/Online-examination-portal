@@ -116,7 +116,7 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 										/>
 										<ButtonComponent
 											type={'button'}
-											className={'btn-password '}
+											className='btn-password'
 											onClick={() => setShowPassword(!showPassword)}>
 											{!showPassword ? 'Show' : 'Hide'}
 										</ButtonComponent>
@@ -222,7 +222,7 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 							<div className='flex justify-end'>
 								<ButtonComponent
 									key={'submit'}
-									className={'btn-secondary'}>
+									className='btn-secondary'>
 									{buttonText} Profile
 								</ButtonComponent>
 							</div>

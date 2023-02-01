@@ -59,19 +59,19 @@ const QuestionTable = ({ question_data, mutate }) => {
 		const action = (
 			<>
 				<Link href={`/questions/${question_id}`}>
-					<ButtonComponent className={'btn-view'}>
+					<ButtonComponent className='btn-view'>
 						<AiFillEye className='h-6 w-5 ' />
 					</ButtonComponent>
 				</Link>
 				<Link href={`/questions/edit/${question_id}`}>
-					<ButtonComponent className={'btn-edit'}>
+					<ButtonComponent className='btn-edit'>
 						<BsPencilSquare className='h-6 w-5 ' />
 					</ButtonComponent>
 				</Link>
 				&nbsp;
 				<ButtonComponent
 					onClick={() => handleRemoveClick(question_id)}
-					className={'btn-delete'}>
+					className='btn-delete'>
 					<MdDelete className='h-6 w-5' />
 				</ButtonComponent>
 			</>

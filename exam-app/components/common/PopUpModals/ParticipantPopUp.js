@@ -91,7 +91,7 @@ function ParticipantPopUp(props) {
 
 										<ButtonComponent
 											type={'button'}
-											className={'btn-password '}
+											className='btn-password'
 											onClick={() => setShowPassword(!showPassword)}>
 											{!showPassword ? 'Show' : 'Hide'}
 										</ButtonComponent>
@@ -137,7 +137,7 @@ function ParticipantPopUp(props) {
 							</div>
 							{isViewOnly == false && (
 								<ButtonComponent
-									className={'btn-secondary'}
+									className='btn-secondary'
 									key={'submit'}>
 									{buttonText}{' '}
 								</ButtonComponent>

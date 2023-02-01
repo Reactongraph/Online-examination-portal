@@ -54,13 +54,13 @@ const OrganizationTable = ({ data: organization_data, mutate }) => {
 		const action = (
 			<>
 				<ButtonComponent
-					className={`btn-view`}
+					className='btn-view'
 					onClick={() => handleViewClick(org)}>
 					<AiFillEye className='h-6 w-7 ' />
 				</ButtonComponent>
 				<ButtonComponent
 					onClick={() => handleEditClick(org)}
-					className={'btn-edit'}>
+					className='btn-edit'>
 					<BsPencilSquare className='h-6 w-7 ' />
 				</ButtonComponent>
 				&nbsp;

@@ -47,7 +47,7 @@ function LevelModulePopup(props) {
 							</div>
 							{isViewOnly == false && (
 								<ButtonComponent
-									className={'btn-secondary'}
+									className='btn-secondary'
 									key={'submit'}>
 									{buttonText}
 								</ButtonComponent>

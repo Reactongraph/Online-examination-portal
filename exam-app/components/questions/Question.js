@@ -19,8 +19,6 @@ const Question = ({ question_data, mutate }) => {
 					<QuestionTable
 						question_data={question_data}
 						mutate={mutate}
-						// level_data={level_data}
-						// module_data={module_data}
 					/>
 				</div>
 			</section>

@@ -2,7 +2,7 @@ export function CheckboxInput(props) {
 	return (
 		<>
 			<input
-				className='btn-checkbox'
+				className='checkbox'
 				type='checkbox'
 				role='switch'
 				id='flexSwitchCheckDefault'

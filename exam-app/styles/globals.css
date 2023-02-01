@@ -29,7 +29,7 @@
 	.form-check-input {
 		@apply appearance-none w-9 rounded-full float-left h-5 align-top bg-red-600 bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm;
 	}
-	.btn-checkbox {
+	.checkbox {
 		@apply form-check-input;
 	}
 	.multi-column-spacing {
