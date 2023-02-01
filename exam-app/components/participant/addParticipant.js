@@ -1,15 +1,15 @@
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { GetOrganizationData } from '../../apis/organizations'
 import {
 	AddParticipant,
 	EditParticipant,
 	GetParticipantDataWithOrgId,
 } from '../../apis/participants'
 import ParticipantPopUp from '../common/PopUpModals/ParticipantPopUp'
+import { ParticipantContext } from '../context'
 
 const CreateParticipant = ({ isViewOnly }) => {
 	const router = useRouter()
@@ -27,7 +27,7 @@ const CreateParticipant = ({ isViewOnly }) => {
 	const { handleSubmit } = useForm()
 	const [editform, setEditForm] = useState(false)
 	const Org = useSelector((state) => state?.user)
-	const organization_data = GetOrganizationData().data
+	const { organization_data } = useContext(ParticipantContext)
 	const handleOrganizationIdTypeSelect = (event) => {
 		let organizationId = event.target.value
 		setSelectedOrganizationId(organizationId)

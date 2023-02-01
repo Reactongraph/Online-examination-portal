@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Table from '../common/Table'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { toast } from 'react-toastify'
@@ -9,7 +9,9 @@ import { useRouter } from 'next/router'
 import { BsPencilSquare } from 'react-icons/bs'
 import { MdDelete } from 'react-icons/md'
 import { AiFillEye } from 'react-icons/ai'
-const ParticipantTable = ({ data: participant_data, mutate }) => {
+import { ParticipantContext } from '../context'
+const ParticipantTable = () => {
+	const { participant_data, mutate } = useContext(ParticipantContext)
 	const router = useRouter()
 	const handleRemoveClick = async (participantId) => {
 		try {
