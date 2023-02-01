@@ -8,13 +8,23 @@ import { ParticipantContext } from '../context'
 import Layout from '../layout/Layout'
 
 export const ParticipantHoc = (Component) => {
-	return (props) => {
+	return function ParticipantHoc(props) {
 		const user = useSelector((state) => state?.user)
-		const { data, mutate } =
+		const { data: organization_data } = GetOrganizationData()
+		const { data, mutate, error } =
 			user?.role == 'SuperAdminUser'
 				? GetParticipantData()
 				: GetParticipantDataWithOrgId(user.Org_id)
-		const { data: organization_data } = GetOrganizationData()
+
+		if (data?.error) {
+			return (
+				<>
+					<Layout title='Participant'>
+						<h1>Loading ...</h1>
+					</Layout>
+				</>
+			)
+		}
 
 		return (
 			<>

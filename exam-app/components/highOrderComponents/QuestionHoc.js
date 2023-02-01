@@ -5,7 +5,7 @@ import { QuestionContext } from '../context'
 import Layout from '../layout/Layout'
 
 export const QuestionHoc = (Component) => {
-	return (props) => {
+	return function QuestionHOC(props) {
 		const { data, mutate } = GetQuestionData()
 		const { data: level_data } = GetLevelData()
 		const { data: module_data } = GetModuleData()

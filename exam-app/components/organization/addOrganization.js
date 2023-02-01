@@ -24,8 +24,6 @@ const CreateOrganization = ({ isViewOnly }) => {
 
 	useEffect(() => {
 		async function getOrganizationData() {
-			console.log(singleOrgData)
-
 			setEditForm(true)
 			setName(singleOrgData?.name)
 			setEmail(singleOrgData?.email)
