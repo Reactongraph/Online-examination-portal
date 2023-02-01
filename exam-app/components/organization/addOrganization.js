@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { AddOrganization, EditOrganization } from '../../apis/organizations'
 import { useRouter } from 'next/router'
 import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
+import { OrganizationContext } from '../context'
 
-const CreateOrganization = ({
-	isViewOnly,
-	organization_data: organizationData,
-}) => {
+const CreateOrganization = ({ isViewOnly }) => {
+	const { singleOrgData } = useContext(OrganizationContext)
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
 	const [pincode, setPincode] = useState('')
@@ -25,16 +24,18 @@ const CreateOrganization = ({
 
 	useEffect(() => {
 		async function getOrganizationData() {
+			console.log(singleOrgData)
+
 			setEditForm(true)
-			setName(organizationData?.name)
-			setEmail(organizationData?.email)
-			setMobile(organizationData?.mobile)
-			setState(organizationData?.state)
-			setPassword(organizationData?.password)
-			setAddress(organizationData?.address)
-			setCity(organizationData?.city)
-			setPincode(organizationData?.pincode)
-			setQuota(organizationData?.quota)
+			setName(singleOrgData?.name)
+			setEmail(singleOrgData?.email)
+			setMobile(singleOrgData?.mobile)
+			setState(singleOrgData?.state)
+			setPassword(singleOrgData?.password)
+			setAddress(singleOrgData?.address)
+			setCity(singleOrgData?.city)
+			setPincode(singleOrgData?.pincode)
+			setQuota(singleOrgData?.quota)
 			isViewOnly ? setButtonText('View') : setButtonText('Edit')
 		}
 		if (router.query.id) {
