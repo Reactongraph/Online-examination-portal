@@ -1,5 +1,4 @@
 import React from 'react'
-import { withRouter } from 'next/router'
 import { Banner } from '../common/micro/banner'
 
 const Dashboard = () => {
