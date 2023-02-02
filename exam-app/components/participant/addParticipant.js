@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import {
 	AddParticipant,
 	EditParticipant,
-	GetParticipantDataWithOrgId,
+	GetParticipantWithId,
 } from '../../apis/participants'
 import ParticipantPopUp from '../common/PopUpModals/ParticipantPopUp'
 
@@ -36,15 +36,15 @@ const CreateParticipant = ({ isViewOnly }) => {
 	useEffect(() => {
 		let participant_id = router.query?.id
 		async function getParticipantData() {
-			const result = await GetParticipantDataWithOrgId(participant_id)
+			const result = await GetParticipantWithId(participant_id)
 			const participantData = result.data
-			participantData?.map((element) => {
-				setName(element?.name)
-				setEmail(element?.email)
-				setPassword(element?.password)
-				setMobile(element?.mobile)
-				return element
-			})
+
+			setName(participantData?.name)
+			setEmail(participantData?.email)
+			setPassword(participantData?.password)
+			setMobile(participantData?.mobile)
+			setSelectedOrganizationId(participantData?.Organization_id)
+
 			isViewOnly ? setButtonText('View') : setButtonText('Edit')
 			setEditForm(true)
 		}
