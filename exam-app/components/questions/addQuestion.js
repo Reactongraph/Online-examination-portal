@@ -15,11 +15,14 @@ import {
 	EditQuestion,
 	GetQuestionDataWithId,
 } from '../../apis/questions'
-import { QuestionContext } from '../context'
+import { LevelContext, ModuleContext } from '../context/context'
+// import { QuestionContext } from '../context'
 
 const AddQuestion = ({ isViewOnly }) => {
-	const { level_data: levelData, module_data: moduleData } =
-		useContext(QuestionContext)
+	const { module_data: moduleData } = useContext(ModuleContext)
+	const { level_data: levelData } = useContext(LevelContext)
+
+	// const {level_data: levelData}
 	const router = useRouter()
 	const [selectedImage, setSelectedImage] = useState(null)
 	const [pageTitle, setPageTitle] = useState('Add')
