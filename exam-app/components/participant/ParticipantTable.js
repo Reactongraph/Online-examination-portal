@@ -9,7 +9,9 @@ import { useRouter } from 'next/router'
 import { BsPencilSquare } from 'react-icons/bs'
 import { MdDelete } from 'react-icons/md'
 import { AiFillEye } from 'react-icons/ai'
-import { ParticipantContext } from '../context'
+import { ParticipantContext } from '../context/context'
+
+// import Participant
 const ParticipantTable = () => {
 	const { participant_data, mutate } = useContext(ParticipantContext)
 	const router = useRouter()

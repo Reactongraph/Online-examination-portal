@@ -10,7 +10,7 @@ import {
 } from '../../apis/participants'
 import ParticipantPopUp from '../common/PopUpModals/ParticipantPopUp'
 
-import { ParticipantContext } from '../context/context'
+import { OrganizationContext } from '../context/context'
 
 const CreateParticipant = ({ isViewOnly }) => {
 	const router = useRouter()
@@ -28,7 +28,7 @@ const CreateParticipant = ({ isViewOnly }) => {
 	const { handleSubmit } = useForm()
 	const [editform, setEditForm] = useState(false)
 	const Org = useSelector((state) => state?.user)
-	const { organization_data } = useContext(ParticipantContext)
+	const { organization_data } = useContext(OrganizationContext)
 	const handleOrganizationIdTypeSelect = (event) => {
 		let organizationId = event.target.value
 		setSelectedOrganizationId(organizationId)
