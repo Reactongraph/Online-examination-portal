@@ -12,7 +12,7 @@ import { BsPencilSquare } from 'react-icons/bs'
 import { MdDelete } from 'react-icons/md'
 import { AiFillEye } from 'react-icons/ai'
 import Link from 'next/link'
-import { QuestionContext } from '../context'
+import { QuestionContext } from '../context/context'
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()

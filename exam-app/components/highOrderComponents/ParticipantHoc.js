@@ -4,7 +4,7 @@ import {
 	GetParticipantData,
 	GetParticipantDataWithOrgId,
 } from '../../apis/participants'
-import { ParticipantContext } from '../context'
+import { ParticipantContext } from '../context/context'
 import Layout from '../layout/Layout'
 
 export const ParticipantHoc = (Component) => {

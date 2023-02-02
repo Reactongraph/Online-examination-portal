@@ -1,7 +1,7 @@
 import { GetLevelData } from '../../apis/levels'
 import { GetModuleData } from '../../apis/modules'
 import { GetQuizData } from '../../apis/quizzes'
-import { QuizContext } from '../context'
+import { QuizContext } from '../context/context'
 import Layout from '../layout/Layout'
 
 export const QuizHoc = (Component) => {
