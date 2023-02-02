@@ -1,7 +1,7 @@
 import { GetModuleData } from '../../apis/modules'
 import { ModuleContext } from './context'
 
-export const ModuleContextProvider = ({ children }) => {
+export const ModuleProvider = ({ children }) => {
 	const { data: module_data } = GetModuleData()
 
 	const updatedModuleData = module_data?.map((item) => {

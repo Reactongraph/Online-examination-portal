@@ -1,13 +1,8 @@
-import { useRouter } from 'next/router'
-import {
-	GetOrganizationData,
-	GetOrganizationDataWithId,
-} from '../../apis/organizations'
+import { GetOrganizationData } from '../../apis/organizations'
 
 import { OrganizationContext } from './context'
 
-export const OrganizationContextProvider = ({ children }) => {
-	const router = useRouter()
+export const OrganizationProvider = ({ children }) => {
 	const { data: organization_data, mutate } = GetOrganizationData()
 
 	return (
