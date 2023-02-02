@@ -22,21 +22,19 @@ function LevelModulePopup(props) {
 					<Banner
 						heading={`${buttonText} ${modalName}`}
 						subHeading={'Easy to understand'}
-						additionalClassName={'my-4 ml-3'}
+						additionalClassName='BannerHeader'
 					/>
 				</div>
-				<div className='flex-auto  items-center p-8 bg-white shadow rounded-lg'>
+				<div className='card-container'>
 					<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 						<React.Fragment>
-							<div class='flex flex-wrap -mx-3 mb-6'>
-								<div class='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
+							<div class='flex-grid-wrap'>
+								<div class='form-field-md-width-half mb-6 md:mb-0'>
 									<Label key={'grid-first-name'}>Enter {modalName}</Label>
 									<InputComponent
 										onChange={(e) => setStateName(e.target.value)}
 										id='grid-first-name'
-										className={
-											'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										}
+										className={'form-input'}
 										type={'text'}
 										placeholder={placeholderText}
 										required={'required'}

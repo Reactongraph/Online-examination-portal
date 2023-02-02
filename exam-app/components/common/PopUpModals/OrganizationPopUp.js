@@ -31,27 +31,25 @@ function OrganizationPopUp(props) {
 	} = props
 	return (
 		<>
-			<div className='flex-row space-y-3 relative p-12 '>
+			<div className='flex-container '>
 				<div className='multi-column-spacing'>
 					<Banner
 						heading={`${buttonText} Organization`}
 						subHeading={'Easy to understand'}
-						additionalClassName={'my-4 ml-3'}
+						additionalClassName='BannerHeader'
 					/>
 				</div>
 
-				<div className='flex-auto  items-center p-8 bg-white shadow rounded-lg '>
+				<div className='card-container'>
 					<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 						<React.Fragment>
-							<div className='flex flex-wrap -mx-3 mb-6'>
-								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
+							<div className='flex-grid-wrap'>
+								<div className='form-field-md-width-half mb-6 md:mb-0'>
 									<Label key={'grid-first-name'}> Name</Label>
 									<InputComponent
 										type='text'
 										onChange={(e) => setName(e.target.value)}
-										className={
-											'appearance-none block w-full bg-white-200 text-white-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
-										}
+										className={'input-field'}
 										value={name}
 										placeholder='Jane'
 										required='required'
@@ -59,15 +57,13 @@ function OrganizationPopUp(props) {
 										id='name'
 									/>
 								</div>
-								<div className='w-full md:w-1/2 px-3'>
+								<div className='form-field-md-width-half'>
 									<Label key={'grid-last-name'}> Email</Label>
 									<InputComponent
 										onChange={(e) => setEmail(e.target.value)}
 										id='grid-email'
 										type='email'
-										className={
-											'appearance-none block w-full bg-white-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
-										}
+										className='input-field'
 										value={email}
 										placeholder='example@gmail.com '
 										disabled={isViewOnly}
@@ -76,15 +72,13 @@ function OrganizationPopUp(props) {
 								</div>
 							</div>
 
-							<div className='flex flex-wrap -mx-3 mb-6'>
+							<div className='flex-grid-wrap'>
 								<div className='w-full px-3'>
 									<Label key={'grid-password'}> Password</Label>
 									<InputComponent
 										onChange={(e) => setPassword(e.target.value)}
 										id='grid-password'
-										className={
-											'appearance-none block w-full bg-white-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
-										}
+										className='input-field'
 										type={'password'}
 										placeholder={'******************'}
 										required={'required'}
@@ -104,7 +98,7 @@ function OrganizationPopUp(props) {
 										onChange={(e) => setCity(e.target.value)}
 										id='mobile'
 										className={
-											'appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+											'organization-form-input'
 										}
 										type={'text'}
 										placeholder={'Albuquerque '}
@@ -145,7 +139,7 @@ function OrganizationPopUp(props) {
 									/>
 								</div>
 							</div>
-							<div className='flex flex-wrap -mx-3 mb-6'>
+							<div className='flex-grid-wrap'>
 								<div className='w-full px-3'>
 									<Label key={'grid-address'}> Address</Label>
 									<InputComponent
@@ -162,8 +156,8 @@ function OrganizationPopUp(props) {
 									/>
 								</div>
 							</div>
-							<div className='flex flex-wrap -mx-3 mb-6'>
-								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
+							<div className='flex-grid-wrap'>
+								<div className='form-field-md-width-half mb-6 md:mb-0'>
 									<Label key={'grid-mobile'}> Mobile</Label>
 									<InputComponent
 										onChange={(e) => setMobile(e.target.value)}
@@ -178,7 +172,7 @@ function OrganizationPopUp(props) {
 										value={mobile}
 									/>
 								</div>
-								<div className='w-full md:w-1/2 px-3'>
+								<div className='form-field-md-width-half'>
 									<Label key={'grid-quota'}> Quota</Label>
 									<InputComponent
 										onChange={(e) => setQuota(e.target.value)}

@@ -43,7 +43,46 @@
 	}
 	.table-section {
 		@apply flex-grow items-center p-8 bg-white shadow rounded-lg;
-	  }
+	}
+	.form-input {
+		@apply appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500;
+	}
+	.disabled-style {
+		@apply disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none;
+	}
+	.form-field-md-width-half {
+		@apply w-full md:w-1/2 px-3;
+	}
+	.flex-container {
+		@apply flex-row space-y-3 relative p-12;
+	}
+	.card-container {
+		@apply flex-auto  items-center p-8 bg-white shadow rounded-lg;
+	}
+	.flex-grid-wrap {
+		@apply flex flex-wrap -mx-3 mb-6;
+	}
+	.input-field {
+		@apply appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white;
+	}
+	.textinputstyle {
+		@apply bg-gray-50 border  w-40 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500;
+	}
+	.input-style {
+		@apply bg-gray-50 border w-full border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500;
+	}
+	.BannerHeader {
+		@apply my-4 ml-3;
+	}
+	.GridTwoColMdFourColXl {
+		@apply grid md:grid-cols-2 xl:grid-cols-4 gap-6;
+	}
+	.flex-card-container {
+		@apply flex items-center p-8 bg-white shadow rounded-lg;
+	}
+	.BlueCircleBadge {
+		@apply inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-blue-600 bg-blue-100 rounded-full mr-6;
+	}
 }
 html,
 body {

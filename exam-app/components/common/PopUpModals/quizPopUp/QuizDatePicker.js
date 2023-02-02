@@ -10,7 +10,7 @@ function QuizDatePicker(props) {
 					className='datepicker bg-gray-200relative form-floating mb-3 w-full '
 					data-mdb-toggle-button='false'>
 					<DatePicker
-						className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+						className='input-field'
 						selected={selectedDate}
 						onChange={(date) => setSelectedDate(date)}
 						placeholderText={'MMMM d, yyyy h:mm aa '}

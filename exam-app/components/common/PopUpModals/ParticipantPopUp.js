@@ -32,21 +32,21 @@ function ParticipantPopUp(props) {
 					<Banner
 						heading={`${buttonText} Participant`}
 						subHeading={'Easy to understand'}
-						additionalClassName={'my-4 ml-3'}
+						additionalClassName='BannerHeader'
 					/>
 				</div>
 
 				<div className=' m-auto py-6 px-6 lg:px-8 bg-white max-w-lg rounded-lg'>
 					<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 						<React.Fragment>
-							<div className='flex flex-wrap -mx-3 mb-6 '>
-								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
+							<div className='flex-grid-wrap '>
+								<div className='form-field-md-width-half mb-6 md:mb-0'>
 									<Label key={'grid-first-name'}>Name</Label>
 									<InputComponent
 										type='text'
 										onChange={(e) => setName(e.target.value)}
 										className={
-											'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+											'input-field'
 										}
 										placeholder='Jane'
 										required='required'
@@ -55,14 +55,14 @@ function ParticipantPopUp(props) {
 										id='name'
 									/>
 								</div>
-								<div className='w-full md:w-1/2 px-3'>
+								<div className='form-field-md-width-half'>
 									<Label key={'grid-first-name'}>Email</Label>
 									<InputComponent
 										onChange={(e) => setEmail(e.target.value)}
 										id='email'
 										type='email'
 										className={
-											'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+											'input-field'
 										}
 										placeholder='example@gmail.com '
 										required='required'
@@ -71,7 +71,7 @@ function ParticipantPopUp(props) {
 									/>
 								</div>
 							</div>
-							<div className='flex flex-wrap -mx-3 mb-6'>
+							<div className='flex-grid-wrap'>
 								<div className='w-full px-3'>
 									<Label key={'grid-password'}> Password</Label>
 
@@ -101,14 +101,14 @@ function ParticipantPopUp(props) {
 									</p>
 								</div>
 							</div>
-							<div className='flex flex-wrap -mx-3 mb-6'>
-								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
+							<div className='flex-grid-wrap'>
+								<div className='form-field-md-width-half mb-6 md:mb-0'>
 									<Label key={'grid-mobile'}> Mobile</Label>
 									<InputComponent
 										onChange={(e) => setMobile(e.target.value)}
 										id='mobile'
 										className={
-											'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+											'input-field'
 										}
 										type={'text'}
 										placeholder={'+91 '}
@@ -117,14 +117,14 @@ function ParticipantPopUp(props) {
 										disabled={isViewOnly}
 									/>
 								</div>
-								<div className='w-full md:w-1/2 px-3'>
+								<div className='form-field-md-width-half'>
 									<Dropdown
 										id='default'
 										labelText={'Organization Name '}
 										value={selectedorganizationId}
 										required={true}
 										className={
-											'bg-gray-50 border w-full border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500'
+											'input-style'
 										}
 										label='Select Organization '
 										options={organization_data}

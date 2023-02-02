@@ -57,26 +57,25 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 
 	return (
 		<>
-			<div className='flex-row space-y-3 relative p-12 '>
+			<div className='flex-container '>
 				<div className='multi-column-spacing'>
 					<Banner
 						heading={`${buttonText} Profile`}
 						subHeading={'Easy to understand'}
-						additionalClassName={'my-4 ml-3'}
+						additionalClassName='BannerHeader'
 					/>
 				</div>
 
-				<div className='flex-auto  items-center p-8 bg-white shadow rounded-lg '>
+				<div className='card-container '>
 					<Form
-						// className='w-full max-w-lg'
 						onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 						<React.Fragment>
-							<div className='flex flex-wrap -mx-3 mb-6'>
-								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
+							<div className='flex-grid-wrap'>
+								<div className='form-field-md-width-half mb-6 md:mb-0'>
 									<Label key={'grid-first-name'}> Name</Label>
 
 									<InputComponent
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+										className='input-field'
 										id='grid-first-name'
 										type='text'
 										value={name}
@@ -85,11 +84,11 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 										placeholder='Jane'
 									/>
 								</div>
-								<div className='w-full md:w-1/2 px-3'>
+								<div className='form-field-md-width-half'>
 									<Label key={'grid-last-name'}> Email</Label>
 
 									<InputComponent
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none'
+										className='form-input disabled-style'
 										id='grid-email'
 										type='email'
 										placeholder='example@gmail.com '
@@ -100,13 +99,13 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 									/>
 								</div>
 							</div>
-							<div className='flex flex-wrap -mx-3 mb-6'>
+							<div className='flex-grid-wrap'>
 								<div className='w-full px-3'>
 									<Label key={'grid-password'}> Password</Label>
 
 									<div className='relative'>
 										<InputComponent
-											className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+											className='form-input'
 											id='grid-password'
 											type={!showPassword ? 'password' : 'text'}
 											placeholder='******************'
@@ -132,7 +131,7 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 									<Label key={'grid-city'}> City</Label>
 
 									<InputComponent
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+										className='form-input'
 										id='grid-city'
 										type='text'
 										placeholder='Albuquerque'
@@ -146,7 +145,7 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 									<Label key={'grid-state'}> State</Label>
 
 									<InputComponent
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+										className='form-input '
 										id='grid-state'
 										type='text'
 										placeholder='State'
@@ -159,7 +158,7 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 									<Label key={'grid-zip'}> Pin Code</Label>
 
 									<InputComponent
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+										className='form-input'
 										id='grid-zip'
 										type='text'
 										placeholder='90210'
@@ -169,12 +168,12 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 									/>
 								</div>
 							</div>
-							<div className='flex flex-wrap -mx-3 mb-6'>
+							<div className='flex-grid-wrap'>
 								<div className='w-full px-3'>
 									<Label key={'grid-address'}>Address</Label>
 
 									<InputComponent
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+										className='form-input'
 										id='grid-address'
 										type='text'
 										placeholder='Your Office number... '
@@ -184,12 +183,12 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 									/>
 								</div>
 							</div>
-							<div className='flex flex-wrap -mx-3 mb-6'>
-								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
+							<div className='flex-grid-wrap'>
+								<div className='form-field-md-width-half mb-6 md:mb-0'>
 									<Label key={'grid-mobile'}>Mobile</Label>
 
 									<InputComponent
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none'
+										className='form-input disabled-style'
 										id='grid-mobile'
 										type='text'
 										disabled
@@ -199,11 +198,11 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 										onChange={(e) => setMobile(e.target.value)}
 									/>
 								</div>
-								<div className='w-full md:w-1/2 px-3'>
+								<div className='form-field-md-width-half'>
 									<Label key={'grid-quota'}>Quota</Label>
 
 									<InputComponent
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none'
+										className='form-input disabled-style'
 										id='grid-quota'
 										type='text'
 										disabled

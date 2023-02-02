@@ -41,18 +41,18 @@ function QuizPopUp(props) {
 					<Banner
 						heading={`${buttonText} Quiz`}
 						subHeading={'Easy to understand'}
-						additionalClassName={'my-4 ml-3'}
+						additionalClassName='BannerHeader'
 					/>
 				</div>
 
-				<div className='flex-auto  items-center p-8 bg-white shadow rounded-lg'>
+				<div className='card-container'>
 					<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 						<React.Fragment>
-							<div className='flex flex-wrap -mx-3 mb-6'>
-								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
+							<div className='flex-grid-wrap'>
+								<div className='form-field-md-width-half mb-6 md:mb-0'>
 									<Label key={'grid-quiz-name'}> Quiz Name</Label>
 									<InputComponent
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+										className='input-field'
 										id='name'
 										type='text'
 										value={name}
@@ -63,7 +63,7 @@ function QuizPopUp(props) {
 									/>
 								</div>
 								<QuizImage />
-								<div className='w-full md:w-1/2 px-3'>
+								<div className='form-field-md-width-half'>
 									<QuizDatePicker
 										timeTitle='Start Time'
 										selectedDate={selectedStartDate}
@@ -71,7 +71,7 @@ function QuizPopUp(props) {
 										isViewOnly={isViewOnly}
 									/>
 								</div>
-								<div className='w-full md:w-1/2 px-3'>
+								<div className='form-field-md-width-half'>
 									<QuizDatePicker
 										timeTitle='End Time'
 										selectedDate={selectedEndDate}
@@ -79,7 +79,7 @@ function QuizPopUp(props) {
 										isViewOnly={isViewOnly}
 									/>
 								</div>
-								<div className='w-full md:w-1/2 px-3'>
+								<div className='form-field-md-width-half'>
 									<QuizDatePicker
 										timeTitle='Buffer Time (Access Time for Quiz)'
 										selectedDate={selectedBufferDate}
@@ -87,9 +87,7 @@ function QuizPopUp(props) {
 										isViewOnly={isViewOnly}
 									/>
 								</div>
-								<div className='w-full md:w-1/2 px-3'>
-									{/* <Label key={'grid-question-level'}>Question Level</Label> */}
-
+								<div className='form-field-md-width-half'>
 									<QuizLevelSelect
 										selectedLevelId={selectedLevelId}
 										handleLevelTypeSelect={handleLevelTypeSelect}
@@ -97,15 +95,8 @@ function QuizPopUp(props) {
 										isViewOnly={isViewOnly}
 									/>
 								</div>
-								<div className='w-full md:w-1/2 px-3'>
-									<Label
-										key={'gird-module'}
-										className={
-											'block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-										}>
-										{' '}
-										Choose Modules for Quiz
-									</Label>
+								<div className='form-field-md-width-half'>
+									<Label key={'gird-module'}> Choose Modules for Quiz</Label>
 									<ReactSelect
 										options={moduleData}
 										className='bg-gray-50 w-50 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block    dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500'
@@ -121,10 +112,10 @@ function QuizPopUp(props) {
 										value={optionModuleSelected}
 									/>
 								</div>
-								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
+								<div className='form-field-md-width-half mb-6 md:mb-0'>
 									<Label key={'grid-quiz-name'}> Organization Name </Label>
 									<InputComponent
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+										className='input-field'
 										disabled
 										id='jane'
 										type='text'

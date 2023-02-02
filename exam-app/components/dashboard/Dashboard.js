@@ -12,8 +12,8 @@ const Dashboard = () => {
 						subHeading={'Online Examination Portal'}
 					/>
 				</div>
-				<section className='grid md:grid-cols-2 xl:grid-cols-4 gap-6'>
-					<div className='flex items-center p-8 bg-white shadow rounded-lg'>
+				<section className='GridTwoColMdFourColXl'>
+					<div className='flex-card-container'>
 						<div className='inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-blue-600 bg-blue-100 rounded-full mr-6'>
 							<svg
 								aria-hidden='true'
@@ -31,7 +31,7 @@ const Dashboard = () => {
 						</div>
 						<div></div>
 					</div>
-					<div className='flex items-center p-8 bg-white shadow rounded-lg'>
+					<div className='flex-card-container'>
 						<div className='inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-green-600 bg-green-100 rounded-full mr-6'>
 							<svg
 								aria-hidden='true'
@@ -49,7 +49,7 @@ const Dashboard = () => {
 						</div>
 						<div></div>
 					</div>
-					<div className='flex items-center p-8 bg-white shadow rounded-lg'>
+					<div className='flex-card-container'>
 						<div className='inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-red-600 bg-red-100 rounded-full mr-6'>
 							<svg
 								aria-hidden='true'
@@ -67,8 +67,8 @@ const Dashboard = () => {
 						</div>
 						<div></div>
 					</div>
-					<div className='flex items-center p-8 bg-white shadow rounded-lg'>
-						<div className='inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-blue-600 bg-blue-100 rounded-full mr-6'>
+					<div className='flex-card-container'>
+						<div className='BlueCircleBadge'>
 							<svg
 								aria-hidden='true'
 								fill='none'

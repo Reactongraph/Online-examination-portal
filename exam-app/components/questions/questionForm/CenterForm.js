@@ -22,7 +22,7 @@ function CenterForm(props) {
 	return (
 		<>
 			<section className='flex md:grid-cols-1 xl:grid-cols-1 gap-6'>
-				<div className='flex-auto  items-center p-8 bg-white shadow rounded-lg'>
+				<div className='card-container'>
 					<div className='mr-6'>
 						<div className='flex justify-center mt-8'>
 							<div className='max-w-2xl rounded-lg shadow-xl bg-gray-50'>

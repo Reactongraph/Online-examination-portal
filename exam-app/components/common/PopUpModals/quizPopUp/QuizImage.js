@@ -4,7 +4,7 @@ import { InputComponent } from '../../micro/inputComponent'
 function QuizImage() {
 	return (
 		<>
-			<div className='w-full md:w-1/2 px-3'>
+			<div className='form-field-md-width-half'>
 				<Label key={'grid-last-name'}> Choose Quiz Image</Label>
 
 				<div class='flex items-center justify-center'>
