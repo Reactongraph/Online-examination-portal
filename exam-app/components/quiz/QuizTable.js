@@ -7,7 +7,7 @@ import { DeleteQuiz, EditQuiz } from '../../apis/quizzes'
 import Table from '../common/Table'
 import QuizDataArray from './QuizDataArray'
 import { QuizColumns } from './quizColumn'
-import { QuizContext } from '../context'
+import { QuizContext } from '../context/context'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {

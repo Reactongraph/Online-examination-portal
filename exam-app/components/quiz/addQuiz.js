@@ -8,7 +8,7 @@ import { AddQuiz, EditQuiz, GetQuizDataWithId } from '../../apis/quizzes'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import moment from 'moment'
-import { QuizContext } from '../context'
+import { QuizContext } from '../context/context'
 
 const AddQuizComponent = ({ isViewOnly }) => {
 	//For Image Preview

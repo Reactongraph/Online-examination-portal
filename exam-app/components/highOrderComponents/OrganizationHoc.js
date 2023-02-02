@@ -3,7 +3,7 @@ import {
 	GetOrganizationDataWithId,
 } from '../../apis/organizations'
 
-import { OrganizationContext } from '../context'
+import { OrganizationContext } from '../context/context'
 import Layout from '../layout/Layout'
 import { useRouter } from 'next/router'
 

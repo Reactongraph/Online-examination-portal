@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 import { BsPencilSquare } from 'react-icons/bs'
 import { MdDelete } from 'react-icons/md'
 import { AiFillEye } from 'react-icons/ai'
-import { OrganizationContext } from '../context'
+import { OrganizationContext } from '../context/context'
 
 const OrganizationTable = () => {
 	const { organization_data, mutate } = useContext(OrganizationContext)

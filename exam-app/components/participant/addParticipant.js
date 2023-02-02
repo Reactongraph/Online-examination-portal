@@ -9,7 +9,8 @@ import {
 	GetParticipantDataWithOrgId,
 } from '../../apis/participants'
 import ParticipantPopUp from '../common/PopUpModals/ParticipantPopUp'
-import { ParticipantContext } from '../context'
+
+import { ParticipantContext } from '../context/context'
 
 const CreateParticipant = ({ isViewOnly }) => {
 	const router = useRouter()
