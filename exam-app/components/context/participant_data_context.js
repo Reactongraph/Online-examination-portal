@@ -6,7 +6,7 @@ import {
 import { ParticipantContext } from './context'
 import Layout from '../layout/Layout'
 
-export const ParticipantContextProvider = ({ children }) => {
+export const ParticipantProvider = ({ children }) => {
 	const user = useSelector((state) => state?.user)
 	const { data, mutate } =
 		user?.role == 'SuperAdminUser'

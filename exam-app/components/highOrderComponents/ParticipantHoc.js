@@ -1,18 +1,18 @@
 import Layout from '../layout/Layout'
-import { OrganizationContextProvider } from '../context/organization_data_context'
-import { ParticipantContextProvider } from '../context/participant_data_context'
+import { OrganizationProvider } from '../context/organization_data_context'
+import { ParticipantProvider } from '../context/participant_data_context'
 
 export const ParticipantHoc = (Component) => {
 	return function ParticipantHoc(props) {
 		return (
 			<>
-				<ParticipantContextProvider>
-					<OrganizationContextProvider>
+				<ParticipantProvider>
+					<OrganizationProvider>
 						<Layout title='Participant'>
 							<Component {...props} />
 						</Layout>
-					</OrganizationContextProvider>
-				</ParticipantContextProvider>
+					</OrganizationProvider>
+				</ParticipantProvider>
 			</>
 		)
 	}
