@@ -4,10 +4,10 @@ import { toast } from 'react-toastify'
 import { AddOrganization, EditOrganization } from '../../apis/organizations'
 import { useRouter } from 'next/router'
 import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
-import { OrganizationContext } from '../context/context'
+import { SingleOrgDataContext } from '../context/context'
 
 const CreateOrganization = ({ isViewOnly }) => {
-	const { singleOrgData } = useContext(OrganizationContext)
+	const { singleOrgData } = useContext(SingleOrgDataContext)
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
 	const [pincode, setPincode] = useState('')
