@@ -8,12 +8,12 @@ import { AddQuiz, EditQuiz, GetQuizDataWithId } from '../../apis/quizzes'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import moment from 'moment'
-import { QuizContext } from '../context/context'
+import { LevelContext, ModuleContext } from '../context/context'
 
 const AddQuizComponent = ({ isViewOnly }) => {
 	//For Image Preview
-	const { module_data: moduleData, level_data: levelData } =
-		useContext(QuizContext)
+	const { module_data: moduleData } = useContext(ModuleContext)
+	const { level_data: levelData } = useContext(LevelContext)
 
 	const router = useRouter()
 
