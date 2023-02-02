@@ -9,11 +9,9 @@ import { OrganizationContext } from './context'
 export const OrganizationContextProvider = ({ children }) => {
 	const router = useRouter()
 	const { data: organization_data, mutate } = GetOrganizationData()
-	const { data: singleOrgData } = GetOrganizationDataWithId(router.query?.id)
 
 	return (
-		<OrganizationContext.Provider
-			value={{ organization_data, mutate, singleOrgData }}>
+		<OrganizationContext.Provider value={{ organization_data, mutate }}>
 			{children}
 		</OrganizationContext.Provider>
 	)
