@@ -1,13 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
-import { AddOrganization, EditOrganization } from '../../apis/organizations'
+import {
+	AddOrganization,
+	EditOrganization,
+	GetOrganizationDataWithId,
+} from '../../apis/organizations'
 import { useRouter } from 'next/router'
 import OrganizationPopUp from '../common/PopUpModals/OrganizationPopUp'
-import { SingleOrgDataContext } from '../context/context'
 
 const CreateOrganization = ({ isViewOnly }) => {
-	const { singleOrgData } = useContext(SingleOrgDataContext)
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
 	const [pincode, setPincode] = useState('')
@@ -24,6 +26,11 @@ const CreateOrganization = ({ isViewOnly }) => {
 
 	useEffect(() => {
 		async function getOrganizationData() {
+			let organizationId = router.query?.id
+			const result = await GetOrganizationDataWithId(organizationId)
+
+			const singleOrgData = result.data
+
 			setEditForm(true)
 			setName(singleOrgData?.name)
 			setEmail(singleOrgData?.email)
