@@ -62,13 +62,12 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 					<Banner
 						heading={`${buttonText} Profile`}
 						subHeading={'Easy to understand'}
-						additionalClassName='BannerHeader'
+						additionalClassName='banner-header'
 					/>
 				</div>
 
 				<div className='card-container '>
-					<Form
-						onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
+					<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 						<React.Fragment>
 							<div className='flex-grid-wrap'>
 								<div className='form-field-md-width-half mb-6 md:mb-0'>

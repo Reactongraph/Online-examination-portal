@@ -41,7 +41,7 @@ function QuizPopUp(props) {
 					<Banner
 						heading={`${buttonText} Quiz`}
 						subHeading={'Easy to understand'}
-						additionalClassName='BannerHeader'
+						additionalClassName='banner-header'
 					/>
 				</div>
 

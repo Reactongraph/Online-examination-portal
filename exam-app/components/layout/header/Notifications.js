@@ -3,10 +3,7 @@ import { ButtonComponent } from '../../common/micro/buttonComponent'
 
 const Notifications = () => {
 	return (
-		<ButtonComponent
-			className={
-				'relative p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100 focus:text-gray-600 rounded-full'
-			}>
+		<ButtonComponent className={'btn-outline'}>
 			<React.Fragment>
 				<span className='sr-only'>Notifications</span>
 				<span className='absolute top-0 right-0 h-2 w-2 mt-1 mr-2 bg-red-500 rounded-full' />

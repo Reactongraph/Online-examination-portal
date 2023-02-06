@@ -3,10 +3,7 @@ export function InputComponent({ type, value, className, ...rest }) {
 		<input
 			type={type}
 			value={value}
-			className={
-				className ||
-				'input-field'
-			}
+			className={className || 'input-field'}
 			{...rest}
 		/>
 	)

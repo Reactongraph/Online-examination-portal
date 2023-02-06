@@ -18,9 +18,7 @@ const LogOutButton = () => {
 			<Link href={'/login'}>
 				<ButtonComponent
 					onClick={handleLogout}
-					className={
-						'relative p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100 focus:text-gray-600 rounded-full'
-					}>
+					className={'btn-outline'}>
 					<React.Fragment>
 						<span className='sr-only'>Log out</span>
 						<svg

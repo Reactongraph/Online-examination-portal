@@ -20,8 +20,7 @@ const CreateTableData = (WrappedComponent) => {
 				<>
 					<div className='flex '>
 						<InputComponent
-							// onClick={() => handleBoxClick(rowId, rowStatus)}
-							className='form-check-input appearance-none w-9  rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm'
+							className='tab-status'
 							type='checkbox'
 							role='switch'
 							id='flexSwitchCheckDefault'

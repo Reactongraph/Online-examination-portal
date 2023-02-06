@@ -32,7 +32,7 @@ function ParticipantPopUp(props) {
 					<Banner
 						heading={`${buttonText} Participant`}
 						subHeading={'Easy to understand'}
-						additionalClassName='BannerHeader'
+						additionalClassName='banner-header'
 					/>
 				</div>
 
@@ -45,9 +45,7 @@ function ParticipantPopUp(props) {
 									<InputComponent
 										type='text'
 										onChange={(e) => setName(e.target.value)}
-										className={
-											'input-field'
-										}
+										className={'input-field '}
 										placeholder='Jane'
 										required='required'
 										value={name}
@@ -61,9 +59,7 @@ function ParticipantPopUp(props) {
 										onChange={(e) => setEmail(e.target.value)}
 										id='email'
 										type='email'
-										className={
-											'input-field'
-										}
+										className={'input-field'}
 										placeholder='example@gmail.com '
 										required='required'
 										value={email}
@@ -79,9 +75,7 @@ function ParticipantPopUp(props) {
 										<InputComponent
 											onChange={(e) => setPassword(e.target.value)}
 											id='password'
-											className={
-												'appearance-none block w-full p-4  bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-											}
+											className={'participant-input'}
 											type={!showPassword ? 'password' : 'text'}
 											placeholder={'******************'}
 											required={'required'}
@@ -107,9 +101,7 @@ function ParticipantPopUp(props) {
 									<InputComponent
 										onChange={(e) => setMobile(e.target.value)}
 										id='mobile'
-										className={
-											'input-field'
-										}
+										className={'input-field'}
 										type={'text'}
 										placeholder={'+91 '}
 										required={'required'}
@@ -123,9 +115,7 @@ function ParticipantPopUp(props) {
 										labelText={'Organization Name '}
 										value={selectedorganizationId}
 										required={true}
-										className={
-											'input-style'
-										}
+										className={'input-style'}
 										label='Select Organization '
 										options={organization_data}
 										disabled={isViewOnly}

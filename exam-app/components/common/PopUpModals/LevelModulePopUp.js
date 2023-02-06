@@ -22,7 +22,7 @@ function LevelModulePopup(props) {
 					<Banner
 						heading={`${buttonText} ${modalName}`}
 						subHeading={'Easy to understand'}
-						additionalClassName='BannerHeader'
+						additionalClassName='banner-header'
 					/>
 				</div>
 				<div className='card-container'>
@@ -34,7 +34,7 @@ function LevelModulePopup(props) {
 									<InputComponent
 										onChange={(e) => setStateName(e.target.value)}
 										id='grid-first-name'
-										className={'form-input'}
+										className='form-input'
 										type={'text'}
 										placeholder={placeholderText}
 										required={'required'}

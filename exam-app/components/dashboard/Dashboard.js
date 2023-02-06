@@ -12,7 +12,7 @@ const Dashboard = () => {
 						subHeading={'Online Examination Portal'}
 					/>
 				</div>
-				<section className='GridTwoColMdFourColXl'>
+				<section className='grid-with-two-col'>
 					<div className='flex-card-container'>
 						<div className='inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-blue-600 bg-blue-100 rounded-full mr-6'>
 							<svg
@@ -68,7 +68,7 @@ const Dashboard = () => {
 						<div></div>
 					</div>
 					<div className='flex-card-container'>
-						<div className='BlueCircleBadge'>
+						<div className='blue-circle-badge'>
 							<svg
 								aria-hidden='true'
 								fill='none'
