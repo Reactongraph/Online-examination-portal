@@ -117,7 +117,7 @@ function CenterForm(props) {
 							required
 							onChange={(e) => setQuestion(e.target.value)}
 							placeholder='Type your question'
-							className='bg-gray-50 border text-center border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+							className='text-field-question'
 						/>
 					</div>
 
@@ -132,7 +132,7 @@ function CenterForm(props) {
 									<InputComponent
 										type='text'
 										id='default-input'
-										className='bg-gray-50 border my-3 text-left border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-3/4 p-2.5  dark:focus:ring-blue-500 dark:focus:border-blue-500'
+										className='text-field-question'
 										name='option'
 										required
 										disabled={isViewOnly}

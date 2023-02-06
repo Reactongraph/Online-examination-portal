@@ -24,9 +24,7 @@ const UserMenu = () => {
 
 	return (
 		<ButtonComponent
-			className={
-				'inline-flex items-center p-2 hover:bg-gray-100 focus:bg-gray-100 rounded-lg relative'
-			}
+			className={'menu-btn'}
 			onClick={userMenuhandle}
 			ref={buttonRef}>
 			<React.Fragment>

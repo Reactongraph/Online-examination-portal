@@ -35,7 +35,7 @@ function OrganizationForm(props) {
 					<Banner
 						heading={`${buttonText} Organization`}
 						subHeading={'Easy to understand'}
-						additionalClassName='BannerHeader'
+						additionalClassName='banner-header'
 					/>
 				</div>
 
@@ -93,9 +93,7 @@ function OrganizationForm(props) {
 									<InputComponent
 										onChange={(e) => setCity(e.target.value)}
 										id='mobile'
-										className={
-											'appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										}
+										className={'org-input'}
 										type={'text'}
 										placeholder={'Albuquerque '}
 										required={'required'}
@@ -108,9 +106,7 @@ function OrganizationForm(props) {
 									<InputComponent
 										onChange={(e) => setState(e.target.value)}
 										id='state'
-										className={
-											'appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										}
+										className={'org-input'}
 										type={'text'}
 										placeholder={'State '}
 										required={'required'}
@@ -122,9 +118,7 @@ function OrganizationForm(props) {
 									<InputComponent
 										onChange={(e) => setPincode(e.target.value)}
 										id='stgrid-zip'
-										className={
-											'appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										}
+										className={'org-input'}
 										type={'text'}
 										placeholder={'90210 '}
 										required={'required'}
@@ -138,9 +132,7 @@ function OrganizationForm(props) {
 									<InputComponent
 										onChange={(e) => setAddress(e.target.value)}
 										id='grid-address'
-										className={
-											'appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										}
+										className={'org-input'}
 										type={'text'}
 										placeholder={'your office number '}
 										required={'required'}
@@ -154,9 +146,7 @@ function OrganizationForm(props) {
 									<InputComponent
 										onChange={(e) => setMobile(e.target.value)}
 										id='mobile'
-										className={
-											'appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										}
+										className={'org-input'}
 										type={'text'}
 										placeholder={'+91 '}
 										required={'required'}
@@ -168,9 +158,7 @@ function OrganizationForm(props) {
 									<InputComponent
 										onChange={(e) => setQuota(e.target.value)}
 										id='Quota'
-										className={
-											'appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										}
+										className={'org-input'}
 										type={'text'}
 										placeholder={'e.g. 1000 '}
 										required={'required'}
