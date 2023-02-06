@@ -4,5 +4,10 @@ import { ParticipantHoc } from '../../../components/highOrderComponents/Particip
 
 const EditParticipantWithContext = ParticipantHoc(CreateParticipant)
 export default function EditParticipantPage() {
-	return <EditParticipantWithContext />
+	return (
+		<EditParticipantWithContext
+			buttonText={'Edit'}
+			editform={true}
+		/>
+	)
 }

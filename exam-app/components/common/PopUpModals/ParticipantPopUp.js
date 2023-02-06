@@ -11,12 +11,18 @@ import { GetParticipantWithId } from '../../../apis/participants'
 import { useRouter } from 'next/router'
 
 function ParticipantPopUp(props) {
-	const { checkWithDatabase, organization_data, isViewOnly } = props
+	const { checkWithDatabase, organization_data, isViewOnly, buttonText } = props
 	const [showPassword, setShowPassword] = useState(false)
-	const [buttonText, setButtonText] = useState('Add')
-	const [editform, setEditForm] = useState(false)
 
 	const router = useRouter()
+
+	const participantDefaultValues = {
+		name: '',
+		email: '',
+		password: '',
+		mobile: '',
+		Organization_id: '',
+	}
 
 	const {
 		handleSubmit,
@@ -26,13 +32,7 @@ function ParticipantPopUp(props) {
 	} = useForm({
 		mode: 'onSubmit',
 		reValidateMode: 'onChange',
-		defaultValues: {
-			name: '',
-			email: '',
-			password: '',
-			mobile: '',
-			Organization_id: '',
-		},
+		defaultValues: participantDefaultValues,
 	})
 
 	useEffect(() => {
@@ -40,14 +40,11 @@ function ParticipantPopUp(props) {
 		async function getParticipantData() {
 			const result = await GetParticipantWithId(participant_id)
 			const participantData = result.data
-			setValue('name', participantData?.name, true)
-			setValue('email', participantData?.email, true)
-			setValue('password', participantData?.password, true)
-			setValue('mobile', participantData?.mobile, true)
-			setValue('Organization_id', participantData?.Organization_id, true)
 
-			isViewOnly ? setButtonText('View') : setButtonText('Edit')
-			setEditForm(true)
+			const keys = Object.keys(participantDefaultValues)
+			keys.forEach((key) => {
+				setValue(key, participantData[key], true)
+			})
 		}
 		if (router.query.id) {
 			getParticipantData()
@@ -59,17 +56,14 @@ function ParticipantPopUp(props) {
 			<div className='flex-row space-y-3 relative px-12 bg-gray-100'>
 				<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
 					<Banner
-						heading={`${buttonText} Participant`}
+						heading={`${buttonText || 'Add'}  Participant`}
 						subHeading={'Easy to understand'}
 						additionalClassName={'my-4 ml-3'}
 					/>
 				</div>
 
 				<div className=' m-auto py-6 px-6 lg:px-8 bg-white max-w-lg rounded-lg'>
-					<Form
-						onSubmit={handleSubmit((data) =>
-							checkWithDatabase(data, editform)
-						)}>
+					<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 						<React.Fragment>
 							<div className='flex flex-wrap -mx-3 mb-6 '>
 								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
@@ -211,7 +205,9 @@ function ParticipantPopUp(props) {
 								</div>
 							</div>
 							{isViewOnly == false && (
-								<ButtonComponent key={'submit'}>{buttonText}</ButtonComponent>
+								<ButtonComponent key={'submit'}>
+									{buttonText || 'Add'}
+								</ButtonComponent>
 							)}
 						</React.Fragment>
 					</Form>

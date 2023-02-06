@@ -6,23 +6,21 @@ import ParticipantPopUp from '../common/PopUpModals/ParticipantPopUp'
 
 import { OrganizationContext } from '../context/context'
 
-const CreateParticipant = ({ isViewOnly }) => {
+const CreateParticipant = ({ isViewOnly, buttonText, editform }) => {
 	const router = useRouter()
 
 	const { organization_data } = useContext(OrganizationContext)
 
-	const checkWithDatabase = async (data, editform) => {
+	const checkWithDatabase = async (data) => {
 		if (editform) {
 			let participantData = JSON.stringify(data)
-			console.log(participantData)
 
 			EditParticipant(participantData, router.query?.id)
 				.then(async () => {
 					toast.success('participant  updated')
 					router.replace(`/participant`)
 				})
-				.catch((err) => {
-					console.log(err)
+				.catch(() => {
 					toast.error('invalid request')
 				})
 		} else {
@@ -45,6 +43,7 @@ const CreateParticipant = ({ isViewOnly }) => {
 				checkWithDatabase={checkWithDatabase}
 				organization_data={organization_data}
 				isViewOnly={isViewOnly || false}
+				buttonText={buttonText}
 			/>
 		</>
 	)
