@@ -31,7 +31,7 @@ function ParticipantPopUp(props) {
 			email: '',
 			password: '',
 			mobile: '',
-			id: '',
+			Organization_id: '',
 		},
 	})
 
@@ -44,7 +44,7 @@ function ParticipantPopUp(props) {
 			setValue('email', participantData?.email, true)
 			setValue('password', participantData?.password, true)
 			setValue('mobile', participantData?.mobile, true)
-			setValue('id', participantData?.Organization_id, true)
+			setValue('Organization_id', participantData?.Organization_id, true)
 
 			isViewOnly ? setButtonText('View') : setButtonText('Edit')
 			setEditForm(true)
@@ -189,7 +189,7 @@ function ParticipantPopUp(props) {
 								<div className='w-full md:w-1/2 px-3'>
 									<Controller
 										as={Dropdown}
-										name={'id'}
+										name={'Organization_id'}
 										control={control}
 										render={({ field: { onChange, value, onBlur } }) => (
 											<Dropdown
