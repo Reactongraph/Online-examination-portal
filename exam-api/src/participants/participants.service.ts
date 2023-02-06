@@ -81,7 +81,7 @@ export class ParticipantsService {
 	async findParticipantId(id: string) {
 		try {
 			const find_data = await this.prisma.participants.findMany({
-				where: { id },
+				where: { Organization_id: id },
 			})
 
 			return find_data

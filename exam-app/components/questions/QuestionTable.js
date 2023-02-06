@@ -1,5 +1,5 @@
 import Table from '../common/Table'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useRouter } from 'next/router'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { ToastContainer, toast } from 'react-toastify'
@@ -12,12 +12,14 @@ import { BsPencilSquare } from 'react-icons/bs'
 import { MdDelete } from 'react-icons/md'
 import { AiFillEye } from 'react-icons/ai'
 import Link from 'next/link'
+import { QuestionContext } from '../context/context'
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()
 }
 
-const QuestionTable = ({ question_data, mutate }) => {
+const QuestionTable = () => {
+	const { question_data, mutate } = useContext(QuestionContext)
 	const router = useRouter()
 	const handleRemoveClick = async (question_id) => {
 		DeleteQuestion(question_id)

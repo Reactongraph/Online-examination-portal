@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
@@ -15,12 +15,14 @@ import {
 	EditQuestion,
 	GetQuestionDataWithId,
 } from '../../apis/questions'
+import { LevelContext, ModuleContext } from '../context/context'
+// import { QuestionContext } from '../context'
 
-const AddQuestion = ({
-	level_data: levelData,
-	module_data: moduleData,
-	isViewOnly,
-}) => {
+const AddQuestion = ({ isViewOnly }) => {
+	const { module_data: moduleData } = useContext(ModuleContext)
+	const { level_data: levelData } = useContext(LevelContext)
+
+	// const {level_data: levelData}
 	const router = useRouter()
 	const [selectedImage, setSelectedImage] = useState(null)
 	const [pageTitle, setPageTitle] = useState('Add')

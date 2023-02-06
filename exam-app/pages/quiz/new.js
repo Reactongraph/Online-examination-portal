@@ -1,28 +1,9 @@
-import { GetLevelData } from '../../apis/levels'
-import { GetModuleData } from '../../apis/modules'
-import Layout from '../../components/layout/Layout'
 import AddQuizComponent from '../../components/quiz/addQuiz'
+import { QuizHoc } from '../../components/highOrderComponents/QuizHoc'
+
+// Use the wrapped components
+const AddQuizPageWithContext = QuizHoc(AddQuizComponent)
 
 export default function AddQuiz() {
-	const { data: level_data } = GetLevelData()
-	let { data: module_data } = GetModuleData()
-
-	const updatedModuleData = module_data?.map((item) => {
-		return {
-			...item,
-			label: item.module,
-			value: item.module,
-		}
-	})
-
-	return (
-		<>
-			<Layout title='Quiz'>
-				<AddQuizComponent
-					level_data={level_data}
-					module_data={updatedModuleData}
-				/>
-			</Layout>
-		</>
-	)
+	return <AddQuizPageWithContext />
 }

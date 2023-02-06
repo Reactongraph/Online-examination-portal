@@ -1,15 +1,16 @@
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { GetOrganizationData } from '../../apis/organizations'
 import {
 	AddParticipant,
 	EditParticipant,
-	GetParticipantDataWithOrgId,
+	GetParticipantWithId,
 } from '../../apis/participants'
 import ParticipantPopUp from '../common/PopUpModals/ParticipantPopUp'
+
+import { OrganizationContext } from '../context/context'
 
 const CreateParticipant = ({ isViewOnly }) => {
 	const router = useRouter()
@@ -27,7 +28,7 @@ const CreateParticipant = ({ isViewOnly }) => {
 	const { handleSubmit } = useForm()
 	const [editform, setEditForm] = useState(false)
 	const Org = useSelector((state) => state?.user)
-	const organization_data = GetOrganizationData().data
+	const { organization_data } = useContext(OrganizationContext)
 	const handleOrganizationIdTypeSelect = (event) => {
 		let organizationId = event.target.value
 		setSelectedOrganizationId(organizationId)
@@ -35,15 +36,15 @@ const CreateParticipant = ({ isViewOnly }) => {
 	useEffect(() => {
 		let participant_id = router.query?.id
 		async function getParticipantData() {
-			const result = await GetParticipantDataWithOrgId(participant_id)
+			const result = await GetParticipantWithId(participant_id)
 			const participantData = result.data
-			participantData?.map((element) => {
-				setName(element?.name)
-				setEmail(element?.email)
-				setPassword(element?.password)
-				setMobile(element?.mobile)
-				return element
-			})
+
+			setName(participantData?.name)
+			setEmail(participantData?.email)
+			setPassword(participantData?.password)
+			setMobile(participantData?.mobile)
+			setSelectedOrganizationId(participantData?.Organization_id)
+
 			isViewOnly ? setButtonText('View') : setButtonText('Edit')
 			setEditForm(true)
 		}
