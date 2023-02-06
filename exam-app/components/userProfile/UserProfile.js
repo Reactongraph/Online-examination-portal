@@ -26,10 +26,10 @@ const UserProfile = ({ profile_data, mutate }) => {
 
 				<section className='grid-section'>
 					<div className='w-full px-6 py-6 mx-auto flex loopple-min-height-78vh text-slate-500'>
-						<div className='relative flex flex-col flex-auto min-w-0 shadow-lg p-4 overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white/80 bg-clip-border mb-4'>
+						<div className='profile-card-style'>
 							<div className=' -mx-3'>
 								<div className='flex-none w-auto max-w-full px-3'>
-									<div className='text-size-base ease-soft-in-out shadow  h-18.5 w-18.5 relative inline-flex items-center justify-center rounded-xl text-white transition-all duration-200'>
+									<div className='profile-img'>
 										<Image
 											src='/Images/userProfileAvtar.png'
 											alt='profile_image'
@@ -53,7 +53,7 @@ const UserProfile = ({ profile_data, mutate }) => {
 						<div className='w-full mx-auto removable'>
 							<div className=''>
 								<div className='w-full max-w-full px-3 lg-max:mt-6 xl:w-12/12 mb-4 '>
-									<div className='relative ml-2 flex flex-col h-full min-w-0 break-words shadow-lg  bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border'>
+									<div className='user-info'>
 										<div className='p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl'>
 											<div className='-mx-3'>
 												<div className='bg-blue-600 p-2 w-full font-bold text-lg text-center text-white rounded-md  pb-4'>
@@ -75,7 +75,7 @@ const UserProfile = ({ profile_data, mutate }) => {
 														data-popper-placement='top'>
 														Edit Profile
 														<div
-															className="invisible absolute h-2 w-2 bg-inherit before:visible before:absolute before:h-2 before:w-2 before:rotate-45 before:bg-inherit before:content-['']"
+															className='edit-profile'
 															data-popper-arrow=''></div>
 													</div>
 												</div>
