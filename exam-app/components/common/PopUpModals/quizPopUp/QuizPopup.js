@@ -49,7 +49,7 @@ function QuizPopUp(props) {
 					<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 						<React.Fragment>
 							<div className='flex-grid-wrap'>
-								<div className='form-field-md-width-half mb-6 md:mb-0'>
+								<div className='form-field mb-6 md:mb-0'>
 									<Label key={'grid-quiz-name'}> Quiz Name</Label>
 									<InputComponent
 										className='input-field'
@@ -63,7 +63,7 @@ function QuizPopUp(props) {
 									/>
 								</div>
 								<QuizImage />
-								<div className='form-field-md-width-half'>
+								<div className='form-field'>
 									<QuizDatePicker
 										timeTitle='Start Time'
 										selectedDate={selectedStartDate}
@@ -71,7 +71,7 @@ function QuizPopUp(props) {
 										isViewOnly={isViewOnly}
 									/>
 								</div>
-								<div className='form-field-md-width-half'>
+								<div className='form-field'>
 									<QuizDatePicker
 										timeTitle='End Time'
 										selectedDate={selectedEndDate}
@@ -79,7 +79,7 @@ function QuizPopUp(props) {
 										isViewOnly={isViewOnly}
 									/>
 								</div>
-								<div className='form-field-md-width-half'>
+								<div className='form-field'>
 									<QuizDatePicker
 										timeTitle='Buffer Time (Access Time for Quiz)'
 										selectedDate={selectedBufferDate}
@@ -87,7 +87,7 @@ function QuizPopUp(props) {
 										isViewOnly={isViewOnly}
 									/>
 								</div>
-								<div className='form-field-md-width-half'>
+								<div className='form-field'>
 									<QuizLevelSelect
 										selectedLevelId={selectedLevelId}
 										handleLevelTypeSelect={handleLevelTypeSelect}
@@ -95,11 +95,11 @@ function QuizPopUp(props) {
 										isViewOnly={isViewOnly}
 									/>
 								</div>
-								<div className='form-field-md-width-half'>
+								<div className='form-field'>
 									<Label key={'gird-module'}> Choose Modules for Quiz</Label>
 									<ReactSelect
 										options={moduleData}
-										className='bg-gray-50 w-50 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block    dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500'
+										className='quiz-module-data'
 										isMulti
 										closeMenuOnSelect={false}
 										hideSelectedOptions={false}
@@ -112,7 +112,7 @@ function QuizPopUp(props) {
 										value={optionModuleSelected}
 									/>
 								</div>
-								<div className='form-field-md-width-half mb-6 md:mb-0'>
+								<div className='form-field mb-6 md:mb-0'>
 									<Label key={'grid-quiz-name'}> Organization Name </Label>
 									<InputComponent
 										className='input-field'

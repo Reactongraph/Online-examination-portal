@@ -43,7 +43,7 @@ function OrganizationForm(props) {
 					<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 						<React.Fragment>
 							<div className='flex-grid-wrap'>
-								<div className='form-field-md-width-half mb-6 md:mb-0'>
+								<div className='form-field mb-6 md:mb-0'>
 									<Label key={'grid-first-name'}> Name</Label>
 									<InputComponent
 										type='text'
@@ -55,7 +55,7 @@ function OrganizationForm(props) {
 										id='name'
 									/>
 								</div>
-								<div className='form-field-md-width-half'>
+								<div className='form-field'>
 									<Label key={'grid-last-name'}> Email</Label>
 									<InputComponent
 										onChange={(e) => setEmail(e.target.value)}
@@ -141,7 +141,7 @@ function OrganizationForm(props) {
 								</div>
 							</div>
 							<div className='flex-grid-wrap'>
-								<div className='form-field-md-width-half mb-6 md:mb-0'>
+								<div className='form-field mb-6 md:mb-0'>
 									<Label key={'grid-mobile'}> Mobile</Label>
 									<InputComponent
 										onChange={(e) => setMobile(e.target.value)}
@@ -153,7 +153,7 @@ function OrganizationForm(props) {
 										value={mobile}
 									/>
 								</div>
-								<div className='form-field-md-width-half'>
+								<div className='form-field'>
 									<Label key={'grid-quota'}> Quota</Label>
 									<InputComponent
 										onChange={(e) => setQuota(e.target.value)}

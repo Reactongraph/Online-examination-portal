@@ -29,7 +29,7 @@ function LevelModulePopup(props) {
 					<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 						<React.Fragment>
 							<div class='flex-grid-wrap'>
-								<div class='form-field-md-width-half mb-6 md:mb-0'>
+								<div class='form-field mb-6 md:mb-0'>
 									<Label key={'grid-first-name'}>Enter {modalName}</Label>
 									<InputComponent
 										onChange={(e) => setStateName(e.target.value)}

@@ -70,7 +70,7 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 					<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 						<React.Fragment>
 							<div className='flex-grid-wrap'>
-								<div className='form-field-md-width-half mb-6 md:mb-0'>
+								<div className='form-field mb-6 md:mb-0'>
 									<Label key={'grid-first-name'}> Name</Label>
 
 									<InputComponent
@@ -83,7 +83,7 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 										placeholder='Jane'
 									/>
 								</div>
-								<div className='form-field-md-width-half'>
+								<div className='form-field'>
 									<Label key={'grid-last-name'}> Email</Label>
 
 									<InputComponent
@@ -183,7 +183,7 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 								</div>
 							</div>
 							<div className='flex-grid-wrap'>
-								<div className='form-field-md-width-half mb-6 md:mb-0'>
+								<div className='form-field mb-6 md:mb-0'>
 									<Label key={'grid-mobile'}>Mobile</Label>
 
 									<InputComponent
@@ -197,7 +197,7 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 										onChange={(e) => setMobile(e.target.value)}
 									/>
 								</div>
-								<div className='form-field-md-width-half'>
+								<div className='form-field'>
 									<Label key={'grid-quota'}>Quota</Label>
 
 									<InputComponent

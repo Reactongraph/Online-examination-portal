@@ -22,7 +22,7 @@ export default function Dropdown(props) {
 				required={props.required}
 				disabled={props.disabled}
 				value={props.value}
-				className={props.className ? props.className : 'textinputstyle'}>
+				className={props.className ? props.className : 'text-input-style'}>
 				<option
 					value=''
 					hidden>
