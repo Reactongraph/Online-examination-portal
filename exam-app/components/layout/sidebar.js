@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import OutsideClick from '../../utils/outsideClick'
+import OutsideClick from '../../utils/outside_click'
 import Logo from './sidebar/logo'
 import Nav from './sidebar/nav'
 

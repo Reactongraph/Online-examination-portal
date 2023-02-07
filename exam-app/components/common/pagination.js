@@ -4,7 +4,7 @@ import {
 	ChevronLeftIcon,
 	ChevronRightIcon,
 } from '@heroicons/react/solid'
-import { Button, PageButton } from '../shared/Button'
+import { Button, PageButton } from '../shared/button'
 import { Label } from './micro/label'
 import React from 'react'
 

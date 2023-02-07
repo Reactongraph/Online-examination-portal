@@ -1,6 +1,6 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
 import React, { useEffect, useRef, useState } from 'react'
-import OutsideClick from '../../../utils/outsideClick'
+import OutsideClick from '../../../utils/outside_click'
 import { useSelector } from 'react-redux'
 import Image from 'next/image'
 import { ButtonComponent } from '../../common/micro/button_component'

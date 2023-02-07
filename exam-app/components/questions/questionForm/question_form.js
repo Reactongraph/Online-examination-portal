@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form } from '../../common/micro/form'
-import CenterForm from './CenterForm'
+import CenterForm from './center_form'
 import { Banner } from '../../common/micro/banner'
 
 function QuestionForm(props) {

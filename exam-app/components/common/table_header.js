@@ -1,4 +1,4 @@
-import { SortDownIcon, SortIcon, SortUpIcon } from '../shared/Icons'
+import { SortDownIcon, SortIcon, SortUpIcon } from '../shared/icons'
 
 const TableHeader = ({ headerGroups }) => {
 	return (
