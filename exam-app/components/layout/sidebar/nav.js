@@ -11,7 +11,7 @@ import { MdQuiz } from 'react-icons/md'
 import { useSelector } from 'react-redux'
 
 import React, { useEffect, useState } from 'react'
-import NavItem from './NavItem'
+import NavItem from './nav_Item'
 
 const Nav = ({ sidebarOutsideClick }) => {
 	const [sidebarStatus, setSidebarStatus] = useState(false)

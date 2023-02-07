@@ -1,5 +1,5 @@
 import React from 'react'
-import { ButtonComponent } from '../../common/micro/buttonComponent'
+import { ButtonComponent } from '../../common/micro/button_component'
 
 const Notifications = () => {
 	return (

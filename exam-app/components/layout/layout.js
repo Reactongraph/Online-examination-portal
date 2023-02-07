@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import React, { Fragment, useState } from 'react'
-import Footer from './Footer'
-import Header from './Header'
-import Sidebar from './Sidebar'
+import Footer from './footer'
+import Header from './header'
+import Sidebar from './sidebar'
 
 const Layout = ({ children, title = 'Sample Title' }) => {
 	const [mobileNavsidebar, setMobileNavsidebar] = useState(false)

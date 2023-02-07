@@ -1,4 +1,4 @@
-import PageComponentTitle from './PageComponentTitle'
+import PageComponentTitle from './page_component_title'
 
 export const FrontPageComponent = ({
 	title,

@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import OutsideClick from '../../../utils/outsideClick'
 import { useSelector } from 'react-redux'
 import Image from 'next/image'
-import { ButtonComponent } from '../../common/micro/buttonComponent'
+import { ButtonComponent } from '../../common/micro/button_component'
 import { useRouter } from 'next/router'
 
 const UserMenu = () => {

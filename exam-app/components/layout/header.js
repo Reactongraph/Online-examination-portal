@@ -1,9 +1,9 @@
 import { MenuIcon } from '@heroicons/react/solid'
 import React from 'react'
-import LogOutButton from './header/LogOutButton'
-import Notifications from './header/Notifications'
-import SearchBox from './header/SearchBox'
-import UserMenu from './header/UserMenu'
+import LogOutButton from './header/log_out_button'
+import Notifications from './header/notifications'
+import SearchBox from './header/search_box'
+import UserMenu from './header/user_menu'
 
 const Header = ({ mobileNavsidebar, setMobileNavsidebar }) => {
 	return (

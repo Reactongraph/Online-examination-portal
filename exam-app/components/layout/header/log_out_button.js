@@ -1,6 +1,6 @@
 import React from 'react'
 import { ToastContainer, toast } from 'react-toastify'
-import { ButtonComponent } from '../../common/micro/buttonComponent'
+import { ButtonComponent } from '../../common/micro/button_component'
 import { UserLogout } from '../../../apis/auth'
 import Link from 'next/link'
 

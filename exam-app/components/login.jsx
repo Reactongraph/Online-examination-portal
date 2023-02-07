@@ -8,10 +8,10 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify'
 import { Form } from './common/micro/form'
-import { ButtonComponent } from './common/micro/buttonComponent'
+import { ButtonComponent } from './common/micro/button_component'
 import Dropdown from './common/micro/dropdown'
 import { UserLogin } from '../apis/auth'
-import { LoginRoles } from './DropDownData/loginData'
+import { LoginRoles } from './drop_down_data/login_data'
 
 // validation schema
 const schema = object({
