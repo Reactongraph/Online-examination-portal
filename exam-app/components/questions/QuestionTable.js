@@ -119,7 +119,6 @@ const QuestionTable = () => {
 				data={data || []}
 				rowKey='id'
 				className='table-primary'
-				className='table-primary'
 			/>
 
 			<ToastContainer />

@@ -5,13 +5,11 @@ import QuestionTable from './QuestionTable'
 const Question = () => {
 	return (
 		<main className='main-content'>
-		<main className='main-content'>
 			<div className='multi-column-spacing'>
 				<ComponentTitle
 					title='QUESTION'
 					titleDescription='List of all question'
 					buttonTitle='ADD NEW QUESTION'
-					mutate={mutate}
 				/>
 			</div>
 

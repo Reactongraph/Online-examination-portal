@@ -67,8 +67,7 @@ const ModuleTable = ({ data: module_data, mutate }) => {
 				<ButtonComponent
 					onClick={() => handleRemoveClick(modules.id)}
 					className={'btn-delete'}>
-					className={'btn-delete'}>
-					<MdDelete className='h-6 w-7'></MdDelete>
+					className={'btn-delete'}><MdDelete className='h-6 w-7'></MdDelete>
 				</ButtonComponent>
 			</>
 		)

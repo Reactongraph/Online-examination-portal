@@ -69,8 +69,7 @@ const OrganizationTable = () => {
 				<ButtonComponent
 					onClick={() => handleRemoveClick(org.id)}
 					className={'btn-delete'}>
-					className={'btn-delete'}>
-					<MdDelete className='h-6 w-7'></MdDelete>
+					className={'btn-delete'}><MdDelete className='h-6 w-7'></MdDelete>
 				</ButtonComponent>
 			</>
 		)
