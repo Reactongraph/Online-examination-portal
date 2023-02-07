@@ -3,7 +3,7 @@ import { ModuleProvider } from '../context/module_data_context'
 import { QuizProvider } from '../context/quiz_data_context'
 
 // import Layout from '../layout/Layout'
-import Layout from '../components/layout/Layout'
+import Layout from '../components/layout/layout'
 
 export const QuizHoc = (Component) => {
 	return function QuizHoc(props) {

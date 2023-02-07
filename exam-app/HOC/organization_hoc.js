@@ -1,4 +1,4 @@
-import Layout from '../components/layout/Layout'
+import Layout from '../components/layout/layout'
 import { OrganizationProvider } from '../context/organization_data_context'
 
 export const OrganizationHoc = (Component) => {

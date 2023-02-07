@@ -1,5 +1,5 @@
 // import Layout from '../layout/Layout'
-import Layout from '../components/layout/Layout'
+import Layout from '../components/layout/layout'
 import { ModuleProvider } from '../context/module_data_context'
 import { LevelProvider } from '../context/level_data_context'
 import { QuestionProvider } from '../context/question_data_context'
