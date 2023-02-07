@@ -8,7 +8,7 @@ import {
 	usePagination,
 } from 'react-table'
 import TableFilter from './table_filter'
-import TableHeader from './TableHeader'
+import TableHeader from './table_header'
 import TableBody from './table_body'
 import Pagination from './pagination'
 

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
-import { ButtonComponent } from './micro/buttonComponent'
+import { ButtonComponent } from './micro/button_component'
 import { Label } from './micro/label'
 import { EditOrganization } from '../../apis/organizations'
 import { Form } from './micro/form'

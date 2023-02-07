@@ -1,5 +1,5 @@
 import React from 'react'
-import ParticipantTable from './ParticipantTable'
+import ParticipantTable from './participant_table'
 import { FrontPageComponent } from '../common/front_page_component'
 
 const Participant = () => {

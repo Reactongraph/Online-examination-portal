@@ -1,6 +1,6 @@
 import React from 'react'
 import { Label } from './micro/label'
-import { InputComponent } from './micro/inputComponent'
+import { InputComponent } from './micro/input_component'
 
 const TableFilter = ({ filterData, value, headerGroups, count }) => {
 	return (
