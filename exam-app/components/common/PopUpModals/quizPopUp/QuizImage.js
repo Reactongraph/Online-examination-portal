@@ -4,7 +4,7 @@ import { InputComponent } from '../../micro/inputComponent'
 function QuizImage() {
 	return (
 		<>
-			<div className='w-full md:w-1/2 px-3'>
+			<div className='form-field'>
 				<Label key={'grid-last-name'}> Choose Quiz Image</Label>
 
 				<div class='flex items-center justify-center'>
@@ -12,7 +12,7 @@ function QuizImage() {
 						className='datepicker bg-gray-200relative form-floating mb-3 w-full'
 						data-mdb-toggle-button='false'>
 						<InputComponent
-							className='block w-full text-sm appearance-none  bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+							className='quiz-input'
 							aria-describedby='file_input_help'
 							accept='image/*'
 							id='file_input'

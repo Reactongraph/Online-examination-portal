@@ -117,9 +117,7 @@ const Login = () => {
 
 										<ButtonComponent
 											key={'submit'}
-											className={
-												'border-2 border-blue rounded-full px-12 py-2 inline-block font-semibold bg-blue-500 hover:bg-blue-700  ml-20 md-15 mr-25 '
-											}>
+											className={'btn-tertiary ml-20 md-15 mr-25'}>
 											SignIn
 										</ButtonComponent>
 									</div>

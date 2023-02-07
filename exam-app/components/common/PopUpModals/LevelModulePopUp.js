@@ -18,25 +18,23 @@ function LevelModulePopup(props) {
 	return (
 		<>
 			<div className='flex-row space-y-3 relative p-10'>
-				<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
+				<div className='multi-column-spacing'>
 					<Banner
 						heading={`${buttonText} ${modalName}`}
 						subHeading={'Easy to understand'}
-						additionalClassName={'my-4 ml-3'}
+						additionalClassName='banner-header'
 					/>
 				</div>
-				<div className='flex-auto  items-center p-8 bg-white shadow rounded-lg'>
+				<div className='card-container'>
 					<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 						<React.Fragment>
-							<div class='flex flex-wrap -mx-3 mb-6'>
-								<div class='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
+							<div class='flex-grid-wrap'>
+								<div class='form-field mb-6 md:mb-0'>
 									<Label key={'grid-first-name'}>Enter {modalName}</Label>
 									<InputComponent
 										onChange={(e) => setStateName(e.target.value)}
 										id='grid-first-name'
-										className={
-											'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										}
+										className='form-input'
 										type={'text'}
 										placeholder={placeholderText}
 										required={'required'}
@@ -46,7 +44,11 @@ function LevelModulePopup(props) {
 								</div>
 							</div>
 							{isViewOnly == false && (
-								<ButtonComponent key={'submit'}>{buttonText}</ButtonComponent>
+								<ButtonComponent
+									className='btn-secondary'
+									key={'submit'}>
+									{buttonText}
+								</ButtonComponent>
 							)}
 						</React.Fragment>
 					</Form>

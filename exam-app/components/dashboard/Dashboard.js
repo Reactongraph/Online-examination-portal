@@ -1,20 +1,19 @@
 import React from 'react'
-import { withRouter } from 'next/router'
 import { Banner } from '../common/micro/banner'
 
 const Dashboard = () => {
 	return (
 		<>
-			<main className='p-6 sm:p-10 space-y-6'>
-				<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
+			<main className='main-content'>
+				<div className='multi-column-spacing'>
 					<Banner
 						heading={'Dashboard'}
 						subHeading={'Online Examination Portal'}
 					/>
 				</div>
-				<section className='grid md:grid-cols-2 xl:grid-cols-4 gap-6'>
-					<div className='flex items-center p-8 bg-white shadow rounded-lg'>
-						<div className='inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-blue-600 bg-blue-100 rounded-full mr-6'>
+				<section className='grid-with-two-col'>
+					<div className='flex-card-container'>
+						<div className='blue-circle-badge'>
 							<svg
 								aria-hidden='true'
 								fill='none'
@@ -31,8 +30,8 @@ const Dashboard = () => {
 						</div>
 						<div></div>
 					</div>
-					<div className='flex items-center p-8 bg-white shadow rounded-lg'>
-						<div className='inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-green-600 bg-green-100 rounded-full mr-6'>
+					<div className='flex-card-container'>
+						<div className='blue-circle-badge text-green-600 bg-green-100 rounded-full mr-6'>
 							<svg
 								aria-hidden='true'
 								fill='none'
@@ -49,8 +48,8 @@ const Dashboard = () => {
 						</div>
 						<div></div>
 					</div>
-					<div className='flex items-center p-8 bg-white shadow rounded-lg'>
-						<div className='inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-red-600 bg-red-100 rounded-full mr-6'>
+					<div className='flex-card-container'>
+						<div className='blue-circle-badge text-red-600 bg-red-100 rounded-full mr-6'>
 							<svg
 								aria-hidden='true'
 								fill='none'
@@ -67,8 +66,8 @@ const Dashboard = () => {
 						</div>
 						<div></div>
 					</div>
-					<div className='flex items-center p-8 bg-white shadow rounded-lg'>
-						<div className='inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-blue-600 bg-blue-100 rounded-full mr-6'>
+					<div className='flex-card-container'>
+						<div className='blue-circle-badge'>
 							<svg
 								aria-hidden='true'
 								fill='none'
@@ -93,4 +92,4 @@ const Dashboard = () => {
 	)
 }
 
-export default withRouter(Dashboard)
+export default Dashboard

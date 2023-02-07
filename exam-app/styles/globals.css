@@ -1,6 +1,50 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer components {
+	.btn-primary {
+		@apply inline-flex px-5 py-3 text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 rounded-md ml-6 mb-3;
+	}
+	.btn-secondary {
+		@apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded;
+	}
+	.rc-table-custom {
+		@apply bg-gray-200 text-gray-600 font-semibold;
+	}
+	.table-primary {
+		@apply bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed;
+	}
+	.btn-password {
+		@apply text-white absolute right-2.5 bottom-2.5 bg-blue-400 hover:bg-blue-500   font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-300 dark:hover:bg-blue-400;
+	}
+	.btn-view {
+		@apply text-blue-500 hover:text-blue-700;
+	}
+	.btn-edit {
+		@apply text-green-500 hover:text-green-700 ml-2;
+	}
+	.btn-delete {
+		@apply text-red-500 hover:text-red-700  m-1;
+	}
+	.form-check-input {
+		@apply appearance-none w-9 rounded-full float-left h-5 align-top bg-red-600 bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm;
+	}
+	.checkbox {
+		@apply form-check-input;
+	}
+	.multi-column-spacing {
+		@apply flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between;
+	}
+	.main-content {
+		@apply p-6 sm:p-10 space-y-6;
+	}
+	.grid-section {
+		@apply grid md:grid-cols-1 xl:grid-cols-1 gap-6;
+	}
+	.table-section {
+		@apply flex-grow items-center p-8 bg-white shadow rounded-lg;
+	  }
+}
 html,
 body {
 	padding: 0;

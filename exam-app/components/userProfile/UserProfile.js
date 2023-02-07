@@ -11,7 +11,7 @@ const UserProfile = ({ profile_data, mutate }) => {
 
 	return (
 		<>
-			<main className='p-6 sm:p-10 space-y-6'>
+			<main className='main-content'>
 				{userRole == 'OrganizationUser' && (
 					<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
 						<PageComponentTitle
@@ -24,12 +24,12 @@ const UserProfile = ({ profile_data, mutate }) => {
 					</div>
 				)}
 
-				<section className='grid md:grid-cols-1 xl:grid-cols-1 gap-6'>
+				<section className='grid-section'>
 					<div className='w-full px-6 py-6 mx-auto flex loopple-min-height-78vh text-slate-500'>
-						<div className='relative flex flex-col flex-auto min-w-0 shadow-lg p-4 overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white/80 bg-clip-border mb-4'>
+						<div className='profile-card-style'>
 							<div className=' -mx-3'>
 								<div className='flex-none w-auto max-w-full px-3'>
-									<div className='text-size-base ease-soft-in-out shadow  h-18.5 w-18.5 relative inline-flex items-center justify-center rounded-xl text-white transition-all duration-200'>
+									<div className='profile-img'>
 										<Image
 											src='/Images/userProfileAvtar.png'
 											alt='profile_image'
@@ -53,7 +53,7 @@ const UserProfile = ({ profile_data, mutate }) => {
 						<div className='w-full mx-auto removable'>
 							<div className=''>
 								<div className='w-full max-w-full px-3 lg-max:mt-6 xl:w-12/12 mb-4 '>
-									<div className='relative ml-2 flex flex-col h-full min-w-0 break-words shadow-lg  bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border'>
+									<div className='user-info'>
 										<div className='p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl'>
 											<div className='-mx-3'>
 												<div className='bg-blue-600 p-2 w-full font-bold text-lg text-center text-white rounded-md  pb-4'>
@@ -75,7 +75,7 @@ const UserProfile = ({ profile_data, mutate }) => {
 														data-popper-placement='top'>
 														Edit Profile
 														<div
-															className="invisible absolute h-2 w-2 bg-inherit before:visible before:absolute before:h-2 before:w-2 before:rotate-45 before:bg-inherit before:content-['']"
+															className='edit-profile'
 															data-popper-arrow=''></div>
 													</div>
 												</div>
@@ -87,44 +87,44 @@ const UserProfile = ({ profile_data, mutate }) => {
 												border='5'>
 												<tbody>
 													<TableRow
-														className='border px-8 py-4 bg-blue-100'
+														className='table-row'
 														label='Full Name:'
 														name={profile_data?.name}
 													/>
 													<TableRow
-														className='border px-8 py-4'
+														className='table-row'
 														label='Email:'
 														name={profile_data?.email}
 													/>
 													{userRole == 'OrganizationUser' && (
 														<>
 															<TableRow
-																className='border px-8 py-4 bg-blue-100'
+																className='table-row'
 																label='Mobile:'
 																name={profile_data?.mobile}
 															/>
 															<TableRow
-																className='border px-8 py-4'
+																className='table-row'
 																label='Quota Allotted:'
 																name={profile_data?.quota}
 															/>
 															<TableRow
-																className='border px-8 py-4 bg-blue-100'
+																className='table-row'
 																label='Address:'
 																name={profile_data?.address}
 															/>
 															<TableRow
-																className='border px-8 py-4'
+																className='table-row'
 																label='City:'
 																name={profile_data?.city}
 															/>
 															<TableRow
-																className='border px-8 py-4 bg-blue-100'
+																className='table-row'
 																label='State:'
 																name={profile_data?.state}
 															/>
 															<TableRow
-																className='border px-8 py-4'
+																className='table-row'
 																label='PinCode:'
 																name={profile_data?.pincode}
 															/>

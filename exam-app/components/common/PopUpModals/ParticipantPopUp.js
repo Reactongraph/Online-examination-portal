@@ -54,19 +54,19 @@ function ParticipantPopUp(props) {
 	return (
 		<>
 			<div className='flex-row space-y-3 relative px-12 bg-gray-100'>
-				<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
+				<div className='multi-column-spacing'>
 					<Banner
 						heading={`${buttonText || 'Add'}  Participant`}
 						subHeading={'Easy to understand'}
-						additionalClassName={'my-4 ml-3'}
+						additionalClassName='banner-header'
 					/>
 				</div>
 
 				<div className=' m-auto py-6 px-6 lg:px-8 bg-white max-w-lg rounded-lg'>
 					<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 						<React.Fragment>
-							<div className='flex flex-wrap -mx-3 mb-6 '>
-								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
+							<div className='flex-grid-wrap '>
+								<div className='form-field mb-6 md:mb-0'>
 									<Label key={'grid-first-name'}>Name</Label>
 
 									<Controller
@@ -90,7 +90,7 @@ function ParticipantPopUp(props) {
 										)}
 									/>
 								</div>
-								<div className='w-full md:w-1/2 px-3'>
+								<div className='form-field'>
 									<Label key={'grid-first-name'}>Email</Label>
 
 									<Controller
@@ -115,7 +115,7 @@ function ParticipantPopUp(props) {
 									/>
 								</div>
 							</div>
-							<div className='flex flex-wrap -mx-3 mb-6'>
+							<div className='flex-grid-wrap'>
 								<div className='w-full px-3'>
 									<Label key={'grid-password'}> Password</Label>
 
@@ -143,9 +143,7 @@ function ParticipantPopUp(props) {
 
 										<ButtonComponent
 											type={'button'}
-											className={
-												'text-white absolute right-2.5 bottom-2.5 bg-blue-400 hover:bg-blue-500   font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-300 dark:hover:bg-blue-400 '
-											}
+											className='btn-password'
 											onClick={() => setShowPassword(!showPassword)}>
 											{!showPassword ? 'Show' : 'Hide'}
 										</ButtonComponent>
@@ -155,8 +153,8 @@ function ParticipantPopUp(props) {
 									</p>
 								</div>
 							</div>
-							<div className='flex flex-wrap -mx-3 mb-6'>
-								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
+							<div className='flex-grid-wrap'>
+								<div className='form-field mb-6 md:mb-0'>
 									<Label key={'grid-mobile'}> Mobile</Label>
 
 									<Controller

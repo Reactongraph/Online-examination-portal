@@ -30,42 +30,38 @@ function OrganizationForm(props) {
 	} = props
 	return (
 		<>
-			<div className='flex-row space-y-3 relative p-12 '>
-				<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
+			<div className='flex-container'>
+				<div className='multi-column-spacing'>
 					<Banner
 						heading={`${buttonText} Organization`}
 						subHeading={'Easy to understand'}
-						additionalClassName={'my-4 ml-3'}
+						additionalClassName='banner-header'
 					/>
 				</div>
 
-				<div className='flex-auto  items-center p-8 bg-white shadow rounded-lg '>
+				<div className='card-container '>
 					<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 						<React.Fragment>
-							<div className='flex flex-wrap -mx-3 mb-6'>
-								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
+							<div className='flex-grid-wrap'>
+								<div className='form-field mb-6 md:mb-0'>
 									<Label key={'grid-first-name'}> Name</Label>
 									<InputComponent
 										type='text'
 										onChange={(e) => setName(e.target.value)}
-										className={
-											'appearance-none block w-full bg-white-200 text-white-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
-										}
+										className='input-field'
 										value={name}
 										placeholder='Jane'
 										required='required'
 										id='name'
 									/>
 								</div>
-								<div className='w-full md:w-1/2 px-3'>
+								<div className='form-field'>
 									<Label key={'grid-last-name'}> Email</Label>
 									<InputComponent
 										onChange={(e) => setEmail(e.target.value)}
 										id='grid-email'
 										type='email'
-										className={
-											'appearance-none block w-full bg-white-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
-										}
+										className='input-field'
 										value={email}
 										placeholder='example@gmail.com '
 										required='required'
@@ -73,15 +69,13 @@ function OrganizationForm(props) {
 								</div>
 							</div>
 
-							<div className='flex flex-wrap -mx-3 mb-6'>
+							<div className='flex-grid-wrap'>
 								<div className='w-full px-3'>
 									<Label key={'grid-password'}> Password</Label>
 									<InputComponent
 										onChange={(e) => setPassword(e.target.value)}
 										id='grid-password'
-										className={
-											'appearance-none block w-full bg-white-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
-										}
+										className='input-field'
 										type={'password'}
 										placeholder={'******************'}
 										required={'required'}
@@ -99,9 +93,7 @@ function OrganizationForm(props) {
 									<InputComponent
 										onChange={(e) => setCity(e.target.value)}
 										id='mobile'
-										className={
-											'appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										}
+										className={'org-input'}
 										type={'text'}
 										placeholder={'Albuquerque '}
 										required={'required'}
@@ -114,9 +106,7 @@ function OrganizationForm(props) {
 									<InputComponent
 										onChange={(e) => setState(e.target.value)}
 										id='state'
-										className={
-											'appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										}
+										className={'org-input'}
 										type={'text'}
 										placeholder={'State '}
 										required={'required'}
@@ -128,9 +118,7 @@ function OrganizationForm(props) {
 									<InputComponent
 										onChange={(e) => setPincode(e.target.value)}
 										id='stgrid-zip'
-										className={
-											'appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										}
+										className={'org-input'}
 										type={'text'}
 										placeholder={'90210 '}
 										required={'required'}
@@ -138,15 +126,13 @@ function OrganizationForm(props) {
 									/>
 								</div>
 							</div>
-							<div className='flex flex-wrap -mx-3 mb-6'>
+							<div className='flex-grid-wrap'>
 								<div className='w-full px-3'>
 									<Label key={'grid-address'}> Address</Label>
 									<InputComponent
 										onChange={(e) => setAddress(e.target.value)}
 										id='grid-address'
-										className={
-											'appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										}
+										className={'org-input'}
 										type={'text'}
 										placeholder={'your office number '}
 										required={'required'}
@@ -154,29 +140,25 @@ function OrganizationForm(props) {
 									/>
 								</div>
 							</div>
-							<div className='flex flex-wrap -mx-3 mb-6'>
-								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
+							<div className='flex-grid-wrap'>
+								<div className='form-field mb-6 md:mb-0'>
 									<Label key={'grid-mobile'}> Mobile</Label>
 									<InputComponent
 										onChange={(e) => setMobile(e.target.value)}
 										id='mobile'
-										className={
-											'appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										}
+										className={'org-input'}
 										type={'text'}
 										placeholder={'+91 '}
 										required={'required'}
 										value={mobile}
 									/>
 								</div>
-								<div className='w-full md:w-1/2 px-3'>
+								<div className='form-field'>
 									<Label key={'grid-quota'}> Quota</Label>
 									<InputComponent
 										onChange={(e) => setQuota(e.target.value)}
 										id='Quota'
-										className={
-											'appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										}
+										className={'org-input'}
 										type={'text'}
 										placeholder={'e.g. 1000 '}
 										required={'required'}
@@ -187,9 +169,7 @@ function OrganizationForm(props) {
 							<div className='flex justify-end'>
 								<ButtonComponent
 									key={'submit'}
-									className={
-										'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
-									}>
+									className={'btn-secondary'}>
 									{buttonText}
 								</ButtonComponent>
 							</div>

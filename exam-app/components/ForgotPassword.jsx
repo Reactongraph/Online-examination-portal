@@ -60,7 +60,6 @@ const ForgotPassword = () => {
 								Reset Password
 							</h2>
 						</div>
-						{/* <p className="text-gray-1000 mr-20">use your login details</p> */}
 						<div className='flex flex-col items-center'></div>
 						<Form onSubmit={handleSubmit((data) => SendPasswordReset(data))}>
 							<React.Fragment>
@@ -79,9 +78,7 @@ const ForgotPassword = () => {
 								<div className='flex  justify-between w-64 mb-5'>
 									<ButtonComponent
 										key={'submit'}
-										className={
-											'border-2 border-blue rounded-full px-12 py-2 inline-block font-semibold bg-blue-500 hover:bg-blue-700  mr-25 ml-20   '
-										}>
+										className={'btn-tertiary  mr-25 ml-20'}>
 										Send Reset Link
 									</ButtonComponent>
 								</div>

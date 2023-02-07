@@ -44,7 +44,7 @@ const Pagination = ({
 						<React.Fragment>
 							<span className='sr-only'>Items Per Page</span>
 							<select
-								className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50'
+								className='mt-1 block w-full input-field-base'
 								value={state.pageSize}
 								onChange={(e) => {
 									setPageSize(Number(e.target.value))

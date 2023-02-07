@@ -61,25 +61,19 @@ const QuestionTable = () => {
 		const action = (
 			<>
 				<Link href={`/questions/${question_id}`}>
-					<ButtonComponent
-						className={'text-blue-500 hover:text-blue-700 ml-2'}
-						// onClick={() => handleEditClick(question_id)}
-					>
+					<ButtonComponent className={'btn-view'}>
 						<AiFillEye className='h-6 w-5 ' />
 					</ButtonComponent>
 				</Link>
 				<Link href={`/questions/edit/${question_id}`}>
-					<ButtonComponent
-						className={'text-green-500 hover:text-green-700 ml-2'}
-						// onClick={() => handleEditClick(question_id)}
-					>
+					<ButtonComponent className={'btn-edit'}>
 						<BsPencilSquare className='h-6 w-5 ' />
 					</ButtonComponent>
 				</Link>
 				&nbsp;
 				<ButtonComponent
 					onClick={() => handleRemoveClick(question_id)}
-					className={'text-red-500 hover:text-red-700  m-1'}>
+					className={'btn-delete'}>
 					<MdDelete className='h-6 w-5' />
 				</ButtonComponent>
 			</>
@@ -124,7 +118,7 @@ const QuestionTable = () => {
 				columns={QuestionColumns}
 				data={data || []}
 				rowKey='id'
-				className='bg-white table-auto p-1 w-full text-center rc-table-custom font-semibold hover:table-fixed'
+				className='table-primary'
 			/>
 
 			<ToastContainer />

@@ -49,20 +49,20 @@ function OrganizationPopUp(props) {
 	}, [router.query?.id])
 	return (
 		<>
-			<div className='flex-row space-y-3 relative p-12 '>
-				<div className='flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between'>
+			<div className='flex-container '>
+				<div className='multi-column-spacing'>
 					<Banner
 						heading={`${buttonText} Organization`}
 						subHeading={'Easy to understand'}
-						additionalClassName={'my-4 ml-3'}
+						additionalClassName='banner-header'
 					/>
 				</div>
 
-				<div className='flex-auto  items-center p-8 bg-white shadow rounded-lg '>
+				<div className='card-container'>
 					<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
 						<React.Fragment>
-							<div className='flex flex-wrap -mx-3 mb-6'>
-								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
+							<div className='flex-grid-wrap'>
+								<div className='form-field mb-6 md:mb-0'>
 									<Label key={'grid-first-name'}> Name</Label>
 
 									<Controller
@@ -86,7 +86,7 @@ function OrganizationPopUp(props) {
 										)}
 									/>
 								</div>
-								<div className='w-full md:w-1/2 px-3'>
+								<div className='form-field'>
 									<Label key={'grid-last-name'}> Email</Label>
 
 									<Controller
@@ -112,7 +112,7 @@ function OrganizationPopUp(props) {
 								</div>
 							</div>
 
-							<div className='flex flex-wrap -mx-3 mb-6'>
+							<div className='flex-grid-wrap'>
 								<div className='w-full px-3'>
 									<Label key={'grid-password'}> Password</Label>
 
@@ -217,7 +217,7 @@ function OrganizationPopUp(props) {
 									/>
 								</div>
 							</div>
-							<div className='flex flex-wrap -mx-3 mb-6'>
+							<div className='flex-grid-wrap'>
 								<div className='w-full px-3'>
 									<Label key={'grid-address'}> Address</Label>
 
@@ -243,8 +243,8 @@ function OrganizationPopUp(props) {
 									/>
 								</div>
 							</div>
-							<div className='flex flex-wrap -mx-3 mb-6'>
-								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
+							<div className='flex-grid-wrap'>
+								<div className='form-field mb-6 md:mb-0'>
 									<Label key={'grid-mobile'}> Mobile</Label>
 
 									<Controller
@@ -268,7 +268,7 @@ function OrganizationPopUp(props) {
 										)}
 									/>
 								</div>
-								<div className='w-full md:w-1/2 px-3'>
+								<div className='form-field'>
 									<Label key={'grid-quota'}> Quota</Label>
 
 									<Controller
@@ -297,9 +297,7 @@ function OrganizationPopUp(props) {
 								{isViewOnly == false && (
 									<ButtonComponent
 										key={'submit'}
-										className={
-											'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
-										}>
+										className={'btn-secondary'}>
 										{buttonText}
 									</ButtonComponent>
 								)}
