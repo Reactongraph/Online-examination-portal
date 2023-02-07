@@ -7,7 +7,7 @@ function QuestionMarks(props) {
 		<>
 			<Label key={'default'}> Marks</Label>
 			<InputComponent
-				className={'text-field-question'}
+				className={'input-style'}
 				type='number'
 				value={marks}
 				disabled={isViewOnly}

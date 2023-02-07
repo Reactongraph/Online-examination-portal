@@ -53,7 +53,7 @@ const PageComponentTitle = ({ title, titleDescription, buttonTitle }) => {
 					onChange={(e) => {
 						handleCsv(e)
 					}}
-					className='csv-button'
+					className='csv-add'
 				/>
 				<Link href={'/questions/new'}>
 					<ButtonComponent className={'btn-primary'}>
