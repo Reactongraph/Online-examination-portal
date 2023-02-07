@@ -1,5 +1,5 @@
 import React from 'react'
-import PageComponentTitle from '../common/PageComponentTitle'
+import PageComponentTitle from '../common/page_component_title'
 import Image from 'next/image'
 import { TableRow } from '../common/micro/tableRow'
 import { useSelector } from 'react-redux'

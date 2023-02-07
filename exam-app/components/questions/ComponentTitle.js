@@ -7,7 +7,7 @@ import { Banner } from '../common/micro/banner'
 import { ButtonComponent } from '../common/micro/buttonComponent'
 import { InputComponent } from '../common/micro/inputComponent'
 import Link from 'next/link'
-import { QuestionContext } from '../context/context'
+import { QuestionContext } from '../../context/context'
 
 const PageComponentTitle = ({ title, titleDescription, buttonTitle }) => {
 	const router = useRouter()

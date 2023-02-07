@@ -1,4 +1,4 @@
-import Table from '../common/Table'
+import Table from '../common/table'
 import React, { useContext } from 'react'
 import { useRouter } from 'next/router'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
@@ -12,7 +12,7 @@ import { BsPencilSquare } from 'react-icons/bs'
 import { MdDelete } from 'react-icons/md'
 import { AiFillEye } from 'react-icons/ai'
 import Link from 'next/link'
-import { QuestionContext } from '../context/context'
+import { QuestionContext } from '../../context/context'
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
 	injectStyle()

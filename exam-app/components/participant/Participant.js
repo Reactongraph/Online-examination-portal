@@ -1,6 +1,6 @@
 import React from 'react'
 import ParticipantTable from './ParticipantTable'
-import { FrontPageComponent } from '../common/FrontPageComponent'
+import { FrontPageComponent } from '../common/front_page_component'
 
 const Participant = () => {
 	return (

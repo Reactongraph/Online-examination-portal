@@ -1,6 +1,6 @@
 import React from 'react'
 import OrganizationTable from './OrganizationTable'
-import { FrontPageComponent } from '../common/FrontPageComponent'
+import { FrontPageComponent } from '../common/front_page_component'
 
 const Organization = () => {
 	return (

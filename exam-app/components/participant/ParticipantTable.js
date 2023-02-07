@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import Table from '../common/Table'
+import Table from '../common/table'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { toast } from 'react-toastify'
 import { ParticipantColumns } from './participantColumn'
@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 import { BsPencilSquare } from 'react-icons/bs'
 import { MdDelete } from 'react-icons/md'
 import { AiFillEye } from 'react-icons/ai'
-import { ParticipantContext } from '../context/context'
+import { ParticipantContext } from '../../context/context'
 
 // import Participant
 const ParticipantTable = () => {

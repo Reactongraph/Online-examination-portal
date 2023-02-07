@@ -10,7 +10,7 @@ import {
 } from '../../apis/participants'
 import ParticipantPopUp from '../common/PopUpModals/ParticipantPopUp'
 
-import { OrganizationContext } from '../context/context'
+import { OrganizationContext } from '../../context/context'
 
 const CreateParticipant = ({ isViewOnly }) => {
 	const router = useRouter()

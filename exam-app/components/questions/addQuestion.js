@@ -15,7 +15,7 @@ import {
 	EditQuestion,
 	GetQuestionDataWithId,
 } from '../../apis/questions'
-import { LevelContext, ModuleContext } from '../context/context'
+import { LevelContext, ModuleContext } from '../../context/context'
 // import { QuestionContext } from '../context'
 
 const AddQuestion = ({ isViewOnly }) => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import QuizTable from './QuizTable'
-import { FrontPageComponent } from '../common/FrontPageComponent'
+import { FrontPageComponent } from '../common/front_page_component'
 
 const Quiz = () => {
 	return (

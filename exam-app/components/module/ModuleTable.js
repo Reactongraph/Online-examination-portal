@@ -1,4 +1,4 @@
-import Table from '../common/Table'
+import Table from '../common/table'
 import React from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { ToastContainer, toast } from 'react-toastify'

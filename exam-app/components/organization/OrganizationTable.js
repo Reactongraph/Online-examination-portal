@@ -1,4 +1,4 @@
-import Table from '../common/Table'
+import Table from '../common/table'
 import React, { useContext } from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { toast } from 'react-toastify'
@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 import { BsPencilSquare } from 'react-icons/bs'
 import { MdDelete } from 'react-icons/md'
 import { AiFillEye } from 'react-icons/ai'
-import { OrganizationContext } from '../context/context'
+import { OrganizationContext } from '../../context/context'
 
 const OrganizationTable = () => {
 	const { organization_data, mutate } = useContext(OrganizationContext)
