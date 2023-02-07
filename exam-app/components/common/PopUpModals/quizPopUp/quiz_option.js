@@ -1,5 +1,5 @@
 import { components } from 'react-select'
-import { InputComponent } from '../../micro/inputComponent'
+import { InputComponent } from '../../micro/input_component'
 const Option = (props) => {
 	return (
 		<div>

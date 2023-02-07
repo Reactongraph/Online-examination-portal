@@ -3,7 +3,7 @@ import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
-import QuizPopUp from '../common/PopUpModals/quizPopUp/QuizPopup'
+import QuizPopUp from '../common/PopUpModals/quizPopUp/quiz_model'
 import { AddQuiz, EditQuiz, GetQuizDataWithId } from '../../apis/quizzes'
 
 import 'react-datepicker/dist/react-datepicker.css'

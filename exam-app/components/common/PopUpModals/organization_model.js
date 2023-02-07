@@ -1,8 +1,8 @@
 import React from 'react'
-import { ButtonComponent } from '../micro/buttonComponent'
+import { ButtonComponent } from '../micro/button_component'
 import { Label } from '../micro/label'
 import { Form } from '../micro/form'
-import { InputComponent } from '../micro/inputComponent'
+import { InputComponent } from '../micro/input_component'
 import { Banner } from '../micro/banner'
 function OrganizationPopUp(props) {
 	const {

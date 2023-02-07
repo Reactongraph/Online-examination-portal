@@ -1,15 +1,15 @@
 import { default as ReactSelect } from 'react-select'
-import QuizDatePicker from './QuizDatePicker'
-import QuizLevelSelect from './QuizLevelSelect'
-import QuizImage from './QuizImage'
-import Option from './QuizOption'
+import QuizDatePicker from './quiz_date_picker'
+import QuizLevelSelect from './quiz_level_select'
+import QuizImage from './quiz_image'
+import Option from './quiz_option'
 import { Form } from '../../micro/form'
-import { ButtonComponent } from '../../micro/buttonComponent'
+import { ButtonComponent } from '../../micro/button_component'
 import { Label } from '../../micro/label'
-import { TextArea } from '../../micro/textArea'
+import { TextArea } from '../../micro/text_area'
 import React from 'react'
 import { Banner } from '../../micro/banner'
-import { InputComponent } from '../../micro/inputComponent'
+import { InputComponent } from '../../micro/input_component'
 function QuizPopUp(props) {
 	const {
 		name,
