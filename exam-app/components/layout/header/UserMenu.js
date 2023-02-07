@@ -5,17 +5,21 @@ import { useSelector } from 'react-redux'
 import Image from 'next/image'
 import { ButtonComponent } from '../../common/micro/buttonComponent'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const UserMenu = () => {
 	const [userMenuStatus, setUserMenuStatus] = useState(false)
 	const buttonRef = useRef(null)
 	const buttonOutsideClick = OutsideClick(buttonRef)
 	const username = useSelector((state) => state.user)
+	const router = useRouter()
 
 	const userMenuhandle = () => {
 		setUserMenuStatus(!userMenuStatus)
 	}
-
+	const handleclick = () => {
+		router.push('/userProfile')
+	}
 	useEffect(() => {
 		if (buttonOutsideClick) {
 			setUserMenuStatus(false)

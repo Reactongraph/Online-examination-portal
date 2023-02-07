@@ -12,7 +12,7 @@ function QuizImage() {
 						className='datepicker bg-gray-200relative form-floating mb-3 w-full'
 						data-mdb-toggle-button='false'>
 						<InputComponent
-							className='quiz-input'
+							className='block w-full text-sm appearance-none  bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
 							aria-describedby='file_input_help'
 							accept='image/*'
 							id='file_input'
