@@ -1,5 +1,5 @@
 import Dropdown from '../../common/micro/dropdown'
-import { QuestionOptionType } from '../../DropDownData/QuestionOptionType'
+import { QuestionOptionType } from '../../drop_down_data/question_option_type'
 
 function OptionType(props) {
 	const { optionType, handleOptionTypeSelect, isViewOnly } = props

@@ -1,6 +1,6 @@
 import React from 'react'
-import ComponentTitle from './ComponentTitle'
-import QuestionTable from './QuestionTable'
+import ComponentTitle from './component_title'
+import QuestionTable from './question_table'
 
 const Question = () => {
 	return (

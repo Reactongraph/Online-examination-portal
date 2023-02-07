@@ -1,5 +1,5 @@
 import '../styles/globals.css'
-import Layout from '../components/Layout'
+import Layout from '../components/layout'
 import { Provider } from 'react-redux'
 import store from '../store'
 import { injectStyle } from 'react-toastify/dist/inject-style'
