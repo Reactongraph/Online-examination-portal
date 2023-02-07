@@ -5,5 +5,10 @@ import { OrganizationHoc } from '../../../components/highOrderComponents/Organiz
 const EditOrganizationWithContext = OrganizationHoc(CreateOrganization)
 
 export default function EditPage() {
-	return <EditOrganizationWithContext />
+	return (
+		<EditOrganizationWithContext
+			buttonText={'Edit'}
+			editform={true}
+		/>
+	)
 }

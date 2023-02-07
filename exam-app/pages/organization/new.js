@@ -5,5 +5,5 @@ import { OrganizationHoc } from '../../components/highOrderComponents/Organizati
 
 const AddOrganizationWithContext = OrganizationHoc(CreateOrganization)
 export default function AddOrganizations() {
-	return <AddOrganizationWithContext />
+	return <AddOrganizationWithContext buttonText={'Add'} />
 }
