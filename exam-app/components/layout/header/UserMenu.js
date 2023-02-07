@@ -4,7 +4,6 @@ import OutsideClick from '../../../utils/outsideClick'
 import { useSelector } from 'react-redux'
 import Image from 'next/image'
 import { ButtonComponent } from '../../common/micro/buttonComponent'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 const UserMenu = () => {
