@@ -31,10 +31,6 @@ const AddQuizComponent = ({ isViewOnly }) => {
 	const [selectedLevelId, setSelectedLevelId] = useState('')
 	const [selectedModules, setSelectedModules] = useState([])
 
-	// for sending the data to the backend
-
-	//TODO: for checking it as the edit request
-
 	useEffect(() => {
 		let quiz_id = router.query.id
 

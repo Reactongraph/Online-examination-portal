@@ -41,9 +41,7 @@ const PageComponentTitle = ({ title, titleDescription, buttonTitle }) => {
 					download>
 					<ButtonComponent
 						type='button'
-						className={
-							'inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out'
-						}>
+						className={'csv-button'}>
 						Download sample (.csv)
 					</ButtonComponent>
 				</a>
@@ -55,13 +53,10 @@ const PageComponentTitle = ({ title, titleDescription, buttonTitle }) => {
 					onChange={(e) => {
 						handleCsv(e)
 					}}
-					className='px-6 py-2 mx-2 bg-blue-400 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-500 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out'
+					className='csv-button'
 				/>
 				<Link href={'/questions/new'}>
-					<ButtonComponent
-						className={
-							'inline-flex px-5 py-3 text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 rounded-md ml-6 mb-3'
-						}>
+					<ButtonComponent className={'btn-primary'}>
 						<React.Fragment>
 							<svg
 								aria-hidden='true'

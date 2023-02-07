@@ -4,10 +4,7 @@ import { ButtonComponent } from '../../common/micro/buttonComponent'
 const SettingButton = () => {
 	return (
 		<div className='inline-flex items-center justify-center h-20 w-20 border-t border-gray-700'>
-			<ButtonComponent
-				className={
-					'p-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg'
-				}>
+			<ButtonComponent className={'setting-btn'}>
 				<React.Fragment>
 					<span className='sr-only'>Settings</span>
 					<svg

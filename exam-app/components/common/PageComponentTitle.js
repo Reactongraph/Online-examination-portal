@@ -27,9 +27,7 @@ const PageComponentTitle = ({
 
 			<div className='flex  flex-wrap items-start justify-end -mb-3'>
 				<ButtonComponent
-					className={
-						'inline-flex px-5 py-3 text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 rounded-md ml-6 mb-3'
-					}
+					className='btn-primary'
 					onClick={() => handleAddClick()}>
 					<React.Fragment>
 						<svg

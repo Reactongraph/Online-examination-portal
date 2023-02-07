@@ -22,7 +22,7 @@ function CenterForm(props) {
 	return (
 		<>
 			<section className='flex md:grid-cols-1 xl:grid-cols-1 gap-6'>
-				<div className='flex-auto  items-center p-8 bg-white shadow rounded-lg'>
+				<div className='card-container'>
 					<div className='mr-6'>
 						<div className='flex justify-center mt-8'>
 							<div className='max-w-2xl rounded-lg shadow-xl bg-gray-50'>
@@ -117,7 +117,7 @@ function CenterForm(props) {
 							required
 							onChange={(e) => setQuestion(e.target.value)}
 							placeholder='Type your question'
-							className='bg-gray-50 border text-center border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+							className='text-field-question'
 						/>
 					</div>
 
@@ -132,7 +132,7 @@ function CenterForm(props) {
 									<InputComponent
 										type='text'
 										id='default-input'
-										className='bg-gray-50 border my-3 text-left border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-3/4 p-2.5  dark:focus:ring-blue-500 dark:focus:border-blue-500'
+										className='text-field-question'
 										name='option'
 										required
 										disabled={isViewOnly}
@@ -178,9 +178,7 @@ function CenterForm(props) {
 						<div className='flex justify-end'>
 							<ButtonComponent
 								key={'submit'}
-								className={
-									'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
-								}>
+								className={'btn-secondary'}>
 								Submit
 							</ButtonComponent>
 						</div>
