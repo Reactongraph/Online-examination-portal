@@ -1,4 +1,5 @@
-import Layout from '../layout/Layout'
+// import Layout from '../layout/Layout'
+import Layout from '../components/layout/Layout'
 import { OrganizationProvider } from '../context/organization_data_context'
 import { ParticipantProvider } from '../context/participant_data_context'
 

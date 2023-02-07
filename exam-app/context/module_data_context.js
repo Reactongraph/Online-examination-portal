@@ -1,4 +1,4 @@
-import { GetModuleData } from '../../apis/modules'
+import { GetModuleData } from '../apis/modules'
 import { ModuleContext } from './context'
 
 export const ModuleProvider = ({ children }) => {

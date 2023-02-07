@@ -2,9 +2,9 @@ import { useSelector } from 'react-redux'
 import {
 	GetParticipantData,
 	GetParticipantDataWithOrgId,
-} from '../../apis/participants'
+} from '../apis/participants'
 import { ParticipantContext } from './context'
-import Layout from '../layout/Layout'
+import Layout from '../components/layout/Layout'
 
 export const ParticipantProvider = ({ children }) => {
 	const user = useSelector((state) => state?.user)

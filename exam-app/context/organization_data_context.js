@@ -1,4 +1,4 @@
-import { GetOrganizationData } from '../../apis/organizations'
+import { GetOrganizationData } from '../apis/organizations'
 
 import { OrganizationContext } from './context'
 

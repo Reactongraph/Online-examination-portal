@@ -1,4 +1,4 @@
-import { GetQuizData } from '../../apis/quizzes'
+import { GetQuizData } from '../apis/quizzes'
 import { QuizContext } from './context'
 
 export const QuizProvider = ({ children }) => {

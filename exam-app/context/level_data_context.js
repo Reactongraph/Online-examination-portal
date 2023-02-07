@@ -1,4 +1,4 @@
-import { GetLevelData } from '../../apis/levels'
+import { GetLevelData } from '../apis/levels'
 import { LevelContext } from './context'
 
 export const LevelProvider = ({ children }) => {

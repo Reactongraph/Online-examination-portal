@@ -1,4 +1,4 @@
-import { GetQuestionData } from '../../apis/questions'
+import { GetQuestionData } from '../apis/questions'
 import { QuestionContext } from './context'
 
 export const QuestionProvider = ({ children }) => {
