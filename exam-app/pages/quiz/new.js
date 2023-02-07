@@ -5,5 +5,5 @@ import { QuizHoc } from '../../components/highOrderComponents/QuizHoc'
 const AddQuizPageWithContext = QuizHoc(AddQuizComponent)
 
 export default function AddQuiz() {
-	return <AddQuizPageWithContext />
+	return <AddQuizPageWithContext buttonText={'Add'} />
 }

@@ -5,5 +5,10 @@ const ViewQuizWithContext = QuizHoc(AddQuizComponent)
 
 // Use the wrapped components
 export default function ViewQuiz() {
-	return <ViewQuizWithContext isViewOnly={true} />
+	return (
+		<ViewQuizWithContext
+			isViewOnly={true}
+			buttonText={'View'}
+		/>
+	)
 }
