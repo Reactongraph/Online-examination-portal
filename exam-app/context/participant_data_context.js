@@ -4,7 +4,7 @@ import {
 	GetParticipantDataWithOrgId,
 } from '../apis/participants'
 import { ParticipantContext } from './context'
-import Layout from '../components/layout/Layout'
+import Layout from '../components/layout/layout'
 
 export const ParticipantProvider = ({ children }) => {
 	const user = useSelector((state) => state?.user)

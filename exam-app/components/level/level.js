@@ -1,6 +1,6 @@
 import React from 'react'
-import LevelTable from './LevelTable'
-import { FrontPageComponent } from '../common/FrontPageComponent'
+import LevelTable from './level_table'
+import { FrontPageComponent } from '../common/front_page_component'
 
 const Level = ({ level_data, mutate }) => {
 	return (

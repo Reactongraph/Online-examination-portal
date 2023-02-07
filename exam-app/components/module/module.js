@@ -1,6 +1,6 @@
 import React from 'react'
-import ModuleTable from './ModuleTable'
-import { FrontPageComponent } from '../common/FrontPageComponent'
+import ModuleTable from './module_table'
+import { FrontPageComponent } from '../common/front_page_component'
 
 const Modules = ({ module_data, mutate }) => {
 	return (
