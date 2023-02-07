@@ -43,7 +43,55 @@
 	}
 	.table-section {
 		@apply flex-grow items-center p-8 bg-white shadow rounded-lg;
-	  }
+	}
+	.blue-circle-badge {
+		@apply inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-blue-600 bg-blue-100 rounded-full mr-6;
+	}
+	.grid-with-two-col {
+		@apply grid md:grid-cols-2 xl:grid-cols-4 gap-6;
+	}
+	.flex-card-container {
+		@apply flex items-center p-8 bg-white shadow rounded-lg;
+	}
+	.border-blue {
+		border-color: rgb(96, 96, 150);
+	}
+	.btn-tertiary {
+		@apply border-2 border-blue rounded-full px-12 py-2 inline-block font-semibold bg-blue-500 hover:bg-blue-700;
+	}
+	.flex-grid-wrap {
+		@apply flex flex-wrap -mx-3 mb-6;
+	}
+	.user-form-field {
+		@apply w-full md:w-1/2 px-3 mb-6 md:mb-0;
+	}
+	.input-field {
+		@apply appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white;
+	}
+	.form-field {
+		@apply w-full md:w-1/2 px-3;
+	}
+	.organization-form-input {
+		@apply appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white;
+	}
+	.csv-button {
+		@apply inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out;
+	}
+	.csv-add {
+		@apply px-6 py-2 mx-2 bg-blue-400 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-500 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out;
+	}
+	.card-container {
+		@apply flex-auto  items-center p-8 bg-white shadow rounded-lg;
+	}
+	@layer dark {
+		.boinput-stylerder-gray-600 {
+			border-color: #636363;
+		}
+	}
+
+	.input-style {
+		@apply bg-gray-50 border w-40 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:boinput-stylerder-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500;
+	}
 }
 html,
 body {

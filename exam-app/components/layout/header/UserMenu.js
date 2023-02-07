@@ -4,18 +4,21 @@ import OutsideClick from '../../../utils/outsideClick'
 import { useSelector } from 'react-redux'
 import Image from 'next/image'
 import { ButtonComponent } from '../../common/micro/buttonComponent'
-import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const UserMenu = () => {
 	const [userMenuStatus, setUserMenuStatus] = useState(false)
 	const buttonRef = useRef(null)
 	const buttonOutsideClick = OutsideClick(buttonRef)
 	const username = useSelector((state) => state.user)
+	const router = useRouter()
 
 	const userMenuhandle = () => {
 		setUserMenuStatus(!userMenuStatus)
 	}
-
+	const handleclick = () => {
+		router.push('/userProfile')
+	}
 	useEffect(() => {
 		if (buttonOutsideClick) {
 			setUserMenuStatus(false)
@@ -24,7 +27,9 @@ const UserMenu = () => {
 
 	return (
 		<ButtonComponent
-			className={'menu-btn'}
+			className={
+				'inline-flex items-center p-2 hover:bg-gray-100 focus:bg-gray-100 rounded-lg relative'
+			}
 			onClick={userMenuhandle}
 			ref={buttonRef}>
 			<React.Fragment>
@@ -46,12 +51,12 @@ const UserMenu = () => {
 				</span>
 
 				{userMenuStatus && (
-					<div className='user-profile'>
-						<Link
-							href={'/userProfile'}
-							className='block hover:bg-gray-50 hover:text-black'>
+					<div className='absolute right-0 sm:-bottom-16 bg-slate-500 px-2 py-1 space-x-2 text-yellow-50 w-full -bottom-28'>
+						<a
+							className='block hover:bg-gray-50 hover:text-black'
+							onClick={handleclick}>
 							user Profile
-						</Link>
+						</a>
 						<a className='block hover:bg-gray-50 hover:text-black'>
 							user setting
 						</a>

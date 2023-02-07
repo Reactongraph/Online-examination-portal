@@ -31,7 +31,8 @@ const Dashboard = () => {
 						<div></div>
 					</div>
 					<div className='flex-card-container'>
-						<div className='blue-circle-badge text-green-600 bg-green-100 rounded-full mr-6'>
+						{/* <div className='inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-green-600 bg-green-100 rounded-full mr-6'> */}
+						<div className='blue-circle-badge h-16 w-16 text-green-600 bg-green-100'>
 							<svg
 								aria-hidden='true'
 								fill='none'
@@ -49,7 +50,7 @@ const Dashboard = () => {
 						<div></div>
 					</div>
 					<div className='flex-card-container'>
-						<div className='blue-circle-badge text-red-600 bg-red-100 rounded-full mr-6'>
+						<div className='blue-circle-badge h-16 w-16 text-red-600 bg-red-100 rounded-full mr-6'>
 							<svg
 								aria-hidden='true'
 								fill='none'
@@ -67,7 +68,7 @@ const Dashboard = () => {
 						<div></div>
 					</div>
 					<div className='flex-card-container'>
-						<div className='blue-circle-badge'>
+						<div className='blue-circle-badge h-16 w-16 text-blue-600 bg-blue-100 rounded-full mr-6'>
 							<svg
 								aria-hidden='true'
 								fill='none'
