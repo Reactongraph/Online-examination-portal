@@ -4,10 +4,10 @@ WORKDIR /Gaurav/src/app
 
 COPY package*.json ./
 
-RUN npm install
+RUN yarn
 
 COPY . .
 
 EXPOSE 3000
 
-CMD ["node","start"]
+CMD ["yarn","start"]
