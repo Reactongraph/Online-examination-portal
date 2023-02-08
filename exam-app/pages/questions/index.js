@@ -1,6 +1,6 @@
 import Question from '../../components/questions/question'
 
-import { QuestionHoc } from '../../HOC/question_hoc'
+import { QuestionHoc } from '../../hoc/question_hoc'
 
 const QuestionWithContext = QuestionHoc(Question)
 

@@ -11,7 +11,7 @@ import { Form } from './common/micro/form'
 import { ButtonComponent } from './common/micro/button_component'
 import Dropdown from './common/micro/dropdown'
 import { UserLogin } from '../apis/auth'
-import { LoginRoles } from './drop_down_data/login_data'
+import { LoginRoles } from './drop_down_data/login_role_data'
 
 // validation schema
 const schema = object({
