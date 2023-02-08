@@ -7,7 +7,10 @@ export default function EditLevels() {
 	return (
 		<>
 			<Layout title='Edit level'>
-				<AddLevelComponent />
+				<AddLevelComponent
+					editform={true}
+					buttonText={'Edit'}
+				/>
 			</Layout>
 		</>
 	)

@@ -22,6 +22,18 @@ export function GetOrganizationData() {
 		mutate,
 	}
 }
+export function GetUserProfileData(id) {
+	const { data, error, isLoading, mutate } = useSWR(
+		[`/organization/${id}`],
+		([url]) => fetcher(url)
+	)
+	return {
+		data,
+		error,
+		isLoading,
+		mutate,
+	}
+}
 
 export async function GetOrganizationDataWithId(id) {
 	return await ApiCaller.get(`/organization/${id}`)

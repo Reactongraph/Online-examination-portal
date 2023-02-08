@@ -5,5 +5,10 @@ const EditQuizWithContext = QuizHoc(AddQuizComponent)
 
 // Use the wrapped components
 export default function EditQuiz() {
-	return <EditQuizWithContext />
+	return (
+		<EditQuizWithContext
+			buttonText={'Edit'}
+			editform={true}
+		/>
+	)
 }

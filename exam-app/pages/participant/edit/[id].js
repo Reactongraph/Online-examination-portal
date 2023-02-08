@@ -4,5 +4,10 @@ import { ParticipantHoc } from '../../../hoc/participant_hoc'
 
 const EditParticipantWithContext = ParticipantHoc(CreateParticipant)
 export default function EditParticipantPage() {
-	return <EditParticipantWithContext />
+	return (
+		<EditParticipantWithContext
+			buttonText={'Edit'}
+			editform={true}
+		/>
+	)
 }

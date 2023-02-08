@@ -1,10 +1,10 @@
 FROM node:lts-alpine
 ENV NODE_ENV=production
-WORKDIR /usr/src/app
+WORKDIR /exam-app
 COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
-RUN npm install --production --silent && mv node_modules ../
+RUN yarn install --production --silent && mv node_modules ../
 COPY . .
-EXPOSE 5000
-RUN chown -R node /usr/src/app
+EXPOSE 3000
+RUN chown -R node /exam-app
 USER node
-CMD ["npm run", "start:dev"]
+CMD ["yarn run", "start:dev"]

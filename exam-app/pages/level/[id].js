@@ -6,7 +6,10 @@ export default function ViewLevelPage() {
 	return (
 		<>
 			<Layout title='View level'>
-				<AddLevelComponent isViewOnly={true} />
+				<AddLevelComponent
+					isViewOnly={true}
+					buttonText={'View'}
+				/>
 			</Layout>
 		</>
 	)

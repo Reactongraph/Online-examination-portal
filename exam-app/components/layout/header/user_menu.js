@@ -51,7 +51,7 @@ const UserMenu = () => {
 				</span>
 
 				{userMenuStatus && (
-					<div className='absolute right-0 sm:-bottom-16 bg-slate-500 px-2 py-1 space-x-2 text-yellow-50 w-full -bottom-28'>
+					<div className='absolute right-0 sm:-bottom-16 bg-slate-500 px-2 py-1 space-x-2 text-yellow-50 w-full -bottom-28 z-50'>
 						<a
 							className='block hover:bg-gray-50 hover:text-black'
 							onClick={handleclick}>

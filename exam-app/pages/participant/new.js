@@ -5,5 +5,5 @@ import { ParticipantHoc } from '../../hoc/participant_hoc'
 
 const AddParticipantWithContext = ParticipantHoc(CreateParticipant)
 export default function AddParticipantPage() {
-	return <AddParticipantWithContext />
+	return <AddParticipantWithContext buttonText={'Add'} />
 }

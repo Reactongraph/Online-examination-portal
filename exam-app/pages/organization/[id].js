@@ -5,5 +5,10 @@ import { OrganizationHoc } from '../../hoc/organization_hoc'
 
 const ViewOrganizationWithContext = OrganizationHoc(CreateOrganization)
 export default function ViewOrganizationPage() {
-	return <ViewOrganizationWithContext isViewOnly={true} />
+	return (
+		<ViewOrganizationWithContext
+			isViewOnly={true}
+			buttonText={'View'}
+		/>
+	)
 }

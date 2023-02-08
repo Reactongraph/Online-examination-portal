@@ -4,5 +4,10 @@ import { ParticipantHoc } from '../../hoc/participant_hoc'
 
 const ViewParticipantWithContext = ParticipantHoc(CreateParticipant)
 export default function ViewParticipantPage() {
-	return <ViewParticipantWithContext isViewOnly={true} />
+	return (
+		<ViewParticipantWithContext
+			isViewOnly={true}
+			buttonText={'View'}
+		/>
+	)
 }

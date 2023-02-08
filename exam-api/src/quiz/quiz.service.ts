@@ -67,7 +67,7 @@ export class QuizService {
 
 	async findOne(id: string) {
 		try {
-			const quiz = await this.prisma.quiz.findMany({
+			const quiz = await this.prisma.quiz.findUnique({
 				where: {
 					id,
 				},
@@ -77,7 +77,7 @@ export class QuizService {
 			if (!quiz) {
 				return `quiz not found with this  ${id}`
 			}
-			return quiz
+			return { quiz }
 		} catch (err) {
 			return { error: err }
 		}
