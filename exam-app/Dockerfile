@@ -1,15 +1,10 @@
-FROM node:14
-
-WORKDIR /Gaurav/src/app
-
-COPY package*.json ./
-
-RUN npm install -g yarn
-
-RUN yarn
-
+FROM node:lts-alpine
+ENV NODE_ENV=production
+WORKDIR /exam-app
+COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
+RUN yarn install --production --silent && mv node_modules ../
 COPY . .
-
 EXPOSE 3000
-
-CMD ["yarn","start"]
+RUN chown -R node /exam-app
+USER node
+CMD ["yarn run", "start:dev"]
