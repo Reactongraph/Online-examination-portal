@@ -7,7 +7,10 @@ export default function EditModules() {
 	return (
 		<>
 			<Layout title='Edit Module'>
-				<AddModuleComponent />
+				<AddModuleComponent
+					editform={true}
+					buttonText={'Edit'}
+				/>
 			</Layout>
 		</>
 	)

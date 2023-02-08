@@ -6,7 +6,10 @@ export default function ViewModulePage() {
 	return (
 		<>
 			<Layout title='View Module'>
-				<AddModuleComponent isViewOnly={true} />
+				<AddModuleComponent
+					isViewOnly={true}
+					buttonText={'View'}
+				/>
 			</Layout>
 		</>
 	)
