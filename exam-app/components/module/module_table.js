@@ -6,7 +6,7 @@ import { ModuleColumns } from './ module_columns'
 import { useRouter } from 'next/router'
 
 import { DeleteModule, EditModule } from '../../apis/modules'
-import { CheckboxInput } from '../common/micro/check_box_input'
+import { CheckboxInput } from '../common/micro/checkbox'
 import { ButtonComponent } from '../common/micro/button'
 import { BsPencilSquare } from 'react-icons/bs'
 import { MdDelete } from 'react-icons/md'
