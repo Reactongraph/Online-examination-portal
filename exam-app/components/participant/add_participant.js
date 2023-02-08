@@ -8,7 +8,7 @@ import {
 	EditParticipant,
 	GetParticipantWithId,
 } from '../../apis/participants'
-import ParticipantPopUp from '../common/form_modals/participant_modal'
+import ParticipantModal from '../common/form_modals/participant_modal'
 
 import { OrganizationContext } from '../../context/context'
 
@@ -91,7 +91,7 @@ const CreateParticipant = ({ isViewOnly }) => {
 	}
 	return (
 		<>
-			<ParticipantPopUp
+			<ParticipantModal
 				name={name}
 				setName={setName}
 				mobile={mobile}

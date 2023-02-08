@@ -7,7 +7,7 @@ import {
 	GetOrganizationDataWithId,
 } from '../../apis/organizations'
 import { useRouter } from 'next/router'
-import OrganizationPopUp from '../common/form_modals/organization_modal'
+import OrganizationModal from '../common/form_modals/organization_modal'
 
 const CreateOrganization = ({ isViewOnly }) => {
 	const [name, setName] = useState('')
@@ -89,7 +89,7 @@ const CreateOrganization = ({ isViewOnly }) => {
 	return (
 		<>
 			<main>
-				<OrganizationPopUp
+				<OrganizationModal
 					name={name}
 					setName={setName}
 					email={email}
@@ -111,7 +111,7 @@ const CreateOrganization = ({ isViewOnly }) => {
 					handleSubmit={handleSubmit}
 					checkWithDatabase={checkWithDatabase}
 					setQuota={setQuota}
-					isViewOnly={isViewOnly || false}></OrganizationPopUp>
+					isViewOnly={isViewOnly || false}></OrganizationModal>
 			</main>
 		</>
 	)

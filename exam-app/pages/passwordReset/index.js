@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import jwt_decode from 'jwt-decode'
 import { ToastContainer, toast } from 'react-toastify'
 import React from 'react'
-import { ButtonComponent } from '../../components/common/micro/buttonComponent'
+import { ButtonComponent } from '../../components/common/micro/button'
 import { InputComponent } from '../../components/common/micro/inputComponent'
 import { ResetPassword } from '../../apis/auth'
 

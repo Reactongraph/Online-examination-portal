@@ -1,10 +1,10 @@
 import React from 'react'
 import { Label } from '../micro/label'
-import { ButtonComponent } from '../micro/button_component'
+import { ButtonComponent } from '../micro/button'
 import { Form } from '../micro/form'
 import { InputComponent } from '../micro/input_component'
 import { Banner } from '../micro/banner'
-function LevelModulePopup(props) {
+function LevelModuleModal(props) {
 	const {
 		checkWithDatabase,
 		handleSubmit,
@@ -58,4 +58,4 @@ function LevelModulePopup(props) {
 	)
 }
 
-export default LevelModulePopup
+export default LevelModuleModal

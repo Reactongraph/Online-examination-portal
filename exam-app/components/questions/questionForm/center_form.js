@@ -2,7 +2,7 @@ import { RiDeleteBinLine } from 'react-icons/ri'
 import Image from 'next/image'
 import { Label } from '../../common/micro/label'
 import React from 'react'
-import { ButtonComponent } from '../../common/micro/button_component'
+import { ButtonComponent } from '../../common/micro/button'
 import { InputComponent } from '../../common/micro/input_component'
 function CenterForm(props) {
 	const {

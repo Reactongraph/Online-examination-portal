@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 
 import { DeleteModule, EditModule } from '../../apis/modules'
 import { CheckboxInput } from '../common/micro/check_box_input'
-import { ButtonComponent } from '../common/micro/button_component'
+import { ButtonComponent } from '../common/micro/button'
 import { BsPencilSquare } from 'react-icons/bs'
 import { MdDelete } from 'react-icons/md'
 import { AiFillEye } from 'react-icons/ai'

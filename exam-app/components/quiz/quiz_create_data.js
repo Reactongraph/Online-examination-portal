@@ -1,4 +1,4 @@
-import { ButtonComponent } from '../common/micro/button_component'
+import { ButtonComponent } from '../common/micro/button'
 import { CheckboxInput } from '../common/micro/check_box_input'
 import { BsPencilSquare } from 'react-icons/bs'
 import { MdDelete } from 'react-icons/md'

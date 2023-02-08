@@ -1,6 +1,6 @@
 import React from 'react'
 import { Banner } from './micro/banner'
-import { ButtonComponent } from './micro/button_component'
+import { ButtonComponent } from './micro/button'
 import { useRouter } from 'next/router'
 
 const PageComponentTitle = ({

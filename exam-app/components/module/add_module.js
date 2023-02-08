@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { AddModule, EditModule, GetModuleDataWithId } from '../../apis/modules'
-import LevelModulePopup from '../common/form_modals/level_module_modal'
+import LevelModuleModal from '../common/form_modals/level_module_modal'
 import { ToastContainer, toast } from 'react-toastify'
 
 const AddModuleComponent = ({ isViewOnly }) => {
@@ -61,7 +61,7 @@ const AddModuleComponent = ({ isViewOnly }) => {
 
 	return (
 		<>
-			<LevelModulePopup
+			<LevelModuleModal
 				setStateName={setModules}
 				stateName={modules}
 				checkWithDatabase={checkWithDatabase}

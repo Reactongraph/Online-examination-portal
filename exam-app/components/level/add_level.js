@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import LevelModulePopup from '../common/form_modals/level_module_modal'
+import LevelModuleModal from '../common/form_modals/level_module_modal'
 import { useForm } from 'react-hook-form'
 import { AddLevel, EditLevel, GetLevelDataWithId } from '../../apis/levels'
 import { toast } from 'react-toastify'
@@ -65,7 +65,7 @@ const AddLevelComponent = ({ isViewOnly }) => {
 	return (
 		<>
 			{' '}
-			<LevelModulePopup
+			<LevelModuleModal
 				setStateName={setLevel}
 				stateName={level}
 				checkWithDatabase={checkWithDatabase}

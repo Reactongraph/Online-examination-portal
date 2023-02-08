@@ -1,12 +1,12 @@
 import React from 'react'
 import { useState } from 'react'
-import { ButtonComponent } from '../micro/button_component'
+import { ButtonComponent } from '../micro/button'
 import { Label } from '../micro/label'
 import { InputComponent } from '../micro/input_component'
 import { Form } from '../micro/form'
 import Dropdown from '../micro/dropdown'
 import { Banner } from '../micro/banner'
-function ParticipantPopUp(props) {
+function ParticipantModal(props) {
 	const {
 		setName,
 		name,
@@ -140,4 +140,4 @@ function ParticipantPopUp(props) {
 	)
 }
 
-export default ParticipantPopUp
+export default ParticipantModal

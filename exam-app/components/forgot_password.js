@@ -7,7 +7,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import React from 'react'
 import { Form } from './common/micro/form'
-import { ButtonComponent } from './common/micro/buttonComponent'
+import { ButtonComponent } from './common/micro/button'
 
 // validation schema
 const schema = object({
