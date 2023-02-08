@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import LevelModulePopup from '../common/PopUpModals/level_module_model'
+import LevelModulePopup from '../common/form_modals/level_module_modal'
 import { useForm } from 'react-hook-form'
 import { AddLevel, EditLevel, GetLevelDataWithId } from '../../apis/levels'
 import { toast } from 'react-toastify'

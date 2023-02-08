@@ -8,7 +8,7 @@ import {
 	EditParticipant,
 	GetParticipantWithId,
 } from '../../apis/participants'
-import ParticipantPopUp from '../common/PopUpModals/participant_model'
+import ParticipantPopUp from '../common/form_modals/participant_modal'
 
 import { OrganizationContext } from '../../context/context'
 

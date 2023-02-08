@@ -1,5 +1,5 @@
 import Dropdown from '../../common/micro/dropdown'
-import { TimeData } from '../../drop_down_data/timeLimit'
+import { TimeData } from '../../drop_down_data/time_limit'
 
 function TimeLimit(props) {
 	const { timeLimitSelect, handleTimeLimitSelect, isViewOnly } = props

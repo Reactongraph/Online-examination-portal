@@ -7,7 +7,7 @@ import {
 	GetOrganizationDataWithId,
 } from '../../apis/organizations'
 import { useRouter } from 'next/router'
-import OrganizationPopUp from '../common/PopUpModals/organization_model'
+import OrganizationPopUp from '../common/form_modals/organization_modal'
 
 const CreateOrganization = ({ isViewOnly }) => {
 	const [name, setName] = useState('')
