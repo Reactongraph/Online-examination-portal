@@ -1,53 +1,71 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
 import { ButtonComponent } from './micro/buttonComponent'
 import { Label } from './micro/label'
-import { EditOrganization } from '../../apis/organizations'
+import {
+	EditOrganization,
+	GetOrganizationDataWithId,
+} from '../../apis/organizations'
 import { Form } from './micro/form'
 import { InputComponent } from './micro/inputComponent'
 import { Banner } from './micro/banner'
 
-const UserProfileModal = ({ profile_data: userData, mutate }) => {
+const UserProfileModal = ({ buttonText }) => {
 	const router = useRouter()
-	const [name, setName] = useState(userData?.name)
-	const [email, setEmail] = useState(userData?.email)
-	const [pincode, setPincode] = useState(userData?.pincode)
-	const [address, setAddress] = useState(userData?.address)
-	const [city, setCity] = useState(userData?.city)
-	const [state, setState] = useState(userData?.state)
-	const [mobile, setMobile] = useState(userData?.mobile)
-	const [quota, setQuota] = useState(userData?.quota)
-	const buttonText = 'Edit'
 
-	const [password, setPassword] = useState(userData?.password)
+	const userDefaultValues = {
+		name: '',
+		email: '',
+		password: '',
+		mobile: '',
+		quota: '',
+		city: '',
+		state: '',
+		address: '',
+		pincode: '',
+	}
+
+	const {
+		handleSubmit,
+		control,
+		setValue,
+		formState: { errors },
+	} = useForm({
+		mode: 'onSubmit',
+		reValidateMode: 'onChange',
+		defaultValues: userDefaultValues,
+	})
+
+	useEffect(() => {
+		let userId = router.query?.id
+		async function getUserProfileData() {
+			const result = await GetOrganizationDataWithId(userId)
+			const userData = result.data
+			const keys = Object.keys(userDefaultValues)
+			keys.forEach((key) => {
+				setValue(key, userData[key], true)
+			})
+		}
+		if (router.query.id) {
+			getUserProfileData()
+		}
+	}, [router.query?.id])
+
 	const [showPassword, setShowPassword] = useState(false)
-
-	const { handleSubmit } = useForm()
 
 	// for sending the data to the backend
 	const checkWithDatabase = async (data) => {
-		// data.status = true
-		data.name = name
-		data.email = email
-		data.mobile = mobile
-		data.password = password
-		data.city = city
-		data.state = state
-		data.pincode = pincode
-		data.address = address
-		data.quota = quota
 		let OrganizationData = JSON.stringify(data)
 
 		// for new data registration
 
-		EditOrganization(OrganizationData, userData?.id)
+		EditOrganization(OrganizationData, router.query?.id)
 			.then(() => {
 				toast.success('Profile Updated Successfully!')
-				mutate()
 				router.replace(`/userProfile`)
 			})
 			.catch(() => {
@@ -75,28 +93,48 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 									<Label key={'grid-first-name'}> Name</Label>
 
-									<InputComponent
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
-										id='grid-first-name'
-										type='text'
-										value={name}
-										required='required'
-										onChange={(e) => setName(e.target.value)}
-										placeholder='Jane'
+									<Controller
+										as={InputComponent}
+										name={'name'}
+										control={control}
+										render={({ field: { onChange, value, onBlur } }) => (
+											<InputComponent
+												type='text'
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												className={
+													'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+												}
+												placeholder='Jane'
+												required='required'
+												id='name'
+											/>
+										)}
 									/>
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
 									<Label key={'grid-last-name'}> Email</Label>
 
-									<InputComponent
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none'
-										id='grid-email'
-										type='email'
-										placeholder='example@gmail.com '
-										value={email}
-										disabled
-										required='required'
-										onChange={(e) => setEmail(e.target.value)}
+									<Controller
+										as={InputComponent}
+										name={'email'}
+										control={control}
+										render={({ field: { onChange, value, onBlur } }) => (
+											<InputComponent
+												type='email'
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												className={
+													'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+												}
+												placeholder='example@gmail.com '
+												required='required'
+												disabled
+												id='grid-email'
+											/>
+										)}
 									/>
 								</div>
 							</div>
@@ -105,14 +143,24 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 									<Label key={'grid-password'}> Password</Label>
 
 									<div className='relative'>
-										<InputComponent
-											className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-											id='grid-password'
-											type={!showPassword ? 'password' : 'text'}
-											placeholder='******************'
-											value={password}
-											required='required'
-											onChange={(e) => setPassword(e.target.value)}
+										<Controller
+											as={InputComponent}
+											name={'password'}
+											control={control}
+											render={({ field: { onChange, value, onBlur } }) => (
+												<InputComponent
+													type={!showPassword ? 'password' : 'text'}
+													onChange={onChange}
+													onBlur={onBlur}
+													value={value}
+													className={
+														'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+													}
+													placeholder='******************'
+													required='required'
+													id='grid-password'
+												/>
+											)}
 										/>
 										<ButtonComponent
 											type={'button'}
@@ -133,41 +181,71 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 								<div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
 									<Label key={'grid-city'}> City</Label>
 
-									<InputComponent
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										id='grid-city'
-										type='text'
-										placeholder='Albuquerque'
-										value={city}
-										required='required'
-										onChange={(e) => setCity(e.target.value)}
+									<Controller
+										as={InputComponent}
+										name={'city'}
+										control={control}
+										render={({ field: { onChange, value, onBlur } }) => (
+											<InputComponent
+												type='text'
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												className={
+													'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+												}
+												placeholder='Albuquerque'
+												required='required'
+												id='grid-city'
+											/>
+										)}
 									/>
 								</div>
 
 								<div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
 									<Label key={'grid-state'}> State</Label>
 
-									<InputComponent
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										id='grid-state'
-										type='text'
-										placeholder='State'
-										value={state}
-										required='required'
-										onChange={(e) => setState(e.target.value)}
+									<Controller
+										as={InputComponent}
+										name={'state'}
+										control={control}
+										render={({ field: { onChange, value, onBlur } }) => (
+											<InputComponent
+												type='text'
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												className={
+													'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+												}
+												placeholder='State'
+												required='required'
+												id='grid-state'
+											/>
+										)}
 									/>
 								</div>
 								<div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
 									<Label key={'grid-zip'}> Pin Code</Label>
 
-									<InputComponent
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										id='grid-zip'
-										type='text'
-										placeholder='90210'
-										value={pincode}
-										required='required'
-										onChange={(e) => setPincode(e.target.value)}
+									<Controller
+										as={InputComponent}
+										name={'pincode'}
+										control={control}
+										render={({ field: { onChange, value, onBlur } }) => (
+											<InputComponent
+												type='text'
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												className={
+													'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+												}
+												placeholder='302040'
+												required='required'
+												id='grid-pincode'
+											/>
+										)}
 									/>
 								</div>
 							</div>
@@ -175,14 +253,24 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 								<div className='w-full px-3'>
 									<Label key={'grid-address'}>Address</Label>
 
-									<InputComponent
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-										id='grid-address'
-										type='text'
-										placeholder='Your Office number... '
-										value={address}
-										required='required'
-										onChange={(e) => setAddress(e.target.value)}
+									<Controller
+										as={InputComponent}
+										name={'address'}
+										control={control}
+										render={({ field: { onChange, value, onBlur } }) => (
+											<InputComponent
+												type='text'
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												className={
+													'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+												}
+												placeholder='Your office number'
+												required='required'
+												id='grid-address'
+											/>
+										)}
 									/>
 								</div>
 							</div>
@@ -190,29 +278,49 @@ const UserProfileModal = ({ profile_data: userData, mutate }) => {
 								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
 									<Label key={'grid-mobile'}>Mobile</Label>
 
-									<InputComponent
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none'
-										id='grid-mobile'
-										type='text'
-										disabled
-										placeholder='+91 '
-										value={mobile}
-										required='required'
-										onChange={(e) => setMobile(e.target.value)}
+									<Controller
+										as={InputComponent}
+										name={'mobile'}
+										control={control}
+										render={({ field: { onChange, value, onBlur } }) => (
+											<InputComponent
+												type='text'
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												className={
+													'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+												}
+												placeholder='+91 ***********'
+												required='required'
+												disabled
+												id='grid-mobile'
+											/>
+										)}
 									/>
 								</div>
 								<div className='w-full md:w-1/2 px-3'>
 									<Label key={'grid-quota'}>Quota</Label>
 
-									<InputComponent
-										className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none'
-										id='grid-quota'
-										type='text'
-										disabled
-										placeholder='e.g. 1000'
-										value={quota}
-										required='required'
-										onChange={(e) => setQuota(e.target.value)}
+									<Controller
+										as={InputComponent}
+										name={'quota'}
+										control={control}
+										render={({ field: { onChange, value, onBlur } }) => (
+											<InputComponent
+												type='text'
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												className={
+													'appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+												}
+												placeholder='e.g. 1000'
+												required='required'
+												disabled
+												id='grid-quota'
+											/>
+										)}
 									/>
 								</div>
 								<p className='text-gray-600 text-xs italic mt-7'>
