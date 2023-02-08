@@ -2,7 +2,7 @@ import React from 'react'
 import { ButtonComponent } from '../micro/button'
 import { Label } from '../micro/label'
 import { Form } from '../micro/form'
-import { InputComponent } from '../micro/input_component'
+import { InputComponent } from '../micro/input'
 import { Banner } from '../micro/banner'
 function OrganizationModal(props) {
 	const {

@@ -6,11 +6,11 @@ import Option from './quiz_option'
 import { Form } from '../../micro/form'
 import { ButtonComponent } from '../../micro/button'
 import { Label } from '../../micro/label'
-import { TextArea } from '../../micro/text_area'
+import { TextArea } from '../../micro/textarea'
 import React from 'react'
 import { Banner } from '../../micro/banner'
-import { InputComponent } from '../../micro/input_component'
-function QuizPopUp(props) {
+import { InputComponent } from '../../micro/input'
+function QuizModal(props) {
 	const {
 		name,
 		setName,
@@ -156,4 +156,4 @@ function QuizPopUp(props) {
 	)
 }
 
-export default QuizPopUp
+export default QuizModal

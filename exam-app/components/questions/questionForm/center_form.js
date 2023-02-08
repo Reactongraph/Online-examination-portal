@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Label } from '../../common/micro/label'
 import React from 'react'
 import { ButtonComponent } from '../../common/micro/button'
-import { InputComponent } from '../../common/micro/input_component'
+import { InputComponent } from '../../common/micro/input'
 function CenterForm(props) {
 	const {
 		selectedImage,

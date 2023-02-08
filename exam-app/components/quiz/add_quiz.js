@@ -3,7 +3,7 @@ import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
-import QuizPopUp from '../common/form_modals/quiz_modal/quiz_modal'
+import QuizModal from '../common/form_modals/quiz_modal/quiz_modal'
 import { AddQuiz, EditQuiz, GetQuizDataWithId } from '../../apis/quizzes'
 
 import 'react-datepicker/dist/react-datepicker.css'
@@ -125,7 +125,7 @@ const AddQuizComponent = ({ isViewOnly }) => {
 
 	return (
 		<>
-			<QuizPopUp
+			<QuizModal
 				handleSubmit={handleSubmit}
 				checkWithDatabase={checkWithDatabase}
 				buttonText={buttonText}

@@ -2,7 +2,7 @@ import React from 'react'
 import { Label } from '../micro/label'
 import { ButtonComponent } from '../micro/button'
 import { Form } from '../micro/form'
-import { InputComponent } from '../micro/input_component'
+import { InputComponent } from '../micro/input'
 import { Banner } from '../micro/banner'
 function LevelModuleModal(props) {
 	const {

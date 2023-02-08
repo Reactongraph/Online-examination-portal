@@ -1,5 +1,5 @@
 import { Label } from '../../micro/label'
-import { InputComponent } from '../../micro/input_component'
+import { InputComponent } from '../../micro/input'
 
 function QuizImage() {
 	return (

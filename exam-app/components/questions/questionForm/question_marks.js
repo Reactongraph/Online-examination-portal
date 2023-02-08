@@ -1,5 +1,5 @@
 import { Label } from '../../common/micro/label'
-import { InputComponent } from '../../common/micro/input_component'
+import { InputComponent } from '../../common/micro/input'
 
 function QuestionMarks(props) {
 	const { marks, setMarks, isViewOnly } = props

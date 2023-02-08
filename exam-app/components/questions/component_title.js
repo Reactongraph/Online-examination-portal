@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { Banner } from '../common/micro/banner'
 import { ButtonComponent } from '../common/micro/button'
-import { InputComponent } from '../common/micro/input_component'
+import { InputComponent } from '../common/micro/input'
 import Link from 'next/link'
 import { QuestionContext } from '../../context/context'
 
