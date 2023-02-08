@@ -1,39 +1,14 @@
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { AddModule, EditModule, GetModuleDataWithId } from '../../apis/modules'
+import { AddModule, EditModule } from '../../apis/modules'
 import LevelModuleModal from '../common/form_modals/level_module_modal'
 import { ToastContainer, toast } from 'react-toastify'
 
-const AddModuleComponent = ({ isViewOnly }) => {
+const AddModuleComponent = ({ isViewOnly, buttonText, editform }) => {
 	const router = useRouter()
-	const [modules, setModules] = useState('')
-	const [buttonText, setButtonText] = useState('Add')
-	const { handleSubmit } = useForm()
-	const [editForm, setEditForm] = useState(false)
-
-	useEffect(() => {
-		let module_id = router.query?.id
-
-		async function getModuleData() {
-			const results = await GetModuleDataWithId(module_id)
-			const moduleData = results.data
-			// setButtonText('Update')
-			setEditForm(true)
-			setModules(moduleData?.module)
-			isViewOnly ? setButtonText('View') : setButtonText('Edit')
-		}
-
-		if (module_id) {
-			getModuleData()
-		}
-	}, [router.query?.id])
 
 	// for sending the data to the backend
 	const checkWithDatabase = async (data) => {
-		data.module = modules
-
-		if (editForm) {
+		if (editform) {
 			// for taking the patch api data
 			let moduleData = JSON.stringify(data)
 			EditModule(moduleData, router.query?.id)
@@ -62,10 +37,7 @@ const AddModuleComponent = ({ isViewOnly }) => {
 	return (
 		<>
 			<LevelModuleModal
-				setStateName={setModules}
-				stateName={modules}
 				checkWithDatabase={checkWithDatabase}
-				handleSubmit={handleSubmit}
 				modalName={'MODULE'}
 				buttonText={buttonText}
 				placeholderText={'eg. C++ , JAVA ,  etc...'}

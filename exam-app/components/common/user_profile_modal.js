@@ -11,7 +11,7 @@ import {
 	GetOrganizationDataWithId,
 } from '../../apis/organizations'
 import { Form } from './micro/form'
-import { InputComponent } from './micro/inputComponent'
+import { InputComponent } from './micro/input'
 import { Banner } from './micro/banner'
 
 const UserProfileModal = ({ buttonText }) => {
