@@ -28,7 +28,7 @@ export class ParticipantsService {
 						email: params?.email,
 						password,
 						mobile: params?.mobile,
-						Organization_id: params?.id,
+						Organization_id: params?.Organization_id,
 					},
 				})
 				return user

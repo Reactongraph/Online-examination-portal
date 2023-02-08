@@ -14,5 +14,5 @@ export class participants_dto {
 	mobile: string
 
 	@ApiProperty()
-	id: string
+	Organization_id: string
 }

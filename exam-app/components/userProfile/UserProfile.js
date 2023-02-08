@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 
 const UserProfile = ({ profile_data, mutate }) => {
 	const user = useSelector((state) => state?.user)
+
 	const userName = profile_data?.name
 	const userRole = user?.role
 
