@@ -5,7 +5,9 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 // somewhere in your initialization file
 
 async function bootstrap() {
-	const app = await NestFactory.create(AppModule)
+	const app = await NestFactory.create(AppModule, {
+		logger: ['debug']
+	})
 	app.use(cookieParser())
 	app.enableCors({
 		origin: true,
