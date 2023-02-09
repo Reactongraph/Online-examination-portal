@@ -6,7 +6,7 @@ import { Form } from '../../micro/form'
 import { ButtonComponent } from '../../micro/button'
 import { Label } from '../../micro/label'
 import { TextArea } from '../../micro/textarea'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { Banner } from '../../micro/banner'
 import { InputComponent } from '../../micro/input'
 import { Controller, useForm } from 'react-hook-form'
@@ -27,16 +27,19 @@ function QuizModal(props) {
 	const [selectedEndDate, setSelectedEndDate] = useState(null)
 	const [selectedBufferDate, setSelectedBufferDate] = useState(null)
 
-	const quizDefaultValues = {
-		quiz_name: '',
-		start_date: '',
-		end_date: '',
-		buffer_time: '',
-		module_id: [],
-		description: '',
-		level_id: '',
-		Org_name: '',
-	}
+	const quizDefaultValues = useMemo(
+		() => ({
+			quiz_name: '',
+			start_date: '',
+			end_date: '',
+			buffer_time: '',
+			module_id: [],
+			description: '',
+			level_id: '',
+			Org_name: '',
+		}),
+		[]
+	)
 
 	const { handleSubmit, control, setValue } = useForm({
 		mode: 'onSubmit',
@@ -76,7 +79,7 @@ function QuizModal(props) {
 		if (quiz_id) {
 			getQuizData()
 		}
-	}, [router.query?.id])
+	}, [router.query?.id, quizDefaultValues, moduleData, setValue])
 	return (
 		<>
 			<div className='flex-row space-y-3 relative p-10'>

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { useCookie } from 'next-cookie'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { GetRefreshToken } from '../apis/auth'
 
 // To check for the refresh token on every page
@@ -12,7 +12,7 @@ export default function Layout({ children }) {
 	const router = useRouter()
 	const dispatch = useDispatch()
 
-	const refreshToken = async () => {
+	const refreshToken = useCallback(async () => {
 		try {
 			const response = await GetRefreshToken(cookie)
 			const newToken = response.data.access_token
@@ -56,11 +56,11 @@ export default function Layout({ children }) {
 				router.push('/login')
 			}
 		}
-	}
+	}, [cookie, dispatch, router])
 
 	useEffect(() => {
 		refreshToken()
-	}, [])
+	}, [refreshToken])
 
 	return <>{children}</>
 }

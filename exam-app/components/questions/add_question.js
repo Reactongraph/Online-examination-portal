@@ -78,7 +78,7 @@ const AddQuestion = ({ isViewOnly }) => {
 			getQuestionData()
 			// console.log()
 		}
-	}, [router.query?.id])
+	}, [router.query?.id, isViewOnly, numberOfOptionSelect])
 
 	const { handleSubmit } = useForm()
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { ButtonComponent } from '../micro/button'
 import { Label } from '../micro/label'
 import { Form } from '../micro/form'
@@ -11,17 +11,20 @@ function OrganizationModal(props) {
 	const { buttonText, checkWithDatabase, isViewOnly } = props
 	const router = useRouter()
 
-	const organizationDefaultValues = {
-		name: '',
-		email: '',
-		password: '',
-		mobile: '',
-		quota: '',
-		city: '',
-		state: '',
-		address: '',
-		pincode: '',
-	}
+	const organizationDefaultValues = useMemo(
+		() => ({
+			name: '',
+			email: '',
+			password: '',
+			mobile: '',
+			quota: '',
+			city: '',
+			state: '',
+			address: '',
+			pincode: '',
+		}),
+		[]
+	)
 	const { handleSubmit, control, setValue } = useForm({
 		mode: 'onSubmit',
 		reValidateMode: 'onChange',
@@ -41,7 +44,7 @@ function OrganizationModal(props) {
 		if (router.query.id) {
 			getOrganizationData()
 		}
-	}, [router.query?.id])
+	}, [router.query?.id, organizationDefaultValues, setValue])
 	return (
 		<>
 			<div className='flex-row space-y-3 relative p-12 '>

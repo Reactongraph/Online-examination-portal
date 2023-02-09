@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
 import { Controller, useForm } from 'react-hook-form'
 
@@ -17,17 +17,20 @@ import { Banner } from './micro/banner'
 const UserProfileModal = ({ buttonText }) => {
 	const router = useRouter()
 
-	const userDefaultValues = {
-		name: '',
-		email: '',
-		password: '',
-		mobile: '',
-		quota: '',
-		city: '',
-		state: '',
-		address: '',
-		pincode: '',
-	}
+	const userDefaultValues = useMemo(
+		() => ({
+			name: '',
+			email: '',
+			password: '',
+			mobile: '',
+			quota: '',
+			city: '',
+			state: '',
+			address: '',
+			pincode: '',
+		}),
+		[]
+	)
 
 	const { handleSubmit, control, setValue } = useForm({
 		mode: 'onSubmit',
@@ -48,7 +51,7 @@ const UserProfileModal = ({ buttonText }) => {
 		if (router.query.id) {
 			getUserProfileData()
 		}
-	}, [router.query?.id])
+	}, [router.query?.id, userDefaultValues, setValue])
 
 	const [showPassword, setShowPassword] = useState(false)
 

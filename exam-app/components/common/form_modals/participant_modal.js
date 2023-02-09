@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useState } from 'react'
 import { ButtonComponent } from '../micro/button'
 import { Label } from '../micro/label'
@@ -16,13 +16,16 @@ function ParticipantModal(props) {
 
 	const router = useRouter()
 
-	const participantDefaultValues = {
-		name: '',
-		email: '',
-		password: '',
-		mobile: '',
-		Organization_id: '',
-	}
+	const participantDefaultValues = useMemo(
+		() => ({
+			name: '',
+			email: '',
+			password: '',
+			mobile: '',
+			Organization_id: '',
+		}),
+		[]
+	)
 
 	const { handleSubmit, control, setValue } = useForm({
 		mode: 'onSubmit',
@@ -44,7 +47,7 @@ function ParticipantModal(props) {
 		if (router.query.id) {
 			getParticipantData()
 		}
-	}, [router.query?.id])
+	}, [router.query?.id, participantDefaultValues, setValue])
 
 	return (
 		<>
