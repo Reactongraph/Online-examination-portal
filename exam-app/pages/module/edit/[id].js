@@ -1,7 +1,7 @@
 import * as React from 'react'
 
-import Layout from '../../../components/layout/Layout'
-import AddModuleComponent from '../../../components/module/addModule'
+import Layout from '../../../components/layout/layout'
+import AddModuleComponent from '../../../components/module/add_module'
 
 export default function EditModules() {
 	return (

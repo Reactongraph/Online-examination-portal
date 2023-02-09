@@ -11,14 +11,13 @@ const notallowedRoles = {
 export default function middleware(req) {
 	const verify = req.cookies.get('refresh_token')
 	const url = req.url
-	const decode = jwtDecode(verify?.value)
-	const role = decode?.role
-
 	if (!verify && !url.includes('/login')) {
 		return NextResponse.redirect(
 			`${process.env.NEXT_PUBLIC_FRONTEND_LOCAL_URL}/login`
 		)
 	}
+	const decode = jwtDecode(verify?.value)
+	const role = decode?.role
 
 	if (verify && url === `${process.env.NEXT_PUBLIC_FRONTEND_LOCAL_URL}`) {
 		return NextResponse.redirect(`${url}`)

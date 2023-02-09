@@ -1,5 +1,5 @@
-import AddQuizComponent from '../../../components/quiz/addQuiz'
-import { QuizHoc } from '../../../components/highOrderComponents/QuizHoc'
+import AddQuizComponent from '../../../components/quiz/add_quiz'
+import { QuizHoc } from '../../../hoc/quiz_hoc'
 
 const EditQuizWithContext = QuizHoc(AddQuizComponent)
 

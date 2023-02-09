@@ -1,6 +1,6 @@
 import * as React from 'react'
-import Quiz from '../../components/quiz/Quiz'
-import { QuizHoc } from '../../components/highOrderComponents/QuizHoc'
+import Quiz from '../../components/quiz/quiz'
+import { QuizHoc } from '../../hoc/quiz_hoc'
 
 const QuizWithContext = QuizHoc(Quiz)
 
