@@ -6,7 +6,7 @@ import jwt_decode from 'jwt-decode'
 import { ToastContainer, toast } from 'react-toastify'
 import React from 'react'
 import { ButtonComponent } from '../../components/common/micro/button'
-import { InputComponent } from '../../components/common/micro/inputComponent'
+import { InputComponent } from '../../components/common/micro/input'
 import { ResetPassword } from '../../apis/auth'
 
 export default function PasswordReset() {

@@ -38,12 +38,7 @@ function QuizModal(props) {
 		Org_name: '',
 	}
 
-	const {
-		handleSubmit,
-		control,
-		setValue,
-		formState: { errors },
-	} = useForm({
+	const { handleSubmit, control, setValue } = useForm({
 		mode: 'onSubmit',
 		reValidateMode: 'onChange',
 		defaultValues: quizDefaultValues,

@@ -22,12 +22,7 @@ function OrganizationModal(props) {
 		address: '',
 		pincode: '',
 	}
-	const {
-		handleSubmit,
-		control,
-		setValue,
-		formState: { errors },
-	} = useForm({
+	const { handleSubmit, control, setValue } = useForm({
 		mode: 'onSubmit',
 		reValidateMode: 'onChange',
 		defaultValues: organizationDefaultValues,

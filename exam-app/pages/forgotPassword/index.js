@@ -1,4 +1,4 @@
-import ForgotPasswordComponent from '../../components/ForgotPassword'
+import ForgotPasswordComponent from '../../components/forgot_password'
 import Head from 'next/head'
 
 export default function ForgotPassword() {

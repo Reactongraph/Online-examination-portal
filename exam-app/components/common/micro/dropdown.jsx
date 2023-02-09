@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Label } from './label'
 
 export default function Dropdown(props) {
-	const [selectedRole, setSelectedRole] = useState('')
+	// const [selectedRole, setSelectedRole] = useState('')
 
 	const handleSelect = (event) => {
-		setSelectedRole(event.target.value)
+		// setSelectedRole(event.target.value)
 		if (props.onChange) props.onChange(event)
 	}
 	return (
