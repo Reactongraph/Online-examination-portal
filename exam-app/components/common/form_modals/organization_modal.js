@@ -6,10 +6,8 @@ import { InputComponent } from '../micro/input'
 import { Banner } from '../micro/banner'
 import { Controller, useForm } from 'react-hook-form'
 import { GetOrganizationDataWithId } from '../../../apis/organizations'
-import { useRouter } from 'next/router'
 function OrganizationModal(props) {
-	const { buttonText, checkWithDatabase, isViewOnly } = props
-	const router = useRouter()
+	const { buttonText, checkWithDatabase, isViewOnly, userId } = props
 
 	const organizationDefaultValues = useMemo(
 		() => ({
@@ -32,7 +30,7 @@ function OrganizationModal(props) {
 	})
 
 	useEffect(() => {
-		let organizationId = router.query?.id
+		let organizationId = userId
 		async function getOrganizationData() {
 			const result = await GetOrganizationDataWithId(organizationId)
 			const organizationData = result.data
@@ -41,10 +39,10 @@ function OrganizationModal(props) {
 				setValue(key, organizationData[key], true)
 			})
 		}
-		if (router.query.id) {
+		if (userId) {
 			getOrganizationData()
 		}
-	}, [router.query?.id, organizationDefaultValues, setValue])
+	}, [userId, organizationDefaultValues, setValue])
 	return (
 		<>
 			<div className='flex-row space-y-3 relative p-12 '>
