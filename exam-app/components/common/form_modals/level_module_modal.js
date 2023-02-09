@@ -46,7 +46,7 @@ function LevelModuleModal(props) {
 		if (modalById) {
 			getModalData()
 		}
-	}, [router.query?.id])
+	}, [router.query?.id, fieldName, setValue])
 
 	return (
 		<>
