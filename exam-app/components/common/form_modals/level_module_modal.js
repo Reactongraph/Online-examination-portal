@@ -15,6 +15,7 @@ function LevelModuleModal(props) {
 		modalName,
 		placeholderText,
 		isViewOnly,
+		userId
 	} = props
 
 	const fieldName = modalName.toLowerCase()
@@ -30,7 +31,7 @@ function LevelModuleModal(props) {
 
 	// for checking if it is a edit request
 	useEffect(() => {
-		let modalById = router.query?.id
+		let modalById = userId
 
 		async function getModalData() {
 			const results =
@@ -46,7 +47,7 @@ function LevelModuleModal(props) {
 		if (modalById) {
 			getModalData()
 		}
-	}, [router.query?.id, fieldName, setValue])
+	}, [userId, fieldName, setValue])
 
 	return (
 		<>

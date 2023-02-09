@@ -3,7 +3,7 @@ import { AddModule, EditModule } from '../../apis/modules'
 import LevelModuleModal from '../common/form_modals/level_module_modal'
 import { ToastContainer, toast } from 'react-toastify'
 
-const AddModuleComponent = ({ isViewOnly, buttonText, editform }) => {
+const AddModuleComponent = ({ isViewOnly, buttonText, editform, userId }) => {
 	const router = useRouter()
 
 	// for sending the data to the backend
@@ -42,6 +42,7 @@ const AddModuleComponent = ({ isViewOnly, buttonText, editform }) => {
 				buttonText={buttonText}
 				placeholderText={'eg. C++ , JAVA ,  etc...'}
 				isViewOnly={isViewOnly || false}
+				userId={userId}
 			/>
 
 			<ToastContainer />
