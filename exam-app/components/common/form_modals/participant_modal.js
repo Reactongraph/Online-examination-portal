@@ -11,7 +11,13 @@ import { GetParticipantWithId } from '../../../apis/participants'
 import { useRouter } from 'next/router'
 
 function ParticipantModal(props) {
-	const { checkWithDatabase, organization_data, isViewOnly, buttonText } = props
+	const {
+		checkWithDatabase,
+		organization_data,
+		isViewOnly,
+		buttonText,
+		userId,
+	} = props
 	const [showPassword, setShowPassword] = useState(false)
 
 	const router = useRouter()
@@ -34,7 +40,7 @@ function ParticipantModal(props) {
 	})
 
 	useEffect(() => {
-		let participant_id = router.query?.id
+		let participant_id = userId
 		async function getParticipantData() {
 			const result = await GetParticipantWithId(participant_id)
 			const participantData = result.data
@@ -44,10 +50,10 @@ function ParticipantModal(props) {
 				setValue(key, participantData[key], true)
 			})
 		}
-		if (router.query.id) {
+		if (userId) {
 			getParticipantData()
 		}
-	}, [router.query?.id, participantDefaultValues, setValue])
+	}, [userId, participantDefaultValues, setValue])
 
 	return (
 		<>
