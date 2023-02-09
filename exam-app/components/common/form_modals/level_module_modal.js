@@ -7,7 +7,6 @@ import { Banner } from '../micro/banner'
 import { Controller, useForm } from 'react-hook-form'
 import { GetModuleDataWithId } from '../../../apis/modules'
 import { GetLevelDataWithId } from '../../../apis/levels'
-import { useRouter } from 'next/router'
 function LevelModuleModal(props) {
 	const {
 		checkWithDatabase,
@@ -15,14 +14,13 @@ function LevelModuleModal(props) {
 		modalName,
 		placeholderText,
 		isViewOnly,
-		userId
+		userId,
 	} = props
 
 	const fieldName = modalName.toLowerCase()
 	const modalDefaultValues = {
 		[fieldName]: '',
 	}
-	const router = useRouter()
 	const { handleSubmit, control, setValue } = useForm({
 		mode: 'onSubmit',
 		reValidateMode: 'onChange',

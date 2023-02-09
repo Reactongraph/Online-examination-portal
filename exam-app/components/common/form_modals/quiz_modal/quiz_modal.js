@@ -12,13 +12,10 @@ import { InputComponent } from '../../micro/input'
 import { Controller, useForm } from 'react-hook-form'
 import Dropdown from '../../micro/dropdown'
 import { GetQuizDataWithId } from '../../../../apis/quizzes'
-import { useRouter } from 'next/router'
 import moment from 'moment'
 import { LevelContext, ModuleContext } from '../../../../context/context'
 function QuizModal(props) {
-	const { isViewOnly, buttonText, checkWithDatabase } = props
-
-	const router = useRouter()
+	const { isViewOnly, buttonText, checkWithDatabase, userId } = props
 
 	const { module_data: moduleData } = useContext(ModuleContext)
 	const { level_data: levelData } = useContext(LevelContext)
@@ -47,7 +44,7 @@ function QuizModal(props) {
 		defaultValues: quizDefaultValues,
 	})
 	useEffect(() => {
-		let quiz_id = router.query.id
+		let quiz_id = userId
 
 		async function getQuizData() {
 			const results = await GetQuizDataWithId(quiz_id)
@@ -79,7 +76,7 @@ function QuizModal(props) {
 		if (quiz_id) {
 			getQuizData()
 		}
-	}, [router.query?.id, quizDefaultValues, moduleData, setValue])
+	}, [userId, quizDefaultValues, moduleData, setValue])
 	return (
 		<>
 			<div className='flex-row space-y-3 relative p-10'>

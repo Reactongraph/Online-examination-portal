@@ -8,7 +8,6 @@ import Dropdown from '../micro/dropdown'
 import { Banner } from '../micro/banner'
 import { Controller, useForm } from 'react-hook-form'
 import { GetParticipantWithId } from '../../../apis/participants'
-import { useRouter } from 'next/router'
 
 function ParticipantModal(props) {
 	const {
@@ -19,8 +18,6 @@ function ParticipantModal(props) {
 		userId,
 	} = props
 	const [showPassword, setShowPassword] = useState(false)
-
-	const router = useRouter()
 
 	const participantDefaultValues = useMemo(
 		() => ({
