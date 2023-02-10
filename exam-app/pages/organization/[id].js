@@ -4,18 +4,18 @@ import CreateOrganization from '../../components/organization/add_organization'
 import { OrganizationHoc } from '../../hoc/organization_hoc'
 
 const ViewOrganizationWithContext = OrganizationHoc(CreateOrganization)
-export default function ViewOrganizationPage({ userId }) {
+export default function ViewOrganizationPage({ OrganizationId }) {
 	return (
 		<ViewOrganizationWithContext
 			isViewOnly={true}
 			buttonText={'View'}
-			userId={userId}
+			OrganizationId={OrganizationId}
 		/>
 	)
 }
 
 ViewOrganizationPage.getInitialProps = async ({ query: { id } }) => {
 	return {
-		userId: id,
+		OrganizationId: id,
 	}
 }
