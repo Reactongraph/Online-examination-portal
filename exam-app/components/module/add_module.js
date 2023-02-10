@@ -42,7 +42,7 @@ const AddModuleComponent = ({ isViewOnly, buttonText, editform, ModuleId }) => {
 				buttonText={buttonText}
 				placeholderText={'eg. C++ , JAVA ,  etc...'}
 				isViewOnly={isViewOnly || false}
-				ModelId={ModuleId}
+				ModalId={ModuleId}
 			/>
 
 			<ToastContainer />

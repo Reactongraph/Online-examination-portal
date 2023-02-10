@@ -44,7 +44,7 @@ const AddLevelComponent = ({ isViewOnly, buttonText, editform, LevelId }) => {
 				buttonText={buttonText}
 				placeholderText={'eg. Easy , Moderate , etc ...'}
 				isViewOnly={isViewOnly || false}
-				ModelId={LevelId}
+				ModalId={LevelId}
 			/>
 		</>
 	)
