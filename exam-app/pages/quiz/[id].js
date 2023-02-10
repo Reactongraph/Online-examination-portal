@@ -4,17 +4,17 @@ import { QuizHoc } from '../../hoc/quiz_hoc'
 const ViewQuizWithContext = QuizHoc(AddQuizComponent)
 
 // Use the wrapped components
-export default function ViewQuiz({ userId }) {
+export default function ViewQuiz({ QuizId }) {
 	return (
 		<ViewQuizWithContext
 			isViewOnly={true}
 			buttonText={'View'}
-			userId={userId}
+			QuizId={QuizId}
 		/>
 	)
 }
 ViewQuiz.getInitialProps = async ({ query: { id } }) => {
 	return {
-		userId: id,
+		QuizId: id,
 	}
 }

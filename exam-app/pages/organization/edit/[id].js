@@ -4,7 +4,7 @@ import { OrganizationHoc } from '../../../hoc/organization_hoc'
 
 const EditOrganizationWithContext = OrganizationHoc(CreateOrganization)
 
-export default function EditPage({ OrganizationId }) {
+export default function EditOrganizationPage({ OrganizationId }) {
 	return (
 		<EditOrganizationWithContext
 			buttonText={'Edit'}
