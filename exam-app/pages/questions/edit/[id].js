@@ -4,11 +4,11 @@ import { QuestionHoc } from '../../../hoc/question_hoc'
 
 const EditQuestionWithContext = QuestionHoc(AddQuestion)
 
-export default function EditQuestions({ userId }) {
-	return <EditQuestionWithContext userId={userId} />
+export default function EditQuestions({ QuestionId }) {
+	return <EditQuestionWithContext QuestionId={QuestionId} />
 }
 EditQuestions.getInitialProps = async ({ query: { id } }) => {
 	return {
-		userId: id,
+		QuestionId: id,
 	}
 }

@@ -3,16 +3,16 @@ import AddQuestion from '../../components/questions/add_question'
 
 const ViewQuestionWithContext = QuestionHoc(AddQuestion)
 
-export default function ViewQuestions({ userId }) {
+export default function ViewQuestions({ QuestionId }) {
 	return (
 		<ViewQuestionWithContext
 			isViewOnly={true}
-			userId={userId}
+			QuestionId={QuestionId}
 		/>
 	)
 }
 ViewQuestions.getInitialProps = async ({ query: { id } }) => {
 	return {
-		userId: id,
+		QuestionId: id,
 	}
 }
