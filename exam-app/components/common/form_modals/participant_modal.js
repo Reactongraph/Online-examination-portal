@@ -15,7 +15,7 @@ function ParticipantModal(props) {
 		organization_data,
 		isViewOnly,
 		buttonText,
-		userId,
+		ParticipantId,
 	} = props
 	const [showPassword, setShowPassword] = useState(false)
 
@@ -37,7 +37,7 @@ function ParticipantModal(props) {
 	})
 
 	useEffect(() => {
-		let participant_id = userId
+		let participant_id = ParticipantId
 		async function getParticipantData() {
 			const result = await GetParticipantWithId(participant_id)
 			const participantData = result.data
@@ -47,10 +47,10 @@ function ParticipantModal(props) {
 				setValue(key, participantData[key], true)
 			})
 		}
-		if (userId) {
+		if (ParticipantId) {
 			getParticipantData()
 		}
-	}, [userId, participantDefaultValues, setValue])
+	}, [ParticipantId, participantDefaultValues, setValue])
 
 	return (
 		<>
