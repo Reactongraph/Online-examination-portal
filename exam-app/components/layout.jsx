@@ -60,7 +60,7 @@ export default function Layout({ children }) {
 
 	useEffect(() => {
 		refreshToken()
-	}, [refreshToken])
+	}, [])
 
 	return <>{children}</>
 }
