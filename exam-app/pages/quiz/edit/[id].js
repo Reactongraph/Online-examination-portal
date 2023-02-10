@@ -4,11 +4,17 @@ import { QuizHoc } from '../../../hoc/quiz_hoc'
 const EditQuizWithContext = QuizHoc(AddQuizComponent)
 
 // Use the wrapped components
-export default function EditQuiz() {
+export default function EditQuiz({ quizId }) {
 	return (
 		<EditQuizWithContext
 			buttonText={'Edit'}
 			editform={true}
+			quizId={quizId}
 		/>
 	)
+}
+EditQuiz.getInitialProps = async ({ query: { id } }) => {
+	return {
+		quizId: id,
+	}
 }

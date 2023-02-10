@@ -7,7 +7,6 @@ import { Banner } from '../micro/banner'
 import { Controller, useForm } from 'react-hook-form'
 import { GetModuleDataWithId } from '../../../apis/modules'
 import { GetLevelDataWithId } from '../../../apis/levels'
-import { useRouter } from 'next/router'
 function LevelModuleModal(props) {
 	const {
 		checkWithDatabase,
@@ -15,13 +14,14 @@ function LevelModuleModal(props) {
 		modalName,
 		placeholderText,
 		isViewOnly,
+		modalId,
+
 	} = props
 
 	const fieldName = modalName.toLowerCase()
 	const modalDefaultValues = {
 		[fieldName]: '',
 	}
-	const router = useRouter()
 	const { handleSubmit, control, setValue } = useForm({
 		mode: 'onSubmit',
 		reValidateMode: 'onChange',
@@ -30,7 +30,7 @@ function LevelModuleModal(props) {
 
 	// for checking if it is a edit request
 	useEffect(() => {
-		let modalById = router.query?.id
+		let modalById = modalId
 
 		async function getModalData() {
 			const results =
@@ -46,7 +46,7 @@ function LevelModuleModal(props) {
 		if (modalById) {
 			getModalData()
 		}
-	}, [router.query?.id, fieldName, setValue])
+	}, [modalId, fieldName, setValue])
 
 	return (
 		<>

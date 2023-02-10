@@ -8,13 +8,16 @@ import Dropdown from '../micro/dropdown'
 import { Banner } from '../micro/banner'
 import { Controller, useForm } from 'react-hook-form'
 import { GetParticipantWithId } from '../../../apis/participants'
-import { useRouter } from 'next/router'
 
 function ParticipantModal(props) {
-	const { checkWithDatabase, organization_data, isViewOnly, buttonText } = props
+	const {
+		checkWithDatabase,
+		organization_data,
+		isViewOnly,
+		buttonText,
+		participantId,
+	} = props
 	const [showPassword, setShowPassword] = useState(false)
-
-	const router = useRouter()
 
 	const participantDefaultValues = useMemo(
 		() => ({
@@ -34,9 +37,8 @@ function ParticipantModal(props) {
 	})
 
 	useEffect(() => {
-		let participant_id = router.query?.id
 		async function getParticipantData() {
-			const result = await GetParticipantWithId(participant_id)
+			const result = await GetParticipantWithId(participantId)
 			const participantData = result.data
 
 			const keys = Object.keys(participantDefaultValues)
@@ -44,10 +46,10 @@ function ParticipantModal(props) {
 				setValue(key, participantData[key], true)
 			})
 		}
-		if (router.query.id) {
+		if (participantId) {
 			getParticipantData()
 		}
-	}, [router.query?.id, participantDefaultValues, setValue])
+	}, [participantId, participantDefaultValues, setValue])
 
 	return (
 		<>

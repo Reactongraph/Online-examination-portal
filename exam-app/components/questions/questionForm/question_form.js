@@ -20,6 +20,7 @@ function QuestionForm(props) {
 		optionType,
 		requiredOptionField,
 		isViewOnly,
+		// userId
 	} = props
 	return (
 		<>

@@ -18,7 +18,7 @@ import {
 import { LevelContext, ModuleContext } from '../../context/context'
 // import { QuestionContext } from '../context'
 
-const AddQuestion = ({ isViewOnly }) => {
+const AddQuestion = ({ isViewOnly, questionId }) => {
 	const { module_data: moduleData } = useContext(ModuleContext)
 	const { level_data: levelData } = useContext(LevelContext)
 
@@ -45,7 +45,7 @@ const AddQuestion = ({ isViewOnly }) => {
 	])
 
 	useEffect(() => {
-		let question_id = router.query?.id
+		let question_id = questionId
 
 		async function getQuestionData() {
 			const results = await GetQuestionDataWithId(question_id)
@@ -74,11 +74,11 @@ const AddQuestion = ({ isViewOnly }) => {
 			setEditForm(true)
 		}
 
-		if (router.query?.id) {
+		if (questionId) {
 			getQuestionData()
 			// console.log()
 		}
-	}, [router.query?.id, isViewOnly, numberOfOptionSelect])
+	}, [questionId, isViewOnly, numberOfOptionSelect])
 
 	const { handleSubmit } = useForm()
 
@@ -181,7 +181,7 @@ const AddQuestion = ({ isViewOnly }) => {
 		}
 
 		if (editForm) {
-			let question_id = router.query?.id
+			let question_id = questionId
 			data = JSON.stringify(data)
 			EditQuestion(data, question_id)
 				.then(() => {
