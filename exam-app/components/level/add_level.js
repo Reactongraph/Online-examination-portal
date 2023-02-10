@@ -3,7 +3,7 @@ import { AddLevel, EditLevel } from '../../apis/levels'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
 
-const AddLevelComponent = ({ isViewOnly, buttonText, editform, userId }) => {
+const AddLevelComponent = ({ isViewOnly, buttonText, editform, LevelId }) => {
 	const router = useRouter()
 
 	const checkWithDatabase = async (data) => {
@@ -12,7 +12,7 @@ const AddLevelComponent = ({ isViewOnly, buttonText, editform, userId }) => {
 		if (editform) {
 			let LevelData = JSON.stringify(data)
 
-			EditLevel(LevelData, userId)
+			EditLevel(LevelData, LevelId)
 				.then(() => {
 					router.replace('/level')
 					toast.success('level updated!')
@@ -44,7 +44,7 @@ const AddLevelComponent = ({ isViewOnly, buttonText, editform, userId }) => {
 				buttonText={buttonText}
 				placeholderText={'eg. Easy , Moderate , etc ...'}
 				isViewOnly={isViewOnly || false}
-				userId={userId}
+				ModelId={LevelId}
 			/>
 		</>
 	)

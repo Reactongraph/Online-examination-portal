@@ -3,14 +3,14 @@ import * as React from 'react'
 import Layout from '../../../components/layout/layout'
 import AddModuleComponent from '../../../components/module/add_module'
 
-export default function EditModules({ userId }) {
+export default function EditModules({ ModuleId }) {
 	return (
 		<>
 			<Layout title='Edit Module'>
 				<AddModuleComponent
 					editform={true}
 					buttonText={'Edit'}
-					userId={userId}
+					ModuleId={ModuleId}
 				/>
 			</Layout>
 		</>
@@ -18,6 +18,6 @@ export default function EditModules({ userId }) {
 }
 EditModules.getInitialProps = async ({ query: { id } }) => {
 	return {
-		userId: id,
+		ModuleId: id,
 	}
 }

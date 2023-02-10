@@ -2,14 +2,14 @@ import AddModuleComponent from '../../components/module/add_module'
 import * as React from 'react'
 import Layout from '../../components/layout/layout'
 
-export default function ViewModulePage({ userId }) {
+export default function ViewModulePage({ ModuleId }) {
 	return (
 		<>
 			<Layout title='View Module'>
 				<AddModuleComponent
 					isViewOnly={true}
 					buttonText={'View'}
-					userId={userId}
+					ModuleId={ModuleId}
 				/>
 			</Layout>
 		</>
@@ -17,6 +17,6 @@ export default function ViewModulePage({ userId }) {
 }
 ViewModulePage.getInitialProps = async ({ query: { id } }) => {
 	return {
-		userId: id,
+		ModuleId: id,
 	}
 }
