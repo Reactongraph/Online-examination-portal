@@ -6,7 +6,7 @@ import ParticipantModal from '../common/form_modals/participant_modal'
 
 import { OrganizationContext } from '../../context/context'
 
-const CreateParticipant = ({ isViewOnly, buttonText, editform, ParticipantId }) => {
+const CreateParticipant = ({ isViewOnly, buttonText, editform, participantId }) => {
 	const router = useRouter()
 
 	const { organization_data } = useContext(OrganizationContext)
@@ -15,7 +15,7 @@ const CreateParticipant = ({ isViewOnly, buttonText, editform, ParticipantId }) 
 		if (editform) {
 			let participantData = JSON.stringify(data)
 
-			EditParticipant(participantData, ParticipantId)
+			EditParticipant(participantData, participantId)
 				.then(async () => {
 					toast.success('participant  updated')
 					router.replace(`/participant`)
@@ -44,7 +44,7 @@ const CreateParticipant = ({ isViewOnly, buttonText, editform, ParticipantId }) 
 				organization_data={organization_data}
 				isViewOnly={isViewOnly || false}
 				buttonText={buttonText}
-				ParticipantId={ParticipantId}
+				participantId={participantId}
 			/>
 		</>
 	)

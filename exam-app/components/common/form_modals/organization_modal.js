@@ -7,7 +7,7 @@ import { Banner } from '../micro/banner'
 import { Controller, useForm } from 'react-hook-form'
 import { GetOrganizationDataWithId } from '../../../apis/organizations'
 function OrganizationModal(props) {
-	const { buttonText, checkWithDatabase, isViewOnly, OrganizationId } = props
+	const { buttonText, checkWithDatabase, isViewOnly, organizationId } = props
 
 	const organizationDefaultValues = useMemo(
 		() => ({
@@ -30,7 +30,6 @@ function OrganizationModal(props) {
 	})
 
 	useEffect(() => {
-		let organizationId = OrganizationId
 		async function getOrganizationData() {
 			const result = await GetOrganizationDataWithId(organizationId)
 			const organizationData = result.data
@@ -39,10 +38,10 @@ function OrganizationModal(props) {
 				setValue(key, organizationData[key], true)
 			})
 		}
-		if (OrganizationId) {
+		if (organizationId) {
 			getOrganizationData()
 		}
-	}, [OrganizationId, organizationDefaultValues, setValue])
+	}, [organizationId, organizationDefaultValues, setValue])
 	return (
 		<>
 			<div className='flex-row space-y-3 relative p-12 '>

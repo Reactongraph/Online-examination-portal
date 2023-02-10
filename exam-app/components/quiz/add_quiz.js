@@ -7,7 +7,7 @@ import { AddQuiz, EditQuiz } from '../../apis/quizzes'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
-const AddQuizComponent = ({ isViewOnly, editform, buttonText, QuizId }) => {
+const AddQuizComponent = ({ isViewOnly, editform, buttonText, quizId }) => {
 	//For Image Preview
 
 	const router = useRouter()
@@ -30,7 +30,7 @@ const AddQuizComponent = ({ isViewOnly, editform, buttonText, QuizId }) => {
 
 		if (editform) {
 			let QuizData = JSON.stringify(data)
-			EditQuiz(QuizData, QuizId)
+			EditQuiz(QuizData, quizId)
 				.then(() => {
 					toast.success('Quiz updated!')
 					router.replace(`/quiz`)
@@ -58,7 +58,7 @@ const AddQuizComponent = ({ isViewOnly, editform, buttonText, QuizId }) => {
 				checkWithDatabase={checkWithDatabase}
 				buttonText={buttonText}
 				isViewOnly={isViewOnly || false}
-				QuizId={QuizId}
+				quizId={quizId}
 			/>
 		</>
 	)

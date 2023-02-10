@@ -15,7 +15,7 @@ import { GetQuizDataWithId } from '../../../../apis/quizzes'
 import moment from 'moment'
 import { LevelContext, ModuleContext } from '../../../../context/context'
 function QuizModal(props) {
-	const { isViewOnly, buttonText, checkWithDatabase, QuizId } = props
+	const { isViewOnly, buttonText, checkWithDatabase, quizId } = props
 
 	const { module_data: moduleData } = useContext(ModuleContext)
 	const { level_data: levelData } = useContext(LevelContext)
@@ -44,10 +44,8 @@ function QuizModal(props) {
 		defaultValues: quizDefaultValues,
 	})
 	useEffect(() => {
-		let quiz_id = QuizId
-
 		async function getQuizData() {
-			const results = await GetQuizDataWithId(quiz_id)
+			const results = await GetQuizDataWithId(quizId)
 			const { quiz: quizData } = results.data
 
 			let seletedModuleDataArray = []
@@ -73,10 +71,10 @@ function QuizModal(props) {
 			})
 		}
 
-		if (quiz_id) {
+		if (quizId) {
 			getQuizData()
 		}
-	}, [QuizId, quizDefaultValues, moduleData, setValue])
+	}, [quizId, quizDefaultValues, moduleData, setValue])
 	return (
 		<>
 			<div className='flex-row space-y-3 relative p-10'>

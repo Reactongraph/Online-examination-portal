@@ -4,17 +4,17 @@ import { OrganizationHoc } from '../../../hoc/organization_hoc'
 
 const EditOrganizationWithContext = OrganizationHoc(CreateOrganization)
 
-export default function EditOrganizationPage({ OrganizationId }) {
+export default function EditOrganizationPage({ organizationId }) {
 	return (
 		<EditOrganizationWithContext
 			buttonText={'Edit'}
 			editform={true}
-			OrganizationId={OrganizationId}
+			organizationId={organizationId}
 		/>
 	)
 }
-EditPage.getInitialProps = async ({ query: { id } }) => {
+EditOrganizationPage.getInitialProps = async ({ query: { id } }) => {
 	return {
-		OrganizationId: id,
+		organizationId: id,
 	}
 }

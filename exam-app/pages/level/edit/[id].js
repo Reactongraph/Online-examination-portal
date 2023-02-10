@@ -3,14 +3,14 @@ import * as React from 'react'
 import Layout from '../../../components/layout/layout'
 import AddLevelComponent from '../../../components/level/add_level'
 
-export default function EditLevels({ LevelId }) {
+export default function EditLevels({ levelId }) {
 	return (
 		<>
 			<Layout title='Edit level'>
 				<AddLevelComponent
 					editform={true}
 					buttonText={'Edit'}
-					LevelId={LevelId}
+					levelId={levelId}
 				/>
 			</Layout>
 		</>
@@ -18,6 +18,6 @@ export default function EditLevels({ LevelId }) {
 }
 EditLevels.getInitialProps = async ({ query: { id } }) => {
 	return {
-		LevelId: id,
+		levelId: id,
 	}
 }

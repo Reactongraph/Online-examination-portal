@@ -4,7 +4,7 @@ import { AddOrganization, EditOrganization } from '../../apis/organizations'
 import { useRouter } from 'next/router'
 import OrganizationModal from '../common/form_modals/organization_modal'
 
-const CreateOrganization = ({ isViewOnly, buttonText, editform, OrganizationId }) => {
+const CreateOrganization = ({ isViewOnly, buttonText, editform, organizationId }) => {
 	const router = useRouter()
 
 	// for sending the data to the backend
@@ -12,7 +12,7 @@ const CreateOrganization = ({ isViewOnly, buttonText, editform, OrganizationId }
 		if (editform) {
 			let OrganizationData = JSON.stringify(data)
 
-			EditOrganization(OrganizationData, OrganizationId)
+			EditOrganization(OrganizationData, organizationId)
 				.then(async () => {
 					toast.success('organization updated')
 					router.replace(`/organization`)
@@ -44,7 +44,7 @@ const CreateOrganization = ({ isViewOnly, buttonText, editform, OrganizationId }
 					buttonText={buttonText}
 					checkWithDatabase={checkWithDatabase}
 					isViewOnly={isViewOnly || false}
-					OrganizationId={OrganizationId}
+					organizationId={organizationId}
 				/>
 			</main>
 		</>
