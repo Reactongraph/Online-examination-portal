@@ -7,7 +7,7 @@ export default function EditParticipantPage({ participantId }) {
 	return (
 		<EditParticipantWithContext
 			buttonText={'Edit'}
-			editform={true}
+			isEdit={true}
 			participantId={participantId}
 		/>
 	)
