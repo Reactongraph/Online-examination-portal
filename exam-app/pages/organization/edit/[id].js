@@ -8,7 +8,7 @@ export default function EditOrganizationPage({ organizationId }) {
 	return (
 		<EditOrganizationWithContext
 			buttonText={'Edit'}
-			editform={true}
+			isEdit={true}
 			organizationId={organizationId}
 		/>
 	)

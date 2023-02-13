@@ -5,10 +5,19 @@ import { Form } from '../micro/form'
 import { InputComponent } from '../micro/input'
 import { Banner } from '../micro/banner'
 import { Controller, useForm } from 'react-hook-form'
-import { GetOrganizationDataWithId } from '../../../apis/organizations'
+import {
+	AddOrganization,
+	EditOrganization,
+	GetOrganizationDataWithId,
+} from '../../../apis/organizations'
+import useCheckWithDatabase from '../database_function'
 function OrganizationModal(props) {
-	const { buttonText, checkWithDatabase, isViewOnly, organizationId } = props
-
+	const { buttonText, isViewOnly, organizationId, isEdit } = props
+	const checkWithDatabase = useCheckWithDatabase(
+		isEdit ? EditOrganization : AddOrganization,
+		'organization created!',
+		'/organization'
+	)
 	const organizationDefaultValues = useMemo(
 		() => ({
 			name: '',
