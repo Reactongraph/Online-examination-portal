@@ -6,7 +6,8 @@ import { InputComponent } from '../micro/input'
 import { Banner } from '../micro/banner'
 import { Controller, useForm } from 'react-hook-form'
 import { GetModuleDataWithId } from '../../../apis/modules'
-import { GetLevelDataWithId } from '../../../apis/levels'
+import { AddLevel, EditLevel, GetLevelDataWithId } from '../../../apis/levels'
+import { useRouter } from 'next/router'
 function LevelModuleModal(props) {
 	const {
 		checkWithDatabase,
@@ -15,9 +16,10 @@ function LevelModuleModal(props) {
 		placeholderText,
 		isViewOnly,
 		modalId,
-
+		editform,
+		levelId,
 	} = props
-
+	const router = useRouter()
 	const fieldName = modalName.toLowerCase()
 	const modalDefaultValues = {
 		[fieldName]: '',
@@ -59,7 +61,19 @@ function LevelModuleModal(props) {
 					/>
 				</div>
 				<div className='card-container'>
-					<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
+					<Form
+						onSubmit={handleSubmit((data) =>
+							checkWithDatabase(
+								data,
+								editform,
+								levelId,
+								AddLevel,
+								EditLevel,
+								'level',
+								'/level',
+								router
+							)
+						)}>
 						<React.Fragment>
 							<div class='flex-grid-wrap'>
 								<div class='form-field mb-6 md:mb-0'>

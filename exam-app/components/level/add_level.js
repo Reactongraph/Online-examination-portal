@@ -1,40 +1,7 @@
 import LevelModuleModal from '../common/form_modals/level_module_modal'
-import { AddLevel, EditLevel } from '../../apis/levels'
-import { toast } from 'react-toastify'
-import { useRouter } from 'next/router'
+import checkWithDatabase from '../common/database_function'
 
 const AddLevelComponent = ({ isViewOnly, buttonText, editform, levelId }) => {
-	const router = useRouter()
-
-	const checkWithDatabase = async (data) => {
-		// for taking the patch api data
-
-		if (editform) {
-			let LevelData = JSON.stringify(data)
-
-			EditLevel(LevelData, levelId)
-				.then(() => {
-					router.replace('/level')
-					toast.success('level updated!')
-				})
-				.catch(() => {
-					toast.error('Invalid Request')
-				})
-		} else {
-			// for new data registration
-			data.status = true
-			let LevelData = JSON.stringify(data)
-
-			AddLevel(LevelData)
-				.then(() => {
-					toast.success('level inserted')
-					router.replace('/level')
-				})
-				.catch(() => {
-					toast.error('Invalid Request')
-				})
-		}
-	}
 	return (
 		<>
 			{' '}
@@ -45,6 +12,8 @@ const AddLevelComponent = ({ isViewOnly, buttonText, editform, levelId }) => {
 				placeholderText={'eg. Easy , Moderate , etc ...'}
 				isViewOnly={isViewOnly || false}
 				modalId={levelId}
+				editform={editform}
+				levelId={levelId}
 			/>
 		</>
 	)

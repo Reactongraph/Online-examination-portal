@@ -6,7 +6,12 @@ import ParticipantModal from '../common/form_modals/participant_modal'
 
 import { OrganizationContext } from '../../context/context'
 
-const CreateParticipant = ({ isViewOnly, buttonText, editform, participantId }) => {
+const CreateParticipant = ({
+	isViewOnly,
+	buttonText,
+	editform,
+	participantId,
+}) => {
 	const router = useRouter()
 
 	const { organization_data } = useContext(OrganizationContext)
