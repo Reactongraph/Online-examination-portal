@@ -1,19 +1,16 @@
-import LevelModuleModal from '../common/form_modals/level_module_modal'
-import checkWithDatabase from '../common/database_function'
+import LevelModulePage from '../common/form_modals/level_module_page'
 
-const AddLevelComponent = ({ isViewOnly, buttonText, editform, levelId }) => {
+const AddLevelComponent = ({ isViewOnly, buttonText, isEdit, levelId }) => {
 	return (
 		<>
 			{' '}
-			<LevelModuleModal
-				checkWithDatabase={checkWithDatabase}
+			<LevelModulePage
 				modalName={'LEVEL'}
 				buttonText={buttonText}
 				placeholderText={'eg. Easy , Moderate , etc ...'}
 				isViewOnly={isViewOnly || false}
 				modalId={levelId}
-				editform={editform}
-				levelId={levelId}
+				isEdit={isEdit}
 			/>
 		</>
 	)
