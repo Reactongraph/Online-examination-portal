@@ -1,15 +1,16 @@
-import AddModuleComponent from '../../components/module/add_module'
 import * as React from 'react'
 import Layout from '../../components/layout/layout'
+import LevelModulePage from '../../components/common/form_modals/level_module_page'
 
 export default function ViewModulePage({ moduleId }) {
 	return (
 		<>
 			<Layout title='View Module'>
-				<AddModuleComponent
+				<LevelModulePage
 					isViewOnly={true}
 					buttonText={'View'}
-					moduleId={moduleId}
+					modalId={moduleId}
+					modalName={'MODULE'}
 				/>
 			</Layout>
 		</>

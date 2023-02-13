@@ -3,7 +3,6 @@ import { toast } from 'react-toastify'
 
 const useCheckWithDatabase = (dataApi, successMessage, route) => {
 	const router = useRouter()
-
 	const checkWithDatabase = async (data, id) => {
 		try {
 			id ? await dataApi(data, id) : await dataApi(data)

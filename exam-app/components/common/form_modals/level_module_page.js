@@ -6,7 +6,7 @@ import { InputComponent } from '../micro/input'
 import { Banner } from '../micro/banner'
 import { Controller, useForm } from 'react-hook-form'
 import { GetModuleDataWithId } from '../../../apis/modules'
-import { AddLevel, EditLevel, GetLevelDataWithId } from '../../../apis/levels'
+import { GetLevelDataWithId } from '../../../apis/levels'
 import useCheckWithDatabase from '../database_function'
 function LevelModulePage(props) {
 	const {
@@ -15,14 +15,14 @@ function LevelModulePage(props) {
 		placeholderText,
 		isViewOnly,
 		modalId,
-		isEdit,
+		apiMethod,
 	} = props
-	const checkWithDatabase = useCheckWithDatabase(
-		isEdit ? EditLevel : AddLevel,
-		'level added!',
-		'/level'
-	)
 	const fieldName = modalName.toLowerCase()
+	const checkWithDatabase = useCheckWithDatabase(
+		apiMethod,
+		`${modalName} added!`,
+		`/${fieldName}`
+	)
 	const modalDefaultValues = {
 		[fieldName]: '',
 	}
