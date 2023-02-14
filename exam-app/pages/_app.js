@@ -3,6 +3,7 @@ import Layout from '../components/layout'
 import { Provider } from 'react-redux'
 import store from '../store'
 import { injectStyle } from 'react-toastify/dist/inject-style'
+import ErrorBoundary from '../components/common/error_boundry'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
@@ -12,11 +13,13 @@ if (typeof window !== 'undefined') {
 function MyApp({ Component, pageProps }) {
 	return (
 		<>
-			<Provider store={store}>
-				<Layout>
-					<Component {...pageProps} />
-				</Layout>
-			</Provider>
+			<ErrorBoundary>
+				<Provider store={store}>
+					<Layout>
+						<Component {...pageProps} />
+					</Layout>
+				</Provider>
+			</ErrorBoundary>
 		</>
 	)
 }
