@@ -20,7 +20,7 @@ function ParticipantPage(props) {
 	const [showPassword, setShowPassword] = useState(false)
 	const checkWithDatabase = useCheckWithDatabase(
 		isEdit ? EditParticipant : AddParticipant,
-		'participant created!',
+		isEdit ? 'participant updated!' : 'participant created!',
 		'/participant'
 	)
 

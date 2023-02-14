@@ -15,7 +15,7 @@ function OrganizationModal(props) {
 	const { buttonText, isViewOnly, organizationId, isEdit } = props
 	const checkWithDatabase = useCheckWithDatabase(
 		isEdit ? EditOrganization : AddOrganization,
-		'organization created!',
+		isEdit ? 'organization updated!' : 'organization created!',
 		'/organization'
 	)
 	const organizationDefaultValues = useMemo(

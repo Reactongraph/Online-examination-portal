@@ -1,16 +1,13 @@
 import React from 'react'
 import 'react-pure-modal/dist/react-pure-modal.min.css'
-import { useRouter } from 'next/router'
-import { toast } from 'react-toastify'
-import QuizModal from '../common/form_modals/quiz_modal/quiz_modal'
+import QuizPage from '../common/form_modals/quiz_modal/quiz_page'
 import { AddQuiz, EditQuiz } from '../../apis/quizzes'
 
 import 'react-datepicker/dist/react-datepicker.css'
+import useCheckWithDatabase from '../common/database_function'
 
-const AddQuizComponent = ({ isViewOnly, editform, buttonText, quizId }) => {
+const AddQuizComponent = ({ isViewOnly, isEdit, buttonText, quizId }) => {
 	//For Image Preview
-
-	const router = useRouter()
 
 	const handleModuleData = (event) => {
 		// function is created to create an array of module ID only from the array of selected module data object
@@ -22,40 +19,25 @@ const AddQuizComponent = ({ isViewOnly, editform, buttonText, quizId }) => {
 		return moduleSelectedArray
 	}
 
-	const checkWithDatabase = async (data) => {
+	const checkWithDatabase = useCheckWithDatabase(
+		isEdit ? EditQuiz : AddQuiz,
+		isEdit ? 'Quiz updated!' : 'Quiz created!',
+		'/quiz'
+	)
+
+	const handleQuizData = async (data) => {
 		data.module_id = handleModuleData(data.module_id)
 		delete data.Org_name
-
-		//for new data registration
-
-		if (editform) {
-			let QuizData = JSON.stringify(data)
-			EditQuiz(QuizData, quizId)
-				.then(() => {
-					toast.success('Quiz updated!')
-					router.replace(`/quiz`)
-				})
-				.catch(() => {
-					toast.error('invalid request')
-				})
-		} else {
-			data.status = true
-			let QuizData = JSON.stringify(data)
-			AddQuiz(QuizData)
-				.then(() => {
-					router.replace(`/quiz`)
-					toast.success('Quiz created!')
-				})
-				.catch(() => {
-					toast.error('Invalid Request')
-				})
-		}
+		data.status = true
+		const QuizData = JSON.stringify(data)
+		const id = isEdit ? quizId : null
+		await checkWithDatabase(QuizData, id)
 	}
 
 	return (
 		<>
-			<QuizModal
-				checkWithDatabase={checkWithDatabase}
+			<QuizPage
+				handleQuizData={handleQuizData}
 				buttonText={buttonText}
 				isViewOnly={isViewOnly || false}
 				quizId={quizId}
