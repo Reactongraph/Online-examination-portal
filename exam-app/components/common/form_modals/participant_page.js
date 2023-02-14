@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useContext, useEffect, useMemo } from 'react'
 import { useState } from 'react'
 import { ButtonComponent } from '../micro/button'
 import { Label } from '../micro/label'
@@ -13,10 +13,11 @@ import {
 	GetParticipantWithId,
 } from '../../../apis/participants'
 import useCheckWithDatabase from '../database_function'
+import { OrganizationContext } from '../../../context/context'
 
 function ParticipantPage(props) {
-	const { organization_data, isViewOnly, buttonText, participantId, isEdit } =
-		props
+	const { isViewOnly, buttonText, participantId, isEdit } = props
+	const { organization_data } = useContext(OrganizationContext)
 	const [showPassword, setShowPassword] = useState(false)
 	const checkWithDatabase = useCheckWithDatabase(
 		isEdit ? EditParticipant : AddParticipant,
@@ -210,11 +211,12 @@ function ParticipantPage(props) {
 									/>
 								</div>
 							</div>
-							{isViewOnly == false && (
-								<ButtonComponent key={'submit'}>
-									{buttonText || 'Add'}
-								</ButtonComponent>
-							)}
+							{isViewOnly == false ||
+								(isViewOnly == null && (
+									<ButtonComponent key={'submit'}>
+										{buttonText || 'Add'}
+									</ButtonComponent>
+								))}
 						</React.Fragment>
 					</Form>
 				</div>
