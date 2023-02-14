@@ -11,7 +11,7 @@ import {
 	GetOrganizationDataWithId,
 } from '../../../apis/organizations'
 import useCheckWithDatabase from '../database_function'
-function OrganizationModal(props) {
+function OrganizationPage(props) {
 	const { buttonText, isViewOnly, organizationId, isEdit } = props
 	const checkWithDatabase = useCheckWithDatabase(
 		isEdit ? EditOrganization : AddOrganization,
@@ -301,15 +301,16 @@ function OrganizationModal(props) {
 								</div>
 							</div>
 							<div className='flex justify-end'>
-								{isViewOnly == false && (
-									<ButtonComponent
-										key={'submit'}
-										className={
-											'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
-										}>
-										{buttonText}
-									</ButtonComponent>
-								)}
+								{isViewOnly == false ||
+									(isViewOnly == null && (
+										<ButtonComponent
+											key={'submit'}
+											className={
+												'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
+											}>
+											{buttonText}
+										</ButtonComponent>
+									))}
 							</div>
 						</React.Fragment>
 					</Form>
@@ -319,4 +320,4 @@ function OrganizationModal(props) {
 	)
 }
 
-export default OrganizationModal
+export default OrganizationPage
