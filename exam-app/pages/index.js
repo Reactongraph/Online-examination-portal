@@ -1,8 +1,12 @@
 import Head from 'next/head'
 import Login from './login/index'
 import 'regenerator-runtime/runtime'
+import { ButtonComponent } from '../components/common/micro/button'
+
+import { useSession, signIn, signOut } from 'next-auth/react'
 
 export default function Home() {
+	const { data: session } = useSession()
 	return (
 		<>
 			<Head>
@@ -17,7 +21,23 @@ export default function Home() {
 				/>
 			</Head>
 
-			<Login />
+			<main>
+				{!session && (
+					<>
+						Not Signed in <br />
+						<ButtonComponent onClick={signIn}>SignIn</ButtonComponent>
+					</>
+				)}
+
+				{session && (
+					<>
+						Signed in as {session.user.email} <br />
+						<button onClick={signOut}>signOut</button>
+					</>
+				)}
+			</main>
+
+			{/* <Login /> */}
 		</>
 	)
 }
