@@ -12,6 +12,7 @@ import { ButtonComponent } from './common/micro/button'
 import Dropdown from './common/micro/dropdown'
 import { UserLogin } from '../apis/auth'
 import { LoginRoles } from './drop_down_data/login_role_data'
+import { signIn } from 'next-auth/react'
 
 // validation schema
 const schema = object({
@@ -35,34 +36,49 @@ const Login = () => {
 		setOptionValue(e.target.value)
 	}
 	const checkWithDatabase = async (data) => {
-		data.role = optionValue
-		data = JSON.stringify(data)
+		const res = await signIn('examLogin', {
+			redirect: false,
+			email: data.email,
+			password: data.password,
+			role: optionValue,
+		})
 
-		UserLogin(data)
-			.then((response) => {
-				if (response.status === 201) {
-					const login_token = response.data.access_token
-					const payload = response.data.payload
-					const userRole = response.data.role
-					const Org_id = response.data.organization_id
+		if (res?.error) {
+			console.log(res)
+			return toast.error(res.error)
+		}
 
-					toast.success('Login Successfully !')
-					dispatch({
-						type: 'SET_LOGIN',
-						token: login_token,
-						payload: payload,
-						role: userRole,
-						Org_id: Org_id,
-					})
-					router.push({
-						pathname: '/dashboard',
-					})
-				}
-			})
-			.catch((err) => {
-				// const { data } = err.response
-				toast.error(err.message)
-			})
+		return router.push({
+			pathname: '/dashboard',
+		})
+
+		// console.log(res)
+
+		// UserLogin(data)
+		// 	.then((response) => {
+		// 		if (response.status === 201) {
+		// 			const login_token = response.data.access_token
+		// 			const payload = response.data.payload
+		// 			const userRole = response.data.role
+		// 			const Org_id = response.data.organization_id
+
+		// 			toast.success('Login Successfully !')
+		// 			dispatch({
+		// 				type: 'SET_LOGIN',
+		// 				token: login_token,
+		// 				payload: payload,
+		// 				role: userRole,
+		// 				Org_id: Org_id,
+		// 			})
+		// 			router.push({
+		// 				pathname: '/dashboard',
+		// 			})
+		// 		}
+		// 	})
+		// 	.catch((err) => {
+		// 		// const { data } = err.response
+		// 		toast.error(err.message)
+		// 	})
 	}
 
 	return (

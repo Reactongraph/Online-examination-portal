@@ -6,7 +6,10 @@ import { ButtonComponent } from '../components/common/micro/button'
 import { useSession, signIn, signOut } from 'next-auth/react'
 
 export default function Home() {
-	const { data: session } = useSession()
+	// const { data: session } = useSession()
+
+	console.log('sessisong')
+
 	return (
 		<>
 			<Head>
@@ -21,23 +24,7 @@ export default function Home() {
 				/>
 			</Head>
 
-			<main>
-				{!session && (
-					<>
-						Not Signed in <br />
-						<ButtonComponent onClick={signIn}>SignIn</ButtonComponent>
-					</>
-				)}
-
-				{session && (
-					<>
-						Signed in as {session.user.email} <br />
-						<button onClick={signOut}>signOut</button>
-					</>
-				)}
-			</main>
-
-			{/* <Login /> */}
+			<Login />
 		</>
 	)
 }
