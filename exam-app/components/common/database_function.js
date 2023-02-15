@@ -6,8 +6,6 @@ const useCheckWithDatabase = (dataApi, successMessage, route) => {
 	const checkWithDatabase = async (data, id) => {
 		// for edit request
 		try {
-			console.log('data', data)
-
 			if (id) {
 				await dataApi(data, id)
 			}
