@@ -9,10 +9,10 @@ if (typeof window !== 'undefined') {
 	injectStyle()
 }
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 	return (
 		<>
-			<SessionProvider session={pageProps.session}>
+			<SessionProvider session={session}>
 				<Provider store={store}>
 					<Layout>
 						<Component {...pageProps} />

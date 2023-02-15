@@ -13,6 +13,7 @@ import Dropdown from './common/micro/dropdown'
 import { UserLogin } from '../apis/auth'
 import { LoginRoles } from './drop_down_data/login_role_data'
 import { signIn } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 
 // validation schema
 const schema = object({
@@ -26,6 +27,7 @@ const schema = object({
 const Login = () => {
 	const router = useRouter()
 	const dispatch = useDispatch()
+	const { data: session, status } = useSession()
 
 	const { register, handleSubmit } = useForm({
 		resolver: yupResolver(schema),
@@ -47,38 +49,20 @@ const Login = () => {
 			console.log(res)
 			return toast.error(res.error)
 		}
-
+		const login_token = session.user.access_token
+		const payload = session.user.payload
+		const userRole = session.user.role
+		const Org_id = session.user.payload.id
+		dispatch({
+			type: 'SET_LOGIN',
+			token: login_token,
+			payload: payload,
+			role: userRole,
+			Org_id: Org_id,
+		})
 		return router.push({
 			pathname: '/dashboard',
 		})
-
-		// console.log(res)
-
-		// UserLogin(data)
-		// 	.then((response) => {
-		// 		if (response.status === 201) {
-		// 			const login_token = response.data.access_token
-		// 			const payload = response.data.payload
-		// 			const userRole = response.data.role
-		// 			const Org_id = response.data.organization_id
-
-		// 			toast.success('Login Successfully !')
-		// 			dispatch({
-		// 				type: 'SET_LOGIN',
-		// 				token: login_token,
-		// 				payload: payload,
-		// 				role: userRole,
-		// 				Org_id: Org_id,
-		// 			})
-		// 			router.push({
-		// 				pathname: '/dashboard',
-		// 			})
-		// 		}
-		// 	})
-		// 	.catch((err) => {
-		// 		// const { data } = err.response
-		// 		toast.error(err.message)
-		// 	})
 	}
 
 	return (

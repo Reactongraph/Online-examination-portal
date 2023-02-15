@@ -47,7 +47,26 @@ const AuthOptions = {
 			},
 		}),
 	],
-	secret: 'anystring',
+	secret: 'secretrefreshkey',
+	callbacks: {
+		async jwt({ token, user, account }) {
+			if (user) {
+				const { accessToken, ...rest } = user
+				token.accessToken = accessToken
+				token.user = rest
+			}
+			return token
+		},
+		async session({ session, token }) {
+			session.user = {
+				...session.user,
+				...token.user,
+			}
+			session.accessToken = token.accessToken
+
+			return session
+		},
+	},
 }
 
 export default NextAuth(AuthOptions)
