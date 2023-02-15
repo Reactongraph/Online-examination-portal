@@ -8,7 +8,7 @@ export default function EditQuiz({ quizId }) {
 	return (
 		<EditQuizWithContext
 			buttonText={'Edit'}
-			editform={true}
+			isEdit={true}
 			quizId={quizId}
 		/>
 	)

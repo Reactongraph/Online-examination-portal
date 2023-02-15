@@ -1,13 +1,13 @@
 import * as React from 'react'
-import CreateParticipant from '../../../components/participant/add_participant'
+import ParticipantPage from '../../../components/common/form_modals/participant_page'
 import { ParticipantHoc } from '../../../hoc/participant_hoc'
 
-const EditParticipantWithContext = ParticipantHoc(CreateParticipant)
+const EditParticipantWithContext = ParticipantHoc(ParticipantPage)
 export default function EditParticipantPage({ participantId }) {
 	return (
 		<EditParticipantWithContext
 			buttonText={'Edit'}
-			editform={true}
+			isEdit={true}
 			participantId={participantId}
 		/>
 	)

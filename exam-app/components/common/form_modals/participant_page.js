@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useContext, useEffect, useMemo } from 'react'
 import { useState } from 'react'
 import { ButtonComponent } from '../micro/button'
 import { Label } from '../micro/label'
@@ -7,17 +7,23 @@ import { Form } from '../micro/form'
 import Dropdown from '../micro/dropdown'
 import { Banner } from '../micro/banner'
 import { Controller, useForm } from 'react-hook-form'
-import { GetParticipantWithId } from '../../../apis/participants'
+import {
+	AddParticipant,
+	EditParticipant,
+	GetParticipantWithId,
+} from '../../../apis/participants'
+import useCheckWithDatabase from '../database_function'
+import { OrganizationContext } from '../../../context/context'
 
-function ParticipantModal(props) {
-	const {
-		checkWithDatabase,
-		organization_data,
-		isViewOnly,
-		buttonText,
-		participantId,
-	} = props
+function ParticipantPage(props) {
+	const { isViewOnly, buttonText, participantId, isEdit } = props
+	const { organization_data } = useContext(OrganizationContext)
 	const [showPassword, setShowPassword] = useState(false)
+	const checkWithDatabase = useCheckWithDatabase(
+		isEdit ? EditParticipant : AddParticipant,
+		isEdit ? 'participant updated!' : 'participant created!',
+		'/participant'
+	)
 
 	const participantDefaultValues = useMemo(
 		() => ({
@@ -63,7 +69,10 @@ function ParticipantModal(props) {
 				</div>
 
 				<div className=' m-auto py-6 px-6 lg:px-8 bg-white max-w-lg rounded-lg'>
-					<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
+					<Form
+						onSubmit={handleSubmit((data) =>
+							checkWithDatabase(data, participantId)
+						)}>
 						<React.Fragment>
 							<div className='flex-grid-wrap '>
 								<div className='form-field mb-6 md:mb-0'>
@@ -202,11 +211,12 @@ function ParticipantModal(props) {
 									/>
 								</div>
 							</div>
-							{isViewOnly == false && (
-								<ButtonComponent key={'submit'}>
-									{buttonText || 'Add'}
-								</ButtonComponent>
-							)}
+							{isViewOnly == false ||
+								(isViewOnly == null && (
+									<ButtonComponent key={'submit'}>
+										{buttonText || 'Add'}
+									</ButtonComponent>
+								))}
 						</React.Fragment>
 					</Form>
 				</div>
@@ -215,4 +225,4 @@ function ParticipantModal(props) {
 	)
 }
 
-export default ParticipantModal
+export default ParticipantPage

@@ -14,8 +14,8 @@ import Dropdown from '../../micro/dropdown'
 import { GetQuizDataWithId } from '../../../../apis/quizzes'
 import moment from 'moment'
 import { LevelContext, ModuleContext } from '../../../../context/context'
-function QuizModal(props) {
-	const { isViewOnly, buttonText, checkWithDatabase, quizId } = props
+function QuizPage(props) {
+	const { isViewOnly, buttonText, handleQuizData, quizId } = props
 
 	const { module_data: moduleData } = useContext(ModuleContext)
 	const { level_data: levelData } = useContext(LevelContext)
@@ -87,7 +87,7 @@ function QuizModal(props) {
 				</div>
 
 				<div className='card-container'>
-					<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
+					<Form onSubmit={handleSubmit((data) => handleQuizData(data))}>
 						<React.Fragment>
 							<div className='flex-grid-wrap'>
 								<div className='form-field mb-6 md:mb-0'>
@@ -285,4 +285,4 @@ function QuizModal(props) {
 	)
 }
 
-export default QuizModal
+export default QuizPage

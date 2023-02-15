@@ -5,10 +5,19 @@ import { Form } from '../micro/form'
 import { InputComponent } from '../micro/input'
 import { Banner } from '../micro/banner'
 import { Controller, useForm } from 'react-hook-form'
-import { GetOrganizationDataWithId } from '../../../apis/organizations'
-function OrganizationModal(props) {
-	const { buttonText, checkWithDatabase, isViewOnly, organizationId } = props
-
+import {
+	AddOrganization,
+	EditOrganization,
+	GetOrganizationDataWithId,
+} from '../../../apis/organizations'
+import useCheckWithDatabase from '../database_function'
+function OrganizationPage(props) {
+	const { buttonText, isViewOnly, organizationId, isEdit } = props
+	const checkWithDatabase = useCheckWithDatabase(
+		isEdit ? EditOrganization : AddOrganization,
+		isEdit ? 'organization updated!' : 'organization created!',
+		'/organization'
+	)
 	const organizationDefaultValues = useMemo(
 		() => ({
 			name: '',
@@ -54,7 +63,10 @@ function OrganizationModal(props) {
 				</div>
 
 				<div className='flex-auto  items-center p-8 bg-white shadow rounded-lg '>
-					<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
+					<Form
+						onSubmit={handleSubmit((data) =>
+							checkWithDatabase(data, organizationId)
+						)}>
 						<React.Fragment>
 							<div className='flex flex-wrap -mx-3 mb-6'>
 								<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
@@ -289,15 +301,16 @@ function OrganizationModal(props) {
 								</div>
 							</div>
 							<div className='flex justify-end'>
-								{isViewOnly == false && (
-									<ButtonComponent
-										key={'submit'}
-										className={
-											'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
-										}>
-										{buttonText}
-									</ButtonComponent>
-								)}
+								{isViewOnly == false ||
+									(isViewOnly == null && (
+										<ButtonComponent
+											key={'submit'}
+											className={
+												'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
+											}>
+											{buttonText}
+										</ButtonComponent>
+									))}
 							</div>
 						</React.Fragment>
 					</Form>
@@ -307,4 +320,4 @@ function OrganizationModal(props) {
 	)
 }
 
-export default OrganizationModal
+export default OrganizationPage
