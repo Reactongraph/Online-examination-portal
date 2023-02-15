@@ -1,16 +1,19 @@
 import * as React from 'react'
+import LevelModulePage from '../../../components/common/form_modals/level_module_page'
 
 import Layout from '../../../components/layout/layout'
-import AddLevelComponent from '../../../components/level/add_level'
+import { EditLevel } from '../../../apis/levels'
 
 export default function EditLevels({ levelId }) {
 	return (
 		<>
 			<Layout title='Edit level'>
-				<AddLevelComponent
-					editform={true}
+				<LevelModulePage
 					buttonText={'Edit'}
-					levelId={levelId}
+					modalId={levelId}
+					modalName={'LEVEL'}
+					isViewOnly={false}
+					apiMethod={EditLevel}
 				/>
 			</Layout>
 		</>

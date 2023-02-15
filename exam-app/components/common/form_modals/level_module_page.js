@@ -7,17 +7,22 @@ import { Banner } from '../micro/banner'
 import { Controller, useForm } from 'react-hook-form'
 import { GetModuleDataWithId } from '../../../apis/modules'
 import { GetLevelDataWithId } from '../../../apis/levels'
-function LevelModuleModal(props) {
+import useCheckWithDatabase from '../database_function'
+function LevelModulePage(props) {
 	const {
-		checkWithDatabase,
 		buttonText,
 		modalName,
 		placeholderText,
 		isViewOnly,
 		modalId,
+		apiMethod,
 	} = props
-
 	const fieldName = modalName.toLowerCase()
+	const checkWithDatabase = useCheckWithDatabase(
+		apiMethod,
+		`${modalName} added!`,
+		`/${fieldName}`
+	)
 	const modalDefaultValues = {
 		[fieldName]: '',
 	}
@@ -38,7 +43,6 @@ function LevelModuleModal(props) {
 					: await GetModuleDataWithId(modalById)
 
 			const modalData = results.data[fieldName]
-
 			setValue(fieldName, modalData, true)
 		}
 
@@ -58,7 +62,8 @@ function LevelModuleModal(props) {
 					/>
 				</div>
 				<div className='card-container'>
-					<Form onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
+					<Form
+						onSubmit={handleSubmit((data) => checkWithDatabase(data, modalId))}>
 						<React.Fragment>
 							<div class='flex-grid-wrap'>
 								<div class='form-field mb-6 md:mb-0'>
@@ -100,5 +105,4 @@ function LevelModuleModal(props) {
 		</>
 	)
 }
-
-export default LevelModuleModal
+export default LevelModulePage

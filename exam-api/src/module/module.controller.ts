@@ -24,6 +24,7 @@ export class ModuleController {
 		@Body() module: module_dto,
 		@Res({ passthrough: true }) response: Response
 	) {
+
 		const MODULE_CREATE = await this.Modules.create(module)
 
 		if (MODULE_CREATE === null) {
