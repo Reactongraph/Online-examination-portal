@@ -15,7 +15,6 @@ function LevelModuleModal(props) {
 		placeholderText,
 		isViewOnly,
 		modalId,
-
 	} = props
 
 	const fieldName = modalName.toLowerCase()

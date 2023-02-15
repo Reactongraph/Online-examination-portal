@@ -4,7 +4,12 @@ import { AddOrganization, EditOrganization } from '../../apis/organizations'
 import { useRouter } from 'next/router'
 import OrganizationModal from '../common/form_modals/organization_modal'
 
-const CreateOrganization = ({ isViewOnly, buttonText, editform, organizationId }) => {
+const CreateOrganization = ({
+	isViewOnly,
+	buttonText,
+	editform,
+	organizationId,
+}) => {
 	const router = useRouter()
 
 	// for sending the data to the backend

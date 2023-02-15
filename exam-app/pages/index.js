@@ -1,15 +1,8 @@
 import Head from 'next/head'
 import Login from './login/index'
 import 'regenerator-runtime/runtime'
-import { ButtonComponent } from '../components/common/micro/button'
-
-import { useSession, signIn, signOut } from 'next-auth/react'
 
 export default function Home() {
-	// const { data: session } = useSession()
-
-	console.log('sessisong')
-
 	return (
 		<>
 			<Head>

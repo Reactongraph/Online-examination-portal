@@ -25,7 +25,7 @@ const AuthOptions = {
 					type: 'text',
 				},
 			},
-			async authorize(credentials, req) {
+			async authorize(credentials) {
 				const payload = {
 					email: credentials.email,
 					password: credentials.password,
@@ -49,7 +49,7 @@ const AuthOptions = {
 	],
 	secret: 'secretrefreshkey',
 	callbacks: {
-		async jwt({ token, user, account }) {
+		async jwt({ token, user }) {
 			if (user) {
 				const { accessToken, ...rest } = user
 				token.accessToken = accessToken

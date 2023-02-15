@@ -66,10 +66,7 @@ export class AuthController {
 				role: login.role,
 				organization_id: jwt_decode.id,
 			}
-			response.cookie('access_token', token.access_token, { httpOnly: true })
-			response.cookie('refresh_token', token.refresh_token, {
-				httpOnly: false,
-			})
+
 			response.send(data).status(HttpStatus.ACCEPTED)
 		}
 	}

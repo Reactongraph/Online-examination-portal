@@ -10,10 +10,10 @@ import { ToastContainer, toast } from 'react-toastify'
 import { Form } from './common/micro/form'
 import { ButtonComponent } from './common/micro/button'
 import Dropdown from './common/micro/dropdown'
-import { UserLogin } from '../apis/auth'
 import { LoginRoles } from './drop_down_data/login_role_data'
 import { signIn } from 'next-auth/react'
 import { useSession } from 'next-auth/react'
+import { useCookies } from 'react-cookie'
 
 // validation schema
 const schema = object({
@@ -27,7 +27,9 @@ const schema = object({
 const Login = () => {
 	const router = useRouter()
 	const dispatch = useDispatch()
-	const { data: session, status } = useSession()
+	const { data: session } = useSession()
+
+	const [cookie, setCookie] = useCookies(['refresh_token'])
 
 	const { register, handleSubmit } = useForm({
 		resolver: yupResolver(schema),
@@ -46,13 +48,19 @@ const Login = () => {
 		})
 
 		if (res?.error) {
-			console.log(res)
 			return toast.error(res.error)
 		}
 		const login_token = session.user.access_token
+		const refresh_token = session.user.refresh_token
 		const payload = session.user.payload
 		const userRole = session.user.role
 		const Org_id = session.user.payload.id
+
+		setCookie('refresh_token', JSON.stringify(refresh_token), {
+			path: '/',
+			maxAge: 3600, // Expires after 1hr
+			sameSite: true,
+		})
 		dispatch({
 			type: 'SET_LOGIN',
 			token: login_token,
