@@ -8,14 +8,15 @@ import { BsSpeedometer } from 'react-icons/bs'
 import { FaSuitcase } from 'react-icons/fa'
 import { MdRateReview } from 'react-icons/md'
 import { MdQuiz } from 'react-icons/md'
-import { useSelector } from 'react-redux'
+import { useSession } from 'next-auth/react'
 
 import React, { useEffect, useState } from 'react'
 import NavItem from './nav_Item'
 
 const Nav = ({ sidebarOutsideClick }) => {
 	const [sidebarStatus, setSidebarStatus] = useState(false)
-	const userRole = useSelector((state) => state.user.role)
+	const { data: session } = useSession()
+	const userRole = session?.user.role
 
 	const sidebarClose = () => {
 		setSidebarStatus(false)
