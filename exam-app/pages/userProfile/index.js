@@ -4,8 +4,8 @@ import { ToastContainer } from 'react-toastify'
 import Layout from '../../components/layout/layout'
 import UserProfileComponent from '../../components/userProfile/user_profile'
 import { GetAdminDataWithId } from '../../apis/admin'
-import { useSelector } from 'react-redux'
 import { GetUserProfileData } from '../../apis/organizations'
+import { useSession } from 'next-auth/react'
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== 'undefined') {
@@ -13,13 +13,13 @@ if (typeof window !== 'undefined') {
 }
 
 export default function UserProfile() {
-	const user = useSelector((state) => state?.user)
-	const { Org_id } = user
+	const { data: session } = useSession()
+	const user = session?.user
 
 	const { data: profile_data, mutate } =
 		user?.role == 'SuperAdminUser'
-			? GetAdminDataWithId(user?.Org_id)
-			: GetUserProfileData(Org_id)
+			? GetAdminDataWithId(user?.organization_id)
+			: GetUserProfileData(user?.organization_id)
 
 	return (
 		<>

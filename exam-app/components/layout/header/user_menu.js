@@ -1,16 +1,19 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
 import React, { useEffect, useRef, useState } from 'react'
 import OutsideClick from '../../../utils/outside_click'
-import { useSelector } from 'react-redux'
 import Image from 'next/image'
 import { ButtonComponent } from '../../common/micro/button'
 import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
 
 const UserMenu = () => {
 	const [userMenuStatus, setUserMenuStatus] = useState(false)
 	const buttonRef = useRef(null)
 	const buttonOutsideClick = OutsideClick(buttonRef)
-	const username = useSelector((state) => state.user)
+
+	const { data: session } = useSession()
+	const username = session?.user
+
 	const router = useRouter()
 
 	const userMenuhandle = () => {

@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import { useRouter } from 'next/router'
 import { CsvReader } from './csv_reader'
 import { ToastContainer } from 'react-toastify'
-import { useSelector } from 'react-redux'
 import { Banner } from '../common/micro/banner'
 import { ButtonComponent } from '../common/micro/button'
 import { InputComponent } from '../common/micro/input'
@@ -13,10 +12,9 @@ const PageComponentTitle = ({ title, titleDescription, buttonTitle }) => {
 	const router = useRouter()
 
 	const { mutate } = useContext(QuestionContext)
-	const user = useSelector((state) => state?.user)
 
 	const handleCsv = (e) => {
-		const result = CsvReader(e.target.files[0], user, mutate)
+		const result = CsvReader(e.target.files[0], mutate)
 
 		if (result == 1) {
 			setTimeout(() => {

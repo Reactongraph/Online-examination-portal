@@ -2,13 +2,13 @@ import React from 'react'
 import PageComponentTitle from '../common/page_component_title'
 import Image from 'next/image'
 import { TableRow } from '../common/micro/table_row'
-import { useSelector } from 'react-redux'
+import { useSession } from 'next-auth/react'
 
 const UserProfile = ({ profile_data, mutate }) => {
-	const user = useSelector((state) => state?.user)
+	const { data: session } = useSession()
 
 	const userName = profile_data?.name
-	const userRole = user?.role
+	const userRole = session?.user?.role
 
 	return (
 		<>

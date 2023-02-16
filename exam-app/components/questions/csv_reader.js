@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify'
 import { UploadCsvQuestion } from '../../apis/questions'
 
-const CsvReader = (cdata, user, mutate) => {
+const CsvReader = (cdata, mutate) => {
 	let csvFile = cdata
 	const reader = new FileReader()
 
