@@ -23,6 +23,7 @@ export class QuizService {
 				data: {
 					quiz_name: toLowerCaseQuizName,
 					quiz_image: createQuizDto.quiz_image,
+					organization_id: createQuizDto.Organization_id,
 					start_date: createQuizDto.start_date,
 					end_date: createQuizDto.end_date,
 					buffer_time: createQuizDto.buffer_time,

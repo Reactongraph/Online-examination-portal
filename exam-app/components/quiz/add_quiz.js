@@ -27,7 +27,6 @@ const AddQuizComponent = ({ isViewOnly, isEdit, buttonText, quizId }) => {
 
 	const handleQuizData = async (data) => {
 		data.module_id = handleModuleData(data.module_id)
-		delete data.Org_name
 		data.status = true
 		const QuizData = JSON.stringify(data)
 		const id = isEdit ? quizId : null

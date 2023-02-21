@@ -10,13 +10,14 @@ import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { Banner } from '../../micro/banner'
 import { InputComponent } from '../../micro/input'
 import { Controller, useForm } from 'react-hook-form'
+import { useSelector } from 'react-redux'
 import Dropdown from '../../micro/dropdown'
 import { GetQuizDataWithId } from '../../../../apis/quizzes'
 import moment from 'moment'
 import { LevelContext, ModuleContext } from '../../../../context/context'
 function QuizPage(props) {
 	const { isViewOnly, buttonText, handleQuizData, quizId } = props
-
+	const username = useSelector((state) => state.user)
 	const { module_data: moduleData } = useContext(ModuleContext)
 	const { level_data: levelData } = useContext(LevelContext)
 
@@ -33,7 +34,7 @@ function QuizPage(props) {
 			module_id: [],
 			description: '',
 			level_id: '',
-			Org_name: '',
+			Organization_id: username.Org_id,
 		}),
 		[]
 	)
@@ -240,7 +241,25 @@ function QuizPage(props) {
 												type='text'
 												value={value}
 												required='required'
-												placeholder='Ongraph Tech'
+												placeholder={`userName - ${username.payload.username}`}
+											/>
+										)}
+									/>
+									<Controller
+										as={InputComponent}
+										name={'Organization_id'}
+										control={control}
+										render={({ field: { value, onChange, onBlur } }) => (
+											<InputComponent
+												className='input-field'
+												disabled
+												id='jane'
+												onBlur={onBlur}
+												onChange={onChange}
+												type='hidden'
+												value={value}
+												required='required'
+												placeholder={`userName - ${username.payload.username}`}
 											/>
 										)}
 									/>
