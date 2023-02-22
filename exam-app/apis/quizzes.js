@@ -22,6 +22,19 @@ export function GetQuizData() {
 	}
 }
 
+export function GetQuizDataWithOrgId(id) {
+	const { data, error, isLoading, mutate } = useSWR(
+		[`/quiz/findbyorganization/${id}`],
+		([url]) => fetcher(url)
+	)
+	return {
+		data,
+		error,
+		isLoading,
+		mutate,
+	}
+}
+
 export async function GetQuizDataWithId(id) {
 	return await ApiCaller.get(`/quiz/find/${id}`)
 }

@@ -109,8 +109,8 @@ model Quiz {
   end_date    DateTime?
   buffer_time DateTime?
   module_id   String[]  @db.ObjectId
-  level_id    String
-  organization_id String?
+  level_id    String    @db.ObjectId
+  organization_id String? 
   status      Boolean   @default(true)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt

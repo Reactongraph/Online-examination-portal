@@ -7,7 +7,7 @@ function QuizDataArray(
 	handleRemoveClick,
 	handleViewClick
 ) {
-	const rowsDataArray = quiz_data.data?.quiz.map((element) => {
+	const rowsDataArray = quiz_data?.map((element) => {
 		let quiz = element.quiz_name
 		let quiz_id = element._id.$oid
 		let quiz_status = element.status
@@ -18,7 +18,8 @@ function QuizDataArray(
 		})
 
 		let modules = moduleNameArray.join()
-		let level = element?.level?.level
+		let level = element?.level[0]?.level
+
 		let start_date = element.start_date.$date
 		start_date = moment(start_date).format('llll')
 
