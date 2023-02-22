@@ -11,7 +11,6 @@ const useCheckWithDatabase = (dataApi, successMessage, route) => {
 			}
 			// for add request
 			else {
-				data.status = true
 				await dataApi(data)
 			}
 

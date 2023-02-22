@@ -23,6 +23,7 @@ export class QuizService {
 				data: {
 					quiz_name: toLowerCaseQuizName,
 					quiz_image: createQuizDto.quiz_image,
+					organization_id: createQuizDto.Organization_id,
 					start_date: createQuizDto.start_date,
 					end_date: createQuizDto.end_date,
 					buffer_time: createQuizDto.buffer_time,
@@ -41,10 +42,6 @@ export class QuizService {
 
 	async findAll() {
 		try {
-			const leveldata = await this.prisma.quiz.findMany({
-				include: { level: true },
-			})
-
 			const quiz: any = await this.prisma.quiz.aggregateRaw({
 				pipeline: [
 					{
@@ -55,14 +52,55 @@ export class QuizService {
 							as: 'module',
 						},
 					},
+					{
+						$lookup: {
+							from: 'Level',
+							localField: 'level_id',
+							foreignField: '_id',
+							as: 'level',
+						},
+					},
 				],
 			})
 
-			for (const [index] of leveldata.entries()) {
-				quiz[index].level = leveldata[index].level
-			}
 			return { quiz }
-		} catch (error) {}
+		} catch (error) {
+			return { error: error }
+		}
+	}
+
+	async findQuizByOrgId(id: string) {
+		try {
+			const quiz: any = await this.prisma.quiz.aggregateRaw({
+				pipeline: [
+					{
+						$match: {
+							organization_id: id,
+						},
+					},
+					{
+						$lookup: {
+							from: 'Module',
+							localField: 'module_id',
+							foreignField: '_id',
+							as: 'module',
+						},
+					},
+					{
+						$lookup: {
+							from: 'Level',
+							localField: 'level_id',
+							foreignField: '_id',
+							as: 'level',
+						},
+					},
+				],
+			})
+
+			return { quiz }
+		} catch (err) {
+			return { error: err }
+		}
 	}
 
 	async findOne(id: string) {

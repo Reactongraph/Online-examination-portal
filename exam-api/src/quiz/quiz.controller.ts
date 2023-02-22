@@ -38,6 +38,13 @@ export class QuizController {
 		return quizzes
 	}
 
+	@Get('findbyorganization/:id')
+	async findQuizByOrgId(@Param('id') id: string) {
+		const find = await this.quizService.findQuizByOrgId(id)
+
+		return find
+	}
+
 	@Get('find/:id')
 	async findOne(@Param('id') id: string) {
 		const FIND_ONE = await this.quizService.findOne(id)
