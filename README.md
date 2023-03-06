@@ -24,9 +24,9 @@ Online examination portal mainly targets two types of audiences: Student, Organi
 
 ## Installation Requirements
 
-To run back-end Just `cd exam-api` then `yarn Install` and then `yarn run start:dev` in exam-api directory.
+To start back-end, run `yarn && yarn start:dev` in exam-api directory.
 
-To run front-end (admin) `cd exam-app` and then `yarn Install` and Then `yarn dev` in exam-app directory.
+To start front-end (admin), run `yarn && yarn dev` in exam-app directory.
 
 ## Available Scripts
 
