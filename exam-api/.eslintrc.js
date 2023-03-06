@@ -10,6 +10,7 @@ module.exports = {
 	extends: [
 		'plugin:@typescript-eslint/recommended',
 		'standard-with-typescript',
+		'prettier',
 	],
 	root: true,
 	env: {
@@ -41,6 +42,6 @@ module.exports = {
 		'@typescript-eslint/no-base-to-string': 'off',
 		'@typescript-eslint/no-unused-vars': 'off',
 		'@typescript-eslint/no-use-before-define': 'off',
-		'@typescript-eslint/restrict-template-expressions': 'off'
+		'@typescript-eslint/restrict-template-expressions': 'off',
 	},
 }

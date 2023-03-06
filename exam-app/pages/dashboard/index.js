@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { ToastContainer } from 'react-toastify'
-import DashboardComponent from '../../components/dashboard/Dashboard'
-import Layout from '../../components/layout/Layout'
+import DashboardComponent from '../../components/dashboard/dashboard'
+import Layout from '../../components/layout/layout'
 
-export default function Dashboard() {
+const Dashboard = () => {
 	return (
 		<>
 			<Layout title='Dashboard '>
@@ -13,3 +13,4 @@ export default function Dashboard() {
 		</>
 	)
 }
+export default Dashboard

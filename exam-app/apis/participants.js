@@ -35,6 +35,10 @@ export function GetParticipantDataWithOrgId(id) {
 	}
 }
 
+export async function GetParticipantWithId(id) {
+	return await ApiCaller.get(`/participants/${id}`)
+}
+
 export async function DeleteParticipant(participantId) {
 	return await ApiCaller.delete(`/participants/${participantId}`)
 }

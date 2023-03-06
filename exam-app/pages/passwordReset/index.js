@@ -5,8 +5,8 @@ import { useRouter } from 'next/router'
 import jwt_decode from 'jwt-decode'
 import { ToastContainer, toast } from 'react-toastify'
 import React from 'react'
-import { ButtonComponent } from '../../components/common/micro/buttonComponent'
-import { InputComponent } from '../../components/common/micro/inputComponent'
+import { ButtonComponent } from '../../components/common/micro/button'
+import { InputComponent } from '../../components/common/micro/input'
 import { ResetPassword } from '../../apis/auth'
 
 export default function PasswordReset() {
@@ -80,7 +80,7 @@ export default function PasswordReset() {
 								<ButtonComponent
 									type={'submit'}
 									className={
-										'border-2 border-blue rounded-full px-12 py-2 inline-block font-semibold bg-blue-500  hover:text-white ml-20 md-15 mr-30 mt-10   '
+										'btn-tertiary hover:text-white ml-20 md-15 mr-30 mt-10   '
 									}>
 									ChangePassword
 								</ButtonComponent>

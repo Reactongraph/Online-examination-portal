@@ -22,17 +22,7 @@ export function GetModuleData() {
 	}
 }
 export async function GetModuleDataWithId(id) {
-	const { data, error, isLoading, mutate } = useSWR(
-		[`/module/${id}`],
-		([url]) => fetcher(url)
-	)
-
-	return {
-		data,
-		error,
-		isLoading,
-		mutate,
-	}
+	return await ApiCaller.get(`/module/${id}`)
 }
 export async function DeleteModule(id) {
 	return await ApiCaller.delete(`/module/${id}`)
