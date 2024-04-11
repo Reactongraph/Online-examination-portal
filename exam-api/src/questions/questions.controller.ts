@@ -39,8 +39,10 @@ export class QuestionsController {
 	@Post('create')
 	async create_question(
 		@Body() createquestion: QuestionDTO,
+		
 		@Res({ passthrough: true }) response: Response
 	) {
+		
 		const data = this.questionservice.create(createquestion)
 		if (data === null) {
 			response.status(HttpStatus.BAD_REQUEST).json([])

@@ -6,6 +6,7 @@ import { ButtonComponent } from '../../common/micro/button'
 import { InputComponent } from '../../common/micro/input'
 function CenterForm(props) {
 	const {
+		register,
 		selectedImage,
 		handleSelectedOption,
 		setSelectedImage,
@@ -19,7 +20,9 @@ function CenterForm(props) {
 		removeFields,
 		isViewOnly,
 	} = props
+	
 	return (
+		
 		<>
 			<section className='flex md:grid-cols-1 xl:grid-cols-1 gap-6'>
 				<div className='card-container'>
@@ -27,8 +30,9 @@ function CenterForm(props) {
 						<div className='flex justify-center mt-8'>
 							<div className='max-w-2xl rounded-lg shadow-xl bg-gray-50'>
 								<div className='m-4'>
+									
 									{selectedImage ? (
-										<>
+									<>
 											{' '}
 											<Label
 												key={'default'}
@@ -38,8 +42,9 @@ function CenterForm(props) {
 											<div>
 												<Image
 													alt='not fount'
-													width={'250px'}
-													src={URL.createObjectURL(selectedImage)}
+													width={250}
+													height={250}
+													src={typeof selectedImage === 'string' ? selectedImage : URL.createObjectURL(selectedImage)}
 												/>
 												<br />
 
@@ -88,14 +93,18 @@ function CenterForm(props) {
 																Attach a file
 															</p>
 														</div>
-														<InputComponent
-															type='file'
-															accept='image/*'
-															className='opacity-0'
-															onChange={(event) => {
-																setSelectedImage(event.target.files[0])
-															}}
-														/>
+													
+														<input
+                                                           type='file'
+                                                           accept='image/*'
+                                                            className='opacity-0'
+                                                        //    value={selectedImage}
+                                                         {...register('selectedImage')} // assuming you're using React Hook Form
+                                                          onChange={(event) => {
+                                                          setSelectedImage(event.target.files[0]);
+														 
+														   }}
+                                                        />
 													</React.Fragment>
 												</Label>
 											</div>

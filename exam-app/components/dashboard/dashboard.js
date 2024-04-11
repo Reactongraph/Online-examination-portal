@@ -1,10 +1,14 @@
-import React from 'react'
+import {React, useContext} from 'react'
 import { Banner } from '../common/micro/banner'
+import { OrganizationContext } from '../../context/context'
 
 const Dashboard = () => {
+	const { organization_data, mutate } = useContext(OrganizationContext)
+	console.log(organization_data)
+
 	return (
 		<>
-			<main className='main-content'>
+			<main className='main-content' >
 				<div className='multi-column-spacing'>
 					<Banner
 						heading={'Dashboard'}
@@ -12,7 +16,7 @@ const Dashboard = () => {
 					/>
 				</div>
 				<section className='grid-with-two-col'>
-					<div className='flex-card-container'>
+					<div className='flex-card-container text-black'>
 						<div className='blue-circle-badge'>
 							<svg
 								aria-hidden='true'
@@ -28,6 +32,7 @@ const Dashboard = () => {
 								/>
 							</svg>
 						</div>
+						{/* {organization_data.length} */}
 						<div></div>
 					</div>
 					<div className='flex-card-container'>

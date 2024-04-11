@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
@@ -9,6 +9,9 @@ import QuestionMarks from './questionForm/question_marks'
 import TimeLimit from './questionForm/time_limit'
 import QuestionType from './questionForm/question_type'
 import QuestionModule from './questionForm/question_module'
+import { db, storage } from "../../firebase";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
+import { getFirestore } from 'firebase/firestore';
 
 import {
 	Addquestion,
@@ -19,12 +22,16 @@ import { LevelContext, ModuleContext } from '../../context/context'
 // import { QuestionContext } from '../context'
 
 const AddQuestion = ({ isViewOnly, questionId }) => {
+	const firestore = getFirestore();
+    const storage = getStorage();
 	const { module_data: moduleData } = useContext(ModuleContext)
 	const { level_data: levelData } = useContext(LevelContext)
-
+	// const image = useRef('');
 	// const {level_data: levelData}
 	const router = useRouter()
 	const [selectedImage, setSelectedImage] = useState(null)
+	// const [image, setImage] = useState('')
+	const imageRef = useRef('');
 	const [pageTitle, setPageTitle] = useState('Add')
 	const [question, setQuestion] = useState('')
 	const [optionType, setOptionType] = useState('Single')
@@ -69,19 +76,20 @@ const AddQuestion = ({ isViewOnly, questionId }) => {
 			setOptionType(questionData.option_type)
 			setSelectedLevelId(questionData?.level?.id)
 			setSelectedModuleId(questionData?.module?.id)
-
+			setSelectedImage(questionData?.images)
 			setMarks(questionData.marks)
 			setEditForm(true)
 		}
 
 		if (questionId) {
 			getQuestionData()
-			// console.log()
+			
 		}
 	}, [questionId, isViewOnly, numberOfOptionSelect])
 
-	const { handleSubmit } = useForm()
+	const { register, handleSubmit, watch } = useForm()
 
+	
 	useEffect(() => {
 		if (numberOfOptionSelect > 0) {
 			setRequiredOptionField(false)
@@ -157,50 +165,97 @@ const AddQuestion = ({ isViewOnly, questionId }) => {
 		data.splice(index, 1)
 		setInputFields(data)
 	}
+	
+ const handleUpload = async(file,data) => {
+        const storageRef = ref(storage, `images/${file.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        uploadTask.on(
+            'state_changed',
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+                switch (snapshot.state) {
+                    case 'paused':
+                        console.log('Upload is paused');
+                        break;
+                    case 'running':
+                        console.log('Upload is running');
+                        break;
+                }
+            },
+            (error) => {
+                // Handle unsuccessful uploads
+            },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    console.log('File available at', downloadURL);
+                    const newData = { imageUrl: downloadURL };
+					imageRef.current = downloadURL
+					data['images'] = imageRef.current
+					sendDataToDatabase(data);
+				});
+			}
+		);
+	};
+					
+    
+
+	const sendDataToDatabase = (data) => {
+		   data.question_type = questionType
+			data.question = question
+			data.marks = marks
+			data.question_time = timeLimitSelect
+	
+			data.level_id = selectedLevelId
+			data.module_id = selectedModuleId
+			data.option_type = optionType
+			if (optionType != 'Multiple') {
+				data.options = inputFields
+				data.options.map((oneOption, i) => {
+					if (selectedOptionIndex == i) oneOption.correct = true
+					else oneOption.correct = false
+				})
+			} else {
+				data.options = inputFields
+				data.options.map((oneOption) => {
+					if (!oneOption.correct) oneOption.correct = false
+				})
+			}
+	
+			if (editForm) {
+				let question_id = questionId
+				data = JSON.stringify(data)
+				EditQuestion(data, question_id)
+					.then(() => {
+						router.push('/questions')
+					})
+					.catch(() => {
+						toast.error('invalid requests')
+					})
+			} else {
+				data.status = true
+				data = JSON.stringify(data)
+				Addquestion(data)
+					.then(() => {
+						router.push('/questions')
+					})
+					.catch(() => {
+						toast.error('invalid request')
+					})
+			}
+		
+	}
 
 	const checkWithDatabase = async (data) => {
-		data.question_type = questionType
-		data.question = question
-		data.marks = marks
-		data.question_time = timeLimitSelect
-
-		data.level_id = selectedLevelId
-		data.module_id = selectedModuleId
-		data.option_type = optionType
-		if (optionType != 'Multiple') {
-			data.options = inputFields
-			data.options.map((oneOption, i) => {
-				if (selectedOptionIndex == i) oneOption.correct = true
-				else oneOption.correct = false
-			})
+        //    await handleUpload(selectedImage,data);   
+		if (selectedImage) {
+			// If there is a selected image, handle the image upload first
+			await handleUpload(selectedImage, data);
 		} else {
-			data.options = inputFields
-			data.options.map((oneOption) => {
-				if (!oneOption.correct) oneOption.correct = false
-			})
+			// If no image is selected, directly send the other data
+			sendDataToDatabase(data);
 		}
-
-		if (editForm) {
-			let question_id = questionId
-			data = JSON.stringify(data)
-			EditQuestion(data, question_id)
-				.then(() => {
-					router.push('/questions')
-				})
-				.catch(() => {
-					toast.error('invalid requests')
-				})
-		} else {
-			data.status = true
-			data = JSON.stringify(data)
-			Addquestion(data)
-				.then(() => {
-					router.push('/questions')
-				})
-				.catch(() => {
-					toast.error('invalid request')
-				})
-		}
+	
 	}
 
 	return (
@@ -210,6 +265,7 @@ const AddQuestion = ({ isViewOnly, questionId }) => {
 				{/* question side */}
 
 				<QuestionForm
+				    register={register}
 					handleSubmit={handleSubmit}
 					checkWithDatabase={checkWithDatabase}
 					pageTitle={pageTitle}

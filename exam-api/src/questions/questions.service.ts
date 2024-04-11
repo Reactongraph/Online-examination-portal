@@ -29,6 +29,7 @@ export class QuestionsService {
 					module_id: createQuestionDto?.module_id,
 					marks: createQuestionDto?.marks,
 					option_type: createQuestionDto?.option_type,
+					images: createQuestionDto?.images
 				},
 			})
 
@@ -62,6 +63,7 @@ export class QuestionsService {
 			if (!question) {
 				return `user not found with this  ${id}`
 			}
+			console.log(question)
 			return question
 		} catch (err) {
 			return { error: err }
