@@ -63,7 +63,6 @@ export class QuestionsService {
 			if (!question) {
 				return `user not found with this  ${id}`
 			}
-			console.log(question)
 			return question
 		} catch (err) {
 			return { error: err }
@@ -72,14 +71,17 @@ export class QuestionsService {
 
 	async update(id: string, updateRestApiDto: QuestionDTO) {
 		try {
+		
 			const updatedOptions = await this.prisma.questions.update({
 				where: {
 					id,
 				},
 				data: updateRestApiDto,
 			})
+			
 			return updatedOptions
 		} catch (err) {
+		
 			return { error: err }
 		}
 	}

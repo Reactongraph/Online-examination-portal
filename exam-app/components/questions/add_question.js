@@ -40,7 +40,7 @@ const AddQuestion = ({ isViewOnly, questionId }) => {
 	const [selectedModuleId, setSelectedModuleId] = useState('')
 	const [timeLimitSelect, setTimeLimitSelect] = useState('')
 	const [requiredOptionField, setRequiredOptionField] = useState(true)
-	const [marks, setMarks] = useState()
+	const [marks, setMarks] = useState('')
 	const [numberOfOptionSelect, setNumberOfOptionSelect] = useState(0)
 	const [selectedOptionIndex, setSelectedOptionIndex] = useState()
 	const [editForm, setEditForm] = useState(false)
@@ -85,7 +85,7 @@ const AddQuestion = ({ isViewOnly, questionId }) => {
 			getQuestionData()
 			
 		}
-	}, [questionId, isViewOnly, numberOfOptionSelect])
+	}, [questionId, isViewOnly])
 
 	const { register, handleSubmit, watch } = useForm()
 
@@ -166,29 +166,22 @@ const AddQuestion = ({ isViewOnly, questionId }) => {
 		setInputFields(data)
 	}
 	
- const handleUpload = async(file,data) => {
+	
+	const handleUpload = async(file,data) => {
         const storageRef = ref(storage, `images/${file.name}`);
         const uploadTask = uploadBytesResumable(storageRef, file);
         uploadTask.on(
             'state_changed',
             (snapshot) => {
                 const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log('Upload is ' + progress + '% done');
-                switch (snapshot.state) {
-                    case 'paused':
-                        console.log('Upload is paused');
-                        break;
-                    case 'running':
-                        console.log('Upload is running');
-                        break;
-                }
+        
             },
             (error) => {
-                // Handle unsuccessful uploads
+            
             },
             () => {
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    console.log('File available at', downloadURL);
+                   
                     const newData = { imageUrl: downloadURL };
 					imageRef.current = downloadURL
 					data['images'] = imageRef.current
@@ -197,16 +190,14 @@ const AddQuestion = ({ isViewOnly, questionId }) => {
 			}
 		);
 	};
-					
-    
-
+	
 	const sendDataToDatabase = (data) => {
-		   data.question_type = questionType
+		
+		    data.question_type = questionType
 			data.question = question
 			data.marks = marks
 			data.question_time = timeLimitSelect
-	
-			data.level_id = selectedLevelId
+	        data.level_id = selectedLevelId
 			data.module_id = selectedModuleId
 			data.option_type = optionType
 			if (optionType != 'Multiple') {
@@ -223,8 +214,13 @@ const AddQuestion = ({ isViewOnly, questionId }) => {
 			}
 	
 			if (editForm) {
+				
 				let question_id = questionId
-				data = JSON.stringify(data)
+				data = JSON.parse(JSON.stringify(data))
+				
+				if (!selectedImage) {
+					data['images'] = ''
+				}
 				EditQuestion(data, question_id)
 					.then(() => {
 						router.push('/questions')

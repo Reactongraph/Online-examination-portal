@@ -39,7 +39,6 @@ export class QuestionsController {
 	@Post('create')
 	async create_question(
 		@Body() createquestion: QuestionDTO,
-		
 		@Res({ passthrough: true }) response: Response
 	) {
 		
@@ -67,7 +66,8 @@ export class QuestionsController {
 		@Param('id') id: string,
 		@Body() updatequestion: QuestionDTO,
 		@Res({ passthrough: true }) response: Response
-	) {
+	) { 
+		
 		const UPDATE_QUESTIONS = await this.questionservice.update(
 			id,
 			updatequestion

@@ -196,7 +196,7 @@ var PrismaService = /** @class */ (function (_super) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            console.log('hello from prisma');
+         
             return [4 /*yield*/, this.$connect()];
           case 1:
             _a.sent();
