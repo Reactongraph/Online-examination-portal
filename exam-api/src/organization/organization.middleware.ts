@@ -7,8 +7,7 @@ export class Oraganization implements NestMiddleware {
 	constructor(private readonly prisma: PrismaService) {}
 	async use(req: IncomingMessage, res: ServerResponse, next: NextFunction) {
 		const bearerHeader = req.headers.authorization
-
-		if (!bearerHeader) {
+        if (!bearerHeader) {
 			res.writeHead(401)
 			res.end('UNAUTHORIZED')
 		} else {

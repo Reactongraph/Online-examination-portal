@@ -1,11 +1,22 @@
-import {React, useContext} from 'react'
+import {React, useContext, useEffect} from 'react'
 import { Banner } from '../common/micro/banner'
 import { OrganizationContext } from '../../context/context'
+import { ParticipantContext} from '../../context/context'
+import { QuestionContext } from '../../context/context'
+import { QuizContext } from '../../context/context'
+import { CgOrganisation } from 'react-icons/cg'
+import { TiGroup } from 'react-icons/ti'
+import { MdRateReview } from 'react-icons/md'
+import { MdQuiz } from 'react-icons/md'
 
+
+// ParticipantContext
 const Dashboard = () => {
-	const { organization_data, mutate } = useContext(OrganizationContext)
-	console.log(organization_data)
-
+	const { organization_data, mutate: organizationMutate } = useContext(OrganizationContext)
+    const { participant_data, mutate: participantMutate } = useContext(ParticipantContext)
+    const { question_data, mutate: questionMutate } = useContext(QuestionContext)
+	const { quiz_data, mutate: quizMutate } = useContext(QuizContext)
+	
 	return (
 		<>
 			<main className='main-content' >
@@ -18,76 +29,35 @@ const Dashboard = () => {
 				<section className='grid-with-two-col'>
 					<div className='flex-card-container text-black'>
 						<div className='blue-circle-badge'>
-							<svg
-								aria-hidden='true'
-								fill='none'
-								viewBox='0 0 24 24'
-								stroke='currentColor'
-								className='h-6 w-6'>
-								<path
-									strokeLinecap='round'
-									strokeLinejoin='round'
-									strokeWidth={2}
-									d='M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'
-								/>
-							</svg>
+						
+							<CgOrganisation size={30} />
 						</div>
-						{/* {organization_data.length} */}
+						{organization_data ? organization_data.length : "loading"}
 						<div></div>
 					</div>
 					<div className='flex-card-container'>
 						{/* <div className='inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-green-600 bg-green-100 rounded-full mr-6'> */}
 						<div className='blue-circle-badge h-16 w-16 text-green-600 bg-green-100'>
-							<svg
-								aria-hidden='true'
-								fill='none'
-								viewBox='0 0 24 24'
-								stroke='currentColor'
-								className='h-6 w-6'>
-								<path
-									strokeLinecap='round'
-									strokeLinejoin='round'
-									strokeWidth={2}
-									d='M13 7h8m0 0v8m0-8l-8 8-4-4-6 6'
-								/>
-							</svg>
+					
+							<TiGroup size={30} />
 						</div>
+						{participant_data ? participant_data.length : "loading"}
 						<div></div>
 					</div>
 					<div className='flex-card-container'>
 						<div className='blue-circle-badge h-16 w-16 text-red-600 bg-red-100 rounded-full mr-6'>
-							<svg
-								aria-hidden='true'
-								fill='none'
-								viewBox='0 0 24 24'
-								stroke='currentColor'
-								className='h-6 w-6'>
-								<path
-									strokeLinecap='round'
-									strokeLinejoin='round'
-									strokeWidth={2}
-									d='M13 17h8m0 0V9m0 8l-8-8-4 4-6-6'
-								/>
-							</svg>
+						
+							<MdRateReview size={30} />
 						</div>
+						{ question_data ?  question_data.length : "loading"}
 						<div></div>
 					</div>
 					<div className='flex-card-container'>
 						<div className='blue-circle-badge h-16 w-16 text-blue-600 bg-blue-100 rounded-full mr-6'>
-							<svg
-								aria-hidden='true'
-								fill='none'
-								viewBox='0 0 24 24'
-								stroke='currentColor'
-								className='h-6 w-6'>
-								<path
-									strokeLinecap='round'
-									strokeLinejoin='round'
-									strokeWidth={2}
-									d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'
-								/>
-							</svg>
+						
+								<MdQuiz size={30} />
 						</div>
+						{quiz_data && quiz_data.data && quiz_data.data.quiz ? quiz_data.data.quiz.length : "loading"}
 						<div></div>
 					</div>
 				</section>
