@@ -3,6 +3,7 @@ module.exports = {
 		SERVER_LINK: process.env.SERVER_LINK,
 	},
 	images: {
-		domains: ['randomuser.me'],
+		domains: ['randomuser.me', 'firebasestorage.googleapis.com'],
 	},
+	// next.config.js
 }

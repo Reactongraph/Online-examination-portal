@@ -29,6 +29,7 @@ export class QuestionsService {
 					module_id: createQuestionDto?.module_id,
 					marks: createQuestionDto?.marks,
 					option_type: createQuestionDto?.option_type,
+					images: createQuestionDto?.images
 				},
 			})
 
@@ -70,14 +71,17 @@ export class QuestionsService {
 
 	async update(id: string, updateRestApiDto: QuestionDTO) {
 		try {
+		
 			const updatedOptions = await this.prisma.questions.update({
 				where: {
 					id,
 				},
 				data: updateRestApiDto,
 			})
+			
 			return updatedOptions
 		} catch (err) {
+		
 			return { error: err }
 		}
 	}

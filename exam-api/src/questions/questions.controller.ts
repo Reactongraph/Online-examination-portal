@@ -41,6 +41,7 @@ export class QuestionsController {
 		@Body() createquestion: QuestionDTO,
 		@Res({ passthrough: true }) response: Response
 	) {
+		
 		const data = this.questionservice.create(createquestion)
 		if (data === null) {
 			response.status(HttpStatus.BAD_REQUEST).json([])
@@ -65,7 +66,8 @@ export class QuestionsController {
 		@Param('id') id: string,
 		@Body() updatequestion: QuestionDTO,
 		@Res({ passthrough: true }) response: Response
-	) {
+	) { 
+		
 		const UPDATE_QUESTIONS = await this.questionservice.update(
 			id,
 			updatequestion

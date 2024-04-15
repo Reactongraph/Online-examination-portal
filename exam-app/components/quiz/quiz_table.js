@@ -66,8 +66,7 @@ const QuizTable = () => {
 				rowKey='id'
 				className='table-primary'
 			/>
-
-			<ToastContainer />
+    <ToastContainer />
 		</>
 	)
 }

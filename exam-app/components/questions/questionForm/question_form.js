@@ -6,6 +6,7 @@ import { Banner } from '../../common/micro/banner'
 function QuestionForm(props) {
 	const {
 		handleSubmit,
+		register,
 		checkWithDatabase,
 		handleSelectedOption,
 		pageTitle,
@@ -22,8 +23,11 @@ function QuestionForm(props) {
 		isViewOnly,
 		// userId
 	} = props
+	
+	
 	return (
 		<>
+		
 			<Form
 				className={'flex  sm:p-10 '}
 				onSubmit={handleSubmit((data) => checkWithDatabase(data))}>
@@ -38,6 +42,7 @@ function QuestionForm(props) {
 						</div>
 
 						<CenterForm
+						    register={register}
 							selectedImage={selectedImage}
 							removeFields={removeFields}
 							handleSelectedOption={handleSelectedOption}
